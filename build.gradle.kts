@@ -1,19 +1,21 @@
-plugins {
-    id("java")
-}
-
 group = "it.unibo.grubclash"
 version = "1.0-SNAPSHOT"
+
+plugins {
+    id("java")
+    id("application")
+    id("org.openjfx.javafxplugin") version "0.1.0"
+}
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+javafx {
+    version = "22"
+    modules("javafx.controls", "javafx.fxml", "javafx.graphics")
 }
 
-tasks.test {
-    useJUnitPlatform()
+application {
+    mainClass.set("it.unibo.grubclash.Main")
 }
