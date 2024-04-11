@@ -4,16 +4,20 @@ version = "1.0-SNAPSHOT"
 plugins {
     id("java")
     id("application")
-    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 repositories {
     mavenCentral()
 }
 
-javafx {
-    version = "22"
-    modules("javafx.controls", "javafx.fxml", "javafx.graphics")
+tasks.jar {
+    archiveBaseName.set("GrubClash")
+    archiveVersion.set("1.0.0")
+    archiveFileName.set("..\\..\\GrubClash.jar")
+
+    manifest {
+        attributes["Main-Class"] = "it.unibo.grubclash.Main"
+    }
 }
 
 application {
