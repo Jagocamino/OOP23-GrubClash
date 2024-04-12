@@ -21,10 +21,15 @@ public class Main {
         frame.setLayout(null);
         new Main().setIcon();
 
+        //Pannello menù
         final JPanel panel = new JPanel();
         panel.setLayout(null);
         panel.setBounds(0, 0, width_menu, height_menu);
-        frame.add(panel);
+        frame.add(panel); 
+
+        //Pannello di gioco
+        GrubPanel grubPanel = new GrubPanel();
+        frame.add(grubPanel);
 
         // Impostazione dello sfondo del menu
         ImageIcon image = new ImageIcon("src\\main\\resources\\menu\\menu_bg.jpg");
@@ -72,7 +77,12 @@ public class Main {
         panel.add(playButton);
         panel.add(menu_bg);
         frame.setVisible(true);
+
+        /* grubPanel.setupGame();
+        grubPanel.startGameThread(); */
     }
+
+    //icona della applicazione
     public void setIcon(){
 
         ImageIcon icon = new ImageIcon("src\\main\\resources\\menu\\Grub.png");
