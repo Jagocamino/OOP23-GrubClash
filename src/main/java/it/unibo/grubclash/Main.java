@@ -9,15 +9,17 @@ public class Main {
 
     static final int width_menu = 1702;
     static final int height_menu = 956;
+    public static JFrame frame;
 
     public static void main(String[] args) {
 
-        final JFrame frame = new JFrame();
+        frame = new JFrame();
         frame.setTitle("GrubClash");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(width_menu, height_menu);
         frame.setResizable(false);
         frame.setLayout(null);
+        new Main().setIcon();
 
         final JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -70,6 +72,11 @@ public class Main {
         panel.add(playButton);
         panel.add(menu_bg);
         frame.setVisible(true);
+    }
+    public void setIcon(){
+
+        ImageIcon icon = new ImageIcon("src\\main\\resources\\menu\\Grub.png");
+        frame.setIconImage(icon.getImage());
     }
 
 }
