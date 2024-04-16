@@ -2,11 +2,14 @@ package it.unibo.grubclash;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Main {
 
+public class Main {
+    
     static final int width_menu = 1702;
     static final int height_menu = 956;
     public static JFrame frame;
@@ -48,9 +51,14 @@ public class Main {
         playButton.setIcon(scaledIcon);
 
         // Evento scatenato al click del bottone
-        playButton.addActionListener(e ->
+        /*playButton.addActionListener(e ->
             JOptionPane.showMessageDialog(null, "Bottone cliccato!")
-        );
+        );*/
+        playButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                TestMappa.p1mappa(frame);
+            }
+        });
 
         // Effetto sul bottone al passaggio del mouse
         playButton.addMouseListener(new MouseAdapter() {
@@ -84,7 +92,6 @@ public class Main {
 
     //icona della applicazione
     public void setIcon(){
-
         ImageIcon icon = new ImageIcon("src\\main\\resources\\menu\\Grub.png");
         frame.setIconImage(icon.getImage());
     }
