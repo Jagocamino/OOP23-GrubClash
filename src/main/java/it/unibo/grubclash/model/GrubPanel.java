@@ -1,4 +1,4 @@
-package it.unibo.grubclash;
+package it.unibo.grubclash.model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -35,13 +35,13 @@ public class GrubPanel extends JPanel implements Runnable{
     }
 
     //appena avviata l'applicazione si va sulla schermata iniziale
-    public void setupGame(){
+    /* public void setupGame(){
 
         gameState = initialState;
 
         screen = new BufferedImage(width_game, height_game, BufferedImage.TYPE_INT_ARGB);
         g2d = (Graphics2D)screen.getGraphics();
-    }
+    } */
 
     public void startGameThread () {
 
@@ -68,8 +68,8 @@ public class GrubPanel extends JPanel implements Runnable{
             lastTime = currentTime;
 
             if(delta >= 1){
-                update(); //aggiorna eventi e posizioni
-                draw();  // disegna gli aggiornamenti
+                //update(); //aggiorna eventi e posizioni
+                //draw();  // disegna gli aggiornamenti
                 delta--;
                 drawCount++;
             }

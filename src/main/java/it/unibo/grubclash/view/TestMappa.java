@@ -1,4 +1,4 @@
-package it.unibo.grubclash;
+package it.unibo.grubclash.view;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import it.unibo.grubclash.model.GrubPanel;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -23,7 +25,9 @@ import java.io.IOException;
     metti maschera, dentro mapinitialization il nero diventa terreno e il bianco diventa cielo
 */
 
-public class TestMappa extends Canvas{
+public class TestMappa extends Canvas {
+
+    static GrubPanel grubPanel = new GrubPanel();
 
     final static int ROWS = 19;
     final static int COLS = 19;
@@ -69,6 +73,7 @@ public class TestMappa extends Canvas{
                 basemappa[i][j].repaint();
             }
         }
+        grubPanel.startGameThread();
     }
 
 

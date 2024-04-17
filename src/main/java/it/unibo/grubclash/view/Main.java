@@ -1,6 +1,9 @@
-package it.unibo.grubclash;
+package it.unibo.grubclash.view;
 
 import javax.swing.*;
+
+import it.unibo.grubclash.model.GrubPanel;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -85,9 +88,6 @@ public class Main {
         panel.add(playButton);
         panel.add(menu_bg);
         frame.setVisible(true);
-
-        /* grubPanel.setupGame();
-        grubPanel.startGameThread(); */
     }
 
     //icona della applicazione
