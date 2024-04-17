@@ -3,20 +3,25 @@ package it.unibo.grubclash;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import java.io.File;
+import java.io.IOException;
+
 /*
-    -gestire rescale (i bottoni invisibili devono cambiare insieme alla visuale)
- */
+    metti maschera, dentro mapinitialization il nero diventa terreno e il bianco diventa cielo
+*/
 
 public class TestMappa extends Canvas{
 
@@ -24,7 +29,7 @@ public class TestMappa extends Canvas{
     final static int COLS = 19;
     
     public static void switchbackground(JPanel[][] basemappa, int i, int j) {
-        if (basemappa[i][j].getBackground()== Color.WHITE ) {
+        if (basemappa[i][j].getBackground() == Color.WHITE ) {
             basemappa[i][j].setBackground(Color.BLACK);
         } else {
             basemappa[i][j].setBackground(Color.WHITE);
@@ -47,13 +52,30 @@ public class TestMappa extends Canvas{
         }        
     }
 
-    public static void mapinitialization(JButton[][] tantibottoni) {
+    public static void mapinitialization(JButton[][] tantibottoni, JFrame mappa, JPanel[][] basemappa) throws IOException {
+        mappa.setResizable(false);
+        //devo far in modo di cambiare il nero con piattaforma e bianco con cielo
+        //BufferedImage piattaforma = ImageIO.read(new File("src\\main\\resources\\gameplay\\patform.png"));
+
         for(int i=0; i < ROWS+1; i++ ) {
             for(int j=0; j < COLS+1; j++) {
                 tantibottoni[i][j].setVisible(false);
+                if (basemappa[i][j].getBackground()==Color.BLACK) {
+                    panelbackground(basemappa, i, j);
+                }else{
+                    basemappa[i][j].setBackground(Color.CYAN);
+                }
+                
+                basemappa[i][j].repaint();
             }
-
         }
+    }
+
+
+    public static void panelbackground(JPanel[][] basemappa, int i, int j) throws IOException {
+        BufferedImage myPicture = ImageIO.read(new File("src\\main\\resources\\gameplay\\platform.png"));
+        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        basemappa[i][j].add(picLabel);
     }
 
 
@@ -62,6 +84,7 @@ public class TestMappa extends Canvas{
         JFrame mappa = new JFrame();
         mappa.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mappa.setSize(900,900);
+        mappa.setResizable(true); //nella fase di setup è resizable
         //imposto il layout
         mappa.setLayout(new GridLayout(20,20));
         //creo una griglia di panels
@@ -74,11 +97,9 @@ public class TestMappa extends Canvas{
         for(int i=0; i < ROWS+1; i++){
             for(int j=0; j < COLS+1; j++){
 
-                
                 basemappa[i][j] = new JPanel();
                 basemappa[i][j].setBackground(Color.WHITE);
                 basemappa[i][j].setLayout(new FlowLayout());
-
 
                 //aggiungo gli action listener al click
                 tantibottoni[i][j] = creabottone(i, j);
@@ -89,7 +110,12 @@ public class TestMappa extends Canvas{
                     JButton bottonefinish = tantibottoni[i][j];
                     bottonefinish.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent f) { //chiama il metodo per la rimozione dei bottoni
-                            mapinitialization(tantibottoni); //così la mappa è pronta
+                            try {
+                                mapinitialization(tantibottoni,mappa,basemappa);
+                            } catch (IOException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            } //così la mappa è pronta, la svuota dai bottoni durante la fase della creazione
                         }
                     });
                 } else {
@@ -109,10 +135,11 @@ public class TestMappa extends Canvas{
                 mappa.add(basemappa[i][j]);
             }
         }
+        //questi metodi qua sotto servono per centrare il frame in mezzo allo schermo
+        mappa.pack();
+        mappa.setLocationRelativeTo(null);
+
         mappa.setVisible(true);
         frameprima.dispose();
-
-
-
     }
 }
