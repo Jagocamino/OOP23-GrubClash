@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 
 public class Main {
     
-    static final int MENU_WIDTH = 1502;
+    static final int MENU_WIDTH = 1702;
     static final int MENU_HEIGHT = 956;
 
     public static void main(String[] args) {
