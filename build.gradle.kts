@@ -16,10 +16,10 @@ tasks.jar {
     archiveFileName.set("..\\..\\GrubClash.jar")
 
     manifest {
-        attributes["Main-Class"] = "it.unibo.grubclash.Main"
+        attributes["Main-Class"] = "it.unibo.grubclash.view.Main"
     }
 }
 
 application {
-    mainClass.set("it.unibo.grubclash.Main")
+    mainClass.set("it.unibo.grubclash.view.Main")
 }

@@ -6,40 +6,40 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-//pannello di gioco
-public class GrubPanel extends JPanel implements Runnable{
+// Pannello di gioco
+public class GrubPanel extends JPanel implements Runnable {
 
-    //dimensioni schermo
-    static final int width_game = 1702;
-    static final int height_game = 956;
+    // Dimensioni schermo
+    static final int GAME_WIDTH = 1702;
+    static final int GAME_HEIGHT = 956;
 
-    //FPS
-    int FPS = 60;
+    // FPS
+    static final int FPS = 60;
 
-    //Thread principale
+    // Thread principale
     Thread gameThread; 
 
-    //Stato del gioco
+    // Stato del gioco
     public int gameState;
     public final int initialState = 0;
     public final int playState = 1;
 
-    //schermo
+    // Schermo
     BufferedImage screen;
     Graphics2D g2d;
 
     public GrubPanel (){
-        this.setSize(width_game, height_game);
+        this.setSize(GAME_WIDTH, GAME_HEIGHT);
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
     }
 
-    //appena avviata l'applicazione si va sulla schermata iniziale
+    // Appena avviata l'applicazione si va sulla schermata iniziale
     /* public void setupGame(){
 
         gameState = initialState;
 
-        screen = new BufferedImage(width_game, height_game, BufferedImage.TYPE_INT_ARGB);
+        screen = new BufferedImage(GAME_WIDTH, GAME_HEIGHT, BufferedImage.TYPE_INT_ARGB);
         g2d = (Graphics2D)screen.getGraphics();
     } */
 
@@ -52,14 +52,14 @@ public class GrubPanel extends JPanel implements Runnable{
     //metodo "delta" per creare un game loop
     @Override
     public void run() {
-        double drawInterval = 1000000000/FPS;
+        double drawInterval = 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
         long timer = 0;
         int drawCount = 0;
 
-        while(gameThread!=null){
+        while(gameThread != null) {
 
             currentTime = System.nanoTime();
 
