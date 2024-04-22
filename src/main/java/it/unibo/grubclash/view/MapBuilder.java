@@ -158,4 +158,8 @@ public class MapBuilder extends Canvas {
         // Messaggio di aiuto a schermo
         FrameManager.showMessageBox("Messaggio", "Crea o rimuovi spazi con collisione interagendo con i blocchi per creare la tua mappa!", JOptionPane.INFORMATION_MESSAGE);
     }
+
+
+
+
 }
