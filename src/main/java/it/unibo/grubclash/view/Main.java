@@ -2,8 +2,6 @@ package it.unibo.grubclash.view;
 
 import javax.swing.*;
 
-import it.unibo.grubclash.model.GrubPanel;
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -30,8 +28,8 @@ public class Main {
         frame.add(panel); 
 
         //Pannello di gioco
-        GrubPanel grubPanel = new GrubPanel();
-        frame.add(grubPanel);
+        /* GrubPanel grubPanel = new GrubPanel();
+        frame.add(grubPanel); */
 
         // Impostazione dello sfondo del menu
         ImageIcon image = new ImageIcon("src\\main\\resources\\menu\\menu_bg.jpg");

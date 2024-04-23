@@ -1,17 +1,20 @@
 package it.unibo.grubclash.model;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import it.controller.Player;
+
 // Pannello di gioco
 public class GrubPanel extends JPanel implements Runnable {
 
     // Dimensioni schermo
-    static final int GAME_WIDTH = 1702;
-    static final int GAME_HEIGHT = 956;
+    public final int GAME_WIDTH = 1702;
+    public final int GAME_HEIGHT = 956;
 
     // FPS
     static final int FPS = 60;
@@ -28,10 +31,22 @@ public class GrubPanel extends JPanel implements Runnable {
     BufferedImage screen;
     Graphics2D g2d;
 
+    //Key Handler
+    KeyHandler keyH = new KeyHandler(this);
+
+    //Players
+    Player player1 = new Player(this,1,keyH);
+    /* Player player2 = new Player(this,2);
+    Player player3 = new Player(this,3);
+    Player player4 = new Player(this,4);
+    Player player5 = new Player(this,5); */
+
     public GrubPanel (){
         this.setSize(GAME_WIDTH, GAME_HEIGHT);
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
+        this.addKeyListener(keyH);
+        this.setFocusable(true);
     }
 
     // Appena avviata l'applicazione si va sulla schermata iniziale
@@ -68,8 +83,8 @@ public class GrubPanel extends JPanel implements Runnable {
             lastTime = currentTime;
 
             if(delta >= 1){
-                //update(); //aggiorna eventi e posizioni
-                //draw();  // disegna gli aggiornamenti
+                update(); //aggiorna eventi e posizioni
+                repaint();  // disegna gli aggiornamenti
                 delta--;
                 drawCount++;
             }
@@ -82,14 +97,24 @@ public class GrubPanel extends JPanel implements Runnable {
         }
     }
 
-    private void draw() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'drawToScreen'");
+    private void update() {
+        player1.update();
     }
 
-    private void update() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public void paintComponent(Graphics g){
+
+        super.paintComponent(g);
+
+
+        /* g.setColor(Color.YELLOW);
+
+        g.drawRect(100, 100, 200, 50); */
+
+        Graphics2D g2d = (Graphics2D)g; 
+
+        player1.draw(g2d);
+
+        g2d.dispose();
+
     }
-    
 }

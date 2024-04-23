@@ -66,6 +66,25 @@ public class MapBuilder extends Canvas {
                 mapBase[i][j].repaint();
             }
         }
+        BufferedImage mapCopy = new BufferedImage(map.getWidth(), map.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = mapCopy.createGraphics(); 
+        map.printAll(g);
+        g.dispose();
+        try{
+            ImageIO.write(mapCopy, "png", new File("src\\main\\resources\\gameplay\\mapCopy.png"));
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        map.dispose();
+        JFrame prova = new JFrame();
+        FrameManager.setTitle(prova);
+        FrameManager.setIcon(prova);
+        prova.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        prova.setSize(1702, 956);
+        prova.setResizable(false);
+        prova.setBackground(Color.BLACK);
+        prova.add(grubPanel);
+        prova.setVisible(true);
         grubPanel.startGameThread();
     }
 
@@ -146,6 +165,7 @@ public class MapBuilder extends Canvas {
                 mapBase[i][j].setVisible(true);
                 
                 map.add(mapBase[i][j]);
+                //map.add(grubPanel);
             }
         }
 
@@ -156,7 +176,7 @@ public class MapBuilder extends Canvas {
         map.setVisible(true);
 
         // Messaggio di aiuto a schermo
-        FrameManager.showMessageBox("Messaggio", "Crea o rimuovi spazi con collisione interagendo con i blocchi per creare la tua mappa!", JOptionPane.INFORMATION_MESSAGE);
+        FrameManager.showMessageBox("Istruzioni", "Crea o rimuovi spazi con collisione interagendo con i blocchi per creare la tua mappa!", JOptionPane.INFORMATION_MESSAGE);
     }
 
 
