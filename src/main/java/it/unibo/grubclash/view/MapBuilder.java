@@ -19,18 +19,22 @@ import java.io.IOException;
 
 public class MapBuilder extends Canvas {
 
-    static GrubPanel grubPanel = new GrubPanel();
-
     final static int ROWS = 20;
     final static int COLS = 20;
+
+    int playerCount;
+
+    public MapBuilder(int playerCount) {
+        this.playerCount = playerCount;
+    }
     
-    public static Color switchBackground(JPanel[][] mapBase, int i, int j, Color color) {
+    public Color switchBackground(JPanel[][] mapBase, int i, int j, Color color) {
         Color btnColor = (color == Color.WHITE ? Color.BLACK : Color.WHITE);
         mapBase[i][j].setBackground(btnColor);
         return btnColor;
     }
 
-    public static JButton createButton(int i, int j) {
+    public JButton createButton(int i, int j) {
         final int BUTTON_WIDTH = 80;
         final int BUTTON_HEIGHT = 40;
 
@@ -49,7 +53,7 @@ public class MapBuilder extends Canvas {
         return invisibleBtn; // Fa strano chiamare "invisibleBtn" l'unico bottone che fa da finish, ma non ho idee migliori
     }
 
-    public static void mapInitialization(JButton[][] btnMatrix, JFrame map, JPanel[][] mapBase) throws IOException {
+    public void mapInitialization(JButton[][] btnMatrix, JFrame map, JPanel[][] mapBase) throws IOException {
         map.setResizable(false);
         // Devo far in modo di cambiare il nero con piattaforma e bianco con cielo
         // BufferedImage piattaforma = ImageIO.read(new File("src\\main\\resources\\gameplay\\patform.png"));
@@ -67,7 +71,7 @@ public class MapBuilder extends Canvas {
             }
         }
         BufferedImage mapCopy = new BufferedImage(map.getWidth(), map.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = mapCopy.createGraphics(); 
+        Graphics2D g = mapCopy.createGraphics();
         map.printAll(g);
         g.dispose();
         try{
@@ -76,26 +80,26 @@ public class MapBuilder extends Canvas {
             e.printStackTrace();
         }
         map.dispose();
+        GrubPanel grubPanel = new GrubPanel(playerCount);
         JFrame prova = new JFrame();
         FrameManager.setTitle(prova);
         FrameManager.setIcon(prova);
         prova.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         prova.setSize(1702, 956);
         prova.setResizable(false);
-        prova.setBackground(Color.BLACK);
         prova.add(grubPanel);
         prova.setVisible(true);
         grubPanel.startGameThread();
     }
 
 
-    public static void panelBackground(JPanel[][] mapBase, int i, int j) throws IOException {
+    public void panelBackground(JPanel[][] mapBase, int i, int j) throws IOException {
         BufferedImage platformImg = ImageIO.read(new File("src\\main\\resources\\gameplay\\platform.png"));
         JLabel picLabel = new JLabel(new ImageIcon(platformImg));
         mapBase[i][j].add(picLabel);
     }
 
-    public static void p1Map() {
+    public void p1Map() {
         JFrame map = new JFrame();
         FrameManager.setTitle(map);
         FrameManager.setIcon(map);
@@ -178,8 +182,4 @@ public class MapBuilder extends Canvas {
         // Messaggio di aiuto a schermo
         FrameManager.showMessageBox("Istruzioni", "Crea o rimuovi spazi con collisione interagendo con i blocchi per creare la tua mappa!", JOptionPane.INFORMATION_MESSAGE);
     }
-
-
-
-
 }

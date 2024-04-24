@@ -7,16 +7,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Main {
-    
-    static final int MENU_WIDTH = 1702;
-    static final int MENU_HEIGHT = 956;
 
     public static void main(String[] args) {
 
         JFrame frame = new JFrame();
         frame.setTitle("GrubClash");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(MENU_WIDTH, MENU_HEIGHT);
+        frame.setSize(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
         frame.setResizable(false);
         frame.setLayout(null);
         FrameManager.setIcon(frame);
@@ -24,7 +21,7 @@ public class Main {
         //Pannello menù
         final JPanel panel = new JPanel();
         panel.setLayout(null);
-        panel.setBounds(0, 0, MENU_WIDTH, MENU_HEIGHT);
+        panel.setBounds(0, 0, FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
         frame.add(panel); 
 
         //Pannello di gioco
@@ -34,12 +31,12 @@ public class Main {
         // Impostazione dello sfondo del menu
         ImageIcon image = new ImageIcon("src\\main\\resources\\menu\\menu_bg.jpg");
         JLabel menu_bg = new JLabel(image);
-        menu_bg.setBounds(0, 0, MENU_WIDTH, MENU_HEIGHT);
+        menu_bg.setBounds(0, 0, FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
 
         // Creazione del bottone play
         final JButton playButton = new JButton();
         playButton.setBorderPainted(false);
-        playButton.setBounds(MENU_WIDTH - 1300, MENU_HEIGHT - 420, 200, 200);
+        playButton.setBounds(FrameManager.WINDOW_WIDTH - 1300, FrameManager.WINDOW_HEIGHT - 420, 200, 200);
 
         ImageIcon originalIcon = new ImageIcon("src\\main\\resources\\menu\\play.png");
         Image originalImage = originalIcon.getImage();
@@ -48,13 +45,14 @@ public class Main {
         playButton.setIcon(scaledIcon);
 
         JComboBox<Integer> playerSelect = new JComboBox<>(new Integer[]{2, 3, 4, 5});
-        playerSelect.setBounds(MENU_WIDTH - 1080, MENU_HEIGHT - 532, 200, 30);
+        playerSelect.setBounds(FrameManager.WINDOW_WIDTH - 1080, FrameManager.WINDOW_HEIGHT - 532, 200, 30);
 
         // Evento scatenato al click del bottone
         playButton.addActionListener(e -> {
             int playerCount = (int)playerSelect.getSelectedItem();
             frame.dispose();
-            MapBuilder.p1Map();
+            MapBuilder mb = new MapBuilder(playerCount);
+            mb.p1Map();
         });
 
         // Effetto sul bottone al passaggio del mouse

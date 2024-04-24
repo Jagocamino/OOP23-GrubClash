@@ -1,20 +1,17 @@
 package it.unibo.grubclash.model;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 import it.controller.Player;
+import it.unibo.grubclash.view.FrameManager;
 
 // Pannello di gioco
 public class GrubPanel extends JPanel implements Runnable {
-
-    // Dimensioni schermo
-    public final int GAME_WIDTH = 1702;
-    public final int GAME_HEIGHT = 956;
 
     // FPS
     static final int FPS = 60;
@@ -32,20 +29,24 @@ public class GrubPanel extends JPanel implements Runnable {
     Graphics2D g2d;
 
     //Key Handler
-    KeyHandler keyH = new KeyHandler(this);
+    ArrayList<KeyHandler> keyHandelers;
 
     //Players
-    Player player1 = new Player(this,1,keyH);
-    /* Player player2 = new Player(this,2);
-    Player player3 = new Player(this,3);
-    Player player4 = new Player(this,4);
-    Player player5 = new Player(this,5); */
+    ArrayList<Player> players;
+    int playerCount;
 
-    public GrubPanel (){
-        this.setSize(GAME_WIDTH, GAME_HEIGHT);
-        this.setBackground(Color.black);
+    public GrubPanel(int playerCount) {
+        this.playerCount = playerCount;
+        keyHandelers = new ArrayList<>();
+        players = new ArrayList<>();
+        for(int i = 0; i < playerCount; i++) {
+            keyHandelers.add(new KeyHandler(this));
+            players.add(new Player(this, i, keyHandelers.get(i)));
+        }
+
+        this.setSize(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
         this.setDoubleBuffered(true);
-        this.addKeyListener(keyH);
+        //this.addKeyListener(keyH);
         this.setFocusable(true);
     }
 
@@ -74,6 +75,8 @@ public class GrubPanel extends JPanel implements Runnable {
         long timer = 0;
         int drawCount = 0;
 
+        update();
+
         while(gameThread != null) {
 
             currentTime = System.nanoTime();
@@ -82,8 +85,7 @@ public class GrubPanel extends JPanel implements Runnable {
             timer += (currentTime - lastTime);
             lastTime = currentTime;
 
-            if(delta >= 1){
-                update(); //aggiorna eventi e posizioni
+            if(delta >= 1) {
                 repaint();  // disegna gli aggiornamenti
                 delta--;
                 drawCount++;
@@ -98,7 +100,27 @@ public class GrubPanel extends JPanel implements Runnable {
     }
 
     private void update() {
-        player1.update();
+        // TODO: RIVEDI
+        new Thread(() -> {
+            while(gameThread != null) {
+                for(Player p : players) {
+                    long start = System.nanoTime();
+                    this.addKeyListener(p.getKeyH());
+
+                    while(System.nanoTime() - start <= 2000000000) {
+                        p.update();
+                        try {
+                            Thread.sleep(20);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    p.getKeyH().leftPressed = false;
+                    p.getKeyH().rightPressed = false;
+                    this.removeKeyListener(p.getKeyH());
+                }
+            }
+        }).start();
     }
 
     public void paintComponent(Graphics g){
@@ -110,9 +132,11 @@ public class GrubPanel extends JPanel implements Runnable {
 
         g.drawRect(100, 100, 200, 50); */
 
-        Graphics2D g2d = (Graphics2D)g; 
+        Graphics2D g2d = (Graphics2D)g;
 
-        player1.draw(g2d);
+        for(Player p : players) {
+            p.draw(g2d);
+        }
 
         g2d.dispose();
 

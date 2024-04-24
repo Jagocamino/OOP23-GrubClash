@@ -57,8 +57,7 @@ public class Player extends Entity{
             direction = "left";
             x-=speed;
             System.out.println(x);
-        }
-        else if(keyH.rightPressed){
+        } else if(keyH.rightPressed){
             direction = "right";
             x+=speed;
             System.out.println(x);
@@ -100,6 +99,10 @@ public class Player extends Entity{
 
     public float getPosY() {
         return y;
+    }
+
+    public KeyHandler getKeyH() {
+        return keyH;
     }
 
     public void setId( int id ) {
