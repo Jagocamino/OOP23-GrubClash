@@ -1,4 +1,4 @@
-package it.controller;
+package it.unibo.grubclash.controller;
 
 //   LA POSIZIONE DEL GIOCATORE VIENE PASSATA DOPO IL CONTROLLO NEL MAP BUILDER
 
@@ -59,14 +59,5 @@ public class Player {
         for (int i=0 ; i<numerogiocatori ; i++) { //per ogni giocatore segno la posizione iniziale
             playersarray[i].setId(i+1);
         }
-    }
-
-    //Il "level data", ovvero l'hitbox e altre conse non visibili a schermo, saranno dentro il player stesso
-    private int[][] lvlData; //sarebbe più corretto chiamarlo "map data"
-
-    public void loadLvlData(int[][] lvlData) {
-        this.lvlData = lvlData;        
-    }
-
-    
+    }        
 }

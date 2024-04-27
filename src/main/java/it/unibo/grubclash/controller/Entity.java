@@ -1,4 +1,4 @@
-package it.controller;
+package it.unibo.grubclash.controller;
 
 import java.awt.Color;
 import java.awt.Rectangle;
