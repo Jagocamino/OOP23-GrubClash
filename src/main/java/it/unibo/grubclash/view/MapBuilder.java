@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import it.unibo.grubclash.model.GrubPanel;
+import it.unibo.grubclash.view.EnumEntity;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,10 +35,21 @@ public class MapBuilder extends Canvas {
     final static int ROWS = 20;
     final static int COLS = 20; 
 
+    private static EnumEntity.entities[][] entityMatrix;
+
     public MapBuilder(final int playerCount) {
         setNumPlayers(playerCount);
+        entityMatrix = new EnumEntity.entities[ROWS][COLS];
     }
-    
+
+    public static EnumEntity.entities[][] getEntityMatrix() { // metodo per le altre classi
+        return entityMatrix;
+    }
+
+    public static void setEntityInMatrix (int i, int j, EnumEntity.entities entity) {
+        MapBuilder.entityMatrix[i][j] = entity;
+    }
+
     public static void initCharacterPlacementPhase () { // questi tre metodi servono al programma a capire se siamo nella fase del piazzamento dei personaggi, che si trova dopo la fase della creazione dei blocchi di terra della mappa
         characterPlacementPhase = false;
     }
@@ -171,9 +183,11 @@ public class MapBuilder extends Canvas {
             for(int j = 0; j < COLS; j++) {
                 btnMatrix[i][j].setVisible(false);
                 if(mapBase[i][j].getBackground() == Color.BLACK) {
-                    panelBackground(mapBase, i, j);                    
+                    panelBackground(mapBase, i, j);
+                    setEntityInMatrix(i, j, EnumEntity.entities.WALL);                    
                 } else {
                     mapBase[i][j].setBackground(Color.CYAN);
+                    setEntityInMatrix(i, j, EnumEntity.entities.SKY);
                 }        
                 mapBase[i][j].repaint();
             }
@@ -183,8 +197,11 @@ public class MapBuilder extends Canvas {
         grubPanel.startGameThread();
     }
 
-    private static void createPlayableLayer(JButton[][] btnMatrix, JPanel map, JPanel[][] mapBase, JFrame mapContainer, JLayeredPane layeredPaneGrid) { //TODO quando si avvia la mappa, parte questo
-        JPanel playableLayer = new JPanel();
+    private static void createPlayableLayer(JButton[][] btnMatrix, JPanel map, JPanel[][] mapBase, JFrame mapContainer, JLayeredPane layeredPaneGrid) { 
+        
+        
+        
+        JPanel playableLayer = new JPanel();    //TODO debug sake 2
         playableLayer.add(new JLabel("papposcacaton"));
         playableLayer.setBounds(50, 50, 50, 50);
         layeredPaneGrid.add(playableLayer, JLayeredPane.PALETTE_LAYER);
@@ -204,6 +221,8 @@ public class MapBuilder extends Canvas {
         JButton btnFinish = btnMatrix[btnFinishI][btnFinishJ];
         for(int i = 0; i < ROWS; i++){
             for(int j = 0; j < COLS; j++){
+                final int finalI = i;
+                final int finalJ = j;
                 if(btnMatrix[i][j] == btnFinish) { //if(è nel bottone finish, ovvero quello dello switch della fase)
                     btnFinish.addActionListener(o -> {
                         if (getCurrentPlayer() == getNumPlayers() - 1 && getColorSpawnpoint() == true) {
@@ -214,6 +233,25 @@ public class MapBuilder extends Canvas {
                             }
                         }else{
                             if (getColorSpawnpoint() == true) { //se il giocatore è stato piazzato, allora si può fare l'update dei player
+                                switch (getCurrentPlayer()) {
+                                    case 1:
+                                        setEntityInMatrix(finalI, finalJ, EnumEntity.entities.PLAYER1);
+                                        break;
+                                    case 2:
+                                        setEntityInMatrix(finalI, finalJ, EnumEntity.entities.PLAYER2);
+                                        break;
+                                    case 3:
+                                        setEntityInMatrix(finalI, finalJ, EnumEntity.entities.PLAYER3);
+                                        break;
+                                    case 4:
+                                        setEntityInMatrix(finalI, finalJ, EnumEntity.entities.PLAYER4);
+                                        break;
+                                    case 5:
+                                        setEntityInMatrix(finalI, finalJ, EnumEntity.entities.PLAYER5);
+                                        break;
+                                    default:
+                                        break;
+                                }
                                 updateCurrentPlayer();
                             }
                             initColorSpawnpoint();
