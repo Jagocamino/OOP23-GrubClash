@@ -1,9 +1,13 @@
 package it.unibo.grubclash.view;
 
 import javax.swing.*;
+import java.awt.*;
 
 // Classe per gestire le impostazioni dei frame
 public class FrameManager {
+
+    public static final int WINDOW_WIDTH = 1702;
+    public static final int WINDOW_HEIGHT = 956;
 
     public static void setTitle(JFrame frame) {
         frame.setTitle("GrubClash");

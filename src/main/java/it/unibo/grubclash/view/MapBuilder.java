@@ -23,8 +23,6 @@ import java.io.IOException;
 
 public class MapBuilder extends Canvas {
 
-    static GrubPanel grubPanel = new GrubPanel();
-
     protected static int currentPlayer;
     protected static int numPlayers;
     
@@ -36,6 +34,10 @@ public class MapBuilder extends Canvas {
     final static int ROWS = 20;
     final static int COLS = 20; 
 
+    public MapBuilder(final int playerCount) {
+        setNumPlayers(playerCount);
+    }
+    
     public static void initCharacterPlacementPhase () { // questi tre metodi servono al programma a capire se siamo nella fase del piazzamento dei personaggi, che si trova dopo la fase della creazione dei blocchi di terra della mappa
         characterPlacementPhase = false;
     }
@@ -177,6 +179,7 @@ public class MapBuilder extends Canvas {
             }
         }
         createPlayableLayer(btnMatrix, map, mapBase, mapContainer, layeredPaneGrid);
+        GrubPanel grubPanel = new GrubPanel(getNumPlayers());
         grubPanel.startGameThread();
     }
 
@@ -299,6 +302,7 @@ public class MapBuilder extends Canvas {
                 mapBase[i][j].setVisible(true);
                 
                 map.add(mapBase[i][j]);
+                //map.add(grubPanel);
             }
         }   
         // Questi metodi qua sotto servono per centrare il frame in mezzo allo schermo

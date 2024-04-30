@@ -1,17 +1,17 @@
 package it.unibo.grubclash.model;
 
-import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import it.controller.Player;
+import it.unibo.grubclash.view.FrameManager;
+
 // Pannello di gioco
 public class GrubPanel extends JPanel implements Runnable {
-
-    // Dimensioni schermo
-    static final int GAME_WIDTH = 1702;
-    static final int GAME_HEIGHT = 956;
 
     // FPS
     static final int FPS = 60;
@@ -28,10 +28,26 @@ public class GrubPanel extends JPanel implements Runnable {
     BufferedImage screen;
     Graphics2D g2d;
 
-    public GrubPanel (){
-        this.setSize(GAME_WIDTH, GAME_HEIGHT);
-        this.setBackground(Color.black);
+    //Key Handler
+    ArrayList<KeyHandler> keyHandelers;
+
+    //Players
+    ArrayList<Player> players;
+    int playerCount;
+
+    public GrubPanel(int playerCount) {
+        this.playerCount = playerCount;
+        keyHandelers = new ArrayList<>();
+        players = new ArrayList<>();
+        for(int i = 0; i < playerCount; i++) {
+            keyHandelers.add(new KeyHandler(this));
+            players.add(new Player(this, i, keyHandelers.get(i)));
+        }
+
+        this.setSize(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
         this.setDoubleBuffered(true);
+        //this.addKeyListener(keyH);
+        this.setFocusable(true);
     }
 
     // Appena avviata l'applicazione si va sulla schermata iniziale
@@ -59,6 +75,8 @@ public class GrubPanel extends JPanel implements Runnable {
         long timer = 0;
         int drawCount = 0;
 
+        update();
+
         while(gameThread != null) {
 
             currentTime = System.nanoTime();
@@ -67,9 +85,8 @@ public class GrubPanel extends JPanel implements Runnable {
             timer += (currentTime - lastTime);
             lastTime = currentTime;
 
-            if(delta >= 1){
-                //update(); //aggiorna eventi e posizioni
-                //draw();  // disegna gli aggiornamenti
+            if(delta >= 1) {
+                repaint();  // disegna gli aggiornamenti
                 delta--;
                 drawCount++;
             }
@@ -82,14 +99,46 @@ public class GrubPanel extends JPanel implements Runnable {
         }
     }
 
-    private void draw() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'drawToScreen'");
+    private void update() {
+        // TODO: RIVEDI
+        new Thread(() -> {
+            while(gameThread != null) {
+                for(Player p : players) {
+                    long start = System.nanoTime();
+                    this.addKeyListener(p.getKeyH());
+
+                    while(System.nanoTime() - start <= 2000000000) {
+                        p.update();
+                        try {
+                            Thread.sleep(20);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    p.getKeyH().leftPressed = false;
+                    p.getKeyH().rightPressed = false;
+                    this.removeKeyListener(p.getKeyH());
+                }
+            }
+        }).start();
     }
 
-    private void update() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    public void paintComponent(Graphics g){
+
+        super.paintComponent(g);
+
+
+        /* g.setColor(Color.YELLOW);
+
+        g.drawRect(100, 100, 200, 50); */
+
+        Graphics2D g2d = (Graphics2D)g;
+
+        for(Player p : players) {
+            p.draw(g2d);
+        }
+
+        g2d.dispose();
+
     }
-    
 }
