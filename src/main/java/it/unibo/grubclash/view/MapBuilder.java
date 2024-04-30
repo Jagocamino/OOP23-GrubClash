@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import javax.swing.border.LineBorder;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -15,9 +16,9 @@ import java.io.File;
 import java.io.IOException;
 
 /*
-    devo trovare il modo di cambiare il comportamento del bottone in finish (rimuovere actionlistener senza passare parametri), 
-    devo mettere messaggio a schermo ogni volta che avviene un finish nella fase di placement, 
-    ogni volta che lo premo il playercount aumenta, cambia colore (colore specifico = player specifico) e implemento stesso funzionamento dei bottoni terra (toggle)
+    TODO ora abbiamo un metodo che permette di posizionare personaggi (o meglio, sappiamo come farlo)
+    da gestire il ridimensionamento dello schermo che si è buggato --> una volta gestito il ridimensionamento basta creare una matrice ROWSxCOLS di bool per capire se è terreno o se non lo è.
+    Se è terreno ci faccio una bounding box attorno (con conseguente canMoveHere yada yada yada)
 */
 
 public class MapBuilder extends Canvas {
@@ -26,17 +27,16 @@ public class MapBuilder extends Canvas {
 
     protected static int currentPlayer;
     protected static int numPlayers;
+    
     protected static Color playerColor[];
 
     private static boolean characterPlacementPhase; //diventa true quando viene toccato il primo "finish"
     private static boolean colorSpawnpoint; //bool che serve per tenere traccia se lo spawnpoint è stato messo o no, si usa nel metodo switchBackground
 
     final static int ROWS = 20;
-    final static int COLS = 20;
+    final static int COLS = 20; 
 
-
-    //questi tre metodi servono al programma a capire se siamo nella fase del piazzamento dei personaggi, che si trova dopo la fase della creazione dei blocchi di terra della mappa
-    public static void initCharacterPlacementPhase () {
+    public static void initCharacterPlacementPhase () { // questi tre metodi servono al programma a capire se siamo nella fase del piazzamento dei personaggi, che si trova dopo la fase della creazione dei blocchi di terra della mappa
         characterPlacementPhase = false;
     }
     public static void updateCharacterPlacementPhase () {
@@ -62,15 +62,16 @@ public class MapBuilder extends Canvas {
         }
     }
     
-    public static Color switchBackground(JPanel[][] mapBase, int i, int j, Color color, JButton[][] btnMatrix, JFrame map) {
-        if (getCharacterPlacementPhase() == false) { //per capire se siamo nella fase dei personaggi
+    public static Color switchBackground(JPanel[][] mapBase, int i, int j, Color color, JButton[][] btnMatrix, JPanel map, JFrame mapContainer) {
+        // dopo primo click rimane false
+        if (getCharacterPlacementPhase() == false) { // per capire se siamo nella fase dei personaggi
+            System.out.println(color);
             Color btnColor = (color == Color.WHITE ? Color.BLACK : Color.WHITE);
             mapBase[i][j].setBackground(btnColor);
             return btnColor;
-        }else{ //cioè se siamo nella fase di placement dei personaggi
+        }else{ // cioè se siamo nella fase di placement dei personaggi
             Color btnColor;
-             //permetto il cambio del colore solo se o lo sfondo è bianco, o è dello stesso colore del palyer che voglio cambiare
-            if (mapBase[i][j].getBackground() == Color.WHITE && getColorSpawnpoint() == false) {
+            if (mapBase[i][j].getBackground() == Color.WHITE && getColorSpawnpoint() == false) { //permetto il cambio del colore solo se o lo sfondo è bianco, o è dello stesso colore del palyer che voglio cambiare
                 btnColor = getPlayerColor(getCurrentPlayer());
                 switchColorSpawnpoint();
                 mapBase[i][j].setBackground(btnColor);
@@ -144,8 +145,8 @@ public class MapBuilder extends Canvas {
     }
 
     public static JButton createButton(int i, int j) {
-        final int BUTTON_WIDTH = 80;
-        final int BUTTON_HEIGHT = 40;
+        final int BUTTON_WIDTH = 30;
+        final int BUTTON_HEIGHT = 30;
 
         JButton invisibleBtn = new JButton();
         if (i == 0 && j == COLS - 1) {
@@ -154,31 +155,40 @@ public class MapBuilder extends Canvas {
         } else { // Gestisce tutti i bottoni che non sono quello di chiusura dell'editing della mappa
             //invisibleBtn.setText(String.valueOf(i) + "-" + String.valueOf(j));
             invisibleBtn.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-            invisibleBtn.setBorder(null);
-            invisibleBtn.setBorderPainted(false);
+            invisibleBtn.setBorder(new LineBorder(Color.MAGENTA));
+            invisibleBtn.setBorderPainted(true);
             invisibleBtn.setContentAreaFilled(false);
-            invisibleBtn.setOpaque(false);
+            invisibleBtn.setOpaque(true);
         }
         return invisibleBtn; // Fa strano chiamare "invisibleBtn" l'unico bottone che fa da finish, ma non ho idee migliori
     }
 
-    public static void mapInitialization(JButton[][] btnMatrix, JFrame map, JPanel[][] mapBase) throws IOException {//TODO mapinitializazion deve mettere il modello in base al player
-        
-        map.setResizable(false); //blocco il resize, aiuta le hitbox
-        // Devo far in modo di cambiare il nero con piattaforma e bianco con cielo
-        // BufferedImage piattaforma = ImageIO.read(new File("src\\main\\resources\\gameplay\\patform.png"));
+    public static void mapInitialization(JButton[][] btnMatrix, JPanel map, JPanel[][] mapBase, JFrame mapContainer, JLayeredPane layeredPaneGrid) throws IOException {
+        mapContainer.setResizable(false); //blocco il resize, aiuta le hitbox
         for(int i = 0; i < ROWS; i++ ) {
             for(int j = 0; j < COLS; j++) {
                 btnMatrix[i][j].setVisible(false);
                 if(mapBase[i][j].getBackground() == Color.BLACK) {
                     panelBackground(mapBase, i, j);                    
                 } else {
-                        mapBase[i][j].setBackground(Color.CYAN);
+                    mapBase[i][j].setBackground(Color.CYAN);
                 }        
                 mapBase[i][j].repaint();
             }
         }
+        createPlayableLayer(btnMatrix, map, mapBase, mapContainer, layeredPaneGrid);
         grubPanel.startGameThread();
+    }
+
+    private static void createPlayableLayer(JButton[][] btnMatrix, JPanel map, JPanel[][] mapBase, JFrame mapContainer, JLayeredPane layeredPaneGrid) { //TODO quando si avvia la mappa, parte questo
+        JPanel playableLayer = new JPanel();
+        playableLayer.add(new JLabel("papposcacaton"));
+        playableLayer.setBounds(50, 50, 50, 50);
+        layeredPaneGrid.add(playableLayer, JLayeredPane.PALETTE_LAYER);
+        layeredPaneGrid.setOpaque(false); //come si rende trasparente?
+        layeredPaneGrid.setVisible(true);
+        mapContainer.repaint();
+        mapContainer.revalidate();
     }
 
     public static void panelBackground(JPanel[][] mapBase, int i, int j) throws IOException {
@@ -187,21 +197,23 @@ public class MapBuilder extends Canvas {
         mapBase[i][j].add(picLabel);
     }
 
-    public static void p2Map(JFrame map, JPanel[][] mapBase, JButton[][] btnMatrix, int btnFinishI, int btnFinishJ) {
+    public static void p2Map(JPanel map, JPanel[][] mapBase, JButton[][] btnMatrix, int btnFinishI, int btnFinishJ, JFrame mapContainer, JLayeredPane layeredPaneGrid) {
         JButton btnFinish = btnMatrix[btnFinishI][btnFinishJ];
         for(int i = 0; i < ROWS; i++){
             for(int j = 0; j < COLS; j++){
                 if(btnMatrix[i][j] == btnFinish) { //if(è nel bottone finish, ovvero quello dello switch della fase)
                     btnFinish.addActionListener(o -> {
-                        if (getCurrentPlayer() == getNumPlayers() - 1) {
+                        if (getCurrentPlayer() == getNumPlayers() - 1 && getColorSpawnpoint() == true) {
                             try {
-                                mapInitialization(btnMatrix, map, mapBase);
+                                mapInitialization(btnMatrix, map, mapBase, mapContainer, layeredPaneGrid);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }else{
+                            if (getColorSpawnpoint() == true) { //se il giocatore è stato piazzato, allora si può fare l'update dei player
+                                updateCurrentPlayer();
+                            }
                             initColorSpawnpoint();
-                            updateCurrentPlayer();
                             System.out.println("siamo al giocatore numero" + getCurrentPlayer());
                             System.out.println(getNumPlayers());
                         }
@@ -209,84 +221,76 @@ public class MapBuilder extends Canvas {
                 }
             }
         }
-
         SwingUtilities.updateComponentTreeUI(map);
-
     }
 
     public static void p1Map() {
-        JFrame map = new JFrame();
-        FrameManager.setTitle(map);
-        FrameManager.setIcon(map);
+        JFrame mapContainer = new JFrame();
+        FrameManager.setTitle(mapContainer);
+        FrameManager.setIcon(mapContainer);
         initCharacterPlacementPhase();
-        map.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        map.setSize(900, 900);
+        mapContainer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mapContainer.setSize(300, 900);
 
         setNumPlayers(4);//TODO debug sake
+        mapContainer.setMinimumSize(new Dimension(900, 900));    
+        mapContainer.setResizable(false); //TODO prima o poi mettiamole true
+        
+        JLayeredPane layeredPaneGrid = new JLayeredPane();
+        layeredPaneGrid.setPreferredSize(mapContainer.getSize());
+        layeredPaneGrid.setLayout(null);
 
-
-        map.setResizable(true); // Nella fase di setup è resizable
-        // Imposto il layout
-        map.setLayout(new GridLayout(ROWS, COLS));
         // Creo una griglia di panels
+        JPanel map = new JPanel();
+        map.setBounds(0, 0, (int)mapContainer.getSize().getWidth(), (int)mapContainer.getSize().getHeight());
+        map.setLayout(new GridLayout(ROWS, COLS));  //Imposto il layout del pane che contiene le matrix di bottoni e altri pane
         JPanel[][] mapBase = new JPanel[ROWS][COLS];
-
-        // I bottoni servono per cambiare colore
         JButton[][] btnMatrix = new JButton[ROWS][COLS];
-        // Mi concentro a creare la griglia di gioco e i bottoni della griglia
+
         for(int i = 0; i < ROWS; i++){
             for(int j = 0; j < COLS; j++){
-
-                //devono stare final altrimenti da errori
-                final int finalI = i;
+                final int finalI = i; // devono stare final altrimenti da errori
                 final int finalJ = j;
-
                 mapBase[i][j] = new JPanel();
                 mapBase[i][j].setBackground(Color.WHITE);
                 mapBase[i][j].setLayout(new FlowLayout());
-
-                // Aggiungo gli action listener al click
                 btnMatrix[i][j] = createButton(i, j);
-
                 if(i == 0 && j == COLS - 1) { //if(è nel bottone finish, ovvero quello dello switch della fase)
                     JButton btnFinish = btnMatrix[i][j];
                     btnFinish.addActionListener(f -> {
                         initializeCurrentPlayer();
-                        System.out.println("siamo al giocatore numero" + getCurrentPlayer()); //debug sake
-                        mapBase[finalI][finalJ].remove(btnFinish); //TODO come rimuovo questo bottone di merda?
+                        mapBase[finalI][finalJ].remove(btnFinish);
                         if (getCharacterPlacementPhase() == false) {
-                            btnMatrix[finalI][finalJ] = createButton(finalI, finalJ); //TODO una volta creato il bottone devo trovare il modo di non farlo ricreare nuovamente
+                            btnMatrix[finalI][finalJ] = createButton(finalI, finalJ);
                             mapBase[finalI][finalJ].add(btnMatrix[finalI][finalJ], BorderLayout.CENTER);
                         }
                         updateCharacterPlacementPhase();
-                        p2Map(map, mapBase, btnMatrix, finalI, finalJ); //TODO mi chiama ventimila volte p2Map(..) perché non rimuovo l'actionlistener
-                        map.repaint();
-                        map.validate();
+                        p2Map(map, mapBase, btnMatrix, finalI, finalJ, mapContainer, layeredPaneGrid);
+                        mapContainer.repaint();
+                        mapContainer.validate();
                     });
                 } else {
                     // 'previousColorState' deve essere final e non puo' essere modificato dentro i metodi richiamati agli eventi
                     // Soluzione proposta dall'IDE
                     // Oggetto utilizzato per salvare lo stato del colore precedente al ricoloramento in grigio
                     final Color[] previousColorState = { btnMatrix[finalI][finalJ].getBackground() };
+                    btnMatrix[i][j].addActionListener(e -> previousColorState[0] = switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer));
 
-                    btnMatrix[i][j].addActionListener(e -> previousColorState[0] = switchBackground(mapBase, finalI, finalJ, previousColorState[0], btnMatrix, map));
-
-                    /* btnMatrix[i][j].addMouseListener(new MouseAdapter() {
-                        // Quando l'utente passa sopra una cella cambia colore e diventa grigio
-                        
+                    btnMatrix[i][j].addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseEntered(MouseEvent e) {
-                            previousColorState[0] = mapBase[finalI][finalJ].getBackground();
-                            Color menuColor = Color.decode("#EF7B10"); //da mettere grigio, non arancione
-                            mapBase[finalI][finalJ].setBackground(menuColor);
+                            previousColorState[0] = btnMatrix[finalI][finalJ].getBackground();
+                            Color menuColor = Color.decode("#EF3B10"); //da mettere grigio, non arancione
+                            btnMatrix[finalI][finalJ].setBackground(menuColor);
+                            btnMatrix[finalI][finalJ].setContentAreaFilled(true);
                         }
-
                         // Reimposta il colore della cella
                         @Override
                         public void mouseExited(MouseEvent e) {
-                            mapBase[finalI][finalJ].setBackground(previousColorState[0]);
+                            btnMatrix[finalI][finalJ].setBackground(previousColorState[0]);
+                            btnMatrix[finalI][finalJ].setContentAreaFilled(false);
                         }
-                    }); */
+                    });
                 }
                 mapBase[i][j].add(btnMatrix[i][j], BorderLayout.CENTER); //la linea terra di default alla base della mappa
                 if(i == 19) {
@@ -296,16 +300,14 @@ public class MapBuilder extends Canvas {
                 
                 map.add(mapBase[i][j]);
             }
-        }
-    
+        }   
         // Questi metodi qua sotto servono per centrare il frame in mezzo allo schermo
-        map.pack();
-        map.setLocationRelativeTo(null);
+        layeredPaneGrid.add(map, JLayeredPane.DEFAULT_LAYER);
+        mapContainer.add(layeredPaneGrid);
+        mapContainer.pack();
+        mapContainer.setLocationRelativeTo(null);
+        mapContainer.setVisible(true);
         map.setVisible(true);
-
-        // Messaggio di aiuto a schermo
         FrameManager.showMessageBox("Messaggio", "Crea o rimuovi spazi con collisione interagendo con i blocchi per creare la tua mappa!", JOptionPane.INFORMATION_MESSAGE);
     }
-
-
 }
