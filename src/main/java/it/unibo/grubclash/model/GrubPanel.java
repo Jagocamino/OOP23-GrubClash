@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import it.controller.Player;
+import it.unibo.grubclash.controller.Player;
 import it.unibo.grubclash.view.FrameManager;
 
 // Pannello di gioco
