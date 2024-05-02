@@ -29,7 +29,7 @@ public class Allowed {
     }
 
     public static void addEntity (int x, int y, int height, int width, entities entity, int i, int j) {
-        if (Allowed.lvlData[i][j].entity == entity.WALL || Allowed.lvlData[i][j].entity == entity.ITEM) {
+        if (Allowed.lvlData[i][j].entity == entities.WALL || Allowed.lvlData[i][j].entity == entities.ITEM) {
             System.out.println("This box is already taken, overwriting floor or item on the map");
         }
         Allowed.lvlData[i][j] = new Entity((float) x, (float) y, width, height, entity); //TODO vorrei rendere entity una classe astratta, almeno per includerne una, ma non so come fare ancora

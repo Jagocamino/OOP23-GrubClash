@@ -213,12 +213,10 @@ public class MapBuilder extends Canvas {
 
     private static void createPlayableLayer(JButton[][] btnMatrix, JPanel map, JPanel[][] mapBase, JFrame mapContainer, JLayeredPane layeredPaneGrid) { 
         
-        
-        
         JPanel playableLayer = new PlayerPanel();    //TODO debug sake 2
-        playableLayer.setBounds(50, 50, 50, 50);
+        playableLayer.setBounds(0, 0, 900, 900);
+        playableLayer.setOpaque(false); //come si rende trasparente?
         layeredPaneGrid.add(playableLayer, JLayeredPane.PALETTE_LAYER);
-        layeredPaneGrid.setOpaque(false); //come si rende trasparente?
         layeredPaneGrid.setVisible(true);
         mapContainer.repaint();
         mapContainer.revalidate();
@@ -361,6 +359,7 @@ public class MapBuilder extends Canvas {
                 if(i == 19) {
                     mapBase[i][j].setBackground(Color.BLACK);
                 }
+                btnMatrix[i][j].setBackground(mapBase[i][j].getBackground());
                 mapBase[i][j].setVisible(true);
                 
                 map.add(mapBase[i][j]);
