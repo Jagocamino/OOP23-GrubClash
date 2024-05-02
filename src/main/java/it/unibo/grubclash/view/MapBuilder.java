@@ -31,6 +31,7 @@ public class MapBuilder extends Canvas {
 
     private static boolean characterPlacementPhase; //diventa true quando viene toccato il primo "finish"
     private static boolean colorSpawnpoint; //bool che serve per tenere traccia se lo spawnpoint è stato messo o no, si usa nel metodo switchBackground
+    private static boolean mapDrawer;
 
     final static int ROWS = 20;
     final static int COLS = 20; 
@@ -40,6 +41,23 @@ public class MapBuilder extends Canvas {
     public MapBuilder(final int playerCount) {
         setNumPlayers(playerCount);
         entityMatrix = new EnumEntity.entities[ROWS][COLS];
+        mapDrawer = false;
+    }
+
+    public static boolean getMapDrawer () {
+        return mapDrawer;
+    }
+
+    public static void setMapDrawer (boolean bool) {
+        mapDrawer = bool;
+    }
+
+    public static void updateMapDrawer () {
+        if (mapDrawer == false) {
+            mapDrawer = true;
+        }else{
+            mapDrawer = false;
+        }
     }
 
     public static EnumEntity.entities[][] getEntityMatrix() { // metodo per le altre classi
@@ -315,11 +333,25 @@ public class MapBuilder extends Canvas {
                     // Soluzione proposta dall'IDE
                     // Oggetto utilizzato per salvare lo stato del colore precedente al ricoloramento in grigio
                     final Color[] previousColorState = { btnMatrix[finalI][finalJ].getBackground() };
-                    btnMatrix[i][j].addActionListener(e -> previousColorState[0] = switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer));
+                    //btnMatrix[i][j].addActionListener(e -> previousColorState[0] = switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer));
 
                     btnMatrix[i][j].addMouseListener(new MouseAdapter() {
+                    
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if (getMapDrawer() == false) {
+                                switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer);
+                            }
+                            if (getCharacterPlacementPhase() == false) {
+                                updateMapDrawer();
+                            }
+                        };
+
                         @Override
                         public void mouseEntered(MouseEvent e) {
+                            if (getMapDrawer() == true) {
+                                switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer);
+                            }
                             previousColorState[0] = btnMatrix[finalI][finalJ].getBackground();
                             Color menuColor = Color.decode("#EF3B10"); //da mettere grigio, non arancione
                             btnMatrix[finalI][finalJ].setBackground(menuColor);
