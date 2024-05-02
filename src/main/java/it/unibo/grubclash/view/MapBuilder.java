@@ -215,8 +215,7 @@ public class MapBuilder extends Canvas {
         
         
         
-        JPanel playableLayer = new JPanel();    //TODO debug sake 2
-        playableLayer.add(new JLabel("papposcacaton"));
+        JPanel playableLayer = new PlayerPanel();    //TODO debug sake 2
         playableLayer.setBounds(50, 50, 50, 50);
         layeredPaneGrid.add(playableLayer, JLayeredPane.PALETTE_LAYER);
         layeredPaneGrid.setOpaque(false); //come si rende trasparente?
