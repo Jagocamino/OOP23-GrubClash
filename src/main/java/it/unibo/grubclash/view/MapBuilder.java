@@ -1,7 +1,6 @@
 package it.unibo.grubclash.view;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -11,15 +10,12 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import it.unibo.grubclash.model.GrubPanel;
-import it.unibo.grubclash.view.EnumEntity;
 
 import java.io.File;
 import java.io.IOException;
 
 /*
-    TODO ora abbiamo un metodo che permette di posizionare personaggi (o meglio, sappiamo come farlo)
     da gestire il ridimensionamento dello schermo che si è buggato --> una volta gestito il ridimensionamento basta creare una matrice ROWSxCOLS di bool per capire se è terreno o se non lo è.
-    Se è terreno ci faccio una bounding box attorno (con conseguente canMoveHere yada yada yada)
 */
 
 public class MapBuilder extends Canvas {
@@ -96,8 +92,7 @@ public class MapBuilder extends Canvas {
     
     public static Color switchBackground(JPanel[][] mapBase, int i, int j, Color color, JButton[][] btnMatrix, JPanel map, JFrame mapContainer) {
         // dopo primo click rimane false
-        if (getCharacterPlacementPhase() == false) { // per capire se siamo nella fase dei personaggi
-            System.out.println(color);
+        if (getCharacterPlacementPhase() == false) {
             Color btnColor = (color == Color.WHITE ? Color.BLACK : Color.WHITE);
             mapBase[i][j].setBackground(btnColor);
             return btnColor;
@@ -202,7 +197,8 @@ public class MapBuilder extends Canvas {
                 btnMatrix[i][j].setVisible(false);
                 if(mapBase[i][j].getBackground() == Color.BLACK) {
                     panelBackground(mapBase, i, j);
-                    setEntityInMatrix(i, j, EnumEntity.entities.WALL);                    
+                    setEntityInMatrix(i, j, EnumEntity.entities.WALL);
+                    //TODO qui chiamo l'entity per mettere il wall tra le hitbox               
                 } else {
                     mapBase[i][j].setBackground(Color.CYAN);
                     setEntityInMatrix(i, j, EnumEntity.entities.SKY);
@@ -329,12 +325,9 @@ public class MapBuilder extends Canvas {
                         mapContainer.validate();
                     });
                 } else {
-                    // 'previousColorState' deve essere final e non puo' essere modificato dentro i metodi richiamati agli eventi
-                    // Soluzione proposta dall'IDE
-                    // Oggetto utilizzato per salvare lo stato del colore precedente al ricoloramento in grigio
-                    final Color[] previousColorState = { btnMatrix[finalI][finalJ].getBackground() };
-                    //btnMatrix[i][j].addActionListener(e -> previousColorState[0] = switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer));
 
+                    final Color[] previousColorState = { btnMatrix[finalI][finalJ].getBackground() };
+                    //btnMatrix[i][j].addActionListener(e -> previousColorState[0] = switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer))
                     btnMatrix[i][j].addMouseListener(new MouseAdapter() {
                     
                         @Override
@@ -343,7 +336,7 @@ public class MapBuilder extends Canvas {
                                 switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer);
                             }
                             if (getCharacterPlacementPhase() == false) {
-                                updateMapDrawer();
+                                updateMapDrawer(); //se il bool è in true, allora si può disegnare la mappa con il mouse (ecco perché nell'altra fase non viene rispettato questo bool)
                             }
                         };
 
@@ -375,7 +368,6 @@ public class MapBuilder extends Canvas {
                 //map.add(grubPanel);
             }
         }   
-        // Questi metodi qua sotto servono per centrare il frame in mezzo allo schermo
         layeredPaneGrid.add(map, JLayeredPane.DEFAULT_LAYER);
         mapContainer.add(layeredPaneGrid);
         mapContainer.pack();

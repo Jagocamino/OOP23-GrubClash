@@ -9,31 +9,31 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import it.unibo.grubclash.view.ImageScaler;
+import it.unibo.grubclash.view.EnumEntity.entities;
 import it.unibo.grubclash.model.GrubPanel;
 
 import java.awt.Graphics;
 
-public abstract class Entity {
+public class Entity { //ogni entity, comprese le strutture, ha questa classe
 
     GrubPanel grubPanel;
 
     protected float x,y;  //qui metterei int e non float tanto viene sempre messo (int) e come valore float non viene mai effettivamente usato
     protected int width, height;
     protected Rectangle hitbox;
+    protected entities entity;
 
-    public int spriteSeq = 1;
-
-    /* public Entity(float x, float y, int width, int height) {
+    public Entity(float x, float y, int width, int height, entities entity) { //passed
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.entity = entity;
 
-        //con hitBox. esce una sfilza di cose utili
         initHitbox();
-    } */
+    }
 
-    public Entity(GrubPanel grubPanel){
+    public Entity(GrubPanel grubPanel){ //non mi viene in mente perché dovrei passare questo costruttore
         this.grubPanel = grubPanel;
     }
 
@@ -52,11 +52,11 @@ public abstract class Entity {
         hitbox.y = (int) y;
     }
 
-    public Rectangle getHitbox() { //è questa classe che fa l'update dell'hitbox
+    public Rectangle getHitbox() {
         return hitbox;
     }
 
-    public BufferedImage setup(String imagePath, int width, int height) {
+    public BufferedImage setup(String imagePath, int width, int height) { //da spolpare per bene
         ImageScaler uTool = new ImageScaler();
         BufferedImage image = null;
     
