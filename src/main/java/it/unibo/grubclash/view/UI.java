@@ -36,6 +36,7 @@ public class UI {
     public void drawPlayerTurn() {
         
         g2d.drawString("Turno del giocatore:" + grubPanel.numPlayerTurn, 600, 50);
+        g2d.drawString("" + grubPanel.secondsTurn, 600, 100);
     }
 
 }

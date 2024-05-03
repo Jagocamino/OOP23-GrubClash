@@ -35,6 +35,7 @@ public class GrubPanel extends JPanel implements Runnable {
     public ArrayList<Player> players;
     int playerCount;
     public int numPlayerTurn;
+    public int secondsTurn = 0;
 
     //UI
     UI ui = new UI(this);
@@ -108,18 +109,28 @@ public class GrubPanel extends JPanel implements Runnable {
         new Thread(() -> {
             while(gameThread != null) {
                 for(Player p : players) {
-                    long start = System.nanoTime();
+                    int numCicles = 0;   //5 cicli da 2 secondi => 10 secondi di round
                     this.addKeyListener(p.getKeyH());
+                    int counter = 0;
 
-                    while(System.nanoTime() - start <= 2000000000) {
-                        p.update();
-                        numPlayerTurn = p.getId();
-                        try {
-                            Thread.sleep(20);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                    while(numCicles <= 5){   //algoritmo da rivedere ma la sostanza c'è TODO 
+                        long start = System.nanoTime();
+                        while(System.nanoTime() - start <= 2000000000) {
+                            counter++;
+                            p.update();
+                            numPlayerTurn = p.getId();
+                            if(counter % 33 == 0){   //forse c'è un modo migliore per farlo 
+                                secondsTurn++;
+                            }
+                            try {
+                                Thread.sleep(20);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
+                        numCicles++;
                     }
+                    secondsTurn = 0;
                     p.getKeyH().leftPressed = false;
                     p.getKeyH().rightPressed = false;
                     this.removeKeyListener(p.getKeyH());
