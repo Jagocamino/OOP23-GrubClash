@@ -1,7 +1,6 @@
 package it.unibo.grubclash.view;
 
 import javax.swing.*;
-import java.awt.*;
 
 // Classe per gestire le impostazioni dei frame
 public class FrameManager {

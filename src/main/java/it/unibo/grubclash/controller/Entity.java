@@ -22,6 +22,8 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     protected int width, height;
     protected Rectangle hitbox;
     protected entities entity;
+    protected int spriteNum = 1;
+    protected int spriteCounter = 0;
 
     public Entity(float x, float y, int width, int height, entities entity) { //passed
         this.x = x;

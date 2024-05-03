@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import it.unibo.grubclash.controller.Player;
-import it.unibo.grubclash.view.FrameManager;
 
 // Pannello di gioco
 public class GrubPanel extends JPanel implements Runnable {
@@ -118,6 +117,7 @@ public class GrubPanel extends JPanel implements Runnable {
                     p.getKeyH().leftPressed = false;
                     p.getKeyH().rightPressed = false;
                     this.removeKeyListener(p.getKeyH());
+                    p.direction = "down";
                 }
             }
         }).start();
