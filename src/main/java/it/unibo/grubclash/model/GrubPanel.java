@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import it.unibo.grubclash.controller.Player;
+import it.unibo.grubclash.view.UI;
 
 // Pannello di gioco
 public class GrubPanel extends JPanel implements Runnable {
@@ -31,8 +32,12 @@ public class GrubPanel extends JPanel implements Runnable {
     ArrayList<KeyHandler> keyHandelers;
 
     //Players
-    ArrayList<Player> players;
+    public ArrayList<Player> players;
     int playerCount;
+    public int numPlayerTurn;
+
+    //UI
+    UI ui = new UI(this);
 
     public GrubPanel(int playerCount) {
         this.playerCount = playerCount;
@@ -108,6 +113,7 @@ public class GrubPanel extends JPanel implements Runnable {
 
                     while(System.nanoTime() - start <= 2000000000) {
                         p.update();
+                        numPlayerTurn = p.getId();
                         try {
                             Thread.sleep(20);
                         } catch (InterruptedException e) {
@@ -137,6 +143,8 @@ public class GrubPanel extends JPanel implements Runnable {
         for(Player p : players) {
             p.draw(g2d);
         }
+
+        ui.draw(g2d);
 
         g2d.dispose();
 
