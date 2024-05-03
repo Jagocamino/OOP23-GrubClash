@@ -18,25 +18,42 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
 
     GrubPanel grubPanel;
 
-    protected float x,y;  //qui metterei int e non float tanto viene sempre messo (int) e come valore float non viene mai effettivamente usato
-    protected int width, height;
-    protected Rectangle hitbox;
-    protected entities entity;
-    protected int spriteNum = 1;
-    protected int spriteCounter = 0;
+    protected static float x;  //qui metterei int e non float tanto viene sempre messo (int) e come valore float non viene mai effettivamente usato
+    protected static float y;
+    protected static int width, height;
+    protected static Rectangle hitbox;
+    protected static entities entity;
+    protected static int spriteNum = 1;
+    protected static int spriteCounter = 0;
 
     public Entity(float x, float y, int width, int height, entities entity) { //passed
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.entity = entity;
+        Entity.x = x;
+        Entity.y = y;
+        Entity.width = width;
+        Entity.height = height;
+        Entity.entity = entity;
 
         initHitbox();
     }
 
     public Entity(GrubPanel grubPanel){ //non mi viene in mente perché dovrei passare questo costruttore
         this.grubPanel = grubPanel;
+    }
+
+    public float getX () {
+        return x;
+    }
+
+    public float getY () {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     protected void drawHitbox(Graphics g) {
@@ -56,6 +73,14 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
 
     public Rectangle getHitbox() {
         return hitbox;
+    }
+
+    public entities getEntity () {
+        return Entity.entity;
+    }
+    
+    public void setEntity (entities entity) {
+        Entity.entity = entity;
     }
 
     public BufferedImage setup(String imagePath, int width, int height) { //da spolpare per bene

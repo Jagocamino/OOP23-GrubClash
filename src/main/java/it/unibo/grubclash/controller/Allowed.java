@@ -20,6 +20,10 @@ public class Allowed {
     addEntity mette nella matrice di entità una nuova entità, da fare controlli necessari affinché nuove entità non vadano in conflitto
     quando il costruttore di allowed viene chiamato, devo passargli anche le const relative all numero di celle, per rendere più flessibile il codice a future implementazioni
     */
+    public entities getEntity (int i, int j) {
+        return Allowed.lvlData[i][j].getEntity();
+    }
+
     public Allowed(int borderX, int borderY, int ROWS, int COLS) { //quando creo Allowed DENTRO MAP BUILDER chiamo il costruttore e gli passo i bordi del JPanel che contiene il giochino e le righe e colonne totali
         Allowed.borderX = borderX;
         Allowed.borderY = borderY;
@@ -29,7 +33,7 @@ public class Allowed {
     }
 
     public static void addEntity (int x, int y, int height, int width, entities entity, int i, int j) {
-        if (Allowed.lvlData[i][j].entity == entities.WALL || Allowed.lvlData[i][j].entity == entities.ITEM) {
+        if (Allowed.lvlData[i][j].getEntity() == entities.WALL || Allowed.lvlData[i][j].getEntity() == entities.ITEM) {
             System.out.println("This box is already taken, overwriting floor or item on the map");
         }
         Allowed.lvlData[i][j] = new Entity((float) x, (float) y, width, height, entity); //TODO vorrei rendere entity una classe astratta, almeno per includerne una, ma non so come fare ancora
@@ -60,8 +64,8 @@ public class Allowed {
         }
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                if (x >= lvlData[i][j].x && x < (lvlData[i][j].width + lvlData[i][j].x) && y >= lvlData[i][j].x && y < (lvlData[i][j].y + lvlData[i][j].height) ) {
-                    return lvlData[i][j].entity; //se le coordinate degli angoli si intersecano, ritorna il tipo di entità
+                if (x >= lvlData[i][j].getX() && x < (lvlData[i][j].getWidth() + lvlData[i][j].getX()) && y >= lvlData[i][j].getX() && y < (lvlData[i][j].getY() + lvlData[i][j].getHeight()) ) {
+                    return lvlData[i][j].getEntity(); //se le coordinate degli angoli si intersecano, ritorna il tipo di entità
                 } 
             }
 
