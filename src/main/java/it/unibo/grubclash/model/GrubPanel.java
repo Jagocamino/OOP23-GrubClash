@@ -44,7 +44,7 @@ public class GrubPanel extends JPanel implements Runnable {
             players.add(new Player(this, i, keyHandelers.get(i)));
         }
 
-        this.setSize(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
+        this.setSize(900, 900);
         this.setDoubleBuffered(true);
         //this.addKeyListener(keyH);
         this.setFocusable(true);

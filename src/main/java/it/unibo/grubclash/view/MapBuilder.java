@@ -207,13 +207,14 @@ public class MapBuilder extends Canvas {
             }
         }
         createPlayableLayer(btnMatrix, map, mapBase, mapContainer, layeredPaneGrid);
-        GrubPanel grubPanel = new GrubPanel(getNumPlayers());
-        grubPanel.startGameThread();
+        /* GrubPanel grubPanel = new GrubPanel(getNumPlayers());
+        grubPanel.startGameThread(); */
     }
 
     private static void createPlayableLayer(JButton[][] btnMatrix, JPanel map, JPanel[][] mapBase, JFrame mapContainer, JLayeredPane layeredPaneGrid) { 
         
-        JPanel playableLayer = new PlayerPanel();    //TODO debug sake 2
+        GrubPanel playableLayer = new GrubPanel(getNumPlayers());    //TODO debug sake 2
+        playableLayer.startGameThread();
         playableLayer.setBounds(0, 0, 900, 900);
         playableLayer.setOpaque(false); //come si rende trasparente?
         layeredPaneGrid.add(playableLayer, JLayeredPane.PALETTE_LAYER);
