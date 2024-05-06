@@ -27,17 +27,11 @@ public class EnumEntity {
     }
 
     public static int buttonToCoordsXConverter(entities[][] entities, entities player){  //da sistemare TODO
-
-
         int x = 0;
         for(int i = 0; i < MapBuilder.COLS; i++){
             for(int j = 0; j < MapBuilder.ROWS; j++){
                 if(entities[i][j].equals(player)){
-                    if(i == MapBuilder.COLS-1 || i == 0 || j == 0 || j == MapBuilder.ROWS-1){
-                        x = FrameManager.WINDOW_WIDTH / 20 * i;
-                    }else{
-                        x = FrameManager.WINDOW_WIDTH / 20 * (i+1);
-                    }
+                    x = MapBuilder.getXMapBase(i, j);
                     System.out.println(FrameManager.WINDOW_WIDTH + " " + i);
                 }
             }
@@ -52,11 +46,7 @@ public class EnumEntity {
         for(int i = 0; i < MapBuilder.COLS; i++){
             for(int j = 0; j < MapBuilder.ROWS; j++){
                 if(entities[i][j].equals(player)){
-                    if(j == 0 || j == MapBuilder.ROWS-1 || i == MapBuilder.COLS-1 || i == 0 ){
-                        y = FrameManager.WINDOW_HEIGHT / 20 * j;
-                    }else{
-                        y = FrameManager.WINDOW_HEIGHT / 20 * (j-1);
-                    }
+                    y = MapBuilder.getYMapBase(i, j);
                 }
             }
         }

@@ -47,6 +47,12 @@ public class MapBuilder extends Canvas {
     public static void setMapBase(JPanel[][] mapBase) {
         MapBuilder.mapBase = mapBase;   
     }
+    public static int getXMapBase(int i, int j){ // TODO ASOKHFOòPSAHNBOIASGOIADSFBGOIASGHNOIPADFGHNOI9AGBNIPè
+        return MapBuilder.mapBase[i][j].getX();
+    }
+    public static int getYMapBase(int i, int j){
+        return MapBuilder.mapBase[i][j].getY();
+    }
 
     private static JButton btnMatrix[][];
     public static JButton[][] getBtnMatrix() {
