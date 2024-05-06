@@ -18,7 +18,7 @@ public class FrameManager {
 
     // Icona della applicazione
     public static void setIcon(JFrame frame) {
-        ImageIcon icon = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub.png");
+        ImageIcon icon = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player0" + FS + "Grub_pl_0_stand_1.png");
         frame.setIconImage(icon.getImage());
     }
 

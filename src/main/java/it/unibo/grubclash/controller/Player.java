@@ -34,17 +34,17 @@ public class Player extends Entity{
         this.speed = 2;
         this.direction = "down";
 
-        getImage();
+        getImage(id);
     }
 
-    public void getImage(){ //parametro con numero del giocatore es : if(player == 1) => getImage del player1
+    public void getImage(int playerId){ //parametro con numero del giocatore es : if(player == 1) => getImage del player1
 
-        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub.png", 48, 48);
-        stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub2.png", 48, 48);
-        left1 = setup("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub_left_1.png", 48, 48);
-        left2 = setup("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub_left_2.png", 48, 48);
-        right1 = setup("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub_right_1.png", 48, 48);
-        right2 = setup("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub_right_2.png", 48, 48);
+        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", 48, 48);
+        stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_2.png", 48, 48);
+        left1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_left_1.png", 48, 48);
+        left2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_left_2.png", 48, 48);
+        right1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_right_1.png", 48, 48);
+        right2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_right_2.png", 48, 48);
     }
 
 
