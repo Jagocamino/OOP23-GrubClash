@@ -20,6 +20,52 @@ import java.io.IOException;
 
 public class MapBuilder extends Canvas {
 
+    private static JFrame mapContainer;
+    public static JFrame getMapContainer() {
+        return mapContainer;
+    }
+    public static void setMapContainer(JFrame mapContainer) {
+        MapBuilder.mapContainer = mapContainer;
+    }
+
+    private static JPanel map;
+    public static JPanel getMap() {
+        return map;
+    }
+    public static void setMap(JPanel map) {
+        MapBuilder.map = map;
+    }
+
+    private static JPanel mapBase[][];
+    public static JPanel[][] getMapBase() {
+        return mapBase;
+    }
+    public static JPanel getMapBase (int i, int j) {
+        return mapBase[i][j]; // TODO non ho capito perché dentro p1map(), se metto getMapBase(i, j) = new JPanel; mi da errore
+    }
+    public static void setMapBase(JPanel[][] mapBase) {
+        MapBuilder.mapBase = mapBase;   
+    }
+
+    private static JButton btnMatrix[][];
+    public static JButton[][] getBtnMatrix() {
+        return btnMatrix;
+    }
+    public static JButton getBtnMatrix(int i, int j) {
+        return btnMatrix[i][j];
+    }
+    public static void setBtnMatrix(JButton[][] btnMatrix) {
+        MapBuilder.btnMatrix = btnMatrix;
+    }
+
+    private static JLayeredPane layeredPaneGrid;
+    public static JLayeredPane getLayeredPaneGrid() {
+        return layeredPaneGrid;
+    }
+    public static void setLayeredPaneGrid(JLayeredPane layeredPaneGrid) {
+        MapBuilder.layeredPaneGrid = layeredPaneGrid;
+    }
+
     protected static int currentPlayer;
     protected static int numPlayers;
     
@@ -36,7 +82,7 @@ public class MapBuilder extends Canvas {
 
     public MapBuilder(final int playerCount) {
         setNumPlayers(playerCount);
-        entityMatrix = new EnumEntity.entities[ROWS][COLS];
+        MapBuilder.entityMatrix = new EnumEntity.entities[ROWS][COLS];
         mapDrawer = false;
     }
 
@@ -213,9 +259,9 @@ public class MapBuilder extends Canvas {
 
     private static void createPlayableLayer(JButton[][] btnMatrix, JPanel map, JPanel[][] mapBase, JFrame mapContainer, JLayeredPane layeredPaneGrid) { 
         
-        GrubPanel playableLayer = new GrubPanel(getNumPlayers());    //TODO debug sake 2
+        GrubPanel playableLayer = new GrubPanel(getNumPlayers()); 
         playableLayer.startGameThread();
-        playableLayer.setBounds(0, 0, 900, 900);
+        playableLayer.setBounds(0, 0, (int)mapContainer.getSize().getWidth(), (int)mapContainer.getSize().getHeight());
         playableLayer.setOpaque(false); //come si rende trasparente?
         layeredPaneGrid.add(playableLayer, JLayeredPane.PALETTE_LAYER);
         layeredPaneGrid.setVisible(true);
@@ -224,13 +270,22 @@ public class MapBuilder extends Canvas {
     }
 
     public static void panelBackground(JPanel[][] mapBase, int i, int j) throws IOException {
-        BufferedImage platformImg = ImageIO.read(new File("src\\main\\resources\\gameplay\\platform.png"));
-        JLabel picLabel = new JLabel(new ImageIcon(platformImg));
-        mapBase[i][j].add(picLabel);
+        if ( i==0 || mapBase[i-1][j].getBackground() == Color.WHITE || mapBase[i-1][j].getBackground() == Color.CYAN) {
+            BufferedImage platformImg = ImageIO.read(new File("src\\main\\resources\\gameplay\\platform.png")); //TODO cambio img
+            JLabel picLabel = new JLabel(new ImageIcon(platformImg));
+            mapBase[i][j].add(picLabel);
+        }else{
+            BufferedImage platformImg = ImageIO.read(new File("src\\main\\resources\\gameplay\\platform_ground.png"));
+            JLabel picLabel = new JLabel(new ImageIcon(platformImg));
+            mapBase[i][j].add(picLabel);
+        }
     }
 
     public static void p2Map(JPanel map, JPanel[][] mapBase, JButton[][] btnMatrix, int btnFinishI, int btnFinishJ, JFrame mapContainer, JLayeredPane layeredPaneGrid) {
         JButton btnFinish = btnMatrix[btnFinishI][btnFinishJ];
+        if (getMapDrawer() == true) {
+            updateMapDrawer();
+        }
         for(int i = 0; i < ROWS; i++){
             for(int j = 0; j < COLS; j++){
                 final int finalI = i;
@@ -277,28 +332,38 @@ public class MapBuilder extends Canvas {
         SwingUtilities.updateComponentTreeUI(map);
     }
 
+    /*
+     * TODO da pulire il codice implementando dove necessario i getter e setter appena creati, rimuovere gli attributi addizionali dei metodi per tenere un'architettura più leggibile
+     */
     public static void p1Map() {
         JFrame mapContainer = new JFrame();
-        FrameManager.setTitle(mapContainer);
-        FrameManager.setIcon(mapContainer);
+        setMapContainer(mapContainer);
+        FrameManager.setTitle(getMapContainer());
+        FrameManager.setIcon(getMapContainer());
         initCharacterPlacementPhase();
-        mapContainer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mapContainer.setSize(300, 900);
+        getMapContainer().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getMapContainer().setSize(1200, 900);
 
         setNumPlayers(4);//TODO debug sake
-        mapContainer.setMinimumSize(new Dimension(900, 900));    
-        mapContainer.setResizable(false); //TODO prima o poi mettiamole true
-        
+            
+        getMapContainer().setResizable(false); //TODO prima o poi mettiamole true
+        //mapContainer.setMinimumSize(new Dimension(900, 900));
+
         JLayeredPane layeredPaneGrid = new JLayeredPane();
-        layeredPaneGrid.setPreferredSize(mapContainer.getSize());
-        layeredPaneGrid.setLayout(null);
+        setLayeredPaneGrid(layeredPaneGrid);
+        getLayeredPaneGrid().setPreferredSize(mapContainer.getSize());
+        getLayeredPaneGrid().setLayout(null);
 
         // Creo una griglia di panels
         JPanel map = new JPanel();
-        map.setBounds(0, 0, (int)mapContainer.getSize().getWidth(), (int)mapContainer.getSize().getHeight());
-        map.setLayout(new GridLayout(ROWS, COLS));  //Imposto il layout del pane che contiene le matrix di bottoni e altri pane
+        setMap(map);
+        getMap().setBounds(0, 0, (int)getMapContainer().getSize().getWidth(), (int)getMapContainer().getSize().getHeight());
+        getMap().setLayout(new GridLayout(ROWS, COLS));  //Imposto il layout del pane che contiene le matrix di bottoni e altri pane
+
         JPanel[][] mapBase = new JPanel[ROWS][COLS];
+        setMapBase(mapBase);
         JButton[][] btnMatrix = new JButton[ROWS][COLS];
+        setBtnMatrix(btnMatrix);
 
         for(int i = 0; i < ROWS; i++){
             for(int j = 0; j < COLS; j++){
@@ -375,4 +440,5 @@ public class MapBuilder extends Canvas {
         map.setVisible(true);
         FrameManager.showMessageBox("Messaggio", "Crea o rimuovi spazi con collisione interagendo con i blocchi per creare la tua mappa!", JOptionPane.INFORMATION_MESSAGE);
     }
+
 }

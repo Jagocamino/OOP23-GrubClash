@@ -34,12 +34,12 @@ public class Allowed {
 
     public static void addEntity (int x, int y, int height, int width, entities entity, int i, int j) {
         if (Allowed.lvlData[i][j].getEntity() == entities.WALL || Allowed.lvlData[i][j].getEntity() == entities.ITEM) {
-            System.out.println("This box is already taken, overwriting floor or item on the map");
+            System.out.println("This box is already taken, overwriting floor or item on the map..");
         }
-        Allowed.lvlData[i][j] = new Entity((float) x, (float) y, width, height, entity); //TODO vorrei rendere entity una classe astratta, almeno per includerne una, ma non so come fare ancora
+        Allowed.lvlData[i][j] = new Entity((float) x, (float) y, width, height, entity);
     }    
 
-    public static boolean CanMoveThere(float x, float y, int width, int height, entities[][] entityMatrix) {
+    public static boolean CanMoveThere(int x, int y, int width, int height, entities[][] entityMatrix) {
         //controlla ogni angolo del rettangolo, se gli angoli non sono contenuti nel WALL (cioè la piattaforma o i bordi), allora restituisce true
         if (whatIsFacing(x, y, lvlData) != entities.WALL) {
             if(whatIsFacing(x + width, y + width, lvlData) != entities.WALL) {

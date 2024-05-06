@@ -28,7 +28,7 @@ public class ItemSpawner{
         Random randomnum = new Random();
         int randX;
         int randY;
-        while (numOfItems == 0) {
+        while (numOfItems != 0) {
             randX = randomnum.nextInt(ROWS);
             randY = randomnum.nextInt(COLS);
             while (lvlData[randX][randY].getEntity() == entities.SKY) { // se la cella che genero casualmente è cielo
@@ -43,7 +43,6 @@ public class ItemSpawner{
                 }
                 numOfItems--;
             }
-            numOfItems--;
         }
         
     }
