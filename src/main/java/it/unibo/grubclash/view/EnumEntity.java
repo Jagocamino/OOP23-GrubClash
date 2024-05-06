@@ -40,8 +40,6 @@ public class EnumEntity {
     }
 
     public static int buttonToCoordsYConverter(entities[][] entities, entities player){ //da sistemare TODO
-
-
         int y = 0;
         for(int i = 0; i < MapBuilder.COLS; i++){
             for(int j = 0; j < MapBuilder.ROWS; j++){

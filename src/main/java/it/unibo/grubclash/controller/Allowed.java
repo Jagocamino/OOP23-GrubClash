@@ -1,5 +1,7 @@
 package it.unibo.grubclash.controller;
+import it.unibo.grubclash.view.EnumEntity;
 import it.unibo.grubclash.view.EnumEntity.entities;
+import javax.swing.*;
 
 public class Allowed { 
 
@@ -31,7 +33,7 @@ public class Allowed {
         Allowed.lvlData = new Entity[ROWS - 1][COLS - 1]; //TODO credo sia il numero giusto con un -1 a fianco, da testare
     }
 
-    public static void addEntity (int x, int y, int height, int width, entities entity, int i, int j) {
+    public static void addEntity (int x, int y, double height, double width, entities entity, int i, int j) {
         if (Allowed.lvlData[i][j].getEntity() == entities.WALL || Allowed.lvlData[i][j].getEntity() == entities.ITEM) {
             System.out.println("This box is already taken, overwriting floor or item on the map..");
         }
@@ -49,6 +51,14 @@ public class Allowed {
             }
         }
         return false;
+    }
+
+    public void addMapBase (JButton[][] mapBase, EnumEntity.entities[][] entityMatrix, int ROWS, int COLS) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < ROWS; j++) {
+                addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), mapBase[i][j].getBounds().getHeight(), mapBase[i][j].getBounds().getWidth(), entityMatrix[i][j], i, j);
+            }    
+        }
     }
     
     //controlleremo di volta in volta i quattro angoli di questo "rettangolo"

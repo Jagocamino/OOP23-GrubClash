@@ -359,7 +359,7 @@ public class MapBuilder extends Canvas {
         SwingUtilities.updateComponentTreeUI(map);
     }
 
-    public static void p1Map() {
+    public void p1Map() {
         JFrame mapContainer = new JFrame();
         setMapContainer(mapContainer);
         FrameManager.setTitle(getMapContainer());
