@@ -27,7 +27,7 @@ public class UI {
         this.g2d = g2d;
 
         g2d.setFont(snapITCFont);
-        g2d.setColor(Color.getColor("#EF3B10"));
+        g2d.setColor(Color.ORANGE);
 
         drawPlayerTurn();
 

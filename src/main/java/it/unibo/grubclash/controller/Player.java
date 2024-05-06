@@ -6,6 +6,8 @@ import java.io.File;
 
 import it.unibo.grubclash.model.GrubPanel;
 import it.unibo.grubclash.model.KeyHandler;
+import it.unibo.grubclash.view.EnumEntity;
+import it.unibo.grubclash.view.MapBuilder;
 
 //   LA POSIZIONE DEL GIOCATORE VIENE PASSATA DOPO IL CONTROLLO NEL MAP BUILDER
 
@@ -29,8 +31,10 @@ public class Player extends Entity{
         this.keyH = keyH;
 
         this.id = id;
-        this.x = 100;
-        this.y = 100;
+        this.x = EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id));
+        System.out.println("coords playerX: " + x);
+        this.y = EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id));
+        System.out.println("coords playerY: " + y);
         this.speed = 2;
         this.direction = "down";
 

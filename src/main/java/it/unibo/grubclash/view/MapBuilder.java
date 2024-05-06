@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import javax.swing.border.LineBorder;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -34,7 +33,7 @@ public class MapBuilder extends Canvas {
     final static int ROWS = 20;
     final static int COLS = 20; 
 
-    private static EnumEntity.entities[][] entityMatrix;
+    public static EnumEntity.entities[][] entityMatrix;
 
     public MapBuilder(final int playerCount) {
         setNumPlayers(playerCount);
@@ -198,7 +197,22 @@ public class MapBuilder extends Canvas {
                     panelBackground(mapBase, i, j);
                     setEntityInMatrix(i, j, EnumEntity.entities.WALL);
                     //TODO qui chiamo l'entity per mettere il wall tra le hitbox               
-                } else {
+                }else if(mapBase[i][j].getBackground() == Color.GREEN){
+                    mapBase[i][j].setBackground(Color.CYAN);
+                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER1);
+                }else if(mapBase[i][j].getBackground() == Color.CYAN){
+                    mapBase[i][j].setBackground(Color.CYAN);
+                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER2);
+                }else if(mapBase[i][j].getBackground() == Color.ORANGE){
+                    mapBase[i][j].setBackground(Color.CYAN);
+                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER3);
+                }else if(mapBase[i][j].getBackground() == Color.YELLOW){
+                    mapBase[i][j].setBackground(Color.CYAN);
+                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER4);
+                }else if(mapBase[i][j].getBackground() == Color.RED){
+                    mapBase[i][j].setBackground(Color.CYAN);
+                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER5);
+                }else {
                     mapBase[i][j].setBackground(Color.CYAN);
                     setEntityInMatrix(i, j, EnumEntity.entities.SKY);
                 }        
@@ -206,8 +220,6 @@ public class MapBuilder extends Canvas {
             }
         }
         createPlayableLayer(btnMatrix, map, mapBase, mapContainer, layeredPaneGrid);
-        /* GrubPanel grubPanel = new GrubPanel(getNumPlayers());
-        grubPanel.startGameThread(); */
     }
 
     private static void createPlayableLayer(JButton[][] btnMatrix, JPanel map, JPanel[][] mapBase, JFrame mapContainer, JLayeredPane layeredPaneGrid) { 
