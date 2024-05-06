@@ -1,6 +1,7 @@
 package it.unibo.grubclash.view;
 
 import javax.swing.*;
+import java.io.File;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -9,6 +10,8 @@ import java.awt.event.MouseEvent;
 public class Main {
 
     public static void main(String[] args) {
+
+        final char FS = File.separatorChar;
 
         JFrame frame = new JFrame();
         frame.setTitle("GrubClash");
@@ -29,7 +32,7 @@ public class Main {
         frame.add(grubPanel); */
 
         // Impostazione dello sfondo del menu
-        ImageIcon image = new ImageIcon("src\\main\\resources\\menu\\menu_bg.jpg");
+        ImageIcon image = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "menu_bg.jpg");
         JLabel menu_bg = new JLabel(image);
         menu_bg.setBounds(0, 0, FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
 
@@ -38,7 +41,7 @@ public class Main {
         playButton.setBorderPainted(false);
         playButton.setBounds(FrameManager.WINDOW_WIDTH - 1300, FrameManager.WINDOW_HEIGHT - 420, 200, 200);
 
-        ImageIcon originalIcon = new ImageIcon("src\\main\\resources\\menu\\play.png");
+        ImageIcon originalIcon = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "play.png");
         Image originalImage = originalIcon.getImage();
 
         ImageIcon scaledIcon = new ImageIcon(originalImage.getScaledInstance(playButton.getWidth(), playButton.getHeight(), Image.SCALE_SMOOTH));
@@ -59,7 +62,7 @@ public class Main {
         playButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                ImageIcon originalIcon = new ImageIcon("src\\main\\resources\\menu\\play_on_hover.png");
+                ImageIcon originalIcon = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "play_on_hover.png");
                 Image originalImage = originalIcon.getImage();
 
                 ImageIcon scaledIcon = new ImageIcon(originalImage.getScaledInstance(playButton.getWidth(), playButton.getHeight(), Image.SCALE_SMOOTH));
@@ -68,7 +71,7 @@ public class Main {
 
             @Override
             public void mouseExited(MouseEvent e) {
-                ImageIcon originalIcon = new ImageIcon("src\\main\\resources\\menu\\play.png");
+                ImageIcon originalIcon = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "play.png");
                 Image originalImage = originalIcon.getImage();
 
                 ImageIcon scaledIcon = new ImageIcon(originalImage.getScaledInstance(playButton.getWidth(), playButton.getHeight(), Image.SCALE_SMOOTH));

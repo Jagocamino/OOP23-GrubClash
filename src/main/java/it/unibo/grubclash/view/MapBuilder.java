@@ -20,6 +20,8 @@ import java.io.IOException;
 
 public class MapBuilder extends Canvas {
 
+    final static char FS = File.separatorChar;
+
     protected static int currentPlayer;
     protected static int numPlayers;
     
@@ -224,7 +226,7 @@ public class MapBuilder extends Canvas {
     }
 
     public static void panelBackground(JPanel[][] mapBase, int i, int j) throws IOException {
-        BufferedImage platformImg = ImageIO.read(new File("src\\main\\resources\\gameplay\\platform.png"));
+        BufferedImage platformImg = ImageIO.read(new File("src" + FS + "main" + FS + "resources" + FS + "gameplay" + FS + "platform.png"));
         JLabel picLabel = new JLabel(new ImageIcon(platformImg));
         mapBase[i][j].add(picLabel);
     }

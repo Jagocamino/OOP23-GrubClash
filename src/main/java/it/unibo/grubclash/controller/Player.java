@@ -2,6 +2,7 @@ package it.unibo.grubclash.controller;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import it.unibo.grubclash.model.GrubPanel;
 import it.unibo.grubclash.model.KeyHandler;
@@ -9,6 +10,8 @@ import it.unibo.grubclash.model.KeyHandler;
 //   LA POSIZIONE DEL GIOCATORE VIENE PASSATA DOPO IL CONTROLLO NEL MAP BUILDER
 
 public class Player extends Entity{
+
+    final char FS = File.separatorChar;
 
     KeyHandler keyH;
 
@@ -34,14 +37,14 @@ public class Player extends Entity{
         getImage();
     }
 
-    public void getImage(){
+    public void getImage(){ //parametro con numero del giocatore es : if(player == 1) => getImage del player1
 
-        stand1 = setup("src\\main\\resources\\menu\\Grub.png", 48, 48);
-        stand2 = setup("src\\main\\resources\\menu\\Grub2.png", 48, 48);
-        left1 = setup("src\\main\\resources\\menu\\Grub_left_1.png", 48, 48);
-        left2 = setup("src\\main\\resources\\menu\\Grub_left_2.png", 48, 48);
-        right1 = setup("src\\main\\resources\\menu\\Grub_right_1.png", 48, 48);
-        right2 = setup("src\\main\\resources\\menu\\Grub_right_2.png", 48, 48);
+        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub.png", 48, 48);
+        stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub2.png", 48, 48);
+        left1 = setup("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub_left_1.png", 48, 48);
+        left2 = setup("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub_left_2.png", 48, 48);
+        right1 = setup("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub_right_1.png", 48, 48);
+        right2 = setup("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "Grub_right_2.png", 48, 48);
     }
 
 
