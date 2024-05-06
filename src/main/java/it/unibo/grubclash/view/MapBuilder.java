@@ -147,22 +147,19 @@ public class MapBuilder extends Canvas {
         for (int f = 0; f < getNumPlayers(); f++) {
             switch (f) {
                 case 0:
-                    playerColor[f] = Color.PINK;
+                    playerColor[f] = Color.GREEN;
                     break;
                 case 1:
-                    playerColor[f] = Color.YELLOW;
+                    playerColor[f] = Color.CYAN;
                     break;
                 case 2:
-                    playerColor[f] = Color.LIGHT_GRAY;
-                    break;
-                case 3:
-                    playerColor[f] = Color.RED;
-                    break;
-                case 4:
                     playerColor[f] = Color.ORANGE;
                     break;
-                case 5:
-                    playerColor[f] = Color.BLUE;
+                case 3:
+                    playerColor[f] = Color.YELLOW;
+                    break;
+                case 4:
+                    playerColor[f] = Color.RED;
                     break;
             }
         }
@@ -174,8 +171,8 @@ public class MapBuilder extends Canvas {
     }
 
     public static JButton createButton(int i, int j) {
-        final int BUTTON_WIDTH = 30;
-        final int BUTTON_HEIGHT = 30;
+        final int BUTTON_WIDTH = FrameManager.WINDOW_WIDTH / ROWS;
+        final int BUTTON_HEIGHT = FrameManager.WINDOW_HEIGHT / COLS;
 
         JButton invisibleBtn = new JButton();
         if (i == 0 && j == COLS - 1) {
@@ -184,8 +181,8 @@ public class MapBuilder extends Canvas {
         } else { // Gestisce tutti i bottoni che non sono quello di chiusura dell'editing della mappa
             //invisibleBtn.setText(String.valueOf(i) + "-" + String.valueOf(j));
             invisibleBtn.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-            invisibleBtn.setBorder(new LineBorder(Color.MAGENTA));
-            invisibleBtn.setBorderPainted(true);
+            //invisibleBtn.setBorder(new LineBorder(Color.MAGENTA));
+            invisibleBtn.setBorderPainted(false); // era true
             invisibleBtn.setContentAreaFilled(false);
             invisibleBtn.setOpaque(true);
         }
@@ -217,7 +214,7 @@ public class MapBuilder extends Canvas {
         
         GrubPanel playableLayer = new GrubPanel(getNumPlayers());    //TODO debug sake 2
         playableLayer.startGameThread();
-        playableLayer.setBounds(0, 0, 900, 900);
+        playableLayer.setBounds(0, 0, FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
         playableLayer.setOpaque(false); //come si rende trasparente?
         layeredPaneGrid.add(playableLayer, JLayeredPane.PALETTE_LAYER);
         layeredPaneGrid.setVisible(true);
@@ -285,11 +282,11 @@ public class MapBuilder extends Canvas {
         FrameManager.setIcon(mapContainer);
         initCharacterPlacementPhase();
         mapContainer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mapContainer.setSize(300, 900);
+        mapContainer.setSize(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
 
-        setNumPlayers(4);//TODO debug sake
-        mapContainer.setMinimumSize(new Dimension(900, 900));    
-        mapContainer.setResizable(false); //TODO prima o poi mettiamole true
+        setNumPlayers(numPlayers);//TODO debug sake
+        mapContainer.setMinimumSize(new Dimension(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT));    
+        mapContainer.setResizable(false); //TODO prima o poi mettiamole true NO FRA
         
         JLayeredPane layeredPaneGrid = new JLayeredPane();
         layeredPaneGrid.setPreferredSize(mapContainer.getSize());
@@ -346,7 +343,7 @@ public class MapBuilder extends Canvas {
                                 switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer);
                             }
                             previousColorState[0] = btnMatrix[finalI][finalJ].getBackground();
-                            Color menuColor = Color.decode("#EF3B10"); //da mettere grigio, non arancione
+                            Color menuColor = Color.decode("#EF3B10"); 
                             btnMatrix[finalI][finalJ].setBackground(menuColor);
                             btnMatrix[finalI][finalJ].setContentAreaFilled(true);
                         }

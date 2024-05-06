@@ -39,7 +39,7 @@ public class Main {
         // Creazione del bottone play
         final JButton playButton = new JButton();
         playButton.setBorderPainted(false);
-        playButton.setBounds(FrameManager.WINDOW_WIDTH - 1300, FrameManager.WINDOW_HEIGHT - 420, 200, 200);
+        playButton.setBounds(FrameManager.getPercentage(FrameManager.WINDOW_WIDTH, 75), FrameManager.getPercentage(FrameManager.WINDOW_HEIGHT, 45), 200, 200);
 
         ImageIcon originalIcon = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "play.png");
         Image originalImage = originalIcon.getImage();
@@ -48,7 +48,7 @@ public class Main {
         playButton.setIcon(scaledIcon);
 
         JComboBox<Integer> playerSelect = new JComboBox<>(new Integer[]{2, 3, 4, 5});
-        playerSelect.setBounds(FrameManager.WINDOW_WIDTH - 1080, FrameManager.WINDOW_HEIGHT - 532, 200, 30);
+        playerSelect.setBounds(FrameManager.getPercentage(FrameManager.WINDOW_WIDTH, 63), FrameManager.getPercentage(FrameManager.WINDOW_HEIGHT, 55), 200, 30);
 
         // Evento scatenato al click del bottone
         playButton.addActionListener(e -> {
