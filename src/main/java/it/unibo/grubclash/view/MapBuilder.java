@@ -42,12 +42,12 @@ public class MapBuilder extends Canvas {
         return mapBase;
     }
     public static JPanel getMapBase (int i, int j) {
-        return mapBase[i][j]; // TODO non ho capito perché dentro p1map(), se metto getMapBase(i, j) = new JPanel; mi da errore
+        return mapBase[i][j];
     }
     public static void setMapBase(JPanel[][] mapBase) {
         MapBuilder.mapBase = mapBase;   
     }
-    public static int getXMapBase(int i, int j){ // TODO ASOKHFOòPSAHNBOIASGOIADSFBGOIASGHNOIPADFGHNOI9AGBNIPè
+    public static int getXMapBase(int i, int j){
         return MapBuilder.mapBase[i][j].getX();
     }
     public static int getYMapBase(int i, int j){
@@ -293,7 +293,7 @@ public class MapBuilder extends Canvas {
 
     public static void panelBackground(JPanel[][] mapBase, int i, int j) throws IOException {
         if ( i==0 || mapBase[i-1][j].getBackground() == Color.WHITE || mapBase[i-1][j].getBackground() == Color.CYAN) {
-            BufferedImage platformImg = ImageIO.read(new File("src" + FS + "main" + FS + "resources" + FS + "gameplay" + FS + "platform.png")); //TODO cambio img
+            BufferedImage platformImg = ImageIO.read(new File("src" + FS + "main" + FS + "resources" + FS + "gameplay" + FS + "platform.png"));
             JLabel picLabel = new JLabel(new ImageIcon(platformImg));
             mapBase[i][j].add(picLabel);
         }else{
@@ -359,9 +359,6 @@ public class MapBuilder extends Canvas {
         SwingUtilities.updateComponentTreeUI(map);
     }
 
-    /*
-     * TODO da pulire il codice implementando dove necessario i getter e setter appena creati, rimuovere gli attributi addizionali dei metodi per tenere un'architettura più leggibile
-     */
     public static void p1Map() {
         JFrame mapContainer = new JFrame();
         setMapContainer(mapContainer);
@@ -371,10 +368,9 @@ public class MapBuilder extends Canvas {
         getMapContainer().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getMapContainer().setSize(1200, 900);
 
-        setNumPlayers(numPlayers);//TODO debug sake
+        setNumPlayers(numPlayers);
         mapContainer.setMinimumSize(new Dimension(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT));    
-        mapContainer.setResizable(false); //TODO prima o poi mettiamole true NO FRA
-        
+        mapContainer.setResizable(false);
         JLayeredPane layeredPaneGrid = new JLayeredPane();
         setLayeredPaneGrid(layeredPaneGrid);
         getLayeredPaneGrid().setPreferredSize(mapContainer.getSize());
