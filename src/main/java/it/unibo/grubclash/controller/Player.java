@@ -2,13 +2,18 @@ package it.unibo.grubclash.controller;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import it.unibo.grubclash.model.GrubPanel;
 import it.unibo.grubclash.model.KeyHandler;
+import it.unibo.grubclash.view.EnumEntity;
+import it.unibo.grubclash.view.MapBuilder;
 
 //   LA POSIZIONE DEL GIOCATORE VIENE PASSATA DOPO IL CONTROLLO NEL MAP BUILDER
 
 public class Player extends Entity{
+
+    final char FS = File.separatorChar;
 
     KeyHandler keyH;
 
@@ -26,22 +31,24 @@ public class Player extends Entity{
         this.keyH = keyH;
 
         this.id = id;
-        this.x = 100;
-        this.y = 100;
+        this.x = EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id));
+        System.out.println("coords playerX: " + x);
+        this.y = EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id));
+        System.out.println("coords playerY: " + y);
         this.speed = 2;
         this.direction = "down";
 
-        getImage();
+        getImage(id);
     }
 
-    public void getImage(){
+    public void getImage(int playerId){ //parametro con numero del giocatore es : if(player == 1) => getImage del player1
 
-        stand1 = setup("src\\main\\resources\\menu\\Grub.png", 48, 48);
-        stand2 = setup("src\\main\\resources\\menu\\Grub2.png", 48, 48);
-        left1 = setup("src\\main\\resources\\menu\\Grub_left_1.png", 48, 48);
-        left2 = setup("src\\main\\resources\\menu\\Grub_left_2.png", 48, 48);
-        right1 = setup("src\\main\\resources\\menu\\Grub_right_1.png", 48, 48);
-        right2 = setup("src\\main\\resources\\menu\\Grub_right_2.png", 48, 48);
+        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", 48, 48);
+        stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_2.png", 48, 48);
+        left1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_left_1.png", 48, 48);
+        left2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_left_2.png", 48, 48);
+        right1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_right_1.png", 48, 48);
+        right2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_right_2.png", 48, 48);
     }
 
 

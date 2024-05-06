@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import javax.swing.border.LineBorder;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -19,6 +18,8 @@ import java.io.IOException;
 */
 
 public class MapBuilder extends Canvas {
+
+    final static char FS = File.separatorChar;
 
     private static JFrame mapContainer;
     public static JFrame getMapContainer() {
@@ -78,7 +79,7 @@ public class MapBuilder extends Canvas {
     final static int ROWS = 20;
     final static int COLS = 20; 
 
-    private static EnumEntity.entities[][] entityMatrix;
+    public static EnumEntity.entities[][] entityMatrix;
 
     public MapBuilder(final int playerCount) {
         setNumPlayers(playerCount);
@@ -191,22 +192,19 @@ public class MapBuilder extends Canvas {
         for (int f = 0; f < getNumPlayers(); f++) {
             switch (f) {
                 case 0:
-                    playerColor[f] = Color.PINK;
+                    playerColor[f] = Color.GREEN;
                     break;
                 case 1:
-                    playerColor[f] = Color.YELLOW;
+                    playerColor[f] = Color.CYAN;
                     break;
                 case 2:
-                    playerColor[f] = Color.LIGHT_GRAY;
-                    break;
-                case 3:
-                    playerColor[f] = Color.RED;
-                    break;
-                case 4:
                     playerColor[f] = Color.ORANGE;
                     break;
-                case 5:
-                    playerColor[f] = Color.BLUE;
+                case 3:
+                    playerColor[f] = Color.YELLOW;
+                    break;
+                case 4:
+                    playerColor[f] = Color.RED;
                     break;
             }
         }
@@ -218,8 +216,8 @@ public class MapBuilder extends Canvas {
     }
 
     public static JButton createButton(int i, int j) {
-        final int BUTTON_WIDTH = 30;
-        final int BUTTON_HEIGHT = 30;
+        final int BUTTON_WIDTH = FrameManager.WINDOW_WIDTH / ROWS;
+        final int BUTTON_HEIGHT = FrameManager.WINDOW_HEIGHT / COLS;
 
         JButton invisibleBtn = new JButton();
         if (i == 0 && j == COLS - 1) {
@@ -228,8 +226,8 @@ public class MapBuilder extends Canvas {
         } else { // Gestisce tutti i bottoni che non sono quello di chiusura dell'editing della mappa
             //invisibleBtn.setText(String.valueOf(i) + "-" + String.valueOf(j));
             invisibleBtn.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-            invisibleBtn.setBorder(new LineBorder(Color.MAGENTA));
-            invisibleBtn.setBorderPainted(true);
+            //invisibleBtn.setBorder(new LineBorder(Color.MAGENTA));
+            invisibleBtn.setBorderPainted(false); // era true
             invisibleBtn.setContentAreaFilled(false);
             invisibleBtn.setOpaque(true);
         }
@@ -245,7 +243,22 @@ public class MapBuilder extends Canvas {
                     panelBackground(mapBase, i, j);
                     setEntityInMatrix(i, j, EnumEntity.entities.WALL);
                     //TODO qui chiamo l'entity per mettere il wall tra le hitbox               
-                } else {
+                }else if(mapBase[i][j].getBackground() == Color.GREEN){
+                    mapBase[i][j].setBackground(Color.CYAN);
+                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER1);
+                }else if(mapBase[i][j].getBackground() == Color.CYAN){
+                    mapBase[i][j].setBackground(Color.CYAN);
+                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER2);
+                }else if(mapBase[i][j].getBackground() == Color.ORANGE){
+                    mapBase[i][j].setBackground(Color.CYAN);
+                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER3);
+                }else if(mapBase[i][j].getBackground() == Color.YELLOW){
+                    mapBase[i][j].setBackground(Color.CYAN);
+                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER4);
+                }else if(mapBase[i][j].getBackground() == Color.RED){
+                    mapBase[i][j].setBackground(Color.CYAN);
+                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER5);
+                }else {
                     mapBase[i][j].setBackground(Color.CYAN);
                     setEntityInMatrix(i, j, EnumEntity.entities.SKY);
                 }        
@@ -253,8 +266,6 @@ public class MapBuilder extends Canvas {
             }
         }
         createPlayableLayer(btnMatrix, map, mapBase, mapContainer, layeredPaneGrid);
-        /* GrubPanel grubPanel = new GrubPanel(getNumPlayers());
-        grubPanel.startGameThread(); */
     }
 
     private static void createPlayableLayer(JButton[][] btnMatrix, JPanel map, JPanel[][] mapBase, JFrame mapContainer, JLayeredPane layeredPaneGrid) { 
@@ -271,14 +282,17 @@ public class MapBuilder extends Canvas {
 
     public static void panelBackground(JPanel[][] mapBase, int i, int j) throws IOException {
         if ( i==0 || mapBase[i-1][j].getBackground() == Color.WHITE || mapBase[i-1][j].getBackground() == Color.CYAN) {
-            BufferedImage platformImg = ImageIO.read(new File("src\\main\\resources\\gameplay\\platform.png")); //TODO cambio img
+            BufferedImage platformImg = ImageIO.read(new File("src" + FS + "main" + FS + "resources" + FS + "gameplay" + FS + "platform.png")); //TODO cambio img
             JLabel picLabel = new JLabel(new ImageIcon(platformImg));
             mapBase[i][j].add(picLabel);
         }else{
-            BufferedImage platformImg = ImageIO.read(new File("src\\main\\resources\\gameplay\\platform_ground.png"));
+            BufferedImage platformImg = ImageIO.read(new File("src" + FS + "main" + FS + "resources" + FS + "gameplay" + FS + "platform_ground.png"));
             JLabel picLabel = new JLabel(new ImageIcon(platformImg));
             mapBase[i][j].add(picLabel);
         }
+        BufferedImage platformImg = ImageIO.read(new File("src" + FS + "main" + FS + "resources" + FS + "gameplay" + FS + "platform.png"));
+        JLabel picLabel = new JLabel(new ImageIcon(platformImg));
+        mapBase[i][j].add(picLabel);
     }
 
     public static void p2Map(JPanel map, JPanel[][] mapBase, JButton[][] btnMatrix, int btnFinishI, int btnFinishJ, JFrame mapContainer, JLayeredPane layeredPaneGrid) {
@@ -344,11 +358,10 @@ public class MapBuilder extends Canvas {
         getMapContainer().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getMapContainer().setSize(1200, 900);
 
-        setNumPlayers(4);//TODO debug sake
-            
-        getMapContainer().setResizable(false); //TODO prima o poi mettiamole true
-        //mapContainer.setMinimumSize(new Dimension(900, 900));
-
+        setNumPlayers(numPlayers);//TODO debug sake
+        mapContainer.setMinimumSize(new Dimension(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT));    
+        mapContainer.setResizable(false); //TODO prima o poi mettiamole true NO FRA
+        
         JLayeredPane layeredPaneGrid = new JLayeredPane();
         setLayeredPaneGrid(layeredPaneGrid);
         getLayeredPaneGrid().setPreferredSize(mapContainer.getSize());
@@ -409,7 +422,7 @@ public class MapBuilder extends Canvas {
                                 switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer);
                             }
                             previousColorState[0] = btnMatrix[finalI][finalJ].getBackground();
-                            Color menuColor = Color.decode("#EF3B10"); //da mettere grigio, non arancione
+                            Color menuColor = Color.decode("#EF3B10"); 
                             btnMatrix[finalI][finalJ].setBackground(menuColor);
                             btnMatrix[finalI][finalJ].setContentAreaFilled(true);
                         }
