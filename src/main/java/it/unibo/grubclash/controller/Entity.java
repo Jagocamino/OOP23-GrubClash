@@ -36,7 +36,7 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
         initHitbox();
     }
 
-    public Entity(GrubPanel grubPanel){ //non mi viene in mente perché dovrei passare questo costruttore
+    public Entity (GrubPanel grubPanel) {
         this.grubPanel = grubPanel;
     }
 

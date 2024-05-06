@@ -143,8 +143,9 @@ public class MapBuilder extends Canvas {
         }
     }
     
-    public static Color switchBackground(JPanel[][] mapBase, int i, int j, Color color, JButton[][] btnMatrix, JPanel map, JFrame mapContainer) {
+    public static Color switchBackground(int i, int j, Color color) {
         // dopo primo click rimane false
+        JPanel[][] mapBase = getMapBase();
         if (getCharacterPlacementPhase() == false) {
             Color btnColor = (color == Color.WHITE ? Color.BLACK : Color.WHITE);
             mapBase[i][j].setBackground(btnColor);
@@ -240,7 +241,10 @@ public class MapBuilder extends Canvas {
         return invisibleBtn; // Fa strano chiamare "invisibleBtn" l'unico bottone che fa da finish, ma non ho idee migliori
     }
 
-    public static void mapInitialization(JButton[][] btnMatrix, JPanel map, JPanel[][] mapBase, JFrame mapContainer, JLayeredPane layeredPaneGrid) throws IOException {
+    public static void mapInitialization() throws IOException {
+        JFrame mapContainer = getMapContainer();
+        JButton[][] btnMatrix = getBtnMatrix();
+        JPanel[][] mapBase = getMapBase();
         mapContainer.setResizable(false); //blocco il resize, aiuta le hitbox
         for(int i = 0; i < ROWS; i++ ) {
             for(int j = 0; j < COLS; j++) {
@@ -271,11 +275,12 @@ public class MapBuilder extends Canvas {
                 mapBase[i][j].repaint();
             }
         }
-        createPlayableLayer(btnMatrix, map, mapBase, mapContainer, layeredPaneGrid);
+        createPlayableLayer(); // DA REVISIONARE QUIESTO AOIHAOSFHIPèOS9A9HFNOIAPSNOIASGNOIPAGNASGANGAOGNPAOIG
     }
 
-    private static void createPlayableLayer(JButton[][] btnMatrix, JPanel map, JPanel[][] mapBase, JFrame mapContainer, JLayeredPane layeredPaneGrid) { 
-        
+    private static void createPlayableLayer() { 
+        JFrame mapContainer = getMapContainer();
+        JLayeredPane layeredPaneGrid = getLayeredPaneGrid();
         GrubPanel playableLayer = new GrubPanel(getNumPlayers()); 
         playableLayer.startGameThread();
         playableLayer.setBounds(0, 0, (int)mapContainer.getSize().getWidth(), (int)mapContainer.getSize().getHeight());
@@ -301,8 +306,10 @@ public class MapBuilder extends Canvas {
         mapBase[i][j].add(picLabel);
     }
 
-    public static void p2Map(JPanel map, JPanel[][] mapBase, JButton[][] btnMatrix, int btnFinishI, int btnFinishJ, JFrame mapContainer, JLayeredPane layeredPaneGrid) {
+    public static void p2Map(int btnFinishI, int btnFinishJ) {
         JButton btnFinish = btnMatrix[btnFinishI][btnFinishJ];
+        JButton[][] btnMatrix = getBtnMatrix();
+
         if (getMapDrawer() == true) {
             updateMapDrawer();
         }
@@ -314,7 +321,7 @@ public class MapBuilder extends Canvas {
                     btnFinish.addActionListener(o -> {
                         if (getCurrentPlayer() == getNumPlayers() - 1 && getColorSpawnpoint() == true) {
                             try {
-                                mapInitialization(btnMatrix, map, mapBase, mapContainer, layeredPaneGrid);
+                                mapInitialization();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -399,23 +406,23 @@ public class MapBuilder extends Canvas {
                         mapBase[finalI][finalJ].remove(btnFinish);
                         if (getCharacterPlacementPhase() == false) {
                             btnMatrix[finalI][finalJ] = createButton(finalI, finalJ);
-                            mapBase[finalI][finalJ].add(btnMatrix[finalI][finalJ], BorderLayout.CENTER);
+                            mapBase[finalI][finalJ].add(getBtnMatrix(finalI, finalJ), BorderLayout.CENTER);
                         }
                         updateCharacterPlacementPhase();
-                        p2Map(map, mapBase, btnMatrix, finalI, finalJ, mapContainer, layeredPaneGrid);
+                        p2Map(finalI, finalJ); //passo la posizione del bottone finish
                         mapContainer.repaint();
                         mapContainer.validate();
                     });
                 } else {
 
-                    final Color[] previousColorState = { btnMatrix[finalI][finalJ].getBackground() };
+                    final Color[] previousColorState = { getBtnMatrix(finalI, finalJ).getBackground() };
                     //btnMatrix[i][j].addActionListener(e -> previousColorState[0] = switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer))
                     btnMatrix[i][j].addMouseListener(new MouseAdapter() {
                     
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             if (getMapDrawer() == false) {
-                                switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer);
+                                switchBackground(finalI, finalJ, getMapBase(finalI, finalJ).getBackground());
                             }
                             if (getCharacterPlacementPhase() == false) {
                                 updateMapDrawer(); //se il bool è in true, allora si può disegnare la mappa con il mouse (ecco perché nell'altra fase non viene rispettato questo bool)
@@ -425,9 +432,9 @@ public class MapBuilder extends Canvas {
                         @Override
                         public void mouseEntered(MouseEvent e) {
                             if (getMapDrawer() == true) {
-                                switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer);
+                                switchBackground(finalI, finalJ, getMapBase(finalI, finalJ).getBackground());
                             }
-                            previousColorState[0] = btnMatrix[finalI][finalJ].getBackground();
+                            previousColorState[0] = getBtnMatrix(finalI, finalJ).getBackground();
                             Color menuColor = Color.decode("#EF3B10"); 
                             btnMatrix[finalI][finalJ].setBackground(menuColor);
                             btnMatrix[finalI][finalJ].setContentAreaFilled(true);
