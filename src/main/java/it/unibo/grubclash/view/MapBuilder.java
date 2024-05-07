@@ -19,6 +19,8 @@ import java.io.IOException;
 
 public class MapBuilder extends Canvas {
 
+    static String color_game = "#EF7B10";
+
     final static char FS = File.separatorChar;
 
     private static JFrame mapContainer;
@@ -47,12 +49,19 @@ public class MapBuilder extends Canvas {
     public static void setMapBase(JPanel[][] mapBase) {
         MapBuilder.mapBase = mapBase;   
     }
-    public static int getXMapBase(int i, int j){ // TODO ASOKHFOòPSAHNBOIASGOIADSFBGOIASGHNOIPADFGHNOI9AGBNIPè
+    public static int getXMapBase(int i, int j){ 
         return MapBuilder.mapBase[i][j].getX();
     }
     public static int getYMapBase(int i, int j){
         return MapBuilder.mapBase[i][j].getY();
     }
+    public static int getWidthMapBase(int i, int j){
+        return MapBuilder.mapBase[i][j].getWidth();
+    }
+    public static int getHeightMapBase(int i, int j){
+        return MapBuilder.mapBase[i][j].getHeight();
+    }
+
 
     private static JButton btnMatrix[][];
     public static JButton[][] getBtnMatrix() {
@@ -428,7 +437,7 @@ public class MapBuilder extends Canvas {
                                 switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer);
                             }
                             previousColorState[0] = btnMatrix[finalI][finalJ].getBackground();
-                            Color menuColor = Color.decode("#EF3B10"); 
+                            Color menuColor = Color.decode(color_game); 
                             btnMatrix[finalI][finalJ].setBackground(menuColor);
                             btnMatrix[finalI][finalJ].setContentAreaFilled(true);
                         }

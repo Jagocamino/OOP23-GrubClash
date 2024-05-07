@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
     GrubPanel grubPanel;
-    public boolean leftPressed, rightPressed;
+    public boolean leftPressed, rightPressed, spacePressed;
 
     public KeyHandler(GrubPanel grubPanel){
         this.grubPanel = grubPanel;
@@ -26,6 +26,9 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_D){
             rightPressed = true;
         }
+        if(code == KeyEvent.VK_SPACE){
+            spacePressed = true;
+        }
     }
 
     @Override
@@ -35,6 +38,9 @@ public class KeyHandler implements KeyListener {
             leftPressed = false;
         }
         if(code == KeyEvent.VK_D){
+            rightPressed = false;
+        }
+        if(code == KeyEvent.VK_SPACE){
             rightPressed = false;
         }
     }
