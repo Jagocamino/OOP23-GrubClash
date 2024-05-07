@@ -4,6 +4,7 @@ import it.unibo.grubclash.view.EnumEntity.entities;
 import javax.swing.*;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 public class Allowed { 
 
@@ -15,9 +16,29 @@ public class Allowed {
     */
     private static int borderX;
     private static int borderY;
+    
     private static Entity[][] lvlData;
+    public static Entity[][] getLvlData() {
+        return lvlData;
+    }
+    public static void setLvlData(Entity[][] lvlData) {
+        Allowed.lvlData = lvlData;
+    }
+
+    private static ArrayList<ArrayList<Object>> a = new ArrayList<ArrayList<Object>>();
+    public static ArrayList<ArrayList<Object>> getA () {
+        return a;
+    }
+
     private static int ROWS;
+    public static int getROWS() {
+        return ROWS;
+    }
+
     private static int COLS;
+    public static int getCOLS() {
+        return COLS;
+    }
 
     /*
     addEntity mette nella matrice di entità una nuova entità, da fare controlli necessari affinché nuove entità non vadano in conflitto
@@ -44,10 +65,10 @@ public class Allowed {
 
     public static boolean CanMoveThere(int x, int y, int width, int height, entities[][] entityMatrix) {
         //controlla ogni angolo del rettangolo, se gli angoli non sono contenuti nel WALL (cioè la piattaforma o i bordi), allora restituisce true
-        if (whatIsFacing(x, y, lvlData) != entities.WALL) {
-            if(whatIsFacing(x + width, y + width, lvlData) != entities.WALL) {
-                if(whatIsFacing(x + width, y, lvlData) != entities.WALL) {
-                    if(whatIsFacing(x, y + height, lvlData) != entities.WALL)
+        if (whatIsFacing(x, y) != entities.WALL) {
+            if(whatIsFacing(x + width, y + width) != entities.WALL) {
+                if(whatIsFacing(x + width, y) != entities.WALL) {
+                    if(whatIsFacing(x, y + height) != entities.WALL)
                         return true;
                 }
             }
@@ -55,18 +76,14 @@ public class Allowed {
         return false;
     }
 
-    public void addMapBase (JButton[][] mapBase, EnumEntity.entities[][] entityMatrix, int ROWS, int COLS) {
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < ROWS; j++) {
+    public void addMapBase (JButton[][] mapBase, EnumEntity.entities[][] entityMatrix) {
+        for (int i = 0; i < getROWS(); i++) {
+            for (int j = 0; j < getCOLS(); j++) {
                 addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), mapBase[i][j].getBounds().getHeight(), mapBase[i][j].getBounds().getWidth(), entityMatrix[i][j], i, j);
             }    
         }
     }
 
-    /*
-        TODO ho rimosso tutto il contenuto del panel,
-        devo dare una riguardata a cosa usare per riempirlo
-    */
     public void mapDestroyer (JButton[][] mapBase, EnumEntity.entities[][] entityMatrix, int i, int j) {
         if (entityMatrix[i][j] == entities.WALL) {     
             mapBase[i][j].removeAll();
@@ -74,6 +91,7 @@ public class Allowed {
             mapBase[i][j].revalidate();
             mapBase[i][j].repaint();
             entityMatrix[i][j] = entities.SKY;
+            lvlData[i][j].setEntity(entities.SKY);
         }else{
             System.out.println("Entity not wall didnt switch behaviour");
         }
@@ -81,8 +99,9 @@ public class Allowed {
     
     //controlleremo di volta in volta i quattro angoli di questo "rettangolo"
     //x & y sono la posizione dei giocatori
-    private static entities whatIsFacing(float x, float y, Entity[][] lvlData) {
+    private static entities whatIsFacing(float x, float y) {
         //controlla, di quei punti dell'angolo che vengono passati, se è dentro un oggetto
+        Entity[][] lvlData = getLvlData();
         if (x < 0 || x >= borderX) {
             return entities.WALL;
         } 

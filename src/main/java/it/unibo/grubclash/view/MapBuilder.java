@@ -14,7 +14,8 @@ import java.io.File;
 import java.io.IOException;
 
 /*
-    da gestire il ridimensionamento dello schermo che si è buggato --> una volta gestito il ridimensionamento basta creare una matrice ROWSxCOLS di bool per capire se è terreno o se non lo è.
+    eradicata la possibilità di gestire il ridimensionamento dello schermo
+    TODO server capire come estrarre delle interfacce, tutti gli altri gruppi hanno fatto delle interfacce
 */
 
 public class MapBuilder extends Canvas {
