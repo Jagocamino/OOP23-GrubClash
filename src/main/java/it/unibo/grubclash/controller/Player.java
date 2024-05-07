@@ -17,7 +17,7 @@ public class Player extends Entity{
 
     KeyHandler keyH;
 
-    public BufferedImage stand1, stand2, left1, left2, right1, right2;
+    public BufferedImage stand1, stand2, left1, left2, right1, right2, jump1, jump2;
 
     private int id;
     private int x, y;
@@ -49,6 +49,8 @@ public class Player extends Entity{
         left2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_left_2.png", 48, 48);
         right1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_right_1.png", 48, 48);
         right2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_right_2.png", 48, 48);
+        jump1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player0" + FS + "Grub_pl_0" + "_jump_1.png", 48, 48);
+        jump2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", 48, 48);
     }
 
 
@@ -71,16 +73,42 @@ public class Player extends Entity{
             spriteCounter = 0;
         }
 
-        if(keyH.leftPressed){
+        if(keyH.leftPressed && canMove){
             direction = "left";
             x-=speed;
-        } else if(keyH.rightPressed){
+        }
+        else if(keyH.rightPressed && canMove){
             direction = "right";
             x+=speed;
-        } else{
+        }
+        //gestire fine del round e salto TODO
+        if(keyH.spacePressed){
+            direction = "up";
+            canMove = false;
+            
+            jump1Counter++;
+            
+            if(jump1Counter > 15){
+                direction = "up2";
+                canMove = true;
+                jump2Counter++;
+                if(jump2Counter < 15){
+                    y-=30 / jump2Counter;
+                }
+                if(jump2Counter > 17 && jump2Counter < 34){  //da vedere e gestire con la fisica
+                    direction = "down";
+                    y+=speed * jump2Counter/8;
+                }
+                if(jump2Counter > 34){
+                    jump2Counter = 0;
+                    jump1Counter = 0;
+                    keyH.spacePressed = false;
+                }
+            }
+        }
+        if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
             direction = "down";
         }
-        
     }
 
     public void draw(Graphics2D g2d){
@@ -99,6 +127,12 @@ public class Player extends Entity{
         case "down":
             if(spriteNum == 1){image = stand1;}
             if(spriteNum == 2){image = stand2;}
+        break;
+        case "up":
+            image = jump1;
+        break;
+        case "up2":
+            image = jump2;
         break;
         }
         
