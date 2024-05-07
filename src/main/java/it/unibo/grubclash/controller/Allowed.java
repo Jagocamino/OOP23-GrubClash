@@ -3,6 +3,8 @@ import it.unibo.grubclash.view.EnumEntity;
 import it.unibo.grubclash.view.EnumEntity.entities;
 import javax.swing.*;
 
+import java.awt.Color;
+
 public class Allowed { 
 
     /*
@@ -58,6 +60,22 @@ public class Allowed {
             for (int j = 0; j < ROWS; j++) {
                 addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), mapBase[i][j].getBounds().getHeight(), mapBase[i][j].getBounds().getWidth(), entityMatrix[i][j], i, j);
             }    
+        }
+    }
+
+    /*
+        TODO ho rimosso tutto il contenuto del panel,
+        devo dare una riguardata a cosa usare per riempirlo
+    */
+    public void mapDestroyer (JButton[][] mapBase, EnumEntity.entities[][] entityMatrix, int i, int j) {
+        if (entityMatrix[i][j] == entities.WALL) {     
+            mapBase[i][j].removeAll();
+            mapBase[i][j].setBackground(Color.CYAN);
+            mapBase[i][j].revalidate();
+            mapBase[i][j].repaint();
+            entityMatrix[i][j] = entities.SKY;
+        }else{
+            System.out.println("Entity not wall didnt switch behaviour");
         }
     }
     

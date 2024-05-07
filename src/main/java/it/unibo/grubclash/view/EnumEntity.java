@@ -26,7 +26,7 @@ public class EnumEntity {
         return null;
     }
 
-    public static int buttonToCoordsXConverter(entities[][] entities, entities player){  //da sistemare TODO
+    public static int buttonToCoordsXConverter(entities[][] entities, entities player){ //da sistemare TODO
         int x = 0;
         for(int i = 0; i < MapBuilder.COLS; i++){
             for(int j = 0; j < MapBuilder.ROWS; j++){

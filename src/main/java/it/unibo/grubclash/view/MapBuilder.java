@@ -143,7 +143,7 @@ public class MapBuilder extends Canvas {
         }
     }
     
-    public static Color switchBackground(int i, int j, Color color) {
+    public Color switchBackground(int i, int j, Color color) {
         // dopo primo click rimane false
         JPanel[][] mapBase = getMapBase();
         if (getCharacterPlacementPhase() == false) {
@@ -252,7 +252,7 @@ public class MapBuilder extends Canvas {
                 if(mapBase[i][j].getBackground() == Color.BLACK) {
                     panelBackground(mapBase, i, j);
                     setEntityInMatrix(i, j, EnumEntity.entities.WALL);
-                    //TODO qui chiamo l'entity per mettere il wall tra le hitbox               
+                    //TODO qui chiamo l'entity per mettere il wall tra le hitbox FORSE
                 }else if(mapBase[i][j].getBackground() == Color.GREEN){
                     mapBase[i][j].setBackground(Color.CYAN);
                     setEntityInMatrix(i, j, EnumEntity.entities.PLAYER1);
@@ -393,7 +393,7 @@ public class MapBuilder extends Canvas {
                 final int finalJ = j;
                 mapBase[i][j] = new JPanel();
                 mapBase[i][j].setBackground(Color.WHITE);
-                mapBase[i][j].setLayout(new FlowLayout());
+                //mapBase[i][j].setLayout(new FlowLayout());
                 btnMatrix[i][j] = createButton(i, j);
                 if(i == 0 && j == COLS - 1) { //if(è nel bottone finish, ovvero quello dello switch della fase)
                     JButton btnFinish = btnMatrix[i][j];
