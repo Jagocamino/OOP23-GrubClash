@@ -441,7 +441,7 @@ public class MapBuilder extends Canvas {
                                 switchBackground(finalI, finalJ, getMapBase(finalI, finalJ).getBackground());
                             }
                             previousColorState[0] = btnMatrix[finalI][finalJ].getBackground();
-                            Color menuColor = Color.decode(color_game);  
+                            Color menuColor = Color.decode(color_game);
                             btnMatrix[finalI][finalJ].setBackground(menuColor);
                             btnMatrix[finalI][finalJ].setContentAreaFilled(true);
                         }
