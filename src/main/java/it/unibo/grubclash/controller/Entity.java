@@ -29,8 +29,8 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
 
     //COUNTERS
     protected static int spriteCounter = 0;
-    protected static int jump1Counter = 0;
-    protected static int jump2Counter = 0;
+    public int jump1Counter = 0;
+    public int jump2Counter = 0;
 
     public Entity(float x, float y, double width, double height, entities entity) { //passed
         Entity.x = x;

@@ -17,7 +17,7 @@ public class Player extends Entity{
 
     KeyHandler keyH;
 
-    public BufferedImage stand1, stand2, left1, left2, right1, right2, jump1, jump2;
+    public BufferedImage stand1, stand2, left1, left2, right1, right2, jump1, jump2, jump3;
 
     private int id;
     private int x, y;
@@ -51,6 +51,7 @@ public class Player extends Entity{
         right2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_right_2.png", 48, 48);
         jump1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player0" + FS + "Grub_pl_0" + "_jump_1.png", 48, 48);
         jump2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", 48, 48);
+        jump3 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player0" + FS + "Grub_pl_0" + "_jump_2.png", 48, 48);
     }
 
 
@@ -132,7 +133,8 @@ public class Player extends Entity{
             image = jump1;
         break;
         case "up2":
-            image = jump2;
+            if(keyH.leftPressed){image = jump3;}
+            else {image = jump2;}
         break;
         }
         
