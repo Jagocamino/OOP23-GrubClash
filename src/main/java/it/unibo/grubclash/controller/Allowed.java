@@ -24,6 +24,20 @@ public class Allowed {
     public static void setLvlData(Entity[][] lvlData) {
         Allowed.lvlData = lvlData;
     }
+    public static void switchBehaviourLvlData (int i, int j, entities entity) {
+        Allowed.lvlData[i][j].setEntity(entity);
+    }
+
+    public static void delateSpawnpoint () {
+        Entity[][] lvlData = getLvlData();
+        for (int i = 0; i < getROWS(); i++) {
+            for (int j = 0; j < getCOLS(); j++) {
+                if (lvlData[i][j].getEntity() != entities.WALL && lvlData[i][j].getEntity() != entities.SKY && lvlData[i][j].getEntity() != entities.ITEM) {
+                    switchBehaviourLvlData(i, j, entities.SKY);
+                }
+            }
+        }
+    }
 
     private static ArrayList<ArrayList<Object>> a = new ArrayList<ArrayList<Object>>();
     public static ArrayList<ArrayList<Object>> getA () {

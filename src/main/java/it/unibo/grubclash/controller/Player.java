@@ -171,16 +171,5 @@ public class Player extends Entity{
     public void newPos(int x, int y) { //ogni volta che viene chiamata si passa una nuova posizione
         this.x = x;
         this.y = y;
-    }
-
-
-    //da settare le animazioni (o l'immagine)
-    //initClasses prima del game loop
-
-    private void initPlayers(int numerogiocatori) { //per ogni giocatore del menu a tendina, si crea un oggetto player
-        Player[] playersarray = new Player[numerogiocatori];
-        for (int i=0 ; i<numerogiocatori ; i++) { //per ogni giocatore segno la posizione iniziale
-            playersarray[i].setId(i+1);
-        }
-    }        
+    } 
 }
