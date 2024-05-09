@@ -20,8 +20,8 @@ public class Player extends Entity{
     public BufferedImage stand1, stand2, left1, left2, right1, right2, jump1, jump2, jump3;
 
     private int id;
-    private int x, y;
-    private int speed;
+    public int x, y;
+    public int speed;
     public String direction;
 
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
@@ -86,6 +86,7 @@ public class Player extends Entity{
         if(keyH.spacePressed){
             direction = "up";
             canMove = false;
+            gravity=false;
             
             jump1Counter++;
             
@@ -106,6 +107,7 @@ public class Player extends Entity{
                     keyH.spacePressed = false;
                 }
             }
+            gravity=true;
         }
         if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
             direction = "down";

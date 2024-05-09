@@ -26,6 +26,7 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     protected static int spriteNum = 1;
     protected static boolean canMove = true;
     protected static boolean justJumped = false;
+    public boolean gravity = true;
 
     //COUNTERS
     protected static int spriteCounter = 0;

@@ -37,13 +37,13 @@ public class UI {
 
     public void drawPlayerTurn() {
         
-        g2d.drawString("TURNO DEL GIOCATORE N°: " + grubPanel.numPlayerTurn, FrameManager.WINDOW_WIDTH/3, 45);
+        g2d.drawString("TURNO DEL GIOCATORE N\u00B0: " + grubPanel.numPlayerTurn, FrameManager.WINDOW_WIDTH/3, 45);
         g2d.drawRect(MapBuilder.getXMapBase(0, 19), MapBuilder.getYMapBase(0, 19), MapBuilder.getWidthMapBase(0,19), MapBuilder.getHeightMapBase(0,19));
         g2d.setFont(snapITCFont.deriveFont(30f));
         if(grubPanel.secondsTurn < 10){
-            g2d.drawString("0" + grubPanel.secondsTurn, MapBuilder.getXMapBase(0, 19)+20, MapBuilder.getYMapBase(0, 19)+35);
+            g2d.drawString("0" + grubPanel.secondsTurn, MapBuilder.getXMapBase(0, 19)+MapBuilder.getWidthMapBase(0,19)*2/7, MapBuilder.getYMapBase(0, 19)+MapBuilder.getHeightMapBase(0,19)*2/3);
         }else{
-            g2d.drawString("" + grubPanel.secondsTurn, MapBuilder.getXMapBase(0, 19)+28, MapBuilder.getYMapBase(0, 19)+35);
+            g2d.drawString("" + grubPanel.secondsTurn, MapBuilder.getXMapBase(0, 19)+MapBuilder.getWidthMapBase(0,19)*2/7, MapBuilder.getYMapBase(0, 19)+MapBuilder.getHeightMapBase(0,19)*2/3);
         }
     }
 

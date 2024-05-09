@@ -9,10 +9,11 @@ import javax.swing.*;
 public class FrameManager {
 
     final static char FS = File.separatorChar;
-    public static final double PROP = 0.9;
+    public static final double PROP_WIDTH = 0.9;
+    public static final double PROP_HEIGHT = 0.9;
 
-    public static final int WINDOW_WIDTH = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth() * PROP);
-    public static final int WINDOW_HEIGHT = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * PROP);
+    public static final int WINDOW_WIDTH = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth() * PROP_WIDTH);
+    public static final int WINDOW_HEIGHT = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * PROP_HEIGHT);
 
     public static void setTitle(JFrame frame) {
         frame.setTitle("GrubClash");

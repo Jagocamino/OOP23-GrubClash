@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import it.unibo.grubclash.controller.Physic;
 import it.unibo.grubclash.controller.Player;
 import it.unibo.grubclash.view.UI;
 
@@ -39,6 +40,9 @@ public class GrubPanel extends JPanel implements Runnable {
 
     //UI
     UI ui = new UI(this);
+
+    //PHYSIC
+    Physic physic = new Physic(this);
 
     public GrubPanel(int playerCount) {
         this.playerCount = playerCount;
@@ -92,6 +96,7 @@ public class GrubPanel extends JPanel implements Runnable {
 
             if(delta >= 1) {
                 repaint();  // disegna gli aggiornamenti
+                update2();
                 delta--;
                 drawCount++;
             }
@@ -100,6 +105,17 @@ public class GrubPanel extends JPanel implements Runnable {
                 System.out.println("FPS: " + drawCount);
                 drawCount = 0;
                 timer = 0;
+            }
+        }
+    }
+
+    private void update2() {
+
+        for(Player p : players){
+            if(physic.checkTerrain(p)){
+
+            }else{
+                p.y+=p.speed;
             }
         }
     }
@@ -138,6 +154,7 @@ public class GrubPanel extends JPanel implements Runnable {
                     p.getKeyH().spacePressed = false;
                     p.jump1Counter = 0;
                     p.jump2Counter = 0;
+                    p.gravity=true;
                 }
             }
         }).start();

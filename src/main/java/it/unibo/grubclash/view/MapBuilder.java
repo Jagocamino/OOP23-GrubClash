@@ -92,8 +92,8 @@ public class MapBuilder extends Canvas {
     private static boolean colorSpawnpoint; //bool che serve per tenere traccia se lo spawnpoint è stato messo o no, si usa nel metodo switchBackground
     private static boolean mapDrawer;
 
-    final static int ROWS = 20;
-    final static int COLS = 20; 
+    public final static int ROWS = 20;
+    public final static int COLS = 20; 
 
     public static EnumEntity.entities[][] entityMatrix;
 
@@ -293,7 +293,7 @@ public class MapBuilder extends Canvas {
         JLayeredPane layeredPaneGrid = getLayeredPaneGrid();
         GrubPanel playableLayer = new GrubPanel(getNumPlayers()); 
         playableLayer.startGameThread();
-        playableLayer.setBounds(0, 0, (int)mapContainer.getSize().getWidth(), (int)mapContainer.getSize().getHeight());
+        playableLayer.setBounds(0, 0, FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
         playableLayer.setOpaque(false); //come si rende trasparente?
         layeredPaneGrid.add(playableLayer, JLayeredPane.PALETTE_LAYER);
         layeredPaneGrid.setVisible(true);
@@ -376,7 +376,7 @@ public class MapBuilder extends Canvas {
         FrameManager.setIcon(getMapContainer());
         initCharacterPlacementPhase();
         getMapContainer().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getMapContainer().setSize(1200, 900);
+        getMapContainer().setSize(FrameManager.WINDOW_HEIGHT, FrameManager.WINDOW_HEIGHT);
 
         setNumPlayers(numPlayers);
         mapContainer.setMinimumSize(new Dimension(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT));    
@@ -389,7 +389,7 @@ public class MapBuilder extends Canvas {
         // Creo una griglia di panels
         JPanel map = new JPanel();
         setMap(map);
-        getMap().setBounds(0, 0, (int)getMapContainer().getSize().getWidth(), (int)getMapContainer().getSize().getHeight());
+        getMap().setBounds(0, 0, FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
         getMap().setLayout(new GridLayout(ROWS, COLS));  //Imposto il layout del pane che contiene le matrix di bottoni e altri pane
 
         JPanel[][] mapBase = new JPanel[ROWS][COLS];
