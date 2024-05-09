@@ -9,11 +9,9 @@ import javax.swing.*;
 public class FrameManager {
 
     final static char FS = File.separatorChar;
-    public static final double PROP_WIDTH = 0.9;
-    public static final double PROP_HEIGHT = 0.9;
 
-    public static final int WINDOW_WIDTH = (int)(Toolkit.getDefaultToolkit().getScreenSize().getWidth() * PROP_WIDTH);
-    public static final int WINDOW_HEIGHT = (int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight() * PROP_HEIGHT);
+    public static final int WINDOW_WIDTH = 1500;
+    public static final int WINDOW_HEIGHT = 800;
 
     public static void setTitle(JFrame frame) {
         frame.setTitle("GrubClash");
@@ -27,10 +25,6 @@ public class FrameManager {
 
     public static void showMessageBox(String title, String content, int messageType) {
         JOptionPane.showMessageDialog(null, content, title, messageType);
-    }
-
-    public static int getPercentage(int total, int percentage) {
-        return (int)(total - (total * ((double)percentage / 100)));
     }
 
 }

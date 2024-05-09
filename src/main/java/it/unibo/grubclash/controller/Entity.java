@@ -89,7 +89,7 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
         Entity.entity = entity;
     }
 
-    public BufferedImage setup(String imagePath, int width, int height) { //da spolpare per bene
+    public static BufferedImage setup(String imagePath, int width, int height) { //da spolpare per bene
         ImageScaler uTool = new ImageScaler();
         BufferedImage image = null;
     
