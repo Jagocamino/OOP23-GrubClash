@@ -96,7 +96,7 @@ public class GrubPanel extends JPanel implements Runnable {
 
             if(delta >= 1) {
                 repaint();  // disegna gli aggiornamenti
-                update2();
+                //update2();
                 delta--;
                 drawCount++;
             }
