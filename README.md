@@ -4,12 +4,12 @@
     # GrubClash
 
     **Descrizione:
-    GrubClash è un gioco Java ispirato al classico gioco Worms,arricchito con la funzionalità di costruzione di mappe. Il gioco permette ai players(vermi) di competere l'uno contro gl'altri player in un ambiente 2D a turni. L'obiettivo è eliminare gli avversari utilizzando armi e tattiche strategiche.
-    ##Funzionalità principali:
+    GrubClash &egrave; un gioco Java ispirato al classico gioco Worms,arricchito con la funzionalit&agrave; di costruzione di mappe. Il gioco permette ai players(vermi) di competere l'uno contro gl'altri player in un ambiente 2D a turni. L'obiettivo &egrave; eliminare gli avversari utilizzando armi e tattiche strategiche.
+    ##Funzionalit&agrave; principali:
 
-    -Modalità di gioco a turni
+    -Modalit&agrave; di gioco a turni
     -Costruzione di mappe
-    -Varietà di armi
+    -Variet&agrave; di armi
     -Collisione fra i vari player
     -Corretto utilizzo della fisica nel gioco
 
@@ -18,7 +18,7 @@
     - **Avvia il gioco,scegliendo il numero di giocatori:
     Esegui il file JAR WormsBlast.jar o esegui la classe principale Main.java dal tuo compilatore.
     - **Crea la tua mappa personalizzata:
-    Puoi creare una mappa personalizzata, le celle nere è dove costruirai i tuoi blocchi di terra
+    Puoi creare una mappa personalizzata, le celle nere &egrave; dove costruirai i tuoi blocchi di terra
     - **Fai spawnare i giocatori:
     Potrai scegliere dove posizionare i player
     - **Inizia il gioco:
@@ -27,12 +27,12 @@
     Inizia una partita e affronta i tuoi avversari in una battaglia a turni fino alla vittoria!
 
     ##Contributi
-        Siamo sempre aperti a contributi e suggerimenti per migliorare il gioco! Se hai idee per nuove funzionalità, miglioramenti o bug fix, sentiti libero di dire la tua opinione
+        Siamo sempre aperti a contributi e suggerimenti per migliorare il gioco! Se hai idee per nuove funzionalit&agrave;, miglioramenti o bug fix, sentiti libero di dire la tua opinione
     ##Crediti
-        WormsBlast è stato sviluppato da:
+        WormsBlast &egrave; stato sviluppato da:
             - Giorgia Patera,
             - Christian Remschi,
             - Jago Camoni,
             - Davide Nicoletti.
     ##Licenza
-        Questo progetto è distribuito con la licenza:Apache License,Version 2.0(https://www.apache.org/licenses/).
+        Questo progetto &egrave; distribuito con la licenza:Apache License,Version 2.0(https://www.apache.org/licenses/).
