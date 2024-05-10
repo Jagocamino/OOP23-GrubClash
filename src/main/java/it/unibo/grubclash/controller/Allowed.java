@@ -67,14 +67,16 @@ public class Allowed {
         Allowed.borderY = borderY;
         Allowed.ROWS = ROWS;
         Allowed.COLS = COLS;
-        Allowed.lvlData = new Entity[ROWS][COLS]; 
+        Allowed.lvlData = new Entity[ROWS][COLS];
     }
 
     public static void addEntity (int x, int y, double height, double width, entities entity, int i, int j) {
-        if (Allowed.lvlData[i][j].getEntity() == entities.WALL || Allowed.lvlData[i][j].getEntity() == entities.ITEM) {
+        if (Allowed.lvlData[i][j]!=null && (Allowed.lvlData[i][j].getEntity() == entities.WALL || Allowed.lvlData[i][j].getEntity() == entities.ITEM)) {
             System.out.println("This box is already taken, overwriting floor or item on the map..");
         }
+        System.out.println("prova");
         Allowed.lvlData[i][j] = new Entity((float) x, (float) y, width, height, entity);
+
     }    
 
     public static boolean CanMoveThere(int x, int y, int width, int height, entities[][] entityMatrix) {
@@ -90,12 +92,15 @@ public class Allowed {
         return false;
     }
 
-    public void addMapBase (JButton[][] mapBase, EnumEntity.entities[][] entityMatrix) {
+    public void addMapBase (JPanel[][] mapBase, EnumEntity.entities[][] entityMatrix) {
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
+                System.out.println(" x "+mapBase[i][j].getX()+ "y " + mapBase[i][j].getY()+ "Height" +mapBase[i][j].getBounds().getHeight()+ "Width" +mapBase[i][j].getBounds().getWidth()+ "entity" +entityMatrix[i][j]+ "i" +i+ "j" +j);
                 addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), mapBase[i][j].getBounds().getHeight(), mapBase[i][j].getBounds().getWidth(), entityMatrix[i][j], i, j);
             }    
         }
+
+        System.out.println("ciao");
     }
 
     public void mapDestroyer (JButton[][] mapBase, EnumEntity.entities[][] entityMatrix, int i, int j) {

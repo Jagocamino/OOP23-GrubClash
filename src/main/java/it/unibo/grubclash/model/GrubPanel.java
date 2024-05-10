@@ -37,7 +37,7 @@ public class GrubPanel extends JPanel implements Runnable {
 
     //Players
     public ArrayList<Player> players;
-    int playerCount;
+    public int playerCount;
     public int numPlayerTurn;
     public int secondsTurn = 0;
 
@@ -58,7 +58,8 @@ public class GrubPanel extends JPanel implements Runnable {
             keyHandelers.add(new KeyHandler(this));
             players.add(new Player(this, i, keyHandelers.get(i)));
         }
-        //allowed.addMapBase(MapBuilder.getBtnMatrix(), MapBuilder.getEntityMatrix()); TODO dà NullPointerException
+        allowed.addMapBase(MapBuilder.getMapBase(), MapBuilder.getEntityMatrix()); //TODO dà NullPointerException
+
 
         this.setSize(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
         this.setDoubleBuffered(true);
@@ -180,6 +181,7 @@ public class GrubPanel extends JPanel implements Runnable {
 
         for(Player p : players) {
             p.draw(g2d);
+            p.life.draw(g2d);
         }
 
         ui.draw(g2d);

@@ -12,15 +12,15 @@ GrubClash &egrave; un gioco Java ispirato al classico gioco Worms,arricchito con
 
 ## Come giocare:
 
-- * Avvia il gioco,scegliendo il numero di giocatori:
+- Avvia il gioco,scegliendo il numero di giocatori:
     Esegui il file JAR WormsBlast.jar o esegui la classe principale Main.java dal tuo compilatore.
-- * Crea la tua mappa personalizzata:
+- Crea la tua mappa personalizzata:
     Puoi creare una mappa personalizzata, le celle nere &egrave; dove costruirai i tuoi blocchi di terra
-- * Fai spawnare i giocatori:
+- Fai spawnare i giocatori:
     Potrai scegliere dove posizionare i player
-- * Inizia il gioco:
-    Una volta iniziata la partita avrete 12 secondi a player per poter scegliere l'arma muoversi e colpire l'avversario, vince chi rimane in vita
-- * Buona Fortuna:
+- Inizia il gioco:
+    Una volta iniziata la partita avrete un tot di secondi a player per poter scegliere l'arma muoversi e colpire l'avversario, vince chi rimane in vita
+- Buona Fortuna:
     Inizia una partita e affronta i tuoi avversari in una battaglia a turni fino alla vittoria!
 
 ## Contributi

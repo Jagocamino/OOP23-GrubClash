@@ -7,6 +7,7 @@ import java.io.File;
 import it.unibo.grubclash.model.GrubPanel;
 import it.unibo.grubclash.model.KeyHandler;
 import it.unibo.grubclash.view.EnumEntity;
+import it.unibo.grubclash.view.Life;
 import it.unibo.grubclash.view.MapBuilder;
 
 //   LA POSIZIONE DEL GIOCATORE VIENE PASSATA DOPO IL CONTROLLO NEL MAP BUILDER
@@ -14,6 +15,7 @@ import it.unibo.grubclash.view.MapBuilder;
 public class Player extends Entity{
 
     final char FS = File.separatorChar;
+    public Life life;
 
     KeyHandler keyH;
 
@@ -27,6 +29,8 @@ public class Player extends Entity{
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
 
         super(grubPanel);
+
+        this.life= new Life(grubPanel,this);
 
         this.keyH = keyH;
 

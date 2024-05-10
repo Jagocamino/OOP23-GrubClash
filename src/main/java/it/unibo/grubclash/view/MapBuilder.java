@@ -285,7 +285,7 @@ public class MapBuilder extends Canvas {
                 mapBase[i][j].repaint();
             }
         }
-        createPlayableLayer(); // DA REVISIONARE QUIESTO AOIHAOSFHIPèOS9A9HFNOIAPSNOIASGNOIPAGNASGANGAOGNPAOIG
+        createPlayableLayer();
     }
 
     private static void createPlayableLayer() { 
