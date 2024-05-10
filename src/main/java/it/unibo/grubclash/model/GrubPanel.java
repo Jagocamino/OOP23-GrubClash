@@ -7,8 +7,11 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import it.unibo.grubclash.controller.Allowed;
 import it.unibo.grubclash.controller.Physic;
 import it.unibo.grubclash.controller.Player;
+import it.unibo.grubclash.view.FrameManager;
+import it.unibo.grubclash.view.MapBuilder;
 import it.unibo.grubclash.view.UI;
 
 // Pannello di gioco
@@ -42,7 +45,10 @@ public class GrubPanel extends JPanel implements Runnable {
     UI ui = new UI(this);
 
     //PHYSIC
-    Physic physic = new Physic(this);
+    public Physic physic = new Physic(this);
+
+    //COLLISION CHECKER
+    Allowed allowed = new Allowed(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT, MapBuilder.ROWS, MapBuilder.COLS);
 
     public GrubPanel(int playerCount) {
         this.playerCount = playerCount;
@@ -52,8 +58,9 @@ public class GrubPanel extends JPanel implements Runnable {
             keyHandelers.add(new KeyHandler(this));
             players.add(new Player(this, i, keyHandelers.get(i)));
         }
+        //allowed.addMapBase(MapBuilder.getBtnMatrix(), MapBuilder.getEntityMatrix()); TODO dà NullPointerException
 
-        this.setSize(900, 900);
+        this.setSize(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
         this.setDoubleBuffered(true);
         //this.addKeyListener(keyH);
         this.setFocusable(true);
@@ -111,13 +118,13 @@ public class GrubPanel extends JPanel implements Runnable {
 
     private void update2() {
 
-        for(Player p : players){
+        /* for(Player p : players){
             if(physic.checkTerrain(p)){
 
             }else{
                 p.y+=p.speed;
             }
-        }
+        } */
     }
 
     private void update() {

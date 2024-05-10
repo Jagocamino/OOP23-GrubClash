@@ -1,13 +1,10 @@
 package it.unibo.grubclash.view;
 
-import it.unibo.grubclash.controller.Entity;
-
 import javax.swing.*;
 import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.SwingUtilities;
 import java.io.File;
 
 public class Menu extends JFrame{
@@ -87,9 +84,9 @@ public class Menu extends JFrame{
             }
         });
 
-        panel.add(menu_bg);
-        panel.add(playerSelect);
         panel.add(playButton);
+        panel.add(playerSelect);
+        panel.add(menu_bg);
         frameMenu.setVisible(true);
     }
 }

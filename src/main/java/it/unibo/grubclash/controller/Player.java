@@ -62,6 +62,11 @@ public class Player extends Entity{
         updateAnimationTick();
         setAnimation();
         */
+
+        if(grubPanel.physic.checkTerrain(this)){}
+        else{
+            y+=speed;
+        }
         
         spriteCounter++;
         if(spriteCounter > 12){

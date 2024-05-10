@@ -67,7 +67,7 @@ public class Allowed {
         Allowed.borderY = borderY;
         Allowed.ROWS = ROWS;
         Allowed.COLS = COLS;
-        Allowed.lvlData = new Entity[ROWS - 1][COLS - 1]; //TODO credo sia il numero giusto con un -1 a fianco, da testare
+        Allowed.lvlData = new Entity[ROWS][COLS]; 
     }
 
     public static void addEntity (int x, int y, double height, double width, entities entity, int i, int j) {
