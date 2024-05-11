@@ -1,7 +1,6 @@
 package it.unibo.grubclash.view.Implementation;
 
 import java.io.File;
-import java.awt.Toolkit;
 
 import javax.swing.*;
 

@@ -1,8 +1,6 @@
 package it.unibo.grubclash.view.Implementation;
 
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
-import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
-import it.unibo.grubclash.view.Implementation.MapBuilder;
 
 public class EnumEntity {
 

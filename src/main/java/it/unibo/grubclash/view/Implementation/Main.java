@@ -1,6 +1,5 @@
 package it.unibo.grubclash.view.Implementation;
 
-import it.unibo.grubclash.view.Implementation.Menu;
 
 public class Main {
 

@@ -1,7 +1,5 @@
 package it.unibo.grubclash.view.Application_Programming_Interface;
 
-import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
-
 import javax.swing.*;
 
 public interface FrameManager {

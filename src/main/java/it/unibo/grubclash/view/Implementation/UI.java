@@ -18,9 +18,9 @@ public class UI {
     Graphics2D g2d;
     public Font snapITCFont;
 
-    public UI(GrubPanel grubPanel){
+    public UI(it.unibo.grubclash.model.Implementation.GrubPanel grubPanel2){
 
-        this.grubPanel = grubPanel;
+        this.grubPanel = grubPanel2;
 
         //Font
         snapITCFont = new Font("Snap ITC", Font.BOLD, 24);
