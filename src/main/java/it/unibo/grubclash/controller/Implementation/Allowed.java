@@ -1,6 +1,6 @@
-package it.unibo.grubclash.controller;
-import it.unibo.grubclash.view.EnumEntity;
-import it.unibo.grubclash.view.EnumEntity.entities;
+package it.unibo.grubclash.controller.Implementation;
+import it.unibo.grubclash.view.Implementation.EnumEntity;
+import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 import javax.swing.*;
 
 import java.awt.Color;
@@ -27,7 +27,7 @@ public class Allowed {
     public static void setLvlData(Entity[][] lvlData) {
         Allowed.lvlData = lvlData;
     }
-    public static void switchBehaviourLvlData (int i, int j, entities entity) {
+    public static void switchBehaviourLvlData (int i, int j,entities entity) {
         Allowed.lvlData[i][j].setEntity(entity);
     }
 

@@ -1,4 +1,4 @@
-package it.unibo.grubclash.model;
+package it.unibo.grubclash.model.Implementation;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

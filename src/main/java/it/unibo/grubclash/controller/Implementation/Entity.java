@@ -1,4 +1,4 @@
-package it.unibo.grubclash.controller;
+package it.unibo.grubclash.controller.Implementation;
 
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -8,9 +8,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import it.unibo.grubclash.view.ImageScaler;
-import it.unibo.grubclash.view.EnumEntity.entities;
-import it.unibo.grubclash.model.GrubPanel;
+import it.unibo.grubclash.view.Implementation.ImageScalar;
+import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
+import it.unibo.grubclash.model.Implementation.GrubPanel;
 
 import java.awt.Graphics;
 
@@ -90,7 +90,7 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     }
 
     public static BufferedImage setup(String imagePath, int width, int height) { //da spolpare per bene
-        ImageScaler uTool = new ImageScaler();
+        ImageScalar uTool = new ImageScalar();
         BufferedImage image = null;
     
         try {

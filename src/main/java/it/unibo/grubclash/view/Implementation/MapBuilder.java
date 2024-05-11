@@ -1,4 +1,4 @@
-package it.unibo.grubclash.view;
+package it.unibo.grubclash.view.Implementation;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -8,7 +8,8 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import it.unibo.grubclash.model.GrubPanel;
+import it.unibo.grubclash.model.Implementation.GrubPanel;
+import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,9 @@ import java.io.IOException;
 */
 
 public class MapBuilder extends Canvas {
+
+    //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
+    private static FrameManager frameManager = new FrameManagerImpl();
 
     static String color_game = "#EF7B10";
 
@@ -233,8 +237,8 @@ public class MapBuilder extends Canvas {
     }
 
     public static JButton createButton(int i, int j) {
-        final int BUTTON_WIDTH = FrameManager.WINDOW_WIDTH / ROWS;
-        final int BUTTON_HEIGHT = FrameManager.WINDOW_HEIGHT / COLS;
+        final int BUTTON_WIDTH = frameManager.getWindowWidth() / ROWS;
+        final int BUTTON_HEIGHT = frameManager.getWindowHeight() / COLS;
 
         JButton invisibleBtn = new JButton();
         if (i == 0 && j == COLS - 1) {
@@ -293,7 +297,7 @@ public class MapBuilder extends Canvas {
         JLayeredPane layeredPaneGrid = getLayeredPaneGrid();
         GrubPanel playableLayer = new GrubPanel(getNumPlayers()); 
         playableLayer.startGameThread();
-        playableLayer.setBounds(0, 0, FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
+        playableLayer.setBounds(0, 0, frameManager.getWindowWidth(), frameManager.getWindowHeight());
         playableLayer.setOpaque(false); //come si rende trasparente?
         layeredPaneGrid.add(playableLayer, JLayeredPane.PALETTE_LAYER);
         layeredPaneGrid.setVisible(true);
@@ -336,7 +340,7 @@ public class MapBuilder extends Canvas {
                                 e.printStackTrace();
                             }
                         }else{
-                            if (getColorSpawnpoint() == true) { //se il giocatore è stato piazzato, allora si può fare l'update dei player
+                            if (getColorSpawnpoint()) { //se il giocatore è stato piazzato, allora si può fare l'update dei player
                                 switch (getCurrentPlayer()) {
                                     case 1:
                                         setEntityInMatrix(finalI, finalJ, EnumEntity.entities.PLAYER1);
@@ -370,16 +374,21 @@ public class MapBuilder extends Canvas {
     }
 
     public void p1Map() {
+
         JFrame mapContainer = new JFrame();
         setMapContainer(mapContainer);
-        FrameManager.setTitle(getMapContainer());
-        FrameManager.setIcon(getMapContainer());
+
+        //FM setto il titolo creando una classe Framemanager perchè non posso mettere statico il metodo nell'interfaccia
+        FrameManager frameManager = new FrameManagerImpl();
+        frameManager.setTitle(getMapContainer());
+
+        frameManager.setIcon(getMapContainer());
         initCharacterPlacementPhase();
         getMapContainer().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getMapContainer().setSize(FrameManager.WINDOW_HEIGHT, FrameManager.WINDOW_HEIGHT);
+        getMapContainer().setSize(frameManager.getWindowWidth(), frameManager.getWindowHeight());
 
         setNumPlayers(numPlayers);
-        mapContainer.setMinimumSize(new Dimension(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT));    
+        mapContainer.setMinimumSize(new Dimension(frameManager.getWindowWidth(), frameManager.getWindowHeight()));
         mapContainer.setResizable(false);
         JLayeredPane layeredPaneGrid = new JLayeredPane();
         setLayeredPaneGrid(layeredPaneGrid);
@@ -389,7 +398,7 @@ public class MapBuilder extends Canvas {
         // Creo una griglia di panels
         JPanel map = new JPanel();
         setMap(map);
-        getMap().setBounds(0, 0, FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
+        getMap().setBounds(0, 0, frameManager.getWindowWidth(), frameManager.getWindowHeight());
         getMap().setLayout(new GridLayout(ROWS, COLS));  //Imposto il layout del pane che contiene le matrix di bottoni e altri pane
 
         JPanel[][] mapBase = new JPanel[ROWS][COLS];
@@ -410,7 +419,7 @@ public class MapBuilder extends Canvas {
                     btnFinish.addActionListener(f -> {
                         initializeCurrentPlayer();
                         mapBase[finalI][finalJ].remove(btnFinish);
-                        if (getCharacterPlacementPhase() == false) {
+                        if (!getCharacterPlacementPhase()) {
                             btnMatrix[finalI][finalJ] = createButton(finalI, finalJ);
                             mapBase[finalI][finalJ].add(getBtnMatrix(finalI, finalJ), BorderLayout.CENTER);
                         }
@@ -427,17 +436,17 @@ public class MapBuilder extends Canvas {
                     
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            if (getMapDrawer() == false) {
+                            if (!getMapDrawer()) {
                                 switchBackground(finalI, finalJ, getMapBase(finalI, finalJ).getBackground());
                             }
-                            if (getCharacterPlacementPhase() == false) {
+                            if (!getCharacterPlacementPhase()) {
                                 updateMapDrawer(); //se il bool è in true, allora si può disegnare la mappa con il mouse (ecco perché nell'altra fase non viene rispettato questo bool)
                             }
                         };
 
                         @Override
                         public void mouseEntered(MouseEvent e) {
-                            if (getMapDrawer() == true) {
+                            if (getMapDrawer()) {
                                 switchBackground(finalI, finalJ, getMapBase(finalI, finalJ).getBackground());
                             }
                             previousColorState[0] = btnMatrix[finalI][finalJ].getBackground();
@@ -470,7 +479,7 @@ public class MapBuilder extends Canvas {
         mapContainer.setLocationRelativeTo(null);
         mapContainer.setVisible(true);
         map.setVisible(true);
-        FrameManager.showMessageBox("Messaggio", "Crea o rimuovi spazi con collisione interagendo con i blocchi per creare la tua mappa!", JOptionPane.INFORMATION_MESSAGE);
+        frameManager.showMessageBox("Messaggio", "Crea o rimuovi spazi con collisione interagendo con i blocchi per creare la tua mappa!", JOptionPane.INFORMATION_MESSAGE);//FM
     }
 
 }

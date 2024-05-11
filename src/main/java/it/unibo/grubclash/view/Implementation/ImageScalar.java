@@ -1,15 +1,15 @@
-package it.unibo.grubclash.view;
+package it.unibo.grubclash.view.Implementation;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class ImageScaler {
+public class ImageScalar {
     public BufferedImage scaleImage(BufferedImage original, int width, int height){
 
         int imageType = original.getType();
         
         // Gestione del tipo di immagine personalizzato o sconosciuto
-        if (imageType == BufferedImage.TYPE_CUSTOM || imageType == 0) {
+        if (imageType == 0) {
             // Usa un tipo di immagine predefinito
             imageType = BufferedImage.TYPE_INT_ARGB;
         }

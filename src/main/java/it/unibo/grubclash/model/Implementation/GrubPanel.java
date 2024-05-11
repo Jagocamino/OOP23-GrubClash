@@ -1,4 +1,4 @@
-package it.unibo.grubclash.model;
+package it.unibo.grubclash.model.Implementation;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,15 +7,19 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import it.unibo.grubclash.controller.Allowed;
-import it.unibo.grubclash.controller.Physic;
-import it.unibo.grubclash.controller.Player;
-import it.unibo.grubclash.view.FrameManager;
-import it.unibo.grubclash.view.MapBuilder;
-import it.unibo.grubclash.view.UI;
+import it.unibo.grubclash.controller.Implementation.Allowed;
+import it.unibo.grubclash.controller.Implementation.Physic;
+import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
+import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
+import it.unibo.grubclash.view.Implementation.MapBuilder;
+import it.unibo.grubclash.view.Implementation.UI;
 
 // Pannello di gioco
 public class GrubPanel extends JPanel implements Runnable {
+
+    //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
+    FrameManager frameManager = new FrameManagerImpl();
 
     // FPS
     static final int FPS = 60;
@@ -48,7 +52,7 @@ public class GrubPanel extends JPanel implements Runnable {
     public Physic physic = new Physic(this);
 
     //COLLISION CHECKER
-    Allowed allowed = new Allowed(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT, MapBuilder.ROWS, MapBuilder.COLS);
+    Allowed allowed = new Allowed(frameManager.getWindowWidth(), frameManager.getWindowHeight(), MapBuilder.ROWS, MapBuilder.COLS);
 
     public GrubPanel(int playerCount) {
         this.playerCount = playerCount;
@@ -61,7 +65,7 @@ public class GrubPanel extends JPanel implements Runnable {
         allowed.addMapBase(MapBuilder.getMapBase(), MapBuilder.getEntityMatrix()); //TODO dà NullPointerException
 
 
-        this.setSize(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
+        this.setSize(frameManager.getWindowWidth(), frameManager.getWindowHeight());
         this.setDoubleBuffered(true);
         //this.addKeyListener(keyH);
         this.setFocusable(true);
@@ -85,7 +89,7 @@ public class GrubPanel extends JPanel implements Runnable {
     //metodo "delta" per creare un game loop
     @Override
     public void run() {
-        double drawInterval = 1000000000 / FPS;
+        double drawInterval = (double) 1000000000 / FPS;
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;

@@ -1,4 +1,5 @@
-package it.unibo.grubclash.view;
+package it.unibo.grubclash.view.Implementation;
+
 
 public class Main {
 

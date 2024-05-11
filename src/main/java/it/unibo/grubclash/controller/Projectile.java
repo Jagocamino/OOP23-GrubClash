@@ -2,7 +2,8 @@ package it.unibo.grubclash.controller;
 
 import javax.swing.JPanel;
 
-import it.unibo.grubclash.view.EnumEntity.entities;
+import it.unibo.grubclash.controller.Implementation.Entity;
+import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 
 public class Projectile {
 

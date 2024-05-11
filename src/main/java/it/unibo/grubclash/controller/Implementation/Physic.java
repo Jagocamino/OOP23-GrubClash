@@ -1,15 +1,15 @@
-package it.unibo.grubclash.controller;
+package it.unibo.grubclash.controller.Implementation;
 
-import it.unibo.grubclash.model.GrubPanel;
-import it.unibo.grubclash.view.EnumEntity;
-import it.unibo.grubclash.view.MapBuilder;
+import it.unibo.grubclash.model.Implementation.GrubPanel;
+import it.unibo.grubclash.view.Implementation.EnumEntity;
+import it.unibo.grubclash.view.Implementation.MapBuilder;
 
 public class Physic {
   
     GrubPanel grubPanel;
 
-    public Physic(GrubPanel grubPanel){
-        this.grubPanel = grubPanel;
+    public Physic(it.unibo.grubclash.model.Implementation.GrubPanel grubPanel2){
+        this.grubPanel = grubPanel2;
     }
 
     public boolean checkTerrain(Player player){

@@ -1,4 +1,6 @@
-package it.unibo.grubclash.view;
+package it.unibo.grubclash.view.Implementation;
+
+import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 
 import javax.swing.*;
 import javax.swing.JFrame;
@@ -9,6 +11,9 @@ import java.io.File;
 
 public class Menu extends JFrame{
 
+    //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
+    private static final FrameManager frameManager = new FrameManagerImpl();
+
     final char FS = File.separatorChar;
 
     public Menu() {
@@ -17,26 +22,29 @@ public class Menu extends JFrame{
         JFrame frameMenu = new JFrame();
         frameMenu.setTitle("GrubClash");
         frameMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameMenu.setSize(FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
+        frameMenu.setSize(frameManager.getWindowWidth(), frameManager.getWindowHeight());
         frameMenu.setResizable(false);
         frameMenu.setLayout(new BorderLayout());
-        FrameManager.setIcon(frameMenu);
+
+        //visto che ho creato l'interfaccia di FrameManager e non posso mettere i metodi statici creo il frame Fanager e gli setto l'icono FM
+        FrameManager frameManager = new FrameManagerImpl();
+        frameManager.setIcon(frameMenu);
 
         //Pannello menù
         final JPanel panel = new JPanel();
         panel.setLayout(null);
-        panel.setBounds(0, 0, FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
+        panel.setBounds(0, 0, frameManager.getWindowWidth(), frameManager.getWindowHeight());
         frameMenu.add(panel);
 
         //Impostazione dello sfondo del menu
         ImageIcon image = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "menu_bg.jpg");
         JLabel menu_bg = new JLabel(image);
-        menu_bg.setBounds(0, 0, FrameManager.WINDOW_WIDTH, FrameManager.WINDOW_HEIGHT);
+        menu_bg.setBounds(0, 0, frameManager.getWindowWidth(), frameManager.getWindowHeight());
 
         //Creazione del bottone play
         final JButton playButton = new JButton();
         playButton.setBorderPainted(false);
-        playButton.setBounds(FrameManager.WINDOW_WIDTH-1150,FrameManager.WINDOW_HEIGHT-350, 200, 200);
+        playButton.setBounds(frameManager.getWindowWidth()-1150,frameManager.getWindowHeight()-350, 200, 200);
 
         ImageIcon originalIcon = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "play.png");
         Image originalImage = originalIcon.getImage();
@@ -45,7 +53,7 @@ public class Menu extends JFrame{
         playButton.setIcon(scaledIcon);
 
         JComboBox<Integer> playerSelect = new JComboBox<>(new Integer[]{2, 3, 4, 5});
-        playerSelect.setBounds(FrameManager.WINDOW_WIDTH-950, FrameManager.WINDOW_HEIGHT-455, 200, 30);
+        playerSelect.setBounds(frameManager.getWindowWidth()-950, frameManager.getWindowHeight()-455, 200, 30);
 
         // Evento scatenato al click del bottone
         playButton.addActionListener(e -> {

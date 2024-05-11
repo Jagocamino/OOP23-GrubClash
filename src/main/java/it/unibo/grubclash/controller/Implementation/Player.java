@@ -1,21 +1,21 @@
-package it.unibo.grubclash.controller;
+package it.unibo.grubclash.controller.Implementation;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import it.unibo.grubclash.model.GrubPanel;
-import it.unibo.grubclash.model.KeyHandler;
-import it.unibo.grubclash.view.EnumEntity;
-import it.unibo.grubclash.view.Life;
-import it.unibo.grubclash.view.MapBuilder;
+import it.unibo.grubclash.model.Implementation.GrubPanel;
+import it.unibo.grubclash.model.Implementation.KeyHandler;
+import it.unibo.grubclash.view.Implementation.EnumEntity;
+import it.unibo.grubclash.view.Implementation.LifeImpl;
+import it.unibo.grubclash.view.Implementation.MapBuilder;
 
 //   LA POSIZIONE DEL GIOCATORE VIENE PASSATA DOPO IL CONTROLLO NEL MAP BUILDER
 
 public class Player extends Entity{
 
     final char FS = File.separatorChar;
-    public Life life;
+    public LifeImpl life;
 
     KeyHandler keyH;
 
@@ -30,7 +30,7 @@ public class Player extends Entity{
 
         super(grubPanel);
 
-        this.life= new Life(grubPanel,this);
+        this.life= new LifeImpl(grubPanel,this);
 
         this.keyH = keyH;
 
@@ -45,7 +45,7 @@ public class Player extends Entity{
         getImage(id);
     }
 
-    public void getImage(int playerId){ //parametro con numero del giocatore es : if(player == 1) => getImage del player1
+    private void getImage(int playerId){ //parametro con numero del giocatore es : if(player == 1) => getImage del player1
 
         stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", 48, 48);
         stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_2.png", 48, 48);
