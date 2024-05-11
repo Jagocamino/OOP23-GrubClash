@@ -21,6 +21,9 @@ public class Allowed {
     public static Entity[][] getLvlData() {
         return lvlData;
     }
+    public static Entity getLvlData( int i, int j) {
+        return lvlData[i][j];
+    }
     public static void setLvlData(Entity[][] lvlData) {
         Allowed.lvlData = lvlData;
     }
@@ -79,7 +82,7 @@ public class Allowed {
 
     }    
 
-    public static boolean CanMoveThere(int x, int y, int width, int height, entities[][] entityMatrix) {
+    public static boolean CanMoveThere(int x, int y, int width, int height) {
         //controlla ogni angolo del rettangolo, se gli angoli non sono contenuti nel WALL (cioè la piattaforma o i bordi), allora restituisce true
         if (whatIsFacing(x, y) != entities.WALL) {
             if(whatIsFacing(x + width, y + width) != entities.WALL) {
@@ -103,13 +106,13 @@ public class Allowed {
         System.out.println("ciao");
     }
 
-    public void mapDestroyer (JButton[][] mapBase, EnumEntity.entities[][] entityMatrix, int i, int j) {
-        if (entityMatrix[i][j] == entities.WALL) {     
+    // TODO entityMatrix serve SOLO per inizializzare lvlData, poi NON DEVE più essere usato
+    public void mapDestroyer (JButton[][] mapBase, int i, int j) {
+        if (getLvlData(i, j).getEntity() == entities.WALL) {     
             mapBase[i][j].removeAll();
             mapBase[i][j].setBackground(Color.CYAN);
             mapBase[i][j].revalidate();
             mapBase[i][j].repaint();
-            entityMatrix[i][j] = entities.SKY;
             lvlData[i][j].setEntity(entities.SKY);
         }else{
             System.out.println("Entity not wall didnt switch behaviour");

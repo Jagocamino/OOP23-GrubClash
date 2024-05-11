@@ -10,7 +10,8 @@ public class EnumEntity {
         PLAYER5,
         WALL,
         SKY,
-        ITEM        
+        ITEM,
+        PROJECTILE;   
     }
 
     public static entities idToEntitiesConverter(int id){
