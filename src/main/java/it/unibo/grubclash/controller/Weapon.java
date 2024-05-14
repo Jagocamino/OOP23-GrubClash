@@ -1,5 +1,5 @@
 package it.unibo.grubclash.controller;
-import it.unibo.grubclash.view.EnumEntity.entities;
+import it.unibo.grubclash.controller.Implementation.Entity;
 
 public class Weapon {
 

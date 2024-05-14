@@ -161,12 +161,13 @@ public class GrubPanel extends JPanel implements Runnable {
                     secondsTurn = 0;
                     p.getKeyH().leftPressed = false;
                     p.getKeyH().rightPressed = false;
+                    p.getKeyH().spacePressed = false;
                     this.removeKeyListener(p.getKeyH());
                     p.direction = "down";
-                    p.getKeyH().spacePressed = false;
                     p.jump1Counter = 0;
                     p.jump2Counter = 0;
                     p.gravity=true;
+                    p.canMove = true;
                 }
             }
         }).start();

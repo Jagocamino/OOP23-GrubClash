@@ -24,8 +24,7 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     protected static Rectangle hitbox;
     protected static entities entity;
     protected static int spriteNum = 1;
-    protected static boolean canMove = true;
-    protected static boolean justJumped = false;
+    public boolean canMove = true;
     public boolean gravity = true;
 
     //COUNTERS
