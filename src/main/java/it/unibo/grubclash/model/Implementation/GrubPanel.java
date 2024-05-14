@@ -52,7 +52,7 @@ public class GrubPanel extends JPanel implements Runnable {
     public Physic physic = new Physic(this);
 
     //COLLISION CHECKER
-    Allowed allowed = new Allowed(frameManager.getWindowWidth(), frameManager.getWindowHeight(), MapBuilder.ROWS, MapBuilder.COLS);
+    public Allowed allowed = new Allowed(frameManager.getWindowWidth(), frameManager.getWindowHeight(), MapBuilder.ROWS, MapBuilder.COLS);
 
     public GrubPanel(int playerCount) {
         this.playerCount = playerCount;
@@ -62,7 +62,8 @@ public class GrubPanel extends JPanel implements Runnable {
             keyHandelers.add(new KeyHandler(this));
             players.add(new Player(this, i, keyHandelers.get(i)));
         }
-        allowed.addMapBase(MapBuilder.getMapBase(), MapBuilder.getEntityMatrix()); //TODO dà NullPointerException
+        allowed.addMapBase(MapBuilder.getMapBase(), MapBuilder.getEntityMatrix()); //creo la matrice delle entità (20x20)
+        Allowed.delateSpawnpoint(); //sostituisco i player con il cielo nella matrice 20x20
 
 
         this.setSize(frameManager.getWindowWidth(), frameManager.getWindowHeight());
@@ -121,17 +122,6 @@ public class GrubPanel extends JPanel implements Runnable {
         }
     }
 
-    private void update2() {
-
-        /* for(Player p : players){
-            if(physic.checkTerrain(p)){
-
-            }else{
-                p.y+=p.speed;
-            }
-        } */
-    }
-
     private void update() {
         // TODO: RIVEDI
         new Thread(() -> {
@@ -167,7 +157,10 @@ public class GrubPanel extends JPanel implements Runnable {
                     p.jump1Counter = 0;
                     p.jump2Counter = 0;
                     p.gravity=true;
-                    p.canMove = true;
+                    p.canMoveTop = true;
+                    p.canMoveBottom = true;
+                    p.canMoveLeft = true;
+                    p.canMoveRight = true;
                 }
             }
         }).start();

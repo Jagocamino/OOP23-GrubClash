@@ -23,6 +23,7 @@ public class Player extends Entity{
 
     private int id;
     public int x, y;
+    private int width, height;
     public int speed;
     public String direction;
 
@@ -39,7 +40,9 @@ public class Player extends Entity{
         System.out.println("coords playerX: " + x);
         this.y = EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id));
         System.out.println("coords playerY: " + y);
-        this.speed = 2;
+        this.width = 48;
+        this.height = 48;
+        this.speed = 3;
         this.direction = "down";
 
         getImage(id);
@@ -47,15 +50,15 @@ public class Player extends Entity{
 
     private void getImage(int playerId){ //parametro con numero del giocatore es : if(player == 1) => getImage del player1
 
-        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", 48, 48);
-        stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_2.png", 48, 48);
-        left1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_left_1.png", 48, 48);
-        left2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_left_2.png", 48, 48);
-        right1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_right_1.png", 48, 48);
-        right2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_right_2.png", 48, 48);
-        jump1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player0" + FS + "Grub_pl_0" + "_jump_1.png", 48, 48);
-        jump2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", 48, 48);
-        jump3 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player0" + FS + "Grub_pl_0" + "_jump_2.png", 48, 48);
+        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", this.width, this.height);
+        stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_2.png", this.width, this.height);
+        left1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_left_1.png", this.width, this.height);
+        left2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_left_2.png", this.width, this.height);
+        right1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_right_1.png", this.width, this.height);
+        right2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_right_2.png", this.width, this.height);
+        jump1 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player0" + FS + "Grub_pl_0" + "_jump_1.png", this.width, this.height);
+        jump2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", this.width, this.height);
+        jump3 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player0" + FS + "Grub_pl_0" + "_jump_2.png", this.width, this.height);
     }
 
 
@@ -67,10 +70,31 @@ public class Player extends Entity{
         setAnimation();
         */
 
-        if(grubPanel.physic.checkTerrain(this)){}
+        if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "right" && !keyH.spacePressed){
+            canMoveRight = false;
+        }else if(!keyH.spacePressed){
+            canMoveRight = true;
+        }
+        if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "left" && !keyH.spacePressed){
+            canMoveLeft = false;
+        }else if(!keyH.spacePressed){
+            canMoveLeft = true;
+        }
+        /* if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "top" && !keyH.spacePressed){
+            canMoveTop = false;
+        }else if(!keyH.spacePressed){
+            canMoveTop = true;
+        }
+        if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "bottom" && !keyH.spacePressed){
+            canMoveBottom = false;
+        }else if(!keyH.spacePressed){
+            canMoveBottom = true;
+        } */
+
+        /* if(grubPanel.physic.checkTerrain(this)){}
         else{
             y+=speed;
-        }
+        } */
         
         spriteCounter++;
         if(spriteCounter > 12){
@@ -83,32 +107,42 @@ public class Player extends Entity{
             spriteCounter = 0;
         }
 
-        if(keyH.leftPressed && canMove){
+        if(keyH.leftPressed && canMoveLeft){
             direction = "left";
             x-=speed;
         }
-        else if(keyH.rightPressed && canMove){
+        else if(keyH.rightPressed && canMoveRight){
             direction = "right";
             x+=speed;
         }
         //gestire fine del round e salto TODO
         if(keyH.spacePressed){
             direction = "up";
-            canMove = false;
+            canMoveLeft = false;
+            canMoveRight = false;
             gravity=false;
             
             jump1Counter++;
             
             if(jump1Counter > 15){
                 direction = "up2";
-                canMove = true;
+                if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "right"){
+                
+                }else{
+                    canMoveRight = true;
+                }
+                if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "left"){
+
+                }else{
+                    canMoveLeft = true;
+                }
                 jump2Counter++;
                 if(jump2Counter < 15){
                     y-=30 / jump2Counter;
                 }
                 if(jump2Counter > 17 && jump2Counter < 34){  //da vedere e gestire con la fisica
                     direction = "down";
-                    y+=speed * jump2Counter/8;
+                    y+=2 * jump2Counter/8;
                 }
                 if(jump2Counter > 34){
                     jump2Counter = 0;

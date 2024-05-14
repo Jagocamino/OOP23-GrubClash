@@ -73,33 +73,47 @@ public class Allowed {
         Allowed.lvlData = new Entity[ROWS][COLS];
     }
 
-    public static void addEntity (int x, int y, double height, double width, entities entity, int i, int j) {
+    public static void addEntity (int x, int y, int height, int width, entities entity, int i, int j) {
         if (Allowed.lvlData[i][j]!=null && (Allowed.lvlData[i][j].getEntity() == entities.WALL || Allowed.lvlData[i][j].getEntity() == entities.ITEM)) {
             System.out.println("This box is already taken, overwriting floor or item on the map..");
         }
         System.out.println("prova");
-        Allowed.lvlData[i][j] = new Entity((float) x, (float) y, width, height, entity);
+        Allowed.lvlData[i][j] = new Entity(x, y, width, height, entity);
 
     }    
 
-    public static boolean CanMoveThere(int x, int y, int width, int height) {
+    public static String CanMoveThere(int x, int y, int width, int height) {
+        System.out.println(whatIsFacing(x, y));
         //controlla ogni angolo del rettangolo, se gli angoli non sono contenuti nel WALL (cioè la piattaforma o i bordi), allora restituisce true
-        if (whatIsFacing(x, y) != entities.WALL) {
-            if(whatIsFacing(x + width, y + width) != entities.WALL) {
+        /* if (whatIsFacing(x, y) != entities.WALL) {
+            if(whatIsFacing(x + width, y + height) != entities.WALL) {
                 if(whatIsFacing(x + width, y) != entities.WALL) {
                     if(whatIsFacing(x, y + height) != entities.WALL)
                         return true;
                 }
             }
         }
-        return false;
+        return false; */
+        if(whatIsFacing(x+width, y) == entities.WALL){
+            return "right";
+        }
+        if(whatIsFacing(x-width, y) == entities.WALL){
+            return "left";
+        }
+        if(whatIsFacing(x, y+height) == entities.WALL){
+            return "bottom";
+        }
+        if(whatIsFacing(x, y-height) == entities.WALL){
+            return "top";
+        }
+        return "";
     }
 
     public void addMapBase (JPanel[][] mapBase, EnumEntity.entities[][] entityMatrix) {
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
                 System.out.println(" x "+mapBase[i][j].getX()+ "y " + mapBase[i][j].getY()+ "Height" +mapBase[i][j].getBounds().getHeight()+ "Width" +mapBase[i][j].getBounds().getWidth()+ "entity" +entityMatrix[i][j]+ "i" +i+ "j" +j);
-                addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), mapBase[i][j].getBounds().getHeight(), mapBase[i][j].getBounds().getWidth(), entityMatrix[i][j], i, j);
+                addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getHeight(), (int)mapBase[i][j].getBounds().getWidth(), entityMatrix[i][j], i, j);
             }    
         }
 
@@ -121,7 +135,7 @@ public class Allowed {
     
     //controlleremo di volta in volta i quattro angoli di questo "rettangolo"
     //x & y sono la posizione dei giocatori
-    private static entities whatIsFacing(float x, float y) {
+    private static entities whatIsFacing(int x, int y) {
         //controlla, di quei punti dell'angolo che vengono passati, se è dentro un oggetto
         Entity[][] lvlData = getLvlData();
         if (x < 0 || x >= borderX) {
@@ -132,7 +146,7 @@ public class Allowed {
         }
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                if (x >= lvlData[i][j].getX() && x < (lvlData[i][j].getWidth() + lvlData[i][j].getX()) && y >= lvlData[i][j].getX() && y < (lvlData[i][j].getY() + lvlData[i][j].getHeight()) ) {
+                if (x >= lvlData[i][j].getX() && x < (lvlData[i][j].getWidth() + lvlData[i][j].getX()) && y >= lvlData[i][j].getY() && y < (lvlData[i][j].getY() + lvlData[i][j].getHeight()) ) {
                     return lvlData[i][j].getEntity(); //se le coordinate degli angoli si intersecano, ritorna il tipo di entità
                 } 
             }
