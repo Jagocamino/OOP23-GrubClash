@@ -18,16 +18,17 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
 
     GrubPanel grubPanel;
 
-    protected static float x;  //qui metterei int e non float tanto viene sempre messo (int) e come valore float non viene mai effettivamente usato
-    protected static float y;
-    protected static double width, height;
-    protected static Rectangle hitbox;
-    protected static entities entity;
-    protected static int spriteNum = 1;
-    public boolean canMoveRight = true;
+    protected float x;  //qui metterei int e non float tanto viene sempre messo (int) e come valore float non viene mai effettivamente usato
+    protected float y;
+    protected double width, height;
+    protected Rectangle hitbox;
+    protected entities entity;
+    protected int spriteNum = 1;
+    public boolean canMove = true;
+    /* public boolean canMoveRight = true;
     public boolean canMoveLeft = true;
     public boolean canMoveBottom = true;
-    public boolean canMoveTop = true;
+    public boolean canMoveTop = true; */
     public boolean gravity = true;
 
     //COUNTERS
@@ -36,12 +37,12 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     public int jump2Counter = 0;
 
     public Entity(float x, float y, double width, double height, entities entity) { //passed
-        Entity.x = x;
-        Entity.y = y;
-        Entity.width = width;
-        Entity.height = height;
-        Entity.entity = entity;
-        initHitbox();
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.entity = entity;
+        /* initHitbox(); */
     }
 
     public Entity (GrubPanel grubPanel) {
@@ -70,9 +71,9 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
         g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
     }
 
-    private void initHitbox() {
+    /* private void initHitbox() {
         hitbox = new Rectangle((int) x, (int) y, (int) width, (int) height); //width e height sono double, non ho capito perché mi forza a fare il cast a int
-    }
+    } */
 
     public void updateHitbox() {
         hitbox.x = (int) x;
@@ -84,11 +85,11 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     }
 
     public entities getEntity () {
-        return Entity.entity;
+        return this.entity;
     }
     
     public void setEntity (entities entity) {
-        Entity.entity = entity;
+        this.entity = entity;
     }
 
     public static BufferedImage setup(String imagePath, int width, int height) { //da spolpare per bene

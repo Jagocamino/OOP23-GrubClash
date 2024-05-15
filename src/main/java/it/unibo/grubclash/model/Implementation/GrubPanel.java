@@ -63,6 +63,12 @@ public class GrubPanel extends JPanel implements Runnable {
             players.add(new Player(this, i, keyHandelers.get(i)));
         }
         allowed.addMapBase(MapBuilder.getMapBase(), MapBuilder.getEntityMatrix()); //creo la matrice delle entità (20x20)
+        //esplode lvlData
+        for (int k = 0 ; k < MapBuilder.ROWS ; k++) {
+            for (int u = 0; u < MapBuilder.COLS; u++) {
+                System.out.println("x >" + allowed.lvlData[k][u].getX() + "x <" + (allowed.lvlData[k][u].getWidth() + allowed.lvlData[k][u].getX()) + "y >= " + allowed.lvlData[k][u].getY() + "y <" + (allowed.lvlData[k][u].getY() + allowed.lvlData[k][u].getHeight()));
+            }
+        }
         Allowed.delateSpawnpoint(); //sostituisco i player con il cielo nella matrice 20x20
 
 
@@ -157,10 +163,7 @@ public class GrubPanel extends JPanel implements Runnable {
                     p.jump1Counter = 0;
                     p.jump2Counter = 0;
                     p.gravity=true;
-                    p.canMoveTop = true;
-                    p.canMoveBottom = true;
-                    p.canMoveLeft = true;
-                    p.canMoveRight = true;
+                    p.canMove = true;
                 }
             }
         }).start();

@@ -32,7 +32,7 @@ public class EnumEntity {
 
     }
 
-    public static int buttonToCoordsXConverter(entities[][] entities, entities player){ //da sistemare TODO
+    public static int buttonToCoordsXConverter(entities[][] entities, entities player){
         int x = 0;
         for(int i = 0; i < MapBuilder.COLS; i++){
             for(int j = 0; j < MapBuilder.ROWS; j++){
@@ -45,7 +45,7 @@ public class EnumEntity {
         return x;
     }
 
-    public static int buttonToCoordsYConverter(entities[][] entities, entities player){ //da sistemare TODO
+    public static int buttonToCoordsYConverter(entities[][] entities, entities player){
         int y = 0;
         for(int i = 0; i < MapBuilder.COLS; i++){
             for(int j = 0; j < MapBuilder.ROWS; j++){

@@ -14,11 +14,6 @@ import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import java.io.File;
 import java.io.IOException;
 
-/*
-    eradicata la possibilità di gestire il ridimensionamento dello schermo
-    TODO server capire come estrarre delle interfacce, tutti gli altri gruppi hanno fatto delle interfacce
-*/
-
 public class MapBuilder extends Canvas {
 
     //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
@@ -266,7 +261,6 @@ public class MapBuilder extends Canvas {
                 if(mapBase[i][j].getBackground() == Color.BLACK) {
                     panelBackground(mapBase, i, j);
                     setEntityInMatrix(i, j, EnumEntity.entities.WALL);
-                    //TODO qui chiamo l'entity per mettere il wall tra le hitbox FORSE
                 }else if(mapBase[i][j].getBackground() == Color.GREEN){
                     mapBase[i][j].setBackground(Color.CYAN);
                     setEntityInMatrix(i, j, EnumEntity.entities.PLAYER1);
@@ -363,8 +357,8 @@ public class MapBuilder extends Canvas {
                                 updateCurrentPlayer();
                             }
                             initColorSpawnpoint();
-                            System.out.println("siamo al giocatore numero" + getCurrentPlayer());
-                            System.out.println(getNumPlayers());
+                            /* System.out.println("siamo al giocatore numero" + getCurrentPlayer());
+                            System.out.println(getNumPlayers()); */
                         }
                     });
                 }

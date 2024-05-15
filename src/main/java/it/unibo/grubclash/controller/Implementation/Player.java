@@ -40,8 +40,8 @@ public class Player extends Entity{
         System.out.println("coords playerX: " + x);
         this.y = EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id));
         System.out.println("coords playerY: " + y);
-        this.width = 48;
-        this.height = 48;
+        this.width = 38;
+        this.height = 38;
         this.speed = 3;
         this.direction = "down";
 
@@ -63,23 +63,17 @@ public class Player extends Entity{
 
 
     public void update() {
-        /*
-        updatePos();
-        updateHitbox();
-        updateAnimationTick();
-        setAnimation();
-        */
 
-        if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "right" && !keyH.spacePressed){
-            canMoveRight = false;
+        /* if(!Allowed.CanMoveThere(this.x, this.y, this.width, this.height) && !keyH.spacePressed){
+            canMove = false;
         }else if(!keyH.spacePressed){
-            canMoveRight = true;
+            canMove = true;
         }
-        if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "left" && !keyH.spacePressed){
-            canMoveLeft = false;
+        if(!Allowed.CanMoveThere(this.x, this.y, this.width, this.height) && !keyH.spacePressed){
+            canMove = false;
         }else if(!keyH.spacePressed){
-            canMoveLeft = true;
-        }
+            canMove = true;
+        } */
         /* if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "top" && !keyH.spacePressed){
             canMoveTop = false;
         }else if(!keyH.spacePressed){
@@ -107,26 +101,32 @@ public class Player extends Entity{
             spriteCounter = 0;
         }
 
-        if(keyH.leftPressed && canMoveLeft){
-            direction = "left";
-            x-=speed;
+        if(keyH.leftPressed && canMove){
+            System.out.println(Allowed.whatIsFacing(x, y));
+            if(Allowed.CanMoveThere(x - speed, y, width, height)){
+                direction = "left";
+                x-=speed;
+            }
         }
-        else if(keyH.rightPressed && canMoveRight){
-            direction = "right";
-            x+=speed;
+        else if(keyH.rightPressed && canMove){
+            System.out.println(Allowed.whatIsFacing(x, y));
+            if(Allowed.CanMoveThere(x + speed, y, width, height)){
+                direction = "right";
+                x+=speed;
+            }
         }
         //gestire fine del round e salto TODO
         if(keyH.spacePressed){
             direction = "up";
-            canMoveLeft = false;
-            canMoveRight = false;
+            canMove = false;
             gravity=false;
             
             jump1Counter++;
             
             if(jump1Counter > 15){
+                canMove = true;
                 direction = "up2";
-                if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "right"){
+                /* if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "right"){
                 
                 }else{
                     canMoveRight = true;
@@ -135,7 +135,7 @@ public class Player extends Entity{
 
                 }else{
                     canMoveLeft = true;
-                }
+                } */
                 jump2Counter++;
                 if(jump2Counter < 15){
                     y-=30 / jump2Counter;
