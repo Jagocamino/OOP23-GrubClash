@@ -57,35 +57,21 @@ public class GrubPanel extends JPanel implements Runnable {
     public GrubPanel(int playerCount) {
         this.playerCount = playerCount;
         keyHandelers = new ArrayList<>();
+        Allowed.addMapBase(MapBuilder.getMapBase(), MapBuilder.getEntityMatrix()); //creo la matrice delle entità (20x20)
+
+        //Allowed.delateSpawnpoint(); //sostituisco i player con il cielo nella matrice 20x20, non so se metterlo TODO
+
         players = new ArrayList<>();
         for(int i = 0; i < playerCount; i++) {
             keyHandelers.add(new KeyHandler(this));
             players.add(new Player(this, i, keyHandelers.get(i)));
-        }
-        allowed.addMapBase(MapBuilder.getMapBase(), MapBuilder.getEntityMatrix()); //creo la matrice delle entità (20x20)
-        //esplode lvlData
-        for (int k = 0 ; k < MapBuilder.ROWS ; k++) {
-            for (int u = 0; u < MapBuilder.COLS; u++) {
-                System.out.println("x >" + allowed.lvlData[k][u].getX() + "x <" + (allowed.lvlData[k][u].getWidth() + allowed.lvlData[k][u].getX()) + "y >= " + allowed.lvlData[k][u].getY() + "y <" + (allowed.lvlData[k][u].getY() + allowed.lvlData[k][u].getHeight()));
-            }
-        }
-        Allowed.delateSpawnpoint(); //sostituisco i player con il cielo nella matrice 20x20
+        } 
 
 
         this.setSize(frameManager.getWindowWidth(), frameManager.getWindowHeight());
         this.setDoubleBuffered(true);
-        //this.addKeyListener(keyH);
         this.setFocusable(true);
     }
-
-    // Appena avviata l'applicazione si va sulla schermata iniziale
-    /* public void setupGame(){
-
-        gameState = initialState;
-
-        screen = new BufferedImage(GAME_WIDTH, GAME_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-        g2d = (Graphics2D)screen.getGraphics();
-    } */
 
     public void startGameThread () {
 
@@ -115,7 +101,7 @@ public class GrubPanel extends JPanel implements Runnable {
 
             if(delta >= 1) {
                 repaint();  // disegna gli aggiornamenti
-                //update2();
+                updatePhysic();
                 delta--;
                 drawCount++;
             }
@@ -169,14 +155,17 @@ public class GrubPanel extends JPanel implements Runnable {
         }).start();
     }
 
+    private void updatePhysic() {
+        for(Player p : players) {
+            if(p.gravity){
+                physic.checkTerrain(p);
+            }
+        }
+    }
+
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
-
-
-        /* g.setColor(Color.YELLOW);
-
-        g.drawRect(100, 100, 200, 50); */
 
         Graphics2D g2d = (Graphics2D)g;
 

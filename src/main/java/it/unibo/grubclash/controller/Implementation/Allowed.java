@@ -19,10 +19,10 @@ public class Allowed {
     
     public static Entity[][] lvlData; // da cambiare in private
     public static Entity[][] getLvlData() {
-        return lvlData;
+        return Allowed.lvlData;
     }
     public static Entity getLvlData( int i, int j) {
-        return lvlData[i][j];
+        return Allowed.lvlData[i][j];
     }
     public static void setLvlData(Entity[][] lvlData) {
         Allowed.lvlData = lvlData;
@@ -34,7 +34,7 @@ public class Allowed {
     public static void delateSpawnpoint () { //prima di entrare qui è già esploso
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
-                if (lvlData[i][j].getEntity() == entities.PLAYER1 || lvlData[i][j].getEntity() != entities.PLAYER2 || lvlData[i][j].getEntity() != entities.PLAYER3 || lvlData[i][j].getEntity() != entities.PLAYER4 || lvlData[i][j].getEntity() != entities.PLAYER5 ) {
+                if (Allowed.lvlData[i][j].getEntity() == entities.PLAYER1 || Allowed.lvlData[i][j].getEntity() != entities.PLAYER2 || Allowed.lvlData[i][j].getEntity() != entities.PLAYER3 || Allowed.lvlData[i][j].getEntity() != entities.PLAYER4 || Allowed.lvlData[i][j].getEntity() != entities.PLAYER5 ) {
                     switchBehaviourLvlData(i, j, entities.SKY);
                 }
                 //System.out.println("x: " + getLvlData(i, j).getX() + "y: " + getLvlData(i, j).getY() + "ent: " +getLvlData(i, j).getEntity());
@@ -49,19 +49,19 @@ public class Allowed {
 
     private static int ROWS;
     public static int getROWS() {
-        return ROWS;
+        return Allowed.ROWS;
     }
 
     private static int COLS;
     public static int getCOLS() {
-        return COLS;
+        return Allowed.COLS;
     }
 
     /*
     addEntity mette nella matrice di entità una nuova entità, da fare controlli necessari affinché nuove entità non vadano in conflitto
     quando il costruttore di allowed viene chiamato, devo passargli anche le const relative all numero di celle, per rendere più flessibile il codice a future implementazioni
     */
-    public entities getEntity (int i, int j) {
+    public static entities getEntity (int i, int j) {
         return Allowed.lvlData[i][j].getEntity();
     }
 
@@ -74,13 +74,19 @@ public class Allowed {
     }
 
     public static void addEntity (int x, int y, int width, int height, entities entity, int i, int j) {
-        if (Allowed.lvlData[i][j] != null && (Allowed.lvlData[i][j].getEntity() == entities.WALL || Allowed.lvlData[i][j].getEntity() == entities.ITEM)) {
+        if (lvlData[i][j] != null && (lvlData[i][j].getEntity() == entities.WALL || lvlData[i][j].getEntity() == entities.ITEM)) {
             System.out.println("This box is already taken, overwriting floor or item on the map..");
         }
         Allowed.lvlData[i][j] = new Entity(x, y, width, height, entity);
     }
 
     public static boolean CanMoveThere(int x, int y, int width, int height) {
+        /* for(int i = 0; i < ROWS; i++){
+            for(int j = 0; j < COLS; j++){
+                System.out.print("[" + lvlData[i][j].getEntity() + "] ");
+            }
+            System.out.println();
+        } */
         //controlla ogni angolo del rettangolo, se gli angoli non sono contenuti nel WALL (cioè la piattaforma o i bordi), allora restituisce true
         if (whatIsFacing(x, y) != entities.WALL) {
             if(whatIsFacing(x + width, y + height) != entities.WALL) {
@@ -93,7 +99,7 @@ public class Allowed {
         return false;
     }
 
-    public void addMapBase (JPanel[][] mapBase, EnumEntity.entities[][] entityMatrix) { //sano dopo essere uscito da qui
+    public static void addMapBase (JPanel[][] mapBase, EnumEntity.entities[][] entityMatrix) { //sano dopo essere uscito da qui
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
                 addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getWidth(), (int)mapBase[i][j].getBounds().getHeight(), entityMatrix[i][j], i, j);
@@ -108,7 +114,7 @@ public class Allowed {
             mapBase[i][j].setBackground(Color.CYAN);
             mapBase[i][j].revalidate();
             mapBase[i][j].repaint();
-            lvlData[i][j].setEntity(entities.SKY);
+            Allowed.lvlData[i][j].setEntity(entities.SKY);
         }else{
             System.out.println("Entity not wall didnt switch behaviour");
         }
@@ -118,7 +124,7 @@ public class Allowed {
     //x & y sono la posizione dei giocatori
     public static entities whatIsFacing(int x, int y) { // metti private
         //controlla, di quei punti dell'angolo che vengono passati, se è dentro un oggetto
-        Entity[][] lvlData = getLvlData();
+        
         if (x < 0 || x >= borderX) {
             return entities.WALL;
         } 
@@ -127,10 +133,10 @@ public class Allowed {
         }
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                //System.out.println("x >" + lvlData[i][j].getX() + "x <" + (lvlData[i][j].getWidth() + lvlData[i][j].getX()) + "y >= " + lvlData[i][j].getY() + "y <" + (lvlData[i][j].getY() + lvlData[i][j].getHeight()));
-                if (x >= lvlData[i][j].getX() && x < (lvlData[i][j].getWidth() + lvlData[i][j].getX()) && y >= lvlData[i][j].getY() && y < (lvlData[i][j].getHeight() + lvlData[i][j].getY()) ) {
-                    return lvlData[i][j].getEntity(); //se le coordinate degli angoli si intersecano, ritorna il tipo di entità
-                } 
+                if(x >= Allowed.lvlData[i][j].getX() && x <= (Allowed.lvlData[i][j].getX() + Allowed.lvlData[i][j].getWidth()) && 
+                        y >= Allowed.lvlData[i][j].getY() && y <= (Allowed.lvlData[i][j].getY() + Allowed.lvlData[i][j].getHeight())){
+                    return Allowed.lvlData[i][j].getEntity();
+                }
             }
 
         }

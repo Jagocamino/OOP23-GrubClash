@@ -38,7 +38,6 @@ public class EnumEntity {
             for(int j = 0; j < MapBuilder.ROWS; j++){
                 if(entities[i][j].equals(player)){
                     x = MapBuilder.getXMapBase(i, j);
-                    System.out.println(frameManager.getWindowWidth() + " " + i);
                 }
             }
         }
@@ -54,6 +53,6 @@ public class EnumEntity {
                 }
             }
         }
-        return y-7;
+        return y;
     }
 }

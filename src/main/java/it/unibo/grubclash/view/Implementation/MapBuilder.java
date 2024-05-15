@@ -357,8 +357,6 @@ public class MapBuilder extends Canvas {
                                 updateCurrentPlayer();
                             }
                             initColorSpawnpoint();
-                            /* System.out.println("siamo al giocatore numero" + getCurrentPlayer());
-                            System.out.println(getNumPlayers()); */
                         }
                     });
                 }
@@ -464,7 +462,6 @@ public class MapBuilder extends Canvas {
                 mapBase[i][j].setVisible(true);
                 
                 map.add(mapBase[i][j]);
-                //map.add(grubPanel);
             }
         }   
         layeredPaneGrid.add(map, JLayeredPane.DEFAULT_LAYER);

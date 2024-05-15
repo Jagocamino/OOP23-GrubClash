@@ -23,9 +23,10 @@ public class Player extends Entity{
 
     private int id;
     public int x, y;
-    private int width, height;
+    public int width, height;
     public int speed;
     public String direction;
+    public boolean canJump = true;
 
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
 
@@ -37,11 +38,9 @@ public class Player extends Entity{
 
         this.id = id;
         this.x = EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id));
-        System.out.println("coords playerX: " + x);
         this.y = EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id));
-        System.out.println("coords playerY: " + y);
-        this.width = 38;
-        this.height = 38;
+        this.width = 40;
+        this.height = 40;
         this.speed = 3;
         this.direction = "down";
 
@@ -63,32 +62,6 @@ public class Player extends Entity{
 
 
     public void update() {
-
-        /* if(!Allowed.CanMoveThere(this.x, this.y, this.width, this.height) && !keyH.spacePressed){
-            canMove = false;
-        }else if(!keyH.spacePressed){
-            canMove = true;
-        }
-        if(!Allowed.CanMoveThere(this.x, this.y, this.width, this.height) && !keyH.spacePressed){
-            canMove = false;
-        }else if(!keyH.spacePressed){
-            canMove = true;
-        } */
-        /* if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "top" && !keyH.spacePressed){
-            canMoveTop = false;
-        }else if(!keyH.spacePressed){
-            canMoveTop = true;
-        }
-        if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "bottom" && !keyH.spacePressed){
-            canMoveBottom = false;
-        }else if(!keyH.spacePressed){
-            canMoveBottom = true;
-        } */
-
-        /* if(grubPanel.physic.checkTerrain(this)){}
-        else{
-            y+=speed;
-        } */
         
         spriteCounter++;
         if(spriteCounter > 12){
@@ -102,21 +75,19 @@ public class Player extends Entity{
         }
 
         if(keyH.leftPressed && canMove){
-            System.out.println(Allowed.whatIsFacing(x, y));
             if(Allowed.CanMoveThere(x - speed, y, width, height)){
                 direction = "left";
                 x-=speed;
             }
         }
         else if(keyH.rightPressed && canMove){
-            System.out.println(Allowed.whatIsFacing(x, y));
             if(Allowed.CanMoveThere(x + speed, y, width, height)){
                 direction = "right";
                 x+=speed;
             }
         }
-        //gestire fine del round e salto TODO
-        if(keyH.spacePressed){
+        //TODO togliere la possibilità di saltare mentre si è in aria
+        if(keyH.spacePressed){  //aggiungi "&& canJump" per effetto palleggio
             direction = "up";
             canMove = false;
             gravity=false;
@@ -126,23 +97,13 @@ public class Player extends Entity{
             if(jump1Counter > 15){
                 canMove = true;
                 direction = "up2";
-                /* if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "right"){
-                
-                }else{
-                    canMoveRight = true;
-                }
-                if(Allowed.CanMoveThere(this.x, this.y, this.width, this.height) == "left"){
-
-                }else{
-                    canMoveLeft = true;
-                } */
                 jump2Counter++;
-                if(jump2Counter < 15){
+                if(jump2Counter < 15 && Allowed.CanMoveThere(x, y-30/jump2Counter, width, height)){
                     y-=30 / jump2Counter;
                 }
-                if(jump2Counter > 17 && jump2Counter < 34){  //da vedere e gestire con la fisica
+                if(jump2Counter > 17 && jump2Counter < 34 && Allowed.CanMoveThere(x, y+jump2Counter/8, width, height)){  
                     direction = "down";
-                    y+=2 * jump2Counter/8;
+                    y+=jump2Counter/8;
                 }
                 if(jump2Counter > 34){
                     jump2Counter = 0;
@@ -150,8 +111,8 @@ public class Player extends Entity{
                     keyH.spacePressed = false;
                 }
             }
-            gravity=true;
         }
+        gravity=true;
         if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
             direction = "down";
         }
