@@ -31,6 +31,15 @@ public class Allowed {
         Allowed.lvlData[i][j].setEntity(entity);
     }
 
+    private static ArrayList<Entity> dynamicEntities;
+    public static void addDynamicEntity (Entity dynamicEntity) {
+        Allowed.dynamicEntities.add(dynamicEntity);
+    }
+    public static void removeDynamicEntity (Entity dynamicEntity) {
+        Allowed.dynamicEntities.remove(dynamicEntity);
+    }
+
+
     public static void delateSpawnpoint () { //prima di entrare qui è già esploso
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
@@ -71,6 +80,7 @@ public class Allowed {
         Allowed.ROWS = ROWS;
         Allowed.COLS = COLS;
         Allowed.lvlData = new Entity[ROWS][COLS];
+        Allowed.dynamicEntities = new ArrayList<Entity>();
     }
 
     public static void addEntity (int x, int y, int width, int height, entities entity, int i, int j) {

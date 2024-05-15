@@ -53,6 +53,14 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
         return y;
     }
 
+    public void setX (float x) {
+        this.x = x;
+    }
+
+    public void setY (float y) {
+        this.y = y;
+    }
+
     public double getWidth() {
         return width;
     }

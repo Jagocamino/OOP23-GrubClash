@@ -1,5 +1,7 @@
 package it.unibo.grubclash.controller;
 
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 
 import it.unibo.grubclash.controller.Implementation.Entity;
@@ -105,7 +107,7 @@ public class Projectile {
         */
     }
 
-    private static Entity whatIsFacing(Entity[][] lvlData, Entity[] dynamicEntity, float x, float y) {
+    private static Entity whatIsFacing(Entity[][] lvlData, ArrayList<Entity> dynamicEntity, float x, float y) {
         //controlla, di quei punti dell'angolo che vengono passati, se è dentro un oggetto
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
@@ -114,17 +116,16 @@ public class Projectile {
                 }
             }
         }
-        int dynamicEntityDim = 8; // TODO dynamicEntityDim non serve a una ciola, perché è meglio mettere una ArrayList di dynamicEntity()
-        for (int i = 0; i < dynamicEntityDim; i++) {
-            if (x >= dynamicEntity[i].getX() && x < (dynamicEntity[i].getWidth() + dynamicEntity[i].getX()) && y >= dynamicEntity[i].getX() && y < (dynamicEntity[i].getY() + dynamicEntity[i].getHeight()) ) {
-                return dynamicEntity[i];
+        for (Entity entity : dynamicEntity) {
+            if (x >= entity.getX() && x < (entity.getWidth() + entity.getX()) && y >= entity.getX() && y < (entity.getY() + entity.getHeight()) ) {
+                return entity;
             }
         }
         return null;
     }
 
     //cosa succede se il proiettile tocca una superfice?
-    public boolean collidesWithSmth (Entity[][] lvlData, Entity[] dynamicEntity, JPanel[][] mapBase, int x, int y) { // controlla l'esplosione del proiettile
+    public boolean collidesWithSmth (Entity[][] lvlData, ArrayList<Entity> dynamicEntity, JPanel[][] mapBase, int x, int y) { // controlla l'esplosione del proiettile
         // dynamicEntity potrebbe essere l'insieme dielle entità non fisse che girano per la mappa, come proiettili, player e in caso item speciali
         // do per scontato che ogni angolo appartiene a una sola entità alla volta (o player o muro, non entrambe)
         if (whatIsFacing(lvlData, dynamicEntity, x, y).getEntity() != entities.WALL) {

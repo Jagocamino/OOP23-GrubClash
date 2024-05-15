@@ -74,6 +74,10 @@ public class Player extends Entity{
             spriteCounter = 0;
         }
 
+        // TODO @notnoted ziopera stiamo muovendo il player NON entity, dobbiamo muovere anche l'Entity del giocatore
+        /*
+            Non ci metto le mani altrimenti Pianini mi uccide, aggiorna con i setter appena messi su Entity, se non si muovono insieme naturalmente non sono registrate le collisioni 
+        */
         if(keyH.leftPressed && canMove){
             if(Allowed.CanMoveThere(x - speed, y, width, height)){
                 direction = "left";
