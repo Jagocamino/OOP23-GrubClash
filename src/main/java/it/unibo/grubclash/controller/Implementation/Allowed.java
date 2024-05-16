@@ -91,17 +91,11 @@ public class Allowed {
     }
 
     public static boolean CanMoveThere(int x, int y, int width, int height) {
-        /* for(int i = 0; i < ROWS; i++){
-            for(int j = 0; j < COLS; j++){
-                System.out.print("[" + lvlData[i][j].getEntity() + "] ");
-            }
-            System.out.println();
-        } */
         //controlla ogni angolo del rettangolo, se gli angoli non sono contenuti nel WALL (cioè la piattaforma o i bordi), allora restituisce true
-        if (whatIsFacing(x, y) != entities.WALL) {
-            if(whatIsFacing(x + width, y + height) != entities.WALL) {
-                if(whatIsFacing(x + width, y) != entities.WALL) {
-                    if(whatIsFacing(x, y + height) != entities.WALL)
+        if (whatIsFacing(x+5, y+5) != entities.WALL) {
+            if(whatIsFacing(x + width, y + height+2) != entities.WALL) {
+                if(whatIsFacing(x + width, y+5) != entities.WALL) {
+                    if(whatIsFacing(x+5, y + height+2) != entities.WALL)
                         return true;
                 }
             }
