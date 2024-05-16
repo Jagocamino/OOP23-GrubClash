@@ -105,18 +105,20 @@ public class Player extends Entity{
                 if(jump2Counter < 15 && Allowed.CanMoveThere(x, y-30/jump2Counter, width, height)){
                     y-=30 / jump2Counter;
                 }
-                if(jump2Counter > 17 && jump2Counter < 34 && Allowed.CanMoveThere(x, y+jump2Counter/8, width, height)){  
+                if(jump2Counter > 15 && jump2Counter < 30){ //  && Allowed.CanMoveThere(x, y+gravityAcceleration, width, height)  
                     direction = "down";
-                    y+=jump2Counter/8;
+                    gravity = true;
+                    //y+=jump2Counter/8;
                 }
-                if(jump2Counter > 34){
+                if(jump2Counter > 30){
                     jump2Counter = 0;
                     jump1Counter = 0;
                     keyH.spacePressed = false;
                 }
             }
+        }else{
+            gravity=true;
         }
-        gravity=true;
         if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
             direction = "down";
         }
