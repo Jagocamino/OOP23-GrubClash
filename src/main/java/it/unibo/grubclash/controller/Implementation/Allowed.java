@@ -46,7 +46,6 @@ public class Allowed {
                 if (Allowed.lvlData[i][j].getEntity() == entities.PLAYER1 || Allowed.lvlData[i][j].getEntity() != entities.PLAYER2 || Allowed.lvlData[i][j].getEntity() != entities.PLAYER3 || Allowed.lvlData[i][j].getEntity() != entities.PLAYER4 || Allowed.lvlData[i][j].getEntity() != entities.PLAYER5 ) {
                     switchBehaviourLvlData(i, j, entities.SKY);
                 }
-                //System.out.println("x: " + getLvlData(i, j).getX() + "y: " + getLvlData(i, j).getY() + "ent: " +getLvlData(i, j).getEntity());
             }
         }
     }
@@ -103,6 +102,19 @@ public class Allowed {
         return false;
     }
 
+    //TODO DA FARE ASSOLUTAMENTE APPENA TI SVEGLI, COGLIONE ritorna il primo muro che si trova dentro l'hitbox messa da parametro nel metodo, da completare
+    public static Entity whatLvlDataWallInside (int x, int y, int width, int height) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if(x >= Allowed.lvlData[i][j].getX() && x <= (Allowed.lvlData[i][j].getX() + Allowed.lvlData[i][j].getWidth()) && 
+                        y >= Allowed.lvlData[i][j].getY() && y <= (Allowed.lvlData[i][j].getY() + Allowed.lvlData[i][j].getHeight())){
+                    return Allowed.lvlData[i][j];
+                }
+            }
+        }
+        return null; // TODO da aggiungere il return dell'optional, NON null
+    }
+
     public static void addMapBase (JPanel[][] mapBase, EnumEntity.entities[][] entityMatrix) { //sano dopo essere uscito da qui
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
@@ -122,6 +134,38 @@ public class Allowed {
         }else{
             System.out.println("Entity not wall didnt switch behaviour");
         }
+    }
+
+    // TODO mapdestroyer DEVE spaccare l'entità da finire
+    public void mapDestroyer (JButton[][] mapBase, Entity wall) {
+        int i = getI (wall);
+        int j = getJ (wall);
+        mapDestroyer(mapBase, i, j);
+    }
+
+    // METTERE METODO CHE RITORNA i, j DATA l'entità del muro
+    public int getI (Entity entity) {
+
+        for (int i = 0; i < getROWS(); i++) {
+            for (int j = 0; j < getCOLS(); j++) {
+                if (Allowed.lvlData[i][j] == entity ) {
+                    return i;
+                }
+            }
+        }
+        return 0; // ritorna sempre 0 TODO dovremmo aggiuntere il return di Optional
+    }
+
+    public int getJ (Entity entity) {
+
+        for (int i = 0; i < getROWS(); i++) {
+            for (int j = 0; j < getCOLS(); j++) {
+                if (Allowed.lvlData[i][j] == entity ) {
+                    return j;
+                }
+            }
+        }
+        return 0; // ritorna sempre 0 TODO dovremmo aggiuntere il return di Optional
     }
     
     //controlleremo di volta in volta i quattro angoli di questo "rettangolo"
@@ -146,4 +190,5 @@ public class Allowed {
         }
         return entities.SKY;
     }
+
 }

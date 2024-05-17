@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import it.unibo.grubclash.controller.Implementation.Entity;
+import it.unibo.grubclash.controller.Weapon.weapons;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 
 public class Projectile {
@@ -12,10 +13,6 @@ public class Projectile {
     //serve dare una traiettoria al proiettile, il suo comportamento varia a seconda del tipo di proiettile creato
     //il proiettile smette di esistere se canMoveThere() restituisce false
     //il tipo di arma dipende lo mettiamo in una classe diversa? idk
-    private static Entity[] entitiesExploded;
-    public static void initEntitiesExploded (int n) {
-        Projectile.entitiesExploded = new Entity[n];
-    }
 
     private static int ROWS;
     public static int getROWS() {
@@ -69,7 +66,7 @@ public class Projectile {
     }
 
     private static Weapon weapon;
-    public Weapon getWeapon() {
+    public static Weapon getWeapon() {
         return weapon;
     }
     public static void setWeapon(Weapon weapon) {
@@ -84,6 +81,7 @@ public class Projectile {
         setROWS(ROWS);
         setCOLS(COLS);
         trajectory();
+        setProjectile(new Entity(getxClicked(), getyClicked(), WIDTHROKET, HEIGHTROKET, entities.PROJECTILE)); //a seconda del tipo di proiettile varieranno le dimensioni di width e height, qui ipotizzo di lanciare un razzo
     }
 
     public static void trajectory () {
@@ -100,7 +98,18 @@ public class Projectile {
             double dirY = getyClicked() - ( getWeapon().getOwner().getY() + (getWeapon().getOwner().getHeight() / 2) );
 
         */
-        setProjectile(new Entity(getxClicked(), getyClicked(), WIDTHROKET, HEIGHTROKET, entities.PROJECTILE)); //a seconda del tipo di proiettile varieranno le dimensioni di width e height, qui ipotizzo di lanciare un razzo
+
+        // TODO applicare la fisica di christian qui
+        if (Projectile.weapon.getType() == weapons.GRANADE) {
+            
+        }
+        if (Projectile.weapon.getType() == weapons.HITSCAN) {
+            
+        }
+        if (Projectile.weapon.getType() == weapons.ROKET) {
+            
+        }
+
         /*
             TODO da capire come gestire parallelamente il proiettile nel panel con la sua hitbox
             E questa new Entity si gestisce in modo parallelo all'immagine del proiettile, che si può direttamente gestire qua dentro 
@@ -124,25 +133,59 @@ public class Projectile {
         return null;
     }
 
-    //cosa succede se il proiettile tocca una superfice?
-    public boolean collidesWithSmth (Entity[][] lvlData, ArrayList<Entity> dynamicEntity, JPanel[][] mapBase, int x, int y) { // controlla l'esplosione del proiettile
+    /*
+    TODO MODO PER ELIMINARE LA MAPPA DA METTERE DENTRO GRUBPANEL
+        if (collideWithSmth == true) {
+            addDynamicEntity( damage() );
+            for (canMoveThere( dynamicEntity.find(entities.EXPLOSION) == false)) {
+                // scorro eliminando tutto quello che c'è dentro l'area
+                mapDestroyer(mapBase, Entity);
+
+                if (whatIsFacing( dynamicEntity.find(entities.EXPLOSION).getX, dynamicEntity.find(entities.EXPLOSION).getY ))
+                
+            }
+            //faccio questa pulizia per eliminare l'entità dell'esplosione
+            dynamicEntity.find(entities.EXPLOSION).remove;
+        }
+    */
+
+    private boolean collidesWithSmth (Entity[][] lvlData, ArrayList<Entity> dynamicEntity, JPanel[][] mapBase, int x, int y) { // controlla l'esplosione del proiettile
         // dynamicEntity potrebbe essere l'insieme dielle entità non fisse che girano per la mappa, come proiettili, player e in caso item speciali
         // do per scontato che ogni angolo appartiene a una sola entità alla volta (o player o muro, non entrambe)
-        if (whatIsFacing(lvlData, dynamicEntity, x, y).getEntity() != entities.WALL) {
-            if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).getEntity() != entities.WALL) {
-                if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).getEntity() != entities.WALL) {
-                    if(whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).getEntity() != entities.WALL)
+        if (whatIsFacing(lvlData, dynamicEntity, x, y).getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y).getEntity() != entities.ITEM ) {
+            if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).getEntity() == entities.ITEM) {
+                if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).getEntity() == entities.ITEM) {
+                    if(whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).getEntity() == entities.ITEM)
                         return false;
                 }
             }
         }
-        destroyInRange();
         return true;
     }
 
+    //WIDTHROKET deve essere cambiato
+    private static int getRadius () { // restituisce il raggio a seconda dell'arma
+        switch (getWeapon().getType()) {
+            case GRANADE:
+                return WIDTHROKET + 20;
+            case ROKET:
+                return WIDTHROKET + 40;
+            default: //hitscan
+                return WIDTHROKET;
+        }
+    }
 
-    public void destroyInRange () {
-        // TODO spacca tutto quello che è in range dell'esplosione
+    /*
+        TODO restituisce una Entity, da aggiungere alla dynamicEntity. 
+        Ogni cosa dentro la damageArea() deve volare, infatti chiamata mapdestroyer() per ogni entità che sta dentro
+        finché canMoveThere() da falso, si scorrono le entità all'interno dell'area e viene applicato l'effetto del danno
+        ^naturalmente da mettere dentro GrubPanel :) ^ 
+    */
+    private static Entity damage () { 
+        int x = (int) ((getProjectile().getX() + getProjectile().getWidth()) / 2);
+        int y = (int) ((getProjectile().getY() + getProjectile().getHeight()) / 2);
+        Entity explosionRadius = new Entity(x - getRadius() , y - getRadius(), getRadius() * 2, getRadius() * 2, entities.EXPLOSION); //elimino ogni explosion dopo
+        return explosionRadius;
 
     }
 

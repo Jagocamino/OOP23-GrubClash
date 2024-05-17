@@ -16,6 +16,7 @@ public class EnumEntity {
         WALL,
         SKY,
         ITEM,
+        EXPLOSION,
         PROJECTILE;   
     }
 

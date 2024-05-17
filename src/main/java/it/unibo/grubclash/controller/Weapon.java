@@ -6,7 +6,7 @@ public class Weapon {
     enum weapons {
         GRANADE,
         ROKET,
-        HITSCAN;    
+        HITSCAN;
     }
     
     private static Entity owner;
@@ -18,7 +18,7 @@ public class Weapon {
     }
 
     private static weapons type;
-    public static weapons getType() {
+    public weapons getType() {
         return type;
     }
     public static void setType(weapons type) {
