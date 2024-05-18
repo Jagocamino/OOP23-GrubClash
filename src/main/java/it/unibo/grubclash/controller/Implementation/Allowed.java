@@ -75,14 +75,17 @@ public class Allowed {
         return Allowed.lvlData[i][j].getEntity();
     }
 
-    public Allowed(int borderX, int borderY, int ROWS, int COLS, JPanel[][] mapBase) { //quando creo Allowed DENTRO MAP BUILDER chiamo il costruttore e gli passo i bordi del JPanel che contiene il giochino e le righe e colonne totali
+    public Allowed(int borderX, int borderY, int ROWS, int COLS) { //quando creo Allowed DENTRO MAP BUILDER chiamo il costruttore e gli passo i bordi del JPanel che contiene il giochino e le righe e colonne totali
         Allowed.borderX = borderX;
         Allowed.borderY = borderY;
         Allowed.ROWS = ROWS;
         Allowed.COLS = COLS;
         Allowed.lvlData = new Entity[ROWS][COLS];
         Allowed.dynamicEntities = new ArrayList<Entity>();
-        Allowed.mapBase = mapBase;
+    }
+
+    public void setMapBase (JPanel[][] mapBase) {
+            Allowed.mapBase = mapBase;
     }
 
     public static void addEntity (int x, int y, int width, int height, entities entity, int i, int j) {
@@ -150,7 +153,7 @@ public class Allowed {
     }
 
 
-    public static void addMapBase (EnumEntity.entities[][] entityMatrix) { //sano dopo essere uscito da qui
+    public static void addMapBase (EnumEntity.entities[][] entityMatrix) {
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
                 addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getWidth(), (int)mapBase[i][j].getBounds().getHeight(), entityMatrix[i][j], i, j);
@@ -207,7 +210,6 @@ public class Allowed {
     //x & y sono la posizione dei giocatori
     public static entities whatIsFacing(int x, int y) { // metti private
         //controlla, di quei punti dell'angolo che vengono passati, se è dentro un oggetto
-        
         if (x < 0 || x >= borderX) {
             return entities.WALL;
         } 
@@ -221,7 +223,6 @@ public class Allowed {
                     return Allowed.lvlData[i][j].getEntity();
                 }
             }
-
         }
         return entities.SKY;
     }

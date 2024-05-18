@@ -57,7 +57,7 @@ public class GrubPanel extends JPanel implements Runnable {
     public GrubPanel(int playerCount) {
         this.playerCount = playerCount;
         keyHandelers = new ArrayList<>();
-        Allowed.addMapBase(MapBuilder.getMapBase(), MapBuilder.getEntityMatrix()); //creo la matrice delle entità (20x20)
+        Allowed.addMapBase(MapBuilder.getEntityMatrix()); //creo la matrice delle entità (20x20)
 
         //Allowed.delateSpawnpoint(); //sostituisco i player con il cielo nella matrice 20x20, non so se metterlo TODO
 
