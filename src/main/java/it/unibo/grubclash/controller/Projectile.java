@@ -14,6 +14,23 @@ public class Projectile {
     //il proiettile smette di esistere se canMoveThere() restituisce false
     //il tipo di arma dipende lo mettiamo in una classe diversa? idk
 
+    static int WIDTHROKET = 20;
+    static int HEIGHTROKET = 20;
+
+    public void behavior (weapons weapon) { // TODO qui metto tutto quello che concerne il comoprtamento del proiettile a seconda dello scenario. Hitscan ancora da pensare.
+        switch (weapon) {
+            case GRANADE:
+                
+                break;
+            case ROKET:
+
+                break;
+            case HITSCAN:
+
+                break;
+        }
+    }
+
     private static int ROWS;
     public static int getROWS() {
         return ROWS;
@@ -30,8 +47,6 @@ public class Projectile {
         Projectile.COLS = COLS;
     }
 
-    static int WIDTHROKET = 20;
-    static int HEIGHTROKET = 20;
     private static Entity projectile;
     public static Entity getProjectile() {
         return projectile;
@@ -40,6 +55,9 @@ public class Projectile {
         Projectile.projectile = projectile;
     }
 
+
+
+    // idee, ninente di concreto ------------------------------------------------------------------------------------------------------
     private static int xClicked;
     private static int yClicked;
     public static int getxClicked() {
@@ -64,7 +82,10 @@ public class Projectile {
     public static void setyCurrentPos(int yCurrentPos) {
         Projectile.yCurrentPos = yCurrentPos;
     }
+    // fino a qui ------------------------------------------------------------------------------------------------------
 
+
+    
     private static Weapon weapon;
     public static Weapon getWeapon() {
         return weapon;
@@ -139,17 +160,14 @@ public class Projectile {
             addDynamicEntity( damage() ); //mettendola a entità si possono includere immagini o animazioni o boh
             for (canMoveThere( dynamicEntity.find(entities.EXPLOSION) == false)) {
                 // scorro eliminando tutto quello che c'è dentro l'area
-                mapDestroyer(mapBase, whatWallIsIncluded (x, y, width, height));
-
-                if (whatIsFacing( dynamicEntity.find(entities.EXPLOSION).getX, dynamicEntity.find(entities.EXPLOSION).getY ))
-                
+                mapDestroyer(whatWallIsIncluded (x, y, width, height));                
             }
             //faccio questa pulizia per eliminare l'entità dell'esplosione
-            dynamicEntity.find(entities.EXPLOSION).remove;
+            dynamicEntity.find(entities.EXPLOSION).remove();
         }
     */
 
-    private boolean collidesWithSmth (Entity[][] lvlData, ArrayList<Entity> dynamicEntity, JPanel[][] mapBase, int x, int y) { // controlla l'esplosione del proiettile
+    public boolean collidesWithSmth (Entity[][] lvlData, ArrayList<Entity> dynamicEntity, JPanel[][] mapBase, int x, int y) { // controlla l'esplosione del proiettile
         // dynamicEntity potrebbe essere l'insieme dielle entità non fisse che girano per la mappa, come proiettili, player e in caso item speciali
         // do per scontato che ogni angolo appartiene a una sola entità alla volta (o player o muro, non entrambe)
         if (whatIsFacing(lvlData, dynamicEntity, x, y).getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y).getEntity() != entities.ITEM ) {

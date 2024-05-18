@@ -5,6 +5,7 @@ import javax.swing.*;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Allowed { 
 
@@ -104,11 +105,6 @@ public class Allowed {
         return false;
     }
 
-
-
-
-
-
     /*
             TODO le due funzioni sotto scorrono rispettivamente lvlData e dynamicEntity e ogni volta che vengono chiamate restituiscono una entità in range
             vorrei fare un metodo per il calcolo del danno, magari chiamato alla fine dei due metodi sotto, per eliminare entità o altro    
@@ -116,7 +112,7 @@ public class Allowed {
 
     //se non funziona distruggo tutto
     //è un whatisfacing che restituisce un entità e non controlla i bordi
-    public static Entity whatWallIsIncluded (int x, int y, int width, int height) { //qui ci metto le dimensioni dell'esplosione, ritorna la prima entità Wall nell'area
+    public static Optional<Entity> whatWallIsIncluded (int x, int y, int width, int height) { //qui ci metto le dimensioni dell'esplosione, ritorna la prima entità Wall nell'area
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 if(  Allowed.lvlData[i][j].getEntity() == entities.WALL && (
@@ -128,15 +124,15 @@ public class Allowed {
                     ( y + height >= Allowed.lvlData[i][j].getY() && y + height < (Allowed.lvlData[i][j].getY() + Allowed.lvlData[i][j].getHeight())) || // se è sporgente sotto
                     ( y < Allowed.lvlData[i][j].getY() && y + height >= (Allowed.lvlData[i][j].getY() + Allowed.lvlData[i][j].getHeight())) // se è dentro
                     ) ){
-                    return Allowed.lvlData[i][j];
+                    return Optional.ofNullable(Allowed.lvlData[i][j]);
                 }
             }
         }
-        return null; // TODO da aggiungere il return dell'optional, NON null
+        return Optional.empty();
     }
 
     //qui ci metto le dimensioni dell'esplosione
-    public static Entity applyDamage (int x, int y, int width, int height) {
+    public static Optional<Entity> applyDamage (int x, int y, int width, int height) {
         for (Entity dynamicEntity : Allowed.dynamicEntities) {
             if(  dynamicEntity.getEntity() == entities.WALL && (
                     ( x >= dynamicEntity.getX() && x < (dynamicEntity.getX() + dynamicEntity.getWidth())) || // se è sporgente a sx
@@ -147,10 +143,10 @@ public class Allowed {
                     ( y + height >= dynamicEntity.getY() && y + height < (dynamicEntity.getY() + dynamicEntity.getHeight())) || // se è sporgente sotto
                     ( y < dynamicEntity.getY() && y + height >= (dynamicEntity.getY() + dynamicEntity.getHeight())) // se è dentro
                     ) ){
-                    return dynamicEntity;
+                    return Optional.ofNullable(dynamicEntity);
                 }
         }
-        return null; // TODO da aggiungere il return dell'optional, NON null
+        return Optional.empty();
     }
 
 
@@ -175,36 +171,36 @@ public class Allowed {
         }
     }
 
-    // TODO mapdestroyer DEVE spaccare l'entità da finire
     public void mapDestroyer (Entity wall) {
-        int i = getI (wall);
-        int j = getJ (wall);
+        int i = getI(wall).get().intValue();
+        int j = getJ(wall).get().intValue();
         mapDestroyer(i, j);
     }
 
-    // METTERE METODO CHE RITORNA i, j DATA l'entità del muro
-    public int getI (Entity entity) {
+    // METTERE METODO CHE RITORNA i DATA l'entità del muro
+    public Optional<Integer> getI (Entity entity) {
 
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
                 if (Allowed.lvlData[i][j] == entity ) {
-                    return i;
+                    return Optional.ofNullable(i);
                 }
             }
         }
-        return 0; // ritorna sempre 0 TODO dovremmo aggiuntere il return di Optional
+        return Optional.empty();
     }
 
-    public int getJ (Entity entity) {
+    // METTERE METODO CHE RITORNA j DATA l'entità del muro
+    public Optional<Integer> getJ (Entity entity) {
 
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
                 if (Allowed.lvlData[i][j] == entity ) {
-                    return j;
+                    return Optional.ofNullable(j);
                 }
             }
         }
-        return 0; // ritorna sempre 0 TODO dovremmo aggiuntere il return di Optional
+        return Optional.empty();
     }
     
     //controlleremo di volta in volta i quattro angoli di questo "rettangolo"
