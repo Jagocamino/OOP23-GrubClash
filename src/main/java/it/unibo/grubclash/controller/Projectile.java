@@ -136,10 +136,10 @@ public class Projectile {
     /*
     TODO MODO PER ELIMINARE LA MAPPA DA METTERE DENTRO GRUBPANEL
         if (collideWithSmth == true) {
-            addDynamicEntity( damage() );
+            addDynamicEntity( damage() ); //mettendola a entità si possono includere immagini o animazioni o boh
             for (canMoveThere( dynamicEntity.find(entities.EXPLOSION) == false)) {
                 // scorro eliminando tutto quello che c'è dentro l'area
-                mapDestroyer(mapBase, Entity);
+                mapDestroyer(mapBase, whatWallIsIncluded (x, y, width, height));
 
                 if (whatIsFacing( dynamicEntity.find(entities.EXPLOSION).getX, dynamicEntity.find(entities.EXPLOSION).getY ))
                 

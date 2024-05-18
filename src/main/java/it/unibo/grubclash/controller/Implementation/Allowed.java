@@ -16,7 +16,8 @@ public class Allowed {
     */
     private static int borderX;
     private static int borderY;
-    
+    private static JPanel[][] mapBase;
+
     public static Entity[][] lvlData; // da cambiare in private
     public static Entity[][] getLvlData() {
         return Allowed.lvlData;
@@ -73,13 +74,14 @@ public class Allowed {
         return Allowed.lvlData[i][j].getEntity();
     }
 
-    public Allowed(int borderX, int borderY, int ROWS, int COLS) { //quando creo Allowed DENTRO MAP BUILDER chiamo il costruttore e gli passo i bordi del JPanel che contiene il giochino e le righe e colonne totali
+    public Allowed(int borderX, int borderY, int ROWS, int COLS, JPanel[][] mapBase) { //quando creo Allowed DENTRO MAP BUILDER chiamo il costruttore e gli passo i bordi del JPanel che contiene il giochino e le righe e colonne totali
         Allowed.borderX = borderX;
         Allowed.borderY = borderY;
         Allowed.ROWS = ROWS;
         Allowed.COLS = COLS;
         Allowed.lvlData = new Entity[ROWS][COLS];
         Allowed.dynamicEntities = new ArrayList<Entity>();
+        Allowed.mapBase = mapBase;
     }
 
     public static void addEntity (int x, int y, int width, int height, entities entity, int i, int j) {
@@ -102,12 +104,30 @@ public class Allowed {
         return false;
     }
 
-    //TODO DA FARE ASSOLUTAMENTE APPENA TI SVEGLI, COGLIONE ritorna il primo muro che si trova dentro l'hitbox messa da parametro nel metodo, da completare
-    public static Entity whatLvlDataWallInside (int x, int y, int width, int height) {
+
+
+
+
+
+    /*
+            TODO le due funzioni sotto scorrono rispettivamente lvlData e dynamicEntity e ogni volta che vengono chiamate restituiscono una entità in range
+            vorrei fare un metodo per il calcolo del danno, magari chiamato alla fine dei due metodi sotto, per eliminare entità o altro    
+    */
+
+    //se non funziona distruggo tutto
+    //è un whatisfacing che restituisce un entità e non controlla i bordi
+    public static Entity whatWallIsIncluded (int x, int y, int width, int height) { //qui ci metto le dimensioni dell'esplosione, ritorna la prima entità Wall nell'area
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
-                if(x >= Allowed.lvlData[i][j].getX() && x <= (Allowed.lvlData[i][j].getX() + Allowed.lvlData[i][j].getWidth()) && 
-                        y >= Allowed.lvlData[i][j].getY() && y <= (Allowed.lvlData[i][j].getY() + Allowed.lvlData[i][j].getHeight())){
+                if(  Allowed.lvlData[i][j].getEntity() == entities.WALL && (
+                    ( x >= Allowed.lvlData[i][j].getX() && x < (Allowed.lvlData[i][j].getX() + Allowed.lvlData[i][j].getWidth())) || // se è sporgente a sx
+                    ( x + width >= Allowed.lvlData[i][j].getX() && x + width < (Allowed.lvlData[i][j].getX() + Allowed.lvlData[i][j].getWidth())) || // se è sporgente a dx
+                    ( x < Allowed.lvlData[i][j].getX() && x + width >= (Allowed.lvlData[i][j].getX() + Allowed.lvlData[i][j].getWidth())) // se è dentro
+                    ) && (
+                    ( y >= Allowed.lvlData[i][j].getY() && y < (Allowed.lvlData[i][j].getY() + Allowed.lvlData[i][j].getHeight())) || // se è sporgente sopra
+                    ( y + height >= Allowed.lvlData[i][j].getY() && y + height < (Allowed.lvlData[i][j].getY() + Allowed.lvlData[i][j].getHeight())) || // se è sporgente sotto
+                    ( y < Allowed.lvlData[i][j].getY() && y + height >= (Allowed.lvlData[i][j].getY() + Allowed.lvlData[i][j].getHeight())) // se è dentro
+                    ) ){
                     return Allowed.lvlData[i][j];
                 }
             }
@@ -115,16 +135,35 @@ public class Allowed {
         return null; // TODO da aggiungere il return dell'optional, NON null
     }
 
-    public static void addMapBase (JPanel[][] mapBase, EnumEntity.entities[][] entityMatrix) { //sano dopo essere uscito da qui
+    //qui ci metto le dimensioni dell'esplosione
+    public static Entity applyDamage (int x, int y, int width, int height) {
+        for (Entity dynamicEntity : Allowed.dynamicEntities) {
+            if(  dynamicEntity.getEntity() == entities.WALL && (
+                    ( x >= dynamicEntity.getX() && x < (dynamicEntity.getX() + dynamicEntity.getWidth())) || // se è sporgente a sx
+                    ( x + width >= dynamicEntity.getX() && x + width < (dynamicEntity.getX() + dynamicEntity.getWidth())) || // se è sporgente a dx
+                    ( x < dynamicEntity.getX() && x + width >= (dynamicEntity.getX() + dynamicEntity.getWidth())) // se è dentro
+                    ) && (
+                    ( y >= dynamicEntity.getY() && y < (dynamicEntity.getY() + dynamicEntity.getHeight())) || // se è sporgente sopra
+                    ( y + height >= dynamicEntity.getY() && y + height < (dynamicEntity.getY() + dynamicEntity.getHeight())) || // se è sporgente sotto
+                    ( y < dynamicEntity.getY() && y + height >= (dynamicEntity.getY() + dynamicEntity.getHeight())) // se è dentro
+                    ) ){
+                    return dynamicEntity;
+                }
+        }
+        return null; // TODO da aggiungere il return dell'optional, NON null
+    }
+
+
+    public static void addMapBase (EnumEntity.entities[][] entityMatrix) { //sano dopo essere uscito da qui
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
                 addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getWidth(), (int)mapBase[i][j].getBounds().getHeight(), entityMatrix[i][j], i, j);
-            }    //TODO addEntity popola lvlData di copie delle ultime entità che sono state aggiunte, ecco perché lvlData printa sempre gli stessi valori 
+            }
         }
     }
 
-    // TODO entityMatrix serve SOLO per inizializzare lvlData, poi NON DEVE più essere usato
-    public void mapDestroyer (JButton[][] mapBase, int i, int j) {
+    //entityMatrix serve SOLO per inizializzare lvlData, poi NON DEVE più essere usato
+    public void mapDestroyer (int i, int j) {
         if (getLvlData(i, j).getEntity() == entities.WALL) {     
             mapBase[i][j].removeAll();
             mapBase[i][j].setBackground(Color.CYAN);
@@ -137,10 +176,10 @@ public class Allowed {
     }
 
     // TODO mapdestroyer DEVE spaccare l'entità da finire
-    public void mapDestroyer (JButton[][] mapBase, Entity wall) {
+    public void mapDestroyer (Entity wall) {
         int i = getI (wall);
         int j = getJ (wall);
-        mapDestroyer(mapBase, i, j);
+        mapDestroyer(i, j);
     }
 
     // METTERE METODO CHE RITORNA i, j DATA l'entità del muro
