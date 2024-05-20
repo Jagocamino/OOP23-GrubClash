@@ -37,12 +37,13 @@ public class Player extends Entity{
         this.keyH = keyH;
 
         this.id = id;
-        this.x = EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id));
-        this.y = EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id));
+        this.x = EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get());
+        this.y = EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get());
         this.width = 35;
         this.height = 35;
         this.speed = 3;
         this.direction = "down";
+        setEntity(EnumEntity.idToEntitiesConverter(id).get());
 
         getImage(id);
     }

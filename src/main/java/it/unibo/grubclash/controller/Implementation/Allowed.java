@@ -88,7 +88,7 @@ public class Allowed {
         Allowed.dynamicEntities = new ArrayList<Entity>();
     }
 
-    public void setMapBase (JPanel[][] mapBase) {
+    public static void setMapBase (JPanel[][] mapBase) {
             Allowed.mapBase = mapBase;
     }
 
