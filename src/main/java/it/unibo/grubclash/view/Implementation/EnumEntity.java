@@ -1,5 +1,7 @@
 package it.unibo.grubclash.view.Implementation;
 
+import java.util.Optional;
+
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 
 public class EnumEntity {
@@ -17,18 +19,19 @@ public class EnumEntity {
         SKY,
         ITEM,
         EXPLOSION,
+        GUN,
         PROJECTILE;   
     }
 
-    public static entities idToEntitiesConverter(int id){
+    public static Optional<entities> idToEntitiesConverter(int id){
 
         return switch (id) {
-            case 0 -> entities.PLAYER1;
-            case 1 -> entities.PLAYER2;
-            case 2 -> entities.PLAYER3;
-            case 3 -> entities.PLAYER4;
-            case 4 -> entities.PLAYER5;
-            default -> null;
+            case 0 -> Optional.ofNullable(entities.PLAYER1);
+            case 1 -> Optional.ofNullable(entities.PLAYER2);
+            case 2 -> Optional.ofNullable(entities.PLAYER3);
+            case 3 -> Optional.ofNullable(entities.PLAYER4);
+            case 4 -> Optional.ofNullable(entities.PLAYER5);
+            default -> Optional.empty();
         };
 
     }

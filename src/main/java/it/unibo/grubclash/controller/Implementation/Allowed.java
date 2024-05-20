@@ -71,6 +71,10 @@ public class Allowed {
     addEntity mette nella matrice di entità una nuova entità, da fare controlli necessari affinché nuove entità non vadano in conflitto
     quando il costruttore di allowed viene chiamato, devo passargli anche le const relative all numero di celle, per rendere più flessibile il codice a future implementazioni
     */
+
+
+
+    //TODO mapBase serve dentro allowed, ma allowed è chiamato dentro GrubPanel che non usa mapBase
     public static entities getEntity (int i, int j) {
         return Allowed.lvlData[i][j].getEntity();
     }

@@ -1,5 +1,6 @@
 package it.unibo.grubclash.controller;
 import it.unibo.grubclash.controller.Implementation.Entity;
+import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 
 public class Weapon {
 
@@ -19,7 +20,7 @@ public class Weapon {
     public static Entity getOwner() {
         return owner;
     }
-    private static void setOwner(Entity owner) {
+    public static void setOwner(Entity owner) {
         Weapon.owner = owner;
     }
 
@@ -34,6 +35,7 @@ public class Weapon {
     public Weapon (Entity owner, weapons type) {
         setOwner(owner);
         setType(type);
+        Entity gun = new Entity(0, 0, 0, 0, entities.GUN); // crea l'entità che può essere modificata
     }
     
 }

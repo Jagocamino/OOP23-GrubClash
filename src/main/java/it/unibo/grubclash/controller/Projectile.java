@@ -1,6 +1,7 @@
 package it.unibo.grubclash.controller;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javax.swing.JPanel;
 
@@ -137,21 +138,21 @@ public class Projectile {
         */
     }
 
-    private static Entity whatIsFacing(Entity[][] lvlData, ArrayList<Entity> dynamicEntity, float x, float y) {
+    private static Optional<Entity> whatIsFacing(Entity[][] lvlData, ArrayList<Entity> dynamicEntity, float x, float y) {
         //controlla, di quei punti dell'angolo che vengono passati, se è dentro un oggetto
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
                 if (x >= lvlData[i][j].getX() && x < (lvlData[i][j].getWidth() + lvlData[i][j].getX()) && y >= lvlData[i][j].getX() && y < (lvlData[i][j].getY() + lvlData[i][j].getHeight()) ) {
-                    return lvlData[i][j]; //se le coordinate degli angoli si intersecano, l'entità
+                    return Optional.ofNullable(lvlData[i][j]); //se le coordinate degli angoli si intersecano, l'entità
                 }
             }
         }
         for (Entity entity : dynamicEntity) {
             if (x >= entity.getX() && x < (entity.getWidth() + entity.getX()) && y >= entity.getX() && y < (entity.getY() + entity.getHeight()) ) {
-                return entity;
+                return Optional.ofNullable(entity);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     /*
@@ -170,10 +171,10 @@ public class Projectile {
     public boolean collidesWithSmth (Entity[][] lvlData, ArrayList<Entity> dynamicEntity, JPanel[][] mapBase, int x, int y) { // controlla l'esplosione del proiettile
         // dynamicEntity potrebbe essere l'insieme dielle entità non fisse che girano per la mappa, come proiettili, player e in caso item speciali
         // do per scontato che ogni angolo appartiene a una sola entità alla volta (o player o muro, non entrambe)
-        if (whatIsFacing(lvlData, dynamicEntity, x, y).getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y).getEntity() != entities.ITEM ) {
-            if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).getEntity() == entities.ITEM) {
-                if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).getEntity() == entities.ITEM) {
-                    if(whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).getEntity() == entities.ITEM)
+        if (whatIsFacing(lvlData, dynamicEntity, x, y).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y).get().getEntity() != entities.ITEM ) {
+            if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).get().getEntity() == entities.ITEM) {
+                if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).get().getEntity() == entities.ITEM) {
+                    if(whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).get().getEntity() == entities.ITEM)
                         return false;
                 }
             }
