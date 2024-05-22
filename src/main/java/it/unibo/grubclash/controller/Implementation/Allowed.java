@@ -231,4 +231,60 @@ public class Allowed {
         return entities.SKY;
     }
 
+
+    //                                      TUTTO QUELLO CHE RIGUARDA IL PROIETTILE
+    // TODO da adattare per Allowed
+    /* private static Optional<Entity> whatIsFacing(Entity[][] lvlData, ArrayList<Entity> dynamicEntity, float x, float y) {
+        //controlla, di quei punti dell'angolo che vengono passati, se è dentro un oggetto
+        for (int i = 0; i < getWidth(); i++) {
+            for (int j = 0; j < getHeight(); j++) {
+                if (x >= lvlData[i][j].getX() && x < (lvlData[i][j].getWidth() + lvlData[i][j].getX()) && y >= lvlData[i][j].getX() && y < (lvlData[i][j].getY() + lvlData[i][j].getHeight()) ) {
+                    return Optional.ofNullable(lvlData[i][j]); //se le coordinate degli angoli si intersecano, l'entità
+                }
+            }
+        }
+        for (Entity entity : dynamicEntity) {
+            if (x >= entity.getX() && x < (entity.getWidth() + entity.getX()) && y >= entity.getX() && y < (entity.getY() + entity.getHeight()) ) {
+                return Optional.ofNullable(entity);
+            }
+        }
+        return Optional.empty();
+    } */
+
+   
+
+    /*
+        TODO restituisce una Entity, da aggiungere alla dynamicEntity. 
+        Ogni cosa dentro la damageArea() deve volare, infatti chiamata mapdestroyer() per ogni entità che sta dentro
+        finché canMoveThere() da falso, si scorrono le entità all'interno dell'area e viene applicato l'effetto del danno
+        ^naturalmente da mettere dentro GrubPanel :) ^ 
+    */
+
+        /*
+    TODO MODO PER ELIMINARE LA MAPPA DA METTERE DENTRO GRUBPANEL
+        if (collideWithSmth == true) {
+            addDynamicEntity( damage() ); //mettendola a entità si possono includere immagini o animazioni o boh
+            for (canMoveThere( dynamicEntity.find(entities.EXPLOSION) == false)) {
+                // scorro eliminando tutto quello che c'è dentro l'area
+                mapDestroyer(whatWallIsIncluded (x, y, width, height));                
+            }
+            //faccio questa pulizia per eliminare l'entità dell'esplosione
+            dynamicEntity.find(entities.EXPLOSION).remove();
+        }
+    */
+    /* public boolean collidesWithSmth (Entity[][] lvlData, ArrayList<Entity> dynamicEntity, JPanel[][] mapBase, int x, int y) { // controlla l'esplosione del proiettile
+        // dynamicEntity potrebbe essere l'insieme dielle entità non fisse che girano per la mappa, come proiettili, player e in caso item speciali
+        // do per scontato che ogni angolo appartiene a una sola entità alla volta (o player o muro, non entrambe)
+        if (whatIsFacing(lvlData, dynamicEntity, x, y).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y).get().getEntity() != entities.ITEM ) {
+            if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).get().getEntity() == entities.ITEM) {
+                if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).get().getEntity() == entities.ITEM) {
+                    if(whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).get().getEntity() == entities.ITEM)
+                        return false;
+                }
+            }
+        }
+        return true;
+    } */
+
+
 }

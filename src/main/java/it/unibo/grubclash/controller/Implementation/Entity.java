@@ -22,7 +22,7 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     protected float y;
     protected double width, height;
     protected Rectangle hitbox;
-    protected entities entity;
+    protected static entities entity;
     protected int spriteNum = 1;
     public boolean canMove = true;
     public boolean gravity = true;

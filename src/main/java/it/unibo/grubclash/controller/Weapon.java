@@ -2,40 +2,29 @@ package it.unibo.grubclash.controller;
 import it.unibo.grubclash.controller.Implementation.Entity;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 
-public class Weapon {
+public interface Weapon {
 
     /* 
-        TODO sarebbe bello se dentro weapon potesse essere instanziato un oggetto Entity che si aggiunge alle dynamicEntity 
-        TODO l'owner naturalmente è un player, sarebbe figo mettere dentro al player la possibilità di avere una weapon con il metodo addWeapon()
-        questo metodo ^ aggiunge un arma al personaggio. verifica che se un'arma è già presente allora si butta (magari con una mezza animazione).
-        L'arma non deve essere considerata entità
+        TODO l'owner naturalmente è un player
+        TODO a seconda dell'arma che il player ha in mano (una alla volta) il player spara
+        TODO è dentro weapon che metto il trigger del proiettile
+        Weapon non deve appartenere a dynamicEntity ma il proiettile lanciato sì.
     */ 
-    enum weapons {
+    
+    public enum weapons {
         GRANADE,
         ROKET,
         HITSCAN;
     }
-    
-    private static Entity owner;
-    public static Entity getOwner() {
-        return owner;
-    }
-    public static void setOwner(Entity owner) {
-        Weapon.owner = owner;
-    }
 
-    private static weapons type;
-    public weapons getType() {
-        return type;
-    }
-    private static void setType(weapons type) {
-        Weapon.type = type;
-    }
+    Entity getOwner();
+    void setOwner(Entity owner);
 
-    public Weapon (Entity owner, weapons type) {
-        setOwner(owner);
-        setType(type);
-        Entity gun = new Entity(0, 0, 0, 0, entities.GUN); // crea l'entità che può essere modificata
-    }
+    public void setAmmo (int ammo);
+    public void refillAmmo ();
+    public void reduceAmmo ();
+    public Entity shoot ();
+
+    //serve aggiungere una funzione per lo
     
 }

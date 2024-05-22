@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
     GrubPanel grubPanel;
-    public boolean leftPressed, rightPressed, spacePressed,changePressed;
+    public boolean leftPressed, rightPressed, spacePressed, changePressed;
 
     public KeyHandler(GrubPanel grubPanel){
         this.grubPanel = grubPanel;
