@@ -5,8 +5,10 @@ import java.util.Optional;
 
 import javax.swing.*;
 
+import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
+
 // Classe per gestire le impostazioni dei frame
-public class FrameManagerImpl implements it.unibo.grubclash.view.Application_Programming_Interface.FrameManager {
+public class FrameManagerImpl implements FrameManager {
 
     final static char FS = File.separatorChar;
 

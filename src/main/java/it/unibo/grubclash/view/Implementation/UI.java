@@ -18,7 +18,7 @@ public class UI {
     Graphics2D g2d;
     public Font snapITCFont;
 
-    public UI(it.unibo.grubclash.model.Implementation.GrubPanel grubPanel2){
+    public UI(GrubPanel grubPanel2){
 
         this.grubPanel = grubPanel2;
 
@@ -36,6 +36,7 @@ public class UI {
         g2d.setColor(Color.decode(color_game));
 
         drawPlayerTurn();
+        drawTurnBegin();
 
     }
 
@@ -48,6 +49,14 @@ public class UI {
             g2d.drawString("0" + grubPanel.secondsTurn, MapBuilder.getXMapBase(0, 19)+MapBuilder.getWidthMapBase(0,19)*2/7, MapBuilder.getYMapBase(0, 19)+MapBuilder.getHeightMapBase(0,19)*2/3);
         }else{
             g2d.drawString("" + grubPanel.secondsTurn, MapBuilder.getXMapBase(0, 19)+MapBuilder.getWidthMapBase(0,19)*2/7, MapBuilder.getYMapBase(0, 19)+MapBuilder.getHeightMapBase(0,19)*2/3);
+        }
+    }
+    
+    public void drawTurnBegin(){
+
+        if(grubPanel.turnBegin){
+            g2d.setFont(snapITCFont.deriveFont(40f));
+            g2d.drawString("STA PER INIZIARE IL TURNO DI: " + grubPanel.numPlayerTurn, frameManager.getWindowWidth().get()/4, frameManager.getWindowHeight().get()/4);
         }
     }
 

@@ -3,6 +3,7 @@ package it.unibo.grubclash.view.Implementation;
 import it.unibo.grubclash.controller.Implementation.Entity;
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.model.Implementation.GrubPanel;
+import it.unibo.grubclash.view.Application_Programming_Interface.Life;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
 
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Optional;
 
-public class LifeImpl implements it.unibo.grubclash.view.Application_Programming_Interface.Life {
+public class LifeImpl implements Life {
 
     int playerCount;
     GrubPanel grubPanel;

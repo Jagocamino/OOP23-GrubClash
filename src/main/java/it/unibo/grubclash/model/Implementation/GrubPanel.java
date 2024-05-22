@@ -58,6 +58,9 @@ public class GrubPanel extends JPanel implements Runnable {
     //COLLISION CHECKER
     public Allowed allowed = new Allowed(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get(), MapBuilder.ROWS, MapBuilder.COLS);
 
+    //VARIABLES
+    public boolean turnBegin = false;
+
     public GrubPanel(int playerCount) {
         this.playerCount = playerCount;
         keyHandelers = new ArrayList<>();
@@ -124,10 +127,14 @@ public class GrubPanel extends JPanel implements Runnable {
         new Thread(() -> {
             while(gameThread != null) {
                 for(Player p : players) {
+                    numPlayerTurn = p.getId();
                     int numCicles = 0;   //5 cicli da 2 secondi => 10 secondi di round
                     long wait = System.nanoTime();
-                    while(System.nanoTime() - wait <= 2000000000) {} //due secondi di attesa prima che inizi il turno
+                    while(System.nanoTime() - wait <= 2000000000) {
+                        turnBegin = true;
+                    } //due secondi di attesa prima che inizi il turno
                     //TODO aggiungere scritta che dice "sta per iniziare il turno ..."
+                    turnBegin = false;
                     this.addKeyListener(p.getKeyH());
                     int counter = 0;
 
@@ -136,7 +143,6 @@ public class GrubPanel extends JPanel implements Runnable {
                         while(System.nanoTime() - start <= 2000000000) {
                             counter++;
                             p.update();
-                            numPlayerTurn = p.getId();
                             if(counter % 33 == 0){   //forse c'è un modo migliore per farlo 
                                 secondsTurn++;
                             }
