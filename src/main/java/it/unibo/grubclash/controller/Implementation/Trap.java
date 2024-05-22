@@ -19,9 +19,7 @@ public class Trap extends Entity{
         super(grubPanel);
 
         this.x = EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToItemConverter(id).get());
-        System.out.println("x " + id + " di trap: " + x);
         this.y = EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToItemConverter(id).get());
-        System.out.println("y " + id + " di trap: " + y);
 
         this.width = 20;
         this.height = 20;
