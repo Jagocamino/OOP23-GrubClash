@@ -118,9 +118,9 @@ public class Allowed {
             vorrei fare un metodo per il calcolo del danno, magari chiamato alla fine dei due metodi sotto, per eliminare entità o altro    
     */
 
-    //se non funziona distruggo tutto
+    //se non funziona distruggo tutto, MA PROBABILMENTE NEANCHE SERVE!!!
     //è un whatisfacing che restituisce un entità e non controlla i bordi
-    public static Optional<Entity> whatWallIsIncluded (int x, int y, int width, int height) { //qui ci metto le dimensioni dell'esplosione, ritorna la prima entità Wall nell'area
+    /* public static Optional<Entity> whatWallIsIncluded (int x, int y, int width, int height) { //qui ci metto le dimensioni dell'esplosione, ritorna la prima entità Wall nell'area
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 if(  Allowed.lvlData[i][j].getEntity() == entities.WALL && (
@@ -137,12 +137,19 @@ public class Allowed {
             }
         }
         return Optional.empty();
-    }
+    } */
 
-    //qui ci metto le dimensioni dell'esplosione
-    public static Optional<Entity> applyDamage (int x, int y, int width, int height) {
+    // restituisce una lista di entità che subiranno il danno
+    // chiede in input le dimensioni dell'esplosione
+    public static ArrayList<Optional<Entity>> dealDamage (int x, int y, int width, int height) { 
+        ArrayList<Optional<Entity>> damageToWhichDynamicEntities = new ArrayList<>();
         for (Entity dynamicEntity : Allowed.dynamicEntities) {
-            if(  dynamicEntity.getEntity() == entities.WALL && (
+            if( ( dynamicEntity.getEntity() == entities.PLAYER1 ) || 
+                ( dynamicEntity.getEntity() == entities.PLAYER2 ) || 
+                ( dynamicEntity.getEntity() == entities.PLAYER3 ) ||
+                ( dynamicEntity.getEntity() == entities.PLAYER4 ) ||
+                ( dynamicEntity.getEntity() == entities.PLAYER5 ) ||
+                ( dynamicEntity.getEntity() == entities.WALL ) && (
                     ( x >= dynamicEntity.getX() && x < (dynamicEntity.getX() + dynamicEntity.getWidth())) || // se è sporgente a sx
                     ( x + width >= dynamicEntity.getX() && x + width < (dynamicEntity.getX() + dynamicEntity.getWidth())) || // se è sporgente a dx
                     ( x < dynamicEntity.getX() && x + width >= (dynamicEntity.getX() + dynamicEntity.getWidth())) // se è dentro
@@ -151,10 +158,32 @@ public class Allowed {
                     ( y + height >= dynamicEntity.getY() && y + height < (dynamicEntity.getY() + dynamicEntity.getHeight())) || // se è sporgente sotto
                     ( y < dynamicEntity.getY() && y + height >= (dynamicEntity.getY() + dynamicEntity.getHeight())) // se è dentro
                     ) ){
-                    return Optional.ofNullable(dynamicEntity);
+                    damageToWhichDynamicEntities.add(Optional.ofNullable(dynamicEntity));
                 }
         }
-        return Optional.empty();
+        return damageToWhichDynamicEntities;
+    }
+
+    // infligge il danno alle strutture e ai giocatori nella ArrayList buttata fuori da dealDamage (ovvero tutte le entità colpite dall'esplosione)
+    // TODO da gestire cosa succede al danneggiamento dell'entità
+    public static void applyDamage (int x, int y, int width, int height) {
+        for (Optional<Entity> entity : dealDamage(x, y, width, height)) {
+            if (
+                    entity.get().getEntity() == entities.PLAYER1 ||
+                    entity.get().getEntity() == entities.PLAYER2 ||
+                    entity.get().getEntity() == entities.PLAYER3 ||
+                    entity.get().getEntity() == entities.PLAYER4 ||
+                    entity.get().getEntity() == entities.PLAYER5
+                ) { // cosa succede se il giocatore prende danno?
+                
+            }
+            if (
+                    entity.get().getEntity() == entities.WALL
+            ) {
+                // da valutare se il muoro si cancella direttamente oppure ha una healthbar
+            }
+
+        }
     }
 
 
@@ -232,25 +261,52 @@ public class Allowed {
         return entities.SKY;
     }
 
+    public static boolean hittable(Entity entity) {
+        if (
+            entity.getEntity() == entities.PLAYER1 ||
+            entity.getEntity() == entities.PLAYER2 ||
+            entity.getEntity() == entities.PLAYER3 ||
+            entity.getEntity() == entities.PLAYER4 ||
+            entity.getEntity() == entities.PLAYER5 ||
+            entity.getEntity() == entities.WALL ||
+            entity.getEntity() == entities.PROJECTILE
+            ) {
+                return true;
+        }
+        return false;
+    }
+
 
     //                                      TUTTO QUELLO CHE RIGUARDA IL PROIETTILE
-    // TODO da adattare per Allowed
-    /* private static Optional<Entity> whatIsFacing(Entity[][] lvlData, ArrayList<Entity> dynamicEntity, float x, float y) {
-        //controlla, di quei punti dell'angolo che vengono passati, se è dentro un oggetto
-        for (int i = 0; i < getWidth(); i++) {
-            for (int j = 0; j < getHeight(); j++) {
-                if (x >= lvlData[i][j].getX() && x < (lvlData[i][j].getWidth() + lvlData[i][j].getX()) && y >= lvlData[i][j].getX() && y < (lvlData[i][j].getY() + lvlData[i][j].getHeight()) ) {
-                    return Optional.ofNullable(lvlData[i][j]); //se le coordinate degli angoli si intersecano, l'entità
+
+    private static boolean gonnaExplodeHere(float x, float y) {
+        //scorre tutte le entità in lvlData per controllare le collisioni
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                if ( (
+                        x >= Allowed.lvlData[i][j].getX() &&
+                        x < (Allowed.lvlData[i][j].getWidth() + Allowed.lvlData[i][j].getX()) &&
+                        y >= Allowed.lvlData[i][j].getY() &&
+                        y < (Allowed.lvlData[i][j].getY() + lvlData[i][j].getHeight()) 
+                     ) && (
+                        hittable(lvlData[i][j]) == true
+                     )) {
+                    return true; //se le coordinate degli angoli si intersecano, l'entità
                 }
             }
         }
-        for (Entity entity : dynamicEntity) {
-            if (x >= entity.getX() && x < (entity.getWidth() + entity.getX()) && y >= entity.getX() && y < (entity.getY() + entity.getHeight()) ) {
-                return Optional.ofNullable(entity);
+        //scorre tutte le entità in dynamicEntity per controllare le collisioni
+        for (Entity entity : Allowed.dynamicEntities) {
+            if (        x >= entity.getX() &&
+                        x < (entity.getWidth() + entity.getX()) &&
+                        y >= entity.getX() && 
+                        y < (entity.getY() + entity.getHeight()) 
+                ) {
+                return true;
             }
         }
-        return Optional.empty();
-    } */
+        return false;
+    }
 
    
 
@@ -261,9 +317,9 @@ public class Allowed {
         ^naturalmente da mettere dentro GrubPanel :) ^ 
     */
 
-        /*
-    TODO MODO PER ELIMINARE LA MAPPA DA METTERE DENTRO GRUBPANEL
-        if (collideWithSmth == true) {
+        
+    //TODO MODO PER ELIMINARE LA MAPPA DA METTERE DENTRO GRUBPANEL
+        /* if (gonnaExplode == true) {
             addDynamicEntity( damage() ); //mettendola a entità si possono includere immagini o animazioni o boh
             for (canMoveThere( dynamicEntity.find(entities.EXPLOSION) == false)) {
                 // scorro eliminando tutto quello che c'è dentro l'area
@@ -271,21 +327,21 @@ public class Allowed {
             }
             //faccio questa pulizia per eliminare l'entità dell'esplosione
             dynamicEntity.find(entities.EXPLOSION).remove();
-        }
-    */
-    /* public boolean collidesWithSmth (Entity[][] lvlData, ArrayList<Entity> dynamicEntity, JPanel[][] mapBase, int x, int y) { // controlla l'esplosione del proiettile
+        } */
+   
+    public boolean gonnaExplode ( int x, int y, int widthProjectile, int heightProjectile) { // controlla l'esplosione del proiettile
         // dynamicEntity potrebbe essere l'insieme dielle entità non fisse che girano per la mappa, come proiettili, player e in caso item speciali
         // do per scontato che ogni angolo appartiene a una sola entità alla volta (o player o muro, non entrambe)
-        if (whatIsFacing(lvlData, dynamicEntity, x, y).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y).get().getEntity() != entities.ITEM ) {
-            if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).get().getEntity() == entities.ITEM) {
-                if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).get().getEntity() == entities.ITEM) {
-                    if(whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).get().getEntity() == entities.ITEM)
+        if (gonnaExplodeHere( x, y )) {
+            if(gonnaExplodeHere( x + widthProjectile, y + heightProjectile)) {
+                if(gonnaExplodeHere( x + widthProjectile, y)) {
+                    if(gonnaExplodeHere( x, y + heightProjectile))
                         return false;
                 }
             }
         }
         return true;
-    } */
+    }
 
 
 }
