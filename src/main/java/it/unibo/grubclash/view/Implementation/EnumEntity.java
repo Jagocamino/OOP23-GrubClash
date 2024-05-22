@@ -2,12 +2,7 @@ package it.unibo.grubclash.view.Implementation;
 
 import java.util.Optional;
 
-import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
-
 public class EnumEntity {
-
-    //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
-    private static final FrameManager frameManager = new FrameManagerImpl();
 
     public enum entities {
         PLAYER1,

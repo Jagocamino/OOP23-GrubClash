@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.concurrent.locks.Lock;
 
 import javax.swing.JPanel;
 
@@ -127,14 +126,12 @@ public class GrubPanel extends JPanel implements Runnable {
                 for(Player p : players) {
                     int numCicles = 0;   //5 cicli da 2 secondi => 10 secondi di round
                     long wait = System.nanoTime();
-                        while(System.nanoTime() - wait <= 2000000000) {
-                            
-                        }
-
+                    while(System.nanoTime() - wait <= 2000000000) {} //due secondi di attesa prima che inizi il turno
+                    //TODO aggiungere scritta che dice "sta per iniziare il turno ..."
                     this.addKeyListener(p.getKeyH());
                     int counter = 0;
 
-                        while(numCicles <= 5){   //algoritmo da rivedere ma la sostanza c'è TODO 
+                    while(numCicles <= 5){   //algoritmo da rivedere ma la sostanza c'è TODO 
                         long start = System.nanoTime();
                         while(System.nanoTime() - start <= 2000000000) {
                             counter++;
@@ -150,7 +147,7 @@ public class GrubPanel extends JPanel implements Runnable {
                             }
                         }
                         numCicles++;
-                        }
+                    }
 
                     secondsTurn = 0;
                     p.getKeyH().leftPressed = false;
