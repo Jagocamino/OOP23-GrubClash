@@ -289,7 +289,7 @@ public class MapBuilder extends Canvas {
     private static void createPlayableLayer() { 
         JFrame mapContainer = getMapContainer();
         JLayeredPane layeredPaneGrid = getLayeredPaneGrid();
-        GrubPanel playableLayer = new GrubPanel(getNumPlayers()); 
+        GrubPanel playableLayer = new GrubPanel(getNumPlayers());
         playableLayer.startGameThread();
         playableLayer.setBounds(0, 0, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
         playableLayer.setOpaque(false); //come si rende trasparente?

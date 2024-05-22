@@ -93,7 +93,8 @@ public class Allowed {
     }
 
     public static void addEntity (int x, int y, int width, int height, entities entity, int i, int j) {
-        if (lvlData[i][j] != null && (lvlData[i][j].getEntity() == entities.WALL || lvlData[i][j].getEntity() == entities.ITEM)) {
+        if (lvlData[i][j] != null && (lvlData[i][j].getEntity() == entities.WALL || lvlData[i][j].getEntity() == entities.ITEM1 || lvlData[i][j].getEntity() == entities.ITEM2
+        || lvlData[i][j].getEntity() == entities.ITEM3 || lvlData[i][j].getEntity() == entities.ITEM4 || lvlData[i][j].getEntity() == entities.ITEM5)) {
             System.out.println("This box is already taken, overwriting floor or item on the map..");
         }
         Allowed.lvlData[i][j] = new Entity(x, y, width, height, entity);

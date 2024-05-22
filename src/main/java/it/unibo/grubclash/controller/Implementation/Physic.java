@@ -10,20 +10,20 @@ public class Physic {
         this.grubPanel = grubPanel;
     }
 
-    public void checkTerrain(Player player){
+    public void checkTerrain(Entity entity){
         //TODO caduta accelerata
-        if(Allowed.CanMoveThere(player.x, player.y+player.gravityAcceleration, player.width, player.height)){
-            player.gravityCounter++;
-            player.y+=player.gravityAcceleration;
-            if(player.gravityCounter > 15){
-                player.gravityAcceleration++;
-                player.gravityCounter = 0;
+        if(Allowed.CanMoveThere(entity.x, entity.y+entity.gravityAcceleration, entity.width, entity.height)){
+            entity.gravityCounter++;
+            entity.y+=entity.gravityAcceleration;
+            if(entity.gravityCounter > 15){
+                entity.gravityAcceleration++;
+                entity.gravityCounter = 0;
             }
-            player.canJump = false;
+            entity.canJump = false;
         }else{
-            player.canJump = true;
-            player.gravityAcceleration = 0;
-            player.gravityCounter = 0;
+            entity.canJump = true;
+            entity.gravityAcceleration = 0;
+            entity.gravityCounter = 0;
         }
     }
 }

@@ -22,11 +22,8 @@ public class Player extends Entity{
     public BufferedImage stand1, stand2, left1, left2, right1, right2, jump1, jump2, jump3;
 
     private int id;
-    public int x, y;
-    public int width, height;
     public int speed;
     public String direction;
-    public boolean canJump = true;
 
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
 
@@ -75,6 +72,9 @@ public class Player extends Entity{
             spriteCounter = 0;
         }
 
+        //controlla se danneggiato da una trappola
+        touchTrap();
+
         // TODO @notnoted ziopera stiamo muovendo il player NON entity, dobbiamo muovere anche l'Entity del giocatore
         /*
             Non ci metto le mani altrimenti Pianini mi uccide, aggiorna con i setter appena messi su Entity, se non si muovono insieme naturalmente non sono registrate le collisioni 
@@ -122,6 +122,17 @@ public class Player extends Entity{
         }
         if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
             direction = "down";
+        }
+    }
+
+    public void touchTrap(){
+
+        for (Trap t : grubPanel.traps) {
+            if(t.alive && this.x + this.width/2 > t.getX() && this.x + this.width/2 < t.getX() + t.getWidth()
+            && this.y + this.height/2 > t.getY() && this.y + this.height/2 < t.getY() + t.getHeight()){
+                this.life.damage();
+                t.alive = false;
+            }
         }
     }
 

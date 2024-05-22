@@ -171,10 +171,10 @@ public class Projectile {
     public boolean collidesWithSmth (Entity[][] lvlData, ArrayList<Entity> dynamicEntity, JPanel[][] mapBase, int x, int y) { // controlla l'esplosione del proiettile
         // dynamicEntity potrebbe essere l'insieme dielle entità non fisse che girano per la mappa, come proiettili, player e in caso item speciali
         // do per scontato che ogni angolo appartiene a una sola entità alla volta (o player o muro, non entrambe)
-        if (whatIsFacing(lvlData, dynamicEntity, x, y).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y).get().getEntity() != entities.ITEM ) {
-            if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).get().getEntity() == entities.ITEM) {
-                if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).get().getEntity() == entities.ITEM) {
-                    if(whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).get().getEntity() == entities.ITEM)
+        if (whatIsFacing(lvlData, dynamicEntity, x, y).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y).get().getEntity() == entities.ITEM1 ) {
+            if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y + HEIGHTROKET).get().getEntity() == entities.ITEM1) {
+                if(whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x + WIDTHROKET, y).get().getEntity() == entities.ITEM1) {
+                    if(whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).get().getEntity() == entities.SKY || whatIsFacing(lvlData, dynamicEntity, x, y + HEIGHTROKET).get().getEntity() == entities.ITEM1)
                         return false;
                 }
             }

@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import it.unibo.grubclash.controller.Implementation.Allowed;
+import it.unibo.grubclash.controller.Implementation.ItemSpawner;
 import it.unibo.grubclash.controller.Implementation.Physic;
 import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.controller.Implementation.Trap;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
 import it.unibo.grubclash.view.Implementation.MapBuilder;
@@ -23,9 +25,6 @@ public class GrubPanel extends JPanel implements Runnable {
 
     // FPS
     static final int FPS = 60;
-
-    //CHANGE GIOCATORE
-    public final Object lock = new Object();
 
     // Thread principale
     Thread gameThread; 
@@ -48,6 +47,9 @@ public class GrubPanel extends JPanel implements Runnable {
     public int numPlayerTurn;
     public int secondsTurn = 0;
 
+    //Traps
+    public ArrayList<Trap> traps;
+
     //UI
     UI ui = new UI(this);
 
@@ -60,12 +62,21 @@ public class GrubPanel extends JPanel implements Runnable {
 
     //VARIABLES
     public boolean turnBegin = false;
+    private int numItems = 5;
 
     public GrubPanel(int playerCount) {
+
         this.playerCount = playerCount;
         keyHandelers = new ArrayList<>();
         Allowed.setMapBase(MapBuilder.getMapBase());
         Allowed.addMapBase(MapBuilder.getEntityMatrix()); //creo la matrice delle entità (20x20)
+        
+
+        //ITEMSPAWNER
+        ItemSpawner itemSpawner = new ItemSpawner(MapBuilder.ROWS, MapBuilder.COLS, numItems, Allowed.getLvlData());
+        
+        itemSpawner.generateSpawnLocation();
+        
 
         //Allowed.delateSpawnpoint(); //sostituisco i player con il cielo nella matrice 20x20, non so se metterlo TODO
 
@@ -74,6 +85,12 @@ public class GrubPanel extends JPanel implements Runnable {
             keyHandelers.add(new KeyHandler(this));
             players.add(new Player(this, i, keyHandelers.get(i)));
         } 
+        traps = new ArrayList<>();
+        
+        for(int i = 0; i < numItems; i++){
+            
+            traps.add(new Trap(this, i+1));
+        }
 
 
         this.setSize(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
@@ -176,6 +193,11 @@ public class GrubPanel extends JPanel implements Runnable {
                 physic.checkTerrain(p);
             }
         }
+        for(Trap t : traps) {
+            if(t.gravity){
+                physic.checkTerrain(t);
+            }
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -187,6 +209,9 @@ public class GrubPanel extends JPanel implements Runnable {
         for(Player p : players) {
             p.draw(g2d);
             p.life.draw(g2d);
+        }
+        for(Trap t : traps) {
+            t.draw(g2d);
         }
 
         ui.draw(g2d);

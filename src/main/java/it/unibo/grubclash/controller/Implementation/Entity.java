@@ -18,9 +18,9 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
 
     GrubPanel grubPanel;
 
-    protected float x;  //qui metterei int e non float tanto viene sempre messo (int) e come valore float non viene mai effettivamente usato
-    protected float y;
-    protected double width, height;
+    public int x;  //qui metterei int e non float tanto viene sempre messo (int) e come valore float non viene mai effettivamente usato
+    public int y;
+    public int width, height;
     protected Rectangle hitbox;
     protected entities entity;
     protected int spriteNum = 1;
@@ -28,46 +28,48 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     public boolean gravity = true;
     public int gravityAcceleration = 2;
     public int gravityCounter = 0;
+    public boolean canJump = true;
+    public boolean alive = true;
 
     //COUNTERS
     protected static int spriteCounter = 0;
     public int jump1Counter = 0;
     public int jump2Counter = 0;
 
-    public Entity(float x, float y, double width, double height, entities entity) { //passed
+    public Entity(int x, int y, int width, int height, entities entity) { //passed
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.entity = entity;
-        /* initHitbox(); */
-    }
+        //initHitbox(); 
+    } 
 
     public Entity (GrubPanel grubPanel) {
         this.grubPanel = grubPanel;
     }
 
-    public float getX () {
+    public int getX () {
         return x;
     }
 
-    public float getY () {
+    public int getY () {
         return y;
     }
 
-    public void setX (float x) {
+    public void setX (int x) {
         this.x = x;
     }
 
-    public void setY (float y) {
+    public void setY (int y) {
         this.y = y;
     }
 
-    public double getWidth() {
+    public int getWidth() {
         return width;
     }
 
-    public double getHeight() {
+    public int getHeight() {
         return height;
     }
 

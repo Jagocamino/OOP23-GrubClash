@@ -12,7 +12,11 @@ public class EnumEntity {
         PLAYER5,
         WALL,
         SKY,
-        ITEM,
+        ITEM1,
+        ITEM2,
+        ITEM3,
+        ITEM4,
+        ITEM5,
         EXPLOSION,
         GUN,
         PROJECTILE;   
@@ -26,6 +30,18 @@ public class EnumEntity {
             case 2 -> Optional.ofNullable(entities.PLAYER3);
             case 3 -> Optional.ofNullable(entities.PLAYER4);
             case 4 -> Optional.ofNullable(entities.PLAYER5);
+            default -> Optional.empty();
+        };
+
+    }
+    public static Optional<entities> idToItemConverter(int id){
+
+        return switch (id) {
+            case 1 -> Optional.ofNullable(entities.ITEM1);
+            case 2 -> Optional.ofNullable(entities.ITEM2);
+            case 3 -> Optional.ofNullable(entities.ITEM3);
+            case 4 -> Optional.ofNullable(entities.ITEM4);
+            case 5 -> Optional.ofNullable(entities.ITEM5);
             default -> Optional.empty();
         };
 

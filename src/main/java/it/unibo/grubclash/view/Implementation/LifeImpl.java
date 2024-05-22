@@ -13,6 +13,8 @@ import java.util.Optional;
 
 public class LifeImpl implements Life {
 
+    BufferedImage life0, life20, life40, life60, life80, life100;
+
     int playerCount;
     GrubPanel grubPanel;
     Graphics2D g2d;
@@ -33,6 +35,8 @@ public class LifeImpl implements Life {
         //Font
         snapITCFont = new Font("Snap ITC", Font.BOLD, 24);
 
+        getImage();
+
 
     }
 
@@ -47,15 +51,19 @@ public class LifeImpl implements Life {
 
     }
 
-    private void drawLifePlayer() {
+    private void getImage(){
+
         //mi salvo tutte le varie immagini della vita
         final char FS = File.separatorChar;
-        BufferedImage life100 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_100.png", 100, 15);
-        BufferedImage life80 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_80.png", 100, 15);
-        BufferedImage life60 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_60.png", 100, 15);
-        BufferedImage life40 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_40.png", 100, 15);
-        BufferedImage life20 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_20.png", 100, 15);
-        BufferedImage life0 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_10.png", 100, 15);
+        life100 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_100.png", 100, 15);
+        life80 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_80.png", 100, 15);
+        life60 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_60.png", 100, 15);
+        life40 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_40.png", 100, 15);
+        life20 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_20.png", 100, 15);
+        life0 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_10.png", 100, 15);
+    }
+
+    private void drawLifePlayer() {
 
         //disegno la vita per ogni giocatore
         for(int i=1; i<=playerCount;i++){
