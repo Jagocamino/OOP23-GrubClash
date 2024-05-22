@@ -232,8 +232,8 @@ public class MapBuilder extends Canvas {
     }
 
     public static JButton createButton(int i, int j) {
-        final int BUTTON_WIDTH = frameManager.getWindowWidth() / ROWS;
-        final int BUTTON_HEIGHT = frameManager.getWindowHeight() / COLS;
+        final int BUTTON_WIDTH = frameManager.getWindowWidth().get() / ROWS;
+        final int BUTTON_HEIGHT = frameManager.getWindowHeight().get() / COLS;
 
         JButton invisibleBtn = new JButton();
         if (i == 0 && j == COLS - 1) {
@@ -291,7 +291,7 @@ public class MapBuilder extends Canvas {
         JLayeredPane layeredPaneGrid = getLayeredPaneGrid();
         GrubPanel playableLayer = new GrubPanel(getNumPlayers()); 
         playableLayer.startGameThread();
-        playableLayer.setBounds(0, 0, frameManager.getWindowWidth(), frameManager.getWindowHeight());
+        playableLayer.setBounds(0, 0, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
         playableLayer.setOpaque(false); //come si rende trasparente?
         layeredPaneGrid.add(playableLayer, JLayeredPane.PALETTE_LAYER);
         layeredPaneGrid.setVisible(true);
@@ -326,6 +326,7 @@ public class MapBuilder extends Canvas {
                 final int finalI = i;
                 final int finalJ = j;
                 if(btnMatrix[i][j] == btnFinish) { //if(è nel bottone finish, ovvero quello dello switch della fase)
+                    frameManager.showMessageBox("Messaggio", "Seleziona dove posizionare il primo giocatore e premi il botttone finish, fai così per tutti i vari giocatori", JOptionPane.INFORMATION_MESSAGE);
                     btnFinish.addActionListener(o -> {
                         if (getCurrentPlayer() == getNumPlayers() - 1 && getColorSpawnpoint() == true) {
                             try {
@@ -377,10 +378,10 @@ public class MapBuilder extends Canvas {
         frameManager.setIcon(getMapContainer());
         initCharacterPlacementPhase();
         getMapContainer().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getMapContainer().setSize(frameManager.getWindowWidth(), frameManager.getWindowHeight());
+        getMapContainer().setSize(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
 
         setNumPlayers(numPlayers);
-        mapContainer.setMinimumSize(new Dimension(frameManager.getWindowWidth(), frameManager.getWindowHeight()));
+        mapContainer.setMinimumSize(new Dimension(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get()));
         mapContainer.setResizable(false);
         JLayeredPane layeredPaneGrid = new JLayeredPane();
         setLayeredPaneGrid(layeredPaneGrid);
@@ -390,7 +391,7 @@ public class MapBuilder extends Canvas {
         // Creo una griglia di panels
         JPanel map = new JPanel();
         setMap(map);
-        getMap().setBounds(0, 0, frameManager.getWindowWidth(), frameManager.getWindowHeight());
+        getMap().setBounds(0, 0, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
         getMap().setLayout(new GridLayout(ROWS, COLS));  //Imposto il layout del pane che contiene le matrix di bottoni e altri pane
 
         JPanel[][] mapBase = new JPanel[ROWS][COLS];

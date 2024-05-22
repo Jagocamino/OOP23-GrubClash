@@ -1,6 +1,7 @@
 package it.unibo.grubclash.view.Implementation;
 
 import java.io.File;
+import java.util.Optional;
 
 import javax.swing.*;
 
@@ -25,11 +26,11 @@ public class FrameManagerImpl implements it.unibo.grubclash.view.Application_Pro
         JOptionPane.showMessageDialog(null, content, title, messageType);
     }
 
-    public int getWindowWidth() {
-        return FrameManagerImpl.WINDOW_WIDTH;
+    public Optional<Integer> getWindowWidth() {
+        return Optional.of(FrameManagerImpl.WINDOW_WIDTH);
     }
 
-    public int getWindowHeight() {
-        return FrameManagerImpl.WINDOW_HEIGHT;
+    public Optional<Integer> getWindowHeight() {
+        return Optional.of(FrameManagerImpl.WINDOW_HEIGHT);
     }
 }

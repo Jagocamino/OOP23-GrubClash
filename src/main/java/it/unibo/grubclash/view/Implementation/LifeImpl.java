@@ -8,6 +8,7 @@ import it.unibo.grubclash.view.Implementation.LifeImpl;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Optional;
 
 public class LifeImpl implements it.unibo.grubclash.view.Application_Programming_Interface.Life {
 
@@ -84,8 +85,8 @@ public class LifeImpl implements it.unibo.grubclash.view.Application_Programming
         this.life = life;
     }
 
-    @Override public int getLife(){
-        return this.life;
+    @Override public Optional<Integer> getLife(){
+        return Optional.ofNullable(this.life);
     }
 
     @Override public void damage(){

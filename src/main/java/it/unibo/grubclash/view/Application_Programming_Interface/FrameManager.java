@@ -1,5 +1,7 @@
 package it.unibo.grubclash.view.Application_Programming_Interface;
 
+import java.util.Optional;
+
 import javax.swing.*;
 
 public interface FrameManager {
@@ -10,7 +12,7 @@ public interface FrameManager {
 
     void showMessageBox(String title, String content, int messageType);
 
-    int getWindowWidth();
+    Optional<Integer> getWindowWidth();
 
-    int getWindowHeight();
+    Optional<Integer> getWindowHeight();
 }

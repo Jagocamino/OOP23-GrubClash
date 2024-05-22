@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
 
 import javax.swing.JPanel;
 
@@ -23,6 +24,9 @@ public class GrubPanel extends JPanel implements Runnable {
 
     // FPS
     static final int FPS = 60;
+
+    //CHANGE GIOCATORE
+    public final Object lock = new Object();
 
     // Thread principale
     Thread gameThread; 
@@ -51,8 +55,9 @@ public class GrubPanel extends JPanel implements Runnable {
     //PHYSIC
     public Physic physic = new Physic(this);
 
+
     //COLLISION CHECKER
-    public Allowed allowed = new Allowed(frameManager.getWindowWidth(), frameManager.getWindowHeight(), MapBuilder.ROWS, MapBuilder.COLS);
+    public Allowed allowed = new Allowed(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get(), MapBuilder.ROWS, MapBuilder.COLS);
 
     public GrubPanel(int playerCount) {
         this.playerCount = playerCount;
@@ -69,7 +74,7 @@ public class GrubPanel extends JPanel implements Runnable {
         } 
 
 
-        this.setSize(frameManager.getWindowWidth(), frameManager.getWindowHeight());
+        this.setSize(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
         this.setDoubleBuffered(true);
         this.setFocusable(true);
     }
@@ -121,10 +126,15 @@ public class GrubPanel extends JPanel implements Runnable {
             while(gameThread != null) {
                 for(Player p : players) {
                     int numCicles = 0;   //5 cicli da 2 secondi => 10 secondi di round
+                    long wait = System.nanoTime();
+                        while(System.nanoTime() - wait <= 2000000000) {
+                            
+                        }
+
                     this.addKeyListener(p.getKeyH());
                     int counter = 0;
 
-                    while(numCicles <= 5){   //algoritmo da rivedere ma la sostanza c'è TODO 
+                        while(numCicles <= 5){   //algoritmo da rivedere ma la sostanza c'è TODO 
                         long start = System.nanoTime();
                         while(System.nanoTime() - start <= 2000000000) {
                             counter++;
@@ -140,7 +150,8 @@ public class GrubPanel extends JPanel implements Runnable {
                             }
                         }
                         numCicles++;
-                    }
+                        }
+
                     secondsTurn = 0;
                     p.getKeyH().leftPressed = false;
                     p.getKeyH().rightPressed = false;
