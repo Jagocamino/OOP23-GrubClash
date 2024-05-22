@@ -150,14 +150,14 @@ public class Allowed {
                 ( dynamicEntity.getEntity() == entities.PLAYER4 ) ||
                 ( dynamicEntity.getEntity() == entities.PLAYER5 ) ||
                 ( dynamicEntity.getEntity() == entities.WALL ) && (
-                    ( x >= dynamicEntity.getX() && x < (dynamicEntity.getX() + dynamicEntity.getWidth())) || // se è sporgente a sx
-                    ( x + width >= dynamicEntity.getX() && x + width < (dynamicEntity.getX() + dynamicEntity.getWidth())) || // se è sporgente a dx
-                    ( x < dynamicEntity.getX() && x + width >= (dynamicEntity.getX() + dynamicEntity.getWidth())) // se è dentro
-                    ) && (
-                    ( y >= dynamicEntity.getY() && y < (dynamicEntity.getY() + dynamicEntity.getHeight())) || // se è sporgente sopra
-                    ( y + height >= dynamicEntity.getY() && y + height < (dynamicEntity.getY() + dynamicEntity.getHeight())) || // se è sporgente sotto
-                    ( y < dynamicEntity.getY() && y + height >= (dynamicEntity.getY() + dynamicEntity.getHeight())) // se è dentro
-                    ) ){
+                ( x >= dynamicEntity.getX() && x < (dynamicEntity.getX() + dynamicEntity.getWidth())) || // se è sporgente a sx
+                ( x + width >= dynamicEntity.getX() && x + width < (dynamicEntity.getX() + dynamicEntity.getWidth())) || // se è sporgente a dx
+                ( x < dynamicEntity.getX() && x + width >= (dynamicEntity.getX() + dynamicEntity.getWidth())) // se è dentro
+                ) && (
+                ( y >= dynamicEntity.getY() && y < (dynamicEntity.getY() + dynamicEntity.getHeight())) || // se è sporgente sopra
+                ( y + height >= dynamicEntity.getY() && y + height < (dynamicEntity.getY() + dynamicEntity.getHeight())) || // se è sporgente sotto
+                ( y < dynamicEntity.getY() && y + height >= (dynamicEntity.getY() + dynamicEntity.getHeight())) // se è dentro
+                ) ){
                     damageToWhichDynamicEntities.add(Optional.ofNullable(dynamicEntity));
                 }
         }
@@ -214,7 +214,6 @@ public class Allowed {
         mapDestroyer(i, j);
     }
 
-    // METTERE METODO CHE RITORNA i DATA l'entità del muro
     public Optional<Integer> getI (Entity entity) {
 
         for (int i = 0; i < getROWS(); i++) {
@@ -227,7 +226,6 @@ public class Allowed {
         return Optional.empty();
     }
 
-    // METTERE METODO CHE RITORNA j DATA l'entità del muro
     public Optional<Integer> getJ (Entity entity) {
 
         for (int i = 0; i < getROWS(); i++) {
@@ -262,7 +260,7 @@ public class Allowed {
     }
 
     public static boolean hittable(Entity entity) {
-        if (
+        return (
             entity.getEntity() == entities.PLAYER1 ||
             entity.getEntity() == entities.PLAYER2 ||
             entity.getEntity() == entities.PLAYER3 ||
@@ -270,12 +268,8 @@ public class Allowed {
             entity.getEntity() == entities.PLAYER5 ||
             entity.getEntity() == entities.WALL ||
             entity.getEntity() == entities.PROJECTILE
-            ) {
-                return true;
-        }
-        return false;
+            );
     }
-
 
     //                                      TUTTO QUELLO CHE RIGUARDA IL PROIETTILE
 
