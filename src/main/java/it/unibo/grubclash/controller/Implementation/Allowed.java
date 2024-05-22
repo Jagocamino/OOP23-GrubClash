@@ -261,6 +261,7 @@ public class Allowed {
         return entities.SKY;
     }
 
+    //check if entity is hittable
     public static boolean hittable(Entity entity) {
         if (
             entity.getEntity() == entities.PLAYER1 ||
