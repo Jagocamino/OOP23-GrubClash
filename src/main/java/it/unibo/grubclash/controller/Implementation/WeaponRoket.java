@@ -8,7 +8,7 @@ public class WeaponRoket implements Weapon {
     //il proiettile smette di esistere se canMoveThere() restituisce false
 
     private final int defaultAmmo = 5;
-    private Entity owner;
+    private Player owner;
     private int ammo;
 
     @Override
@@ -17,7 +17,7 @@ public class WeaponRoket implements Weapon {
     }
 
     @Override
-    public void setOwner(Entity owner) {
+    public void setOwner(Player owner) {
         this.owner = owner;
     }
 
@@ -38,7 +38,8 @@ public class WeaponRoket implements Weapon {
 
     @Override
     public Entity shoot() {
-        return new ProjectileRoket(owner.getX(), owner.getY());
+        reduceAmmo();
+        return new ProjectileRoket(owner.getX(), owner.getY(), owner);
     }
     
 }

@@ -242,7 +242,7 @@ public class Allowed {
             dynamicEntity.find(entities.EXPLOSION).remove();
     } */
 
-    private static boolean gonnaExplodeHere(float x, float y) {
+    private static boolean gonnaExplodeHere(float x, float y/* , Entity owner */) {
         //scorre tutte le entità in lvlData per controllare le collisioni
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
@@ -260,13 +260,14 @@ public class Allowed {
         }
 
         //scorre tutte le entità in dynamicEntity per controllare le collisioni
+        // TODO da evitare il self damage
         for (Entity entity : Allowed.dynamicEntities) {
             if ( (      x >= entity.getX() &&
                         x < (entity.getWidth() + entity.getX()) &&
                         y >= entity.getX() && 
                         y < (entity.getY() + entity.getHeight())
                     ) && (
-                        damageable(entity)
+                        damageable(entity) /* && owner.getEntity()  */
                     )
                 ) {
                 return true;
@@ -338,7 +339,8 @@ public class Allowed {
                 ( explosionY >= entityY && explosionY < (entityY + entityHeight)) || // se è sporgente sopra
                 ( explosionY + explosionHeight >= entityY && explosionY + explosionHeight < (entityY + entityHeight)) || // se è sporgente sotto
                 ( explosionY < entityY && explosionY + explosionHeight >= (entityY + entityHeight)) // se è dentro
-                ) ){
+                ) 
+            ){
                     damageToWhichDynamicEntities.add(dynamicEntity);
                 }
         }
@@ -347,16 +349,14 @@ public class Allowed {
 
     // infligge il danno alle strutture e ai giocatori nella ArrayList buttata fuori da dealDamage (ovvero tutte le entità colpite dall'esplosione)
     // TODO da gestire cosa succede al danneggiamento dell'entità
-    public static void applyDamage (int x, int y, int width, int height) {
-        for (Entity entity : dealDamage(x, y, width, height)) {
-            if (
-                    isPlayer(entity)
-                ) { // cosa succede se il giocatore prende danno?
+    // il return di dealDamage() va come argomento di applyDamage()
+    public static void applyDamage (ArrayList<Entity> dealDamage, int damage) {
+        for (Entity entity : dealDamage) {
+            if ( isPlayer(entity) ) { // cosa succede se il giocatore prende danno?
+                
             }
-            if (
-                    entity.getEntity() == entities.WALL
-            ) {
-                // da valutare se il muoro si cancella direttamente oppure ha una healthbar
+            if ( entity.getEntity() == entities.WALL ) {// da valutare se il muoro si cancella direttamente oppure ha una healthbar
+                entity.setEntity(entities.SKY); // TODO da gestire il cambio di immagine
             }
 
         }

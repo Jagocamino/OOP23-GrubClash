@@ -24,7 +24,7 @@ public class Trap extends Entity{
         this.width = 20;
         this.height = 20;
         setEntity(EnumEntity.idToItemConverter(id).get());
-
+        Allowed.addDynamicEntity(this);
         getImage();
     }
 

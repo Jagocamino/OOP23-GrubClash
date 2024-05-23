@@ -9,6 +9,7 @@ import it.unibo.grubclash.model.Implementation.KeyHandler;
 import it.unibo.grubclash.view.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
 import it.unibo.grubclash.view.Implementation.MapBuilder;
+import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
 
 //   LA POSIZIONE DEL GIOCATORE VIENE PASSATA DOPO IL CONTROLLO NEL MAP BUILDER
 
@@ -23,7 +24,7 @@ public class Player extends Entity{
 
     private int id;
     public int speed;
-    public String direction;
+    private orientation direction;
 
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
 
@@ -39,9 +40,9 @@ public class Player extends Entity{
         this.width = 35;
         this.height = 35;
         this.speed = 3;
-        this.direction = "down";
+        this.direction = orientation.DOWN;
         setEntity(EnumEntity.idToEntitiesConverter(id).get());
-
+        Allowed.addDynamicEntity(this);
         getImage(id);
     }
 
@@ -81,19 +82,22 @@ public class Player extends Entity{
         */
         if(keyH.leftPressed && canMove){
             if(Allowed.CanMoveThere(x - speed, y, width, height)){
-                direction = "left";
+                direction = orientation.LEFT;
                 x-=speed;
             }
         }
         else if(keyH.rightPressed && canMove){
             if(Allowed.CanMoveThere(x + speed, y, width, height)){
-                direction = "right";
+                direction = orientation.RIGHT;
                 x+=speed;
             }
         }
+
+
+
         //TODO togliere la possibilità di saltare mentre si è in aria (bugga anche la fisica(accelerazione di gravità continua ad aumentare))
         if(keyH.spacePressed){  //aggiungi "&& canJump" per effetto palleggio
-            direction = "up";
+            direction = orientation.UP;
             canMove = false;
             gravity=false;
             
@@ -101,13 +105,13 @@ public class Player extends Entity{
             
             if(jump1Counter > 15){
                 canMove = true;
-                direction = "up2";
+                direction = orientation.UP2;
                 jump2Counter++;
                 if(jump2Counter < 15 && Allowed.CanMoveThere(x, y-30/jump2Counter, width, height)){
                     y-=30 / jump2Counter;
                 }
                 if(jump2Counter > 15 && jump2Counter < 30){ //  && Allowed.CanMoveThere(x, y+gravityAcceleration, width, height)  
-                    direction = "down";
+                    direction = orientation.DOWN;
                     gravity = true;
                     //y+=jump2Counter/8;
                 }
@@ -121,7 +125,7 @@ public class Player extends Entity{
             gravity=true;
         }
         if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
-            direction = "down";
+            direction = orientation.DOWN;
         }
     }
 
@@ -136,27 +140,31 @@ public class Player extends Entity{
         }
     }
 
+    public orientation getDirection() {
+        return direction;
+    }
+
     public void draw(Graphics2D g2d){
         
         BufferedImage image = null;
 
         switch(direction){
-        case "left":
+        case LEFT:
             if(spriteNum == 1){image = left1;}
             if(spriteNum == 2){image = left2;}
         break;
-        case "right":
+        case RIGHT:
             if(spriteNum == 1){image = right1;}
             if(spriteNum == 2){image = right2;}
         break;
-        case "down":
+        case DOWN:
             if(spriteNum == 1){image = stand1;}
             if(spriteNum == 2){image = stand2;}
         break;
-        case "up":
+        case UP:
             image = jump1;
         break;
-        case "up2":
+        case UP2:
             if(keyH.leftPressed){image = jump3;}
             else {image = jump2;}
         break;
@@ -166,24 +174,8 @@ public class Player extends Entity{
 
     }
 
-    public void render() {
-        //future implementation
-        //costruisco l'hitbox sopra il player
-        /*
-        drawHitbox(g);
-        */
-    }
-
     public int getId() {
         return id;
-    }
-
-    public float getPosX() {
-        return x;
-    }
-
-    public float getPosY() {
-        return y;
     }
 
     public KeyHandler getKeyH() {
@@ -194,8 +186,7 @@ public class Player extends Entity{
         this.id = id;
     }
 
-    public void newPos(int x, int y) { //ogni volta che viene chiamata si passa una nuova posizione
-        this.x = x;
-        this.y = y;
-    } 
+
+
+
 }

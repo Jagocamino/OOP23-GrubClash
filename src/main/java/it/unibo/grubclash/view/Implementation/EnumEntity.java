@@ -22,6 +22,14 @@ public class EnumEntity {
         PROJECTILE;   
     }
 
+    public enum orientation {
+        UP,
+        UP2,
+        DOWN,
+        LEFT,
+        RIGHT;
+    }
+
     public static Optional<entities> idToEntitiesConverter(int id){
 
         return switch (id) {

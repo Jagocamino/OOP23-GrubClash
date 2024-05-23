@@ -1,5 +1,6 @@
 package it.unibo.grubclash.controller;
 import it.unibo.grubclash.controller.Implementation.Entity;
+import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 
 public interface Weapon {
@@ -18,7 +19,7 @@ public interface Weapon {
     }
 
     Entity getOwner();
-    void setOwner(Entity owner);
+    void setOwner(Player owner);
 
     public void setAmmo (int ammo);
     public void refillAmmo ();
