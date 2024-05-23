@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class LifeImpl implements Life {
 
-    BufferedImage life0, life20, life40, life60, life80, life100;
+    BufferedImage life20, life40, life60, life80, life100;
 
     int playerCount;
     GrubPanel grubPanel;
@@ -60,13 +60,12 @@ public class LifeImpl implements Life {
         life60 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_60.png", 100, 15);
         life40 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_40.png", 100, 15);
         life20 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_20.png", 100, 15);
-        life0 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_10.png", 100, 15);
     }
 
     private void drawLifePlayer() {
 
         //disegno la vita per ogni giocatore
-        for(int i=1; i<=playerCount;i++){
+        for(int i=1; i<=playerCount && player.alive;i++){
             switch (life){
                 case 10:
                     g2d.drawImage(life100, player.x-25, player.y-15,null);
@@ -83,9 +82,6 @@ public class LifeImpl implements Life {
                 case 2:
                     g2d.drawImage(life20,player.x-25, player.y-15,null);
                     break;
-                case 0:
-                    g2d.drawImage(life0,player.x-25, player.y-15,null);
-                    break;
             }
         }
     }
@@ -99,10 +95,14 @@ public class LifeImpl implements Life {
     }
 
     @Override public void damage(){
-        this.life -= value;
+        if(this.life > 0){
+            this.life -= value;
+        }
     }
 
     @Override public void plusLife(){
-        this.life += value;
+        if(this.life < 10){
+            this.life += value;
+        }
     }
 }

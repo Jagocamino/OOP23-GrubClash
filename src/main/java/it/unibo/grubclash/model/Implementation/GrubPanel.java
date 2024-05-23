@@ -5,34 +5,35 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import it.unibo.grubclash.controller.Implementation.Allowed;
+import it.unibo.grubclash.controller.Implementation.Heal;
 import it.unibo.grubclash.controller.Implementation.ItemSpawner;
 import it.unibo.grubclash.controller.Implementation.Physic;
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.controller.Implementation.Trap;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
+import it.unibo.grubclash.view.Implementation.Main;
 import it.unibo.grubclash.view.Implementation.MapBuilder;
+import it.unibo.grubclash.view.Implementation.Menu;
 import it.unibo.grubclash.view.Implementation.UI;
+import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
 
 // Pannello di gioco
 public class GrubPanel extends JPanel implements Runnable {
 
     //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
-    FrameManager frameManager = new FrameManagerImpl();
+    public FrameManager frameManager = new FrameManagerImpl();
 
     // FPS
     static final int FPS = 60;
 
     // Thread principale
     Thread gameThread; 
-
-    // Stato del gioco
-    public int gameState;
-    public final int initialState = 0;
-    public final int playState = 1;
 
     // Schermo
     BufferedImage screen;
@@ -46,9 +47,14 @@ public class GrubPanel extends JPanel implements Runnable {
     public int playerCount;
     public int numPlayerTurn;
     public int secondsTurn = 0;
+    private int numAlivePlayers = 0;
+    private int idOfTheWinner;
 
     //Traps
     public ArrayList<Trap> traps;
+
+    //Heals
+    public ArrayList<Heal> heals;
 
     //UI
     UI ui = new UI(this);
@@ -62,20 +68,25 @@ public class GrubPanel extends JPanel implements Runnable {
 
     //VARIABLES
     public boolean turnBegin = false;
-    private int numItems = 5;
+    private int numTraps = 5;
+    private int numHeals = 3;
 
     public GrubPanel(int playerCount) {
 
         this.playerCount = playerCount;
+        this.idOfTheWinner = 99;
+        this.numAlivePlayers = 0;
         keyHandelers = new ArrayList<>();
         Allowed.setMapBase(MapBuilder.getMapBase());
         Allowed.addMapBase(MapBuilder.getEntityMatrix()); //creo la matrice delle entità (20x20)
         
 
         //ITEMSPAWNER
-        ItemSpawner itemSpawner = new ItemSpawner(MapBuilder.ROWS, MapBuilder.COLS, numItems, Allowed.getLvlData());
+        ItemSpawner itemSpawner = new ItemSpawner(MapBuilder.ROWS, MapBuilder.COLS, numTraps, Allowed.getLvlData());
+        ItemSpawner itemSpawner2 = new ItemSpawner(MapBuilder.ROWS, MapBuilder.COLS, numHeals, Allowed.getLvlData());
         
-        itemSpawner.generateSpawnLocation();
+        itemSpawner.generateSpawnLocation(true);
+        itemSpawner2.generateSpawnLocation(false);
         
 
         //Allowed.delateSpawnpoint(); //sostituisco i player con il cielo nella matrice 20x20, non so se metterlo TODO
@@ -87,9 +98,16 @@ public class GrubPanel extends JPanel implements Runnable {
         } 
         traps = new ArrayList<>();
         
-        for(int i = 0; i < numItems; i++){
+        for(int i = 0; i < numTraps; i++){
             
             traps.add(new Trap(this, i+1));
+        }
+
+        heals = new ArrayList<>();
+
+        for(int i = 0; i < numHeals; i++){
+            
+            heals.add(new Heal(this, i+1));
         }
 
 
@@ -143,48 +161,80 @@ public class GrubPanel extends JPanel implements Runnable {
         // TODO: RIVEDI
         new Thread(() -> {
             while(gameThread != null) {
-                for(Player p : players) {
-                    numPlayerTurn = p.getId();
-                    int numCicles = 0;   //5 cicli da 2 secondi => 10 secondi di round
-                    long wait = System.nanoTime();
-                    while(System.nanoTime() - wait <= 2000000000) {
-                        turnBegin = true;
-                    } //due secondi di attesa prima che inizi il turno
-                    //TODO aggiungere scritta che dice "sta per iniziare il turno ..."
-                    turnBegin = false;
-                    this.addKeyListener(p.getKeyH());
-                    int counter = 0;
-
-                    while(numCicles <= 5){   //algoritmo da rivedere ma la sostanza c'è TODO 
-                        long start = System.nanoTime();
-                        while(System.nanoTime() - start <= 2000000000) {
-                            counter++;
-                            p.update();
-                            if(counter % 33 == 0){   //forse c'è un modo migliore per farlo 
-                                secondsTurn++;
-                            }
-                            try {
-                                Thread.sleep(20);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        numCicles++;
+                for (Player player : players) {
+                    if(player.alive){
+                        numAlivePlayers++;
+                        idOfTheWinner = player.getId();
                     }
+                }
+                if(numAlivePlayers == 1){
+                    gameFinished();
+                }else{
+                    for(Player p : players) {
+                        if(p.alive){
+                            numPlayerTurn = p.getId();
+                            int numCicles = 0;   //5 cicli da 2 secondi => 10 secondi di round
+                            long wait = System.nanoTime();
+                            while(System.nanoTime() - wait <= 2000000000) {
+                                turnBegin = true;
+                            } //due secondi di attesa prima che inizi il turno
+                            //TODO aggiungere scritta che dice "sta per iniziare il turno ..."
+                            turnBegin = false;
+                            this.addKeyListener(p.getKeyH());
+                            int counter = 0;
 
-                    secondsTurn = 0;
-                    p.getKeyH().leftPressed = false;
-                    p.getKeyH().rightPressed = false;
-                    p.getKeyH().spacePressed = false;
-                    this.removeKeyListener(p.getKeyH());
-                    p.direction = "down";
-                    p.jump1Counter = 0;
-                    p.jump2Counter = 0;
-                    p.gravity=true;
-                    p.canMove = true;
+                            while(numCicles <= 5 && p.alive){   //algoritmo da rivedere ma la sostanza c'è TODO 
+                                long start = System.nanoTime();
+                                while(System.nanoTime() - start <= 2000000000) {
+                                    counter++;
+                                    p.update();
+                                    if(counter % 33 == 0){   //forse c'è un modo migliore per farlo 
+                                        secondsTurn++;
+                                    }
+                                    try {
+                                        Thread.sleep(20);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                numCicles++;
+                            }
+
+                            secondsTurn = 0;
+                            p.getKeyH().leftPressed = false;
+                            p.getKeyH().rightPressed = false;
+                            p.getKeyH().spacePressed = false;
+                            this.removeKeyListener(p.getKeyH());
+                            p.setDirection(orientation.DOWN);
+                            p.jump1Counter = 0;
+                            p.jump2Counter = 0;
+                            p.gravity=true;
+                            p.canMove = true;
+                        }
+                        
+                    }
+                    numAlivePlayers = 0;
                 }
             }
         }).start();
+    }
+
+    private void gameFinished() {
+        /* Object[] options = {"Esci", "Ricomincia"};
+        int choice = JOptionPane.showOptionDialog(null, "Congratulazioni!\n Il giocatore numero " + idOfTheWinner + " ha vinto!",
+            "VITTORIA", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+            new ImageIcon("src" + FrameManagerImpl.FS + "main" + FrameManagerImpl.FS + "resources" + FrameManagerImpl.FS + "players" + FrameManagerImpl.FS + "player0" + FrameManagerImpl.FS + "Grub_pl_0_stand_1.png"),
+            options, options[0]);
+        if(choice == 0){
+            System.exit(0);
+        }else if(choice == 1){
+            MapBuilder.getMapContainer().dispose();
+            Thread.currentThread().interrupt();
+            System.out.println(gameThread.isAlive());
+            new Menu();
+        } */
+        frameManager.showMessageBox("VITTORIA", "Congratulazioni!\n Il giocatore numero " + idOfTheWinner + " ha vinto!", JOptionPane.OK_OPTION);
+        System.exit(0);
     }
 
     private void updatePhysic() {
@@ -196,6 +246,11 @@ public class GrubPanel extends JPanel implements Runnable {
         for(Trap t : traps) {
             if(t.gravity){
                 physic.checkTerrain(t);
+            }
+        }
+        for(Heal h : heals) {
+            if(h.gravity){
+                physic.checkTerrain(h);
             }
         }
     }
@@ -212,6 +267,9 @@ public class GrubPanel extends JPanel implements Runnable {
         }
         for(Trap t : traps) {
             t.draw(g2d);
+        }
+        for(Heal h : heals) {
+            h.draw(g2d);
         }
 
         ui.draw(g2d);

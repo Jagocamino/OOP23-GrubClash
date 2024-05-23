@@ -12,11 +12,14 @@ public class EnumEntity {
         PLAYER5,
         WALL,
         SKY,
-        ITEM1,
-        ITEM2,
-        ITEM3,
-        ITEM4,
-        ITEM5,
+        TRAP1,
+        TRAP2,
+        TRAP3,
+        TRAP4,
+        TRAP5,
+        HEAL1,
+        HEAL2,
+        HEAL3,
         EXPLOSION,
         GUN,
         PROJECTILE;   
@@ -42,18 +45,29 @@ public class EnumEntity {
         };
 
     }
-    public static Optional<entities> idToItemConverter(int id){
+    public static Optional<entities> idToTrapConverter(int id){
 
         return switch (id) {
-            case 1 -> Optional.ofNullable(entities.ITEM1);
-            case 2 -> Optional.ofNullable(entities.ITEM2);
-            case 3 -> Optional.ofNullable(entities.ITEM3);
-            case 4 -> Optional.ofNullable(entities.ITEM4);
-            case 5 -> Optional.ofNullable(entities.ITEM5);
+            case 1 -> Optional.ofNullable(entities.TRAP1);
+            case 2 -> Optional.ofNullable(entities.TRAP2);
+            case 3 -> Optional.ofNullable(entities.TRAP3);
+            case 4 -> Optional.ofNullable(entities.TRAP4);
+            case 5 -> Optional.ofNullable(entities.TRAP5);
             default -> Optional.empty();
         };
 
     }
+    public static Optional<entities> idToHealConverter(int id){
+
+        return switch (id) {
+            case 1 -> Optional.ofNullable(entities.HEAL1);
+            case 2 -> Optional.ofNullable(entities.HEAL2);
+            case 3 -> Optional.ofNullable(entities.HEAL3);
+            default -> Optional.empty();
+        };
+
+    }
+
 
     public static int buttonToCoordsXConverter(entities[][] entities, entities player){
         int x = 0;

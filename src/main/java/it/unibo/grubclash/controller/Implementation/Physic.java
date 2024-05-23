@@ -24,6 +24,9 @@ public class Physic {
             entity.canJump = true;
             entity.gravityAcceleration = 0;
             entity.gravityCounter = 0;
+            if(entity.y >= grubPanel.frameManager.getWindowHeight().get()-40){
+                entity.alive = false;
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 // Classe per gestire le impostazioni dei frame
 public class FrameManagerImpl implements FrameManager {
 
-    final static char FS = File.separatorChar;
+    public final static char FS = File.separatorChar;
 
     private static final int WINDOW_WIDTH = 1500;
     private static final int WINDOW_HEIGHT = 800;
