@@ -2,6 +2,7 @@ package it.unibo.grubclash.controller.Implementation;
 import it.unibo.grubclash.view.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 import javax.swing.*;
+import java.util.Random;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -216,6 +217,28 @@ public class Allowed {
         }
         return entities.SKY;
     }
+
+    /* public static Entity randomItem () {
+        Random random = new Random();
+        int randomNum = random.nextInt(4);
+        switch (random) {
+            case 1:
+                return new mina..
+            case 2:
+                return new weaponBlock..
+            case 1:
+                
+                break;
+            case 1:
+                
+                break;
+            case 1:
+                
+                break;    
+            default:
+                break;
+        }
+    } */
 
 
     //                                      TUTTO QUELLO CHE RIGUARDA IL PROIETTILE

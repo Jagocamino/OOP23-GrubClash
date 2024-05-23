@@ -24,7 +24,7 @@ public class Player extends Entity{
 
     private int id;
     public int speed;
-    private orientation direction;
+    public orientation direction;
 
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
 

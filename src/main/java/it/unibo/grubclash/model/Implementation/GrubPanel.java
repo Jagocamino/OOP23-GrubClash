@@ -16,6 +16,7 @@ import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
 import it.unibo.grubclash.view.Implementation.MapBuilder;
 import it.unibo.grubclash.view.Implementation.UI;
+import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
 
 // Pannello di gioco
 public class GrubPanel extends JPanel implements Runnable {
@@ -177,7 +178,7 @@ public class GrubPanel extends JPanel implements Runnable {
                     p.getKeyH().rightPressed = false;
                     p.getKeyH().spacePressed = false;
                     this.removeKeyListener(p.getKeyH());
-                    p.direction = "down";
+                    p.direction = orientation.DOWN;
                     p.jump1Counter = 0;
                     p.jump2Counter = 0;
                     p.gravity=true;
