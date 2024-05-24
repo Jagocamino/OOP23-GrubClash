@@ -51,7 +51,7 @@ public class ProjectileRoket extends Entity implements ProjectileType {
         return new Entity(x - dmgRadius , y - dmgRadius, dmgRadius * 2, dmgRadius * 2, entities.EXPLOSION); //elimino ogni explosion dopo
     }
 
-    @Override
+    @Override //d
     public int getDamage() {
         return this.damage;
     }
