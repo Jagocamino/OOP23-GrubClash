@@ -3,7 +3,9 @@ package it.unibo.grubclash.controller.Implementation;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Optional;
 
+import it.unibo.grubclash.controller.Weapon;
 import it.unibo.grubclash.model.Implementation.GrubPanel;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
 import it.unibo.grubclash.view.Implementation.EnumEntity;
@@ -25,6 +27,7 @@ public class Player extends Entity{
     private int id;
     public int speed;
     private orientation direction;
+    private Optional<Weapon> weapon;
 
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
 
@@ -159,6 +162,14 @@ public class Player extends Entity{
                 h.alive = false;
             }
         }
+    }
+
+    public Optional<Weapon> getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(Optional<Weapon> weapon) {
+        this.weapon = weapon;
     }
 
     public orientation getDirection() {

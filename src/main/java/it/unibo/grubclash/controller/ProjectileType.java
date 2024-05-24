@@ -1,7 +1,5 @@
 package it.unibo.grubclash.controller;
-
 import it.unibo.grubclash.controller.Implementation.Entity;
-import it.unibo.grubclash.controller.Weapon.weapons;
 
 public interface ProjectileType { //l'unica cosa che deve fare il proiettile è essere lanciato.
 

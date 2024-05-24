@@ -25,12 +25,23 @@ public class EnumEntity {
         PROJECTILE;   
     }
 
+    public enum weapons {
+        GRANADE,
+        ROKET,
+        HITSCAN;
+    }
+    
     public enum orientation {
         UP,
         UP2,
         DOWN,
         LEFT,
         RIGHT;
+    }
+
+    public enum status {
+        ALIVE,
+        DEAD;
     }
 
     public static Optional<entities> idToEntitiesConverter(int id){

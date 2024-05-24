@@ -1,5 +1,4 @@
 package it.unibo.grubclash.controller.Implementation;
-
 import it.unibo.grubclash.controller.ProjectileType;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
