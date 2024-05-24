@@ -22,6 +22,7 @@ public class EnumEntity {
         HEAL3,
         EXPLOSION,
         GUN,
+        ITEM, // non lo toccate
         PROJECTILE;   
     }
 

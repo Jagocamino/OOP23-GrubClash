@@ -11,6 +11,10 @@ public class ProjectileRoket extends Entity implements ProjectileType {
     final private static int heightRoket = 10;
     private Player owner;
     
+    public Player getOwner() {
+        return owner;
+    }
+
     public ProjectileRoket(int x, int y, Player owner) {
         super(x, y, getWidthRoket(), getHeightRoket(), null); //qu ic'era entity al posto di null ma entity static non va bene rompe tutto TODO
         this.owner = owner;

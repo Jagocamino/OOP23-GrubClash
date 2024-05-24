@@ -27,38 +27,57 @@ public class ItemSpawner{
         this.lvlData = lvlData;
     }
 
-    public void generateSpawnLocation (boolean isTrap) { //voglio generare casualmente più item sul top e meno sul bottom
+    public void generateSpawnLocation (boolean isTrap) { // TODO ci credo che gli oggetti vanno uno sopra l'altro, ci sono 2 ItemSpawner in grubPanel ziopera
         Random randomNum = new Random();
         int randX;
         int randY;
-        int isHere = 0;
         while (numOfItems > 0) {
-            randX = randomNum.nextInt(COLS);
+            
             randY = randomNum.nextInt(ROWS);
 
-            for (Integer element : list) {
-                if(element != randX){
-                    isHere++;
+            do {
+                randX = randomNum.nextInt(COLS);
+                System.out.println("alskjijallògajlk" + randX);
+            } while (alreadyInCol(randX, list) == true); // I dont want duplicates of randX
+            
+            //non funziona spawnano uno sopra l'altro TODO
+            list.add(randX);
+            System.out.print("[" + randX + "] ");
+
+            /*
+                TODO la entityMatrix è una matrice di enum entities, è questa che deve essere popolata di ITEM che poi diventeranno entità in lvlData.
+                noi stiamo settando lo SKY di lvlData in altro. NO. 
+            */
+
+            if (lvlData[randY][randX].getEntity() == entities.SKY) {
+                lvlData[randY][randX].setEntity(entities.ITEM);
+                numOfItems--;
+            }
+
+
+
+            while (lvlData[randY][randX].getEntity() == entities.SKY) { // se la cella che genero casualmente è cielo
+                if(isTrap){
+                    MapBuilder.setEntityInMatrix(randX, randY, EnumEntity.idToTrapConverter(numOfItems).get());
+                    lvlData[randY][randX].setEntity(EnumEntity.idToTrapConverter(numOfItems).get());
+                    numOfItems--;
+                }else{
+                    MapBuilder.setEntityInMatrix(randX, randY, EnumEntity.idToHealConverter(numOfItems).get());
+                    lvlData[randY][randX].setEntity(EnumEntity.idToHealConverter(numOfItems).get());
+                    numOfItems--;
                 }
             }
-            if(isHere == list.size()){   //non funziona spawnano uno sopra l'altro TODO
-                list.add(randX);
-                System.out.print("[" + randX + "] ");
-                while (lvlData[randY][randX].getEntity() == entities.SKY) { // se la cella che genero casualmente è cielo
-                    if(isTrap){
-                        MapBuilder.setEntityInMatrix(randX, randY, EnumEntity.idToTrapConverter(numOfItems).get());
-                        lvlData[randY][randX].setEntity(EnumEntity.idToTrapConverter(numOfItems).get());
-                        numOfItems--;
-                    }else{
-                        MapBuilder.setEntityInMatrix(randX, randY, EnumEntity.idToHealConverter(numOfItems).get());
-                        lvlData[randY][randX].setEntity(EnumEntity.idToHealConverter(numOfItems).get());
-                        numOfItems--;
-                    }
-                }
-            }
-            isHere = 0;
         }
         
     }
+
+    private boolean alreadyInCol (int randX, ArrayList<Integer> list) {
+        for (Integer element : list) {
+            return (Integer.valueOf(element) == randX);
+        } 
+        return false;
+    }
+
+
   
 }

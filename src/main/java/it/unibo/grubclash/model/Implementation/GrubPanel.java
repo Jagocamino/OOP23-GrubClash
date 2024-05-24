@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -17,9 +16,7 @@ import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.controller.Implementation.Trap;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
-import it.unibo.grubclash.view.Implementation.Main;
 import it.unibo.grubclash.view.Implementation.MapBuilder;
-import it.unibo.grubclash.view.Implementation.Menu;
 import it.unibo.grubclash.view.Implementation.UI;
 import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.view.Implementation.EnumEntity.status;

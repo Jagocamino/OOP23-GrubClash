@@ -2,10 +2,6 @@ package it.unibo.grubclash.controller;
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
-import java.util.Optional;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
 public abstract class Weapon {
 
     /* 

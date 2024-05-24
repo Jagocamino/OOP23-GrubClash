@@ -72,9 +72,6 @@ public class Allowed {
     quando il costruttore di allowed viene chiamato, devo passargli anche le const relative all numero di celle, per rendere più flessibile il codice a future implementazioni
     */
 
-
-
-    //TODO mapBase serve dentro allowed, ma allowed è chiamato dentro GrubPanel che non usa mapBase
     public static entities getEntity (int i, int j) {
         return Allowed.lvlData[i][j].getEntity();
     }
@@ -114,11 +111,6 @@ public class Allowed {
         return false;
     }
 
-    /*
-            TODO le due funzioni sotto scorrono rispettivamente lvlData e dynamicEntity e ogni volta che vengono chiamate restituiscono una entità in range
-            vorrei fare un metodo per il calcolo del danno, magari chiamato alla fine dei due metodi sotto, per eliminare entità o altro    
-    */
-
     //se non funziona distruggo tutto, MA PROBABILMENTE NEANCHE SERVE!!!
     //è un whatisfacing che restituisce un entità e non controlla i bordi
     /* public static Optional<Entity> whatWallIsIncluded (int x, int y, int width, int height) { //qui ci metto le dimensioni dell'esplosione, ritorna la prima entità Wall nell'area
@@ -146,7 +138,13 @@ public class Allowed {
     public static void addMapBase (EnumEntity.entities[][] entityMatrix) {
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
-                addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getWidth(), (int)mapBase[i][j].getBounds().getHeight(), entityMatrix[i][j], i, j);
+                if (entityMatrix[i][j] != entities.ITEM) {
+                    addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getWidth(), (int)mapBase[i][j].getBounds().getHeight(), entityMatrix[i][j], i, j);
+                } else {
+                    // TODO QUI si gestisce l'assegnazione random degli item ATTRAVERSO UN ALTRO METODO (tipo, boh giveRandomItem() )
+                    // addEntity( giveRandomItem() ), dove il randomItem è mina, healthpack o arma i guess
+                }
+                
             }
         }
     }
@@ -231,7 +229,6 @@ public class Allowed {
 
         
     //TODO MODO PER ELIMINARE LA MAPPA DA METTERE DENTRO GRUBPANEL
-
     /* if (gonnaExplode == true) {
             addDynamicEntity( damage() ); //mettendola a entità si possono includere immagini o animazioni o boh
             for (canMoveThere( dynamicEntity.find(entities.EXPLOSION) == false)) {
@@ -242,6 +239,9 @@ public class Allowed {
             dynamicEntity.find(entities.EXPLOSION).remove();
     } */
 
+    /*
+        TODO evitare che l'esplosione impatti per primo il modello che l'ha lanciato, basterebbe fare in modo che il proiettile spawni dopo l'hitbox del player
+    */
     private static boolean gonnaExplodeHere(float x, float y/* , Entity owner */) {
         //scorre tutte le entità in lvlData per controllare le collisioni
         for (int i = 0; i < ROWS; i++) {
@@ -260,9 +260,8 @@ public class Allowed {
         }
 
         //scorre tutte le entità in dynamicEntity per controllare le collisioni
-        // TODO da evitare il self damage
         for (Entity entity : Allowed.dynamicEntities) {
-            if ( (      x >= entity.getX() &&
+            if (    (   x >= entity.getX() &&
                         x < (entity.getWidth() + entity.getX()) &&
                         y >= entity.getX() && 
                         y < (entity.getY() + entity.getHeight())
