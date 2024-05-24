@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import it.unibo.grubclash.view.Implementation.ImageScalar;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
+import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 import it.unibo.grubclash.model.Implementation.GrubPanel;
 
 public class Entity { //ogni entity, comprese le strutture, ha questa classe
@@ -24,7 +25,7 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     public int gravityAcceleration = 2;
     public int gravityCounter = 0;
     public boolean canJump = true;
-    public boolean alive = true;
+    public status working = status.ALIVE;
 
     //COUNTERS
     protected static int spriteCounter = 0;

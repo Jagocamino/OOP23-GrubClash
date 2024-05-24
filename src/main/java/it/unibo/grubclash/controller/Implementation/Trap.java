@@ -7,6 +7,7 @@ import java.io.File;
 import it.unibo.grubclash.model.Implementation.GrubPanel;
 import it.unibo.grubclash.view.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Implementation.MapBuilder;
+import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
 public class Trap extends Entity{
 
@@ -33,7 +34,7 @@ public class Trap extends Entity{
     }
 
     public void draw(Graphics2D g2d){
-        if(alive){
+        if(working == status.ALIVE){
             g2d.drawImage(stand1, x, y,null);
         }else{
             Allowed.removeDynamicEntity(this);

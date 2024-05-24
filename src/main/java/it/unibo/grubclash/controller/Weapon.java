@@ -3,14 +3,13 @@ import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
 import java.util.Optional;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 public abstract class Weapon {
 
     /* 
-        TODO l'owner naturalmente è un player
-        TODO a seconda dell'arma che il player ha in mano (una alla volta) il player spara
-        TODO è dentro weapon che metto il trigger del proiettile
-        Weapon non deve appartenere a dynamicEntity ma il proiettile lanciato sì.
+        TODO Weapon deve matierializzare l'immagine, anche i proiettili
     */ 
 
     private final int defaultAmmo = 5;
@@ -46,5 +45,19 @@ public abstract class Weapon {
     public void reduceAmmo() {
         this.ammo = this.ammo - 1;
     }
+
+    /* public void draw(Graphics2D g2d){
+        
+        BufferedImage image = imageWeapon();
+
+        if(getOwner().alive){
+            g2d.drawImage(image, x, y,null);
+            
+
+        }else{
+            // TODO semplicemente si toglie
+        }
+
+    } */
     
 }

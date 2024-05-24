@@ -12,6 +12,7 @@ import it.unibo.grubclash.view.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
 import it.unibo.grubclash.view.Implementation.MapBuilder;
 import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
+import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
 //   LA POSIZIONE DEL GIOCATORE VIENE PASSATA DOPO IL CONTROLLO NEL MAP BUILDER
 
@@ -66,7 +67,7 @@ public class Player extends Entity{
 
     public void update() {
 
-        if(this.alive){
+        if(this.working == status.ALIVE){
             spriteCounter++;
             if(spriteCounter > 12){
                 if(spriteNum == 1){
@@ -136,7 +137,7 @@ public class Player extends Entity{
                 direction = orientation.DOWN;
             }
             if(this.life.getLife().get() == 0){
-                this.alive = false;
+                this.working = status.ALIVE;
             }
         }else{
             Allowed.removeDynamicEntity(this);
@@ -146,20 +147,20 @@ public class Player extends Entity{
     public void touchTrap(){
 
         for (Trap t : grubPanel.traps) {
-            if(t.alive && this.x + this.width/2 > t.getX() && this.x + this.width/2 < t.getX() + t.getWidth()
+            if(t.working == status.ALIVE && this.x + this.width/2 > t.getX() && this.x + this.width/2 < t.getX() + t.getWidth()
             && this.y + this.height/2 > t.getY() && this.y + this.height/2 < t.getY() + t.getHeight()){
                 this.life.damage();
-                t.alive = false;
+                t.working = status.DEAD;
             }
         }
     }
     public void touchHeal(){
 
         for (Heal h : grubPanel.heals) {
-            if(h.alive && this.x + this.width/2 > h.getX() && this.x + this.width/2 < h.getX() + h.getWidth()
+            if(h.working == status.ALIVE && this.x + this.width/2 > h.getX() && this.x + this.width/2 < h.getX() + h.getWidth()
             && this.y + this.height/2 > h.getY() && this.y + this.height/2 < h.getY() + h.getHeight()){
                 this.life.plusLife();
-                h.alive = false;
+                h.working = status.DEAD;
             }
         }
     }
@@ -184,7 +185,7 @@ public class Player extends Entity{
         
         BufferedImage image = death;
 
-        if(this.alive){
+        if(this.working == status.ALIVE){
 
             switch(direction){
                 case LEFT:

@@ -5,6 +5,7 @@ import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.model.Implementation.GrubPanel;
 import it.unibo.grubclash.view.Application_Programming_Interface.Life;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
+import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -65,7 +66,7 @@ public class LifeImpl implements Life {
     private void drawLifePlayer() {
 
         //disegno la vita per ogni giocatore
-        for(int i=1; i<=playerCount && player.alive;i++){
+        for(int i=1; i<=playerCount && player.working == status.ALIVE ;i++){
             switch (life){
                 case 10:
                     g2d.drawImage(life100, player.x-25, player.y-15,null);

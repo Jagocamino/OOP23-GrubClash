@@ -1,6 +1,7 @@
 package it.unibo.grubclash.controller.Implementation;
 
 import it.unibo.grubclash.model.Implementation.GrubPanel;
+import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
 public class Physic {
   
@@ -25,7 +26,7 @@ public class Physic {
             entity.gravityAcceleration = 0;
             entity.gravityCounter = 0;
             if(entity.y >= grubPanel.frameManager.getWindowHeight().get()-40){
-                entity.alive = false;
+                entity.working = status.DEAD;
             }
         }
     }

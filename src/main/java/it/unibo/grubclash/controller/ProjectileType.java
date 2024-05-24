@@ -26,5 +26,7 @@ public interface ProjectileType { //l'unica cosa che deve fare il proiettile è 
     } */
 
     Entity damage ();
+
+    int getDamage ();
     
 }
