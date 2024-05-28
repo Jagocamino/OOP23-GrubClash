@@ -89,7 +89,7 @@ public class GrubPanel extends JPanel implements Runnable {
         itemSpawner2.generateSpawnLocation(false);
         
 
-        //Allowed.delateSpawnpoint(); //sostituisco i player con il cielo nella matrice 20x20, non so se metterlo TODO
+        //Allowed.delateSpawnpoint(); //sostituisco i player con il cielo nella matrice 20x20, non so se metterlo TODO(da problemi di collisione)
 
         players = new ArrayList<>();
         for(int i = 0; i < playerCount; i++) {
@@ -187,7 +187,6 @@ public class GrubPanel extends JPanel implements Runnable {
                             while(System.nanoTime() - wait <= 2000000000) {
                                 turnBegin = true;
                             } //due secondi di attesa prima che inizi il turno
-                            //TODO aggiungere scritta che dice "sta per iniziare il turno ..."
                             turnBegin = false;
                             this.addKeyListener(p.getKeyH());
                             int counter = 0;
@@ -231,7 +230,7 @@ public class GrubPanel extends JPanel implements Runnable {
             Thread.currentThread().interrupt();
             System.out.println(gameThread.isAlive());
             new Menu();
-        } */
+        } */   //TODO primo giocatore quando ricominci viene spawnato in alto a sx
         frameManager.showMessageBox("VITTORIA", "Congratulazioni!\n Il giocatore numero " + idOfTheWinner + " ha vinto!", JOptionPane.OK_OPTION);
         System.exit(0);
     }
