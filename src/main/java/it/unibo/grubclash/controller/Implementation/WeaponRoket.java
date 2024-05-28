@@ -1,25 +1,46 @@
 package it.unibo.grubclash.controller.Implementation;
+import java.io.File;
 import java.util.Optional;
 import it.unibo.grubclash.controller.Weapon;
-import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
 public class WeaponRoket extends Weapon {
 
     //TODO gestire ora che estende entity, OGNI ARMA  lancia un proiettile
     //il proiettile smette di esistere se canMoveThere() restituisce false
 
-    Optional<ProjectileRoket> projectileLaunched;
+    final char FS = File.separatorChar;
 
+    private final static int defaultAmmo = 1;
+
+    public WeaponRoket(Player owner) {
+        super(owner, defaultAmmo);
+        getImage();
+    }
+
+    private void getImage(){ //parametro con numero del giocatore es : if(player == 1) => getImage del player1
+
+        left = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_left.png", 40, 40);
+        right = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_right.png", 40, 40);
+        up = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_up.png", 40, 40);
+        down = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_down.png", 40, 40);
+    }
+
+    @Override
     public Optional<ProjectileRoket> shoot() {
 
-        if (getWorking() == status.DEAD) { // if is not present, it is shot
-            reduceAmmo();
-            setWorking(status.ALIVE);
-            projectileLaunched = Optional.ofNullable(new ProjectileRoket(getOwner().getX(), getOwner().getY(), getOwner()));
-            return projectileLaunched;
+        if(getAmmo() == 0){
+            rocket = Optional.empty();
+            return rocket;
         }
-        return Optional.empty();
+        setShootingDir(getOwner().getDirection());
+        reduceAmmo();
+        rocket = Optional.of(new ProjectileRoket(getOwner().getX(), getOwner().getY(), getOwner()));
+        return rocket;
         
+    }
+
+    public void refillAmmo() {
+        setAmmo(defaultAmmo);
     }
     
 }

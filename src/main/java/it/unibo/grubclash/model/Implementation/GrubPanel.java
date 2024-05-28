@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import it.unibo.grubclash.controller.Implementation.Allowed;
+import it.unibo.grubclash.controller.Implementation.Entity;
 import it.unibo.grubclash.controller.Implementation.Heal;
 import it.unibo.grubclash.controller.Implementation.ItemSpawner;
 import it.unibo.grubclash.controller.Implementation.Physic;
@@ -18,6 +19,7 @@ import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
 import it.unibo.grubclash.view.Implementation.MapBuilder;
 import it.unibo.grubclash.view.Implementation.UI;
+import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
@@ -143,6 +145,7 @@ public class GrubPanel extends JPanel implements Runnable {
             if(delta >= 1) {
                 repaint();  // disegna gli aggiornamenti
                 updatePhysic();
+                updateProj();
                 delta--;
                 drawCount++;
             }
@@ -151,6 +154,14 @@ public class GrubPanel extends JPanel implements Runnable {
                 System.out.println("FPS: " + drawCount);
                 drawCount = 0;
                 timer = 0;
+            }
+        }
+    }
+
+    private void updateProj() {
+        for (Entity entity : Allowed.getDynamicEntities()) {
+            if(entity.getEntity() == entities.PROJECTILE){
+                entity.update();
             }
         }
     }
@@ -262,6 +273,10 @@ public class GrubPanel extends JPanel implements Runnable {
         for(Player p : players) {
             p.draw(g2d);
             p.life.draw(g2d);
+            p.getWeapon().get().draw(g2d);
+            if(!p.getWeapon().get().getRocket().isEmpty()){
+                p.getWeapon().get().getRocket().get().draw(g2d);
+            }
         }
         for(Trap t : traps) {
             t.draw(g2d);

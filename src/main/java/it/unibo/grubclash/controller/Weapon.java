@@ -1,5 +1,11 @@
 package it.unibo.grubclash.controller;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.util.Optional;
+
 import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.controller.Implementation.ProjectileRoket;
+import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
 public abstract class Weapon {
@@ -8,18 +14,33 @@ public abstract class Weapon {
         TODO Weapon deve matierializzare l'immagine, anche i proiettili
     */ 
 
-    private final int defaultAmmo = 5;
     private Player owner;
     private int ammo;
-    private status working;
-    
+    private orientation shootingDir;
 
-    public status getWorking() {
-        return working;
+    private orientation weaponDir;
+
+    protected Optional<ProjectileRoket> rocket;
+
+    public BufferedImage left, right, up, down;
+
+    public Weapon(Player owner, int ammo){
+
+        setOwner(owner);
+        setAmmo(ammo);
+        this.rocket = Optional.empty();
+        this.weaponDir = owner.getDirection();
     }
 
-    public void setWorking(status working) {
-        this.working = working;
+    public void setWeaponDir(orientation weaponDir) {
+        this.weaponDir = weaponDir;
+    }
+
+    public orientation getShootingDir() {
+        return shootingDir;
+    }
+    public void setShootingDir(orientation shootingDir) {
+        this.shootingDir = shootingDir;
     }
 
     public Player getOwner() {
@@ -34,26 +55,49 @@ public abstract class Weapon {
         this.ammo = ammo;
     }
 
-    public void refillAmmo() {
-        setAmmo(defaultAmmo);
+    public int getAmmo() {
+        return this.ammo;
     }
 
     public void reduceAmmo() {
-        this.ammo = this.ammo - 1;
+        this.ammo--;
     }
 
-    /* public void draw(Graphics2D g2d){
+    public void draw(Graphics2D g2d){
         
-        BufferedImage image = imageWeapon();
+        BufferedImage image = null;
 
-        if(getOwner().alive){
-            g2d.drawImage(image, x, y,null);
-            
+        if(getOwner().working == status.ALIVE){
 
-        }else{
-            // TODO semplicemente si toglie
+            switch(weaponDir){
+                case LEFT:
+                    image = left;
+                    g2d.drawImage(image, getOwner().x - 5, getOwner().y + 5,null);
+                break;
+                case RIGHT:
+                    image = right;
+                    g2d.drawImage(image, getOwner().x + getOwner().width + 5, getOwner().y + 5,null);
+                break;
+                case DOWN:
+                    image = down;
+                    g2d.drawImage(image, getOwner().x + getOwner().width/2, getOwner().y + getOwner().height/2,null);
+                break;
+                case UP:
+                    image = up;
+                    g2d.drawImage(image, getOwner().x + getOwner().width/2, getOwner().y - getOwner().height/2,null);
+                break;
+                case UP2:
+                    image = up;
+                    g2d.drawImage(image, getOwner().x + getOwner().width/2, getOwner().y - getOwner().height/2,null);
+                break;
+            }
         }
+    } 
 
-    } */
+    public Optional<ProjectileRoket> shoot(){return Optional.empty();}
+
+    public Optional<ProjectileRoket> getRocket() {
+        return rocket;
+    }
     
 }

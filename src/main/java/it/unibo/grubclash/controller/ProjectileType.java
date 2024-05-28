@@ -17,7 +17,7 @@ public interface ProjectileType { //l'unica cosa che deve fare il proiettile è 
 
     */
 
-    void trajectory (int x, int y); //passati gli x e y di dove clicca il mouse
+    /* void trajectory (int x, int y); //passati gli x e y di dove clicca il mouse */
 
     /* public Entity damage (int dmgRadius) { 
         int x = (int) ((getProjectile().getX() + getProjectile().getWidth()) / 2);

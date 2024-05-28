@@ -48,6 +48,8 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
         this.grubPanel = grubPanel;
     }
 
+    public void update(){}
+
     public int getX () {
         return x;
     }

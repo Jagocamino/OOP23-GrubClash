@@ -1,5 +1,9 @@
 package it.unibo.grubclash.controller.Implementation;
+import java.awt.Color;
+import java.awt.Graphics2D;
+
 import it.unibo.grubclash.controller.ProjectileType;
+import it.unibo.grubclash.view.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
 
@@ -16,8 +20,9 @@ public class ProjectileRoket extends Entity implements ProjectileType {
     }
 
     public ProjectileRoket(int x, int y, Player owner) {
-        super(x, y, getWidthRoket(), getHeightRoket(), null); //qu ic'era entity al posto di null ma entity static non va bene rompe tutto TODO
-        this.owner = owner;
+        super(x, y, getWidthRoket(), getHeightRoket(), entities.PROJECTILE); //qu ic'era entity al posto di null ma entity static non va bene rompe tutto TODO
+        this.owner = owner; 
+        Allowed.addDynamicEntity(this);
     }   
 
     public static int getWidthRoket() {
@@ -27,26 +32,31 @@ public class ProjectileRoket extends Entity implements ProjectileType {
         return ProjectileRoket.heightRoket;
     }
     
+    @Override
     public void update () { // come faccio a passare la direizone di movimento?
-        if (owner.getDirection() == orientation.LEFT) {
-            setX(x--);
-        }
-        if (owner.getDirection() == orientation.RIGHT) {
-            setX(x++);
-        }
-        if (owner.getDirection() == orientation.UP) {
-            setY(y--);
-        }
-        if (owner.getDirection() == orientation.DOWN) {
-            setY(y++);
-        }
 
+        orientation dir = owner.getWeapon().get().getShootingDir();
+        
+        if(this.working == EnumEntity.status.ALIVE){
+            if (dir == orientation.LEFT) {
+                setX(getX()-5);   
+            }
+            else if (dir == orientation.RIGHT) {
+                setX(getX()+5);
+            }
+            else if (dir == orientation.UP || dir == orientation.UP2) {
+                setY(getY()-5);
+            }
+            else if (dir == orientation.DOWN) {
+                setY(getY()+5);
+            }
+        }
     }
 
-    @Override
+    /* @Override
     public void trajectory(int x, int y) { // passa la x e y dell'owner, poi passa la x e y del mouse
         
-    }
+    } */
 
     @Override
     public Entity damage () { 
@@ -59,6 +69,15 @@ public class ProjectileRoket extends Entity implements ProjectileType {
     public int getDamage() {
         return this.damage;
     }
+
+    public void draw(Graphics2D g2d){
+
+        if(this.working == EnumEntity.status.ALIVE){
+
+            g2d.setColor(Color.BLACK);
+            g2d.fillRect(getX(), getY(), getWidth(), getHeight());
+        }
+    } 
     
 
 }

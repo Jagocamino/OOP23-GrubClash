@@ -45,6 +45,7 @@ public class Player extends Entity{
         this.height = 35;
         this.speed = 3;
         this.direction = orientation.DOWN;
+        weapon = Optional.of(new WeaponRoket(this));
         setEntity(EnumEntity.idToEntitiesConverter(id).get());
         Allowed.addDynamicEntity(this);
         getImage(id);
@@ -64,7 +65,7 @@ public class Player extends Entity{
         death = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "death.png", this.width+13, this.height+13);
     }
 
-
+    @Override
     public void update() {
 
         if(this.working == status.ALIVE){
@@ -133,12 +134,17 @@ public class Player extends Entity{
             }else{
                 gravity=true;
             }
+            if(keyH.shootPressed){
+                getWeapon().get().shoot();
+                keyH.shootPressed = false;
+            }
             if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
                 direction = orientation.DOWN;
             }
-            if(this.life.getLife().get() == 0){
-                this.working = status.ALIVE;
+            if(this.life.getLife().get() <= 0){
+                this.working = status.DEAD;
             }
+            weapon.get().setWeaponDir(direction);
         }else{
             Allowed.removeDynamicEntity(this);
         }
