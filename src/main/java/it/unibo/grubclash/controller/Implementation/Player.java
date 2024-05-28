@@ -19,7 +19,6 @@ import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 public class Player extends Entity{
 
     final char FS = File.separatorChar;
-    public LifeImpl life;
 
     KeyHandler keyH;
 
@@ -29,6 +28,7 @@ public class Player extends Entity{
     public int speed;
     private orientation direction;
     private Optional<Weapon> weapon;
+    public boolean alreadyShot = false;
 
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
 
@@ -134,9 +134,10 @@ public class Player extends Entity{
             }else{
                 gravity=true;
             }
-            if(keyH.shootPressed){
+            if(keyH.shootPressed && !alreadyShot){
                 getWeapon().get().shoot();
                 keyH.shootPressed = false;
+                alreadyShot = true;
             }
             if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
                 direction = orientation.DOWN;

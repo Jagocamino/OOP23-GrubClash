@@ -208,17 +208,7 @@ public class GrubPanel extends JPanel implements Runnable {
                                 }
                                 numCicles++;
                             }
-
-                            secondsTurn = 0;
-                            p.getKeyH().leftPressed = false;
-                            p.getKeyH().rightPressed = false;
-                            p.getKeyH().spacePressed = false;
-                            this.removeKeyListener(p.getKeyH());
-                            p.setDirection(orientation.DOWN);
-                            p.jump1Counter = 0;
-                            p.jump2Counter = 0;
-                            p.gravity=true;
-                            p.canMove = true;
+                            resetVariables(p);
                         }
                         
                     }
@@ -244,6 +234,22 @@ public class GrubPanel extends JPanel implements Runnable {
         } */
         frameManager.showMessageBox("VITTORIA", "Congratulazioni!\n Il giocatore numero " + idOfTheWinner + " ha vinto!", JOptionPane.OK_OPTION);
         System.exit(0);
+    }
+
+    private void resetVariables(Player p){
+
+        secondsTurn = 0;
+        p.getKeyH().leftPressed = false;
+        p.getKeyH().rightPressed = false;
+        p.getKeyH().spacePressed = false;
+        p.getKeyH().shootPressed = false;
+        this.removeKeyListener(p.getKeyH());
+        p.setDirection(orientation.DOWN);
+        p.jump1Counter = 0;
+        p.jump2Counter = 0;
+        p.gravity=true;
+        p.canMove = true;
+        p.alreadyShot = false;
     }
 
     private void updatePhysic() {

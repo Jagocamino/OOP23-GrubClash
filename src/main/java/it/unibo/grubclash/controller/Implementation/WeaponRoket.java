@@ -10,7 +10,7 @@ public class WeaponRoket extends Weapon {
 
     final char FS = File.separatorChar;
 
-    private final static int defaultAmmo = 1;
+    private final static int defaultAmmo = 5;
 
     public WeaponRoket(Player owner) {
         super(owner, defaultAmmo);
@@ -34,6 +34,7 @@ public class WeaponRoket extends Weapon {
         }
         setShootingDir(getOwner().getDirection());
         reduceAmmo();
+        System.out.println(getAmmo());
         rocket = Optional.of(new ProjectileRoket(getOwner().getX(), getOwner().getY(), getOwner()));
         return rocket;
         
