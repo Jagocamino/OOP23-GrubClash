@@ -169,7 +169,7 @@ public class Allowed {
 
 
 
-    /* public static void addMapBase (EnumEntity.entities[][] entityMatrix) {
+    public static void addMapBase (EnumEntity.entities[][] entityMatrix) {
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
                 // TODO QUI si gestisce l'assegnazione random degli item ATTRAVERSO UN ALTRO METODO (tipo, boh giveRandomItem() )
@@ -177,13 +177,13 @@ public class Allowed {
                 addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getWidth(), (int)mapBase[i][j].getBounds().getHeight(), entityMatrix[i][j], i, j);
                 
                 if (entityMatrix[i][j] == entities.ITEM) {
-                    addDynamicEntity(giveRandomItem()); // TODO giverandomitem ci restituisce un item tra granata, heal e trap
+                    //addDynamicEntity(giveRandomItem()); // TODO giverandomitem ci restituisce un item tra granata, heal e trap
                     lvlData[i][j].setEntity(entities.SKY);
                 }
             }
             }
     }
- */
+
     
     /* private Entity giveRandomItem () {
         Random randomNum = new Random();    
