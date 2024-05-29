@@ -25,8 +25,6 @@ public interface ProjectileType { //l'unica cosa che deve fare il proiettile è 
         return new Entity(x - dmgRadius , y - dmgRadius, dmgRadius * 2, dmgRadius * 2, entities.EXPLOSION); //elimino ogni explosion dopo
     } */
 
-    Entity damage ();
-
     int getDamage ();
     
 }

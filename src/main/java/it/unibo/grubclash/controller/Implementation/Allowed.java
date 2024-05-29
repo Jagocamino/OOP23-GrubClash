@@ -349,7 +349,27 @@ public class Allowed {
                 ) 
             ){
                     damageToWhichDynamicEntities.add(dynamicEntity);
+            }
+        }
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLS; j++) {
+                int entityX = lvlData[i][j].getX();
+                int entityY = lvlData[i][j].getY();
+                int entityWidth = lvlData[i][j].getWidth();
+                int entityHeight = lvlData[i][j].getHeight();
+                if( (lvlData[i][j].getEntity() == entities.WALL) && (
+                    ( explosionX >= entityX && explosionX < (entityX + entityWidth)) || // se è sporgente a sx
+                    ( explosionX + explosionWidth >= entityX && explosionX + explosionWidth < (entityX + entityWidth)) || // se è sporgente a dx
+                    ( explosionX < entityX && explosionX + explosionWidth >= (entityX + entityWidth)) // se è dentro
+                    ) && (
+                    ( explosionY >= entityY && explosionY < (entityY + entityHeight)) || // se è sporgente sopra
+                    ( explosionY + explosionHeight >= entityY && explosionY + explosionHeight < (entityY + entityHeight)) || // se è sporgente sotto
+                    ( explosionY < entityY && explosionY + explosionHeight >= (entityY + entityHeight)) // se è dentro
+                    ) 
+                ){
+                        damageToWhichDynamicEntities.add(lvlData[i][j]);
                 }
+            }
         }
         return damageToWhichDynamicEntities;
     }
@@ -359,8 +379,8 @@ public class Allowed {
     // il return di dealDamage() va come argomento di applyDamage()
     public static void applyDamage (ArrayList<Entity> dealDamage, int i) {
         for (Entity entity : dealDamage) {
-            System.out.print("[" + entity.getEntity() + "] ");
-            if ( isPlayer(entity) ) { // cosa succede se il giocatore prende danno?
+            if ( isPlayer(entity) ) { // TODO ci sono due player
+                System.out.println("scacaton");
                 for(int j = 0; j < i; j++){
                     entity.life.damage();
                 }
@@ -368,7 +388,6 @@ public class Allowed {
             if ( entity.getEntity() == entities.WALL ) {// da valutare se il muoro si cancella direttamente oppure ha una healthbar
                 mapDestroyer(entity);
             }
-
         }
     }
 
