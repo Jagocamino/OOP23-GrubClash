@@ -3,6 +3,7 @@ import it.unibo.grubclash.view.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 import javax.swing.*;
 
+import java.util.Random;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -135,26 +136,72 @@ public class Allowed {
         return Optional.empty();
     } */
 
-    
+    // TODO evitare che il proiettile esca dallo schermo, gestire la collisione dei proiettili con il giocatore, fare in modo che i proiettili colpiscano in tutte le direzioni
 
 
-    public static void addMapBase (EnumEntity.entities[][] entityMatrix) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // TODO devo riuscire a lavorare le heal e trap senza dover scomodare GrubPanel
+
+
+
+    /* public static void addMapBase (EnumEntity.entities[][] entityMatrix) {
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
-                if (entityMatrix[i][j] != entities.ITEM) {
-                    addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getWidth(), (int)mapBase[i][j].getBounds().getHeight(), entityMatrix[i][j], i, j);
-                } else {
-                    // TODO QUI si gestisce l'assegnazione random degli item ATTRAVERSO UN ALTRO METODO (tipo, boh giveRandomItem() )
-                    // addEntity( giveRandomItem() ), dove il randomItem è mina, healthpack o arma i guess
-                }
+                // TODO QUI si gestisce l'assegnazione random degli item ATTRAVERSO UN ALTRO METODO (tipo, boh giveRandomItem() )
+                // addEntity( giveRandomItem() ), dove il randomItem è mina, healthpack o arma i guess
+                addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getWidth(), (int)mapBase[i][j].getBounds().getHeight(), entityMatrix[i][j], i, j);
                 
+                if (entityMatrix[i][j] == entities.ITEM) {
+                    addDynamicEntity(giveRandomItem()); // TODO giverandomitem ci restituisce un item tra granata, heal e trap
+                    lvlData[i][j].setEntity(entities.SKY);
+                }
             }
-        }
+            }
     }
-
-    private void giveRandomItem (int i, int j) {
+ */
+    
+    /* private Entity giveRandomItem () {
+        Random randomNum = new Random();    
+        switch (randomNum.nextInt(2)) {
+            case 0:
+                return new Trap();
+                break;
+            case 1:
+                return new Heal();
+                break;
+            case 2:
+                return new Granade();
+                break;
         
-    }
+            default:
+                break;
+        }
+    } */
 
     //entityMatrix serve SOLO per inizializzare lvlData, poi NON DEVE più essere usato
     public static void mapDestroyer (int i, int j) {
