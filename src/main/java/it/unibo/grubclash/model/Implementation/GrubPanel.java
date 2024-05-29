@@ -82,14 +82,16 @@ public class GrubPanel extends JPanel implements Runnable {
         
 
         //ITEMSPAWNER
-        ItemSpawner itemSpawner = new ItemSpawner(MapBuilder.ROWS, MapBuilder.COLS, numTraps, Allowed.getLvlData());
+        /* ItemSpawner itemSpawner = new ItemSpawner(MapBuilder.ROWS, MapBuilder.COLS, numTraps, Allowed.getLvlData());
         ItemSpawner itemSpawner2 = new ItemSpawner(MapBuilder.ROWS, MapBuilder.COLS, numHeals, Allowed.getLvlData());
         
         itemSpawner.generateSpawnLocation(true);
-        itemSpawner2.generateSpawnLocation(false);
+        itemSpawner2.generateSpawnLocation(false); */
         
 
         //Allowed.delateSpawnpoint(); //sostituisco i player con il cielo nella matrice 20x20, non so se metterlo TODO(da problemi di collisione)
+
+        /* itemSpawner.generateSpawnLocation(true); */
 
         players = new ArrayList<>();
         for(int i = 0; i < playerCount; i++) {
@@ -159,11 +161,24 @@ public class GrubPanel extends JPanel implements Runnable {
     }
 
     private void updateProj() {
+        ArrayList<Entity> toDelete = new ArrayList<Entity>();
         for (Entity entity : Allowed.getDynamicEntities()) {
             if(entity.getEntity() == entities.PROJECTILE){
-                entity.update();
+                if (entity.isAlive()) {
+                    entity.update();
+                } else {
+                    toDelete.add(entity);
+                }
             }
         }
+        deleteProj(toDelete);
+    }
+
+    private void deleteProj (ArrayList<Entity> toDelete) {
+        for (Entity entity : toDelete) {
+            Allowed.removeDynamicEntity(entity);
+        }
+        toDelete.removeAll(toDelete);
     }
 
     private void update() {

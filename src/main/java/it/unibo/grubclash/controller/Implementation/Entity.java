@@ -28,6 +28,7 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     public boolean canJump = true;
     public status working = status.ALIVE;
 
+
     public LifeImpl life; //da rivedere TODO
 
     //COUNTERS
@@ -87,6 +88,13 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     
     public void setEntity (entities entity) {
         this.entity = entity;
+    }
+
+    public boolean isAlive() {
+        if (working == status.ALIVE) {
+            return true;
+        }
+        return false;
     }
 
     public static BufferedImage setup(String imagePath, int width, int height) { //da spolpare per bene

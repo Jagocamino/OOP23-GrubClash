@@ -152,6 +152,10 @@ public class Allowed {
         }
     }
 
+    private void giveRandomItem (int i, int j) {
+        
+    }
+
     //entityMatrix serve SOLO per inizializzare lvlData, poi NON DEVE più essere usato
     public static void mapDestroyer (int i, int j) {
         if (getLvlData(i, j).getEntity() == entities.WALL) {     
@@ -336,8 +340,8 @@ public class Allowed {
             int entityHeight = dynamicEntity.getHeight();
             if( damageable(dynamicEntity) && (
                 ( explosionX >= entityX && explosionX < (entityX + entityWidth)) || // se è sporgente a sx
-                ( explosionX + explosionWidth>= entityX && explosionX + explosionWidth< (entityX + entityWidth)) || // se è sporgente a dx
-                ( explosionX < entityX && explosionX + explosionWidth>= (entityX + entityWidth)) // se è dentro
+                ( explosionX + explosionWidth >= entityX && explosionX + explosionWidth < (entityX + entityWidth)) || // se è sporgente a dx
+                ( explosionX < entityX && explosionX + explosionWidth >= (entityX + entityWidth)) // se è dentro
                 ) && (
                 ( explosionY >= entityY && explosionY < (entityY + entityHeight)) || // se è sporgente sopra
                 ( explosionY + explosionHeight >= entityY && explosionY + explosionHeight < (entityY + entityHeight)) || // se è sporgente sotto
@@ -357,7 +361,7 @@ public class Allowed {
         for (Entity entity : dealDamage) {
             System.out.print("[" + entity.getEntity() + "] ");
             if ( isPlayer(entity) ) { // cosa succede se il giocatore prende danno?
-                for(int j = 0; j<i; j++){
+                for(int j = 0; j < i; j++){
                     entity.life.damage();
                 }
             }
