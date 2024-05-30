@@ -11,7 +11,6 @@ import it.unibo.grubclash.model.Implementation.KeyHandler;
 import it.unibo.grubclash.view.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
 import it.unibo.grubclash.view.Implementation.MapBuilder;
-import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
@@ -95,7 +94,7 @@ public class Player extends Entity{
             }
 
 
-
+            // TODO non è vero è un'idea bellissima non ci provare aojhfgioagionaboigkahjnèoiaghnèosighè
             //TODO togliere la possibilità di saltare mentre si è in aria (bugga anche la fisica(accelerazione di gravità continua ad aumentare))
             if(keyH.spacePressed){  //aggiungi "&& canJump" per effetto palleggio
                 direction = orientation.UP;

@@ -402,7 +402,7 @@ public class MapBuilder extends Canvas {
         getMapContainer().setSize(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
 
         setNumPlayers(numPlayers);
-        MapBuilder.itemNum = numPlayers * 3;
+        MapBuilder.itemNum = numPlayers * 5;
         mapContainer.setMinimumSize(new Dimension(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get()));
         mapContainer.setResizable(false);
         JLayeredPane layeredPaneGrid = new JLayeredPane();

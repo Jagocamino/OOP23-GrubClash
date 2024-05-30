@@ -36,9 +36,6 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     public int jump1Counter = 0;
     public int jump2Counter = 0;
 
-    // TODO components COMPONENTS components COMPONESNT  COMPONENTRS pordcoednibwqeanbdoaliusj
-    // hp dell'entità gestita in player
-
     public Entity(int x, int y, int width, int height, entities entity) { //passed
         this.x = x;
         this.y = y;

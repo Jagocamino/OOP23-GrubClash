@@ -11,10 +11,8 @@ import java.util.Random;
 
 import it.unibo.grubclash.controller.Implementation.Allowed;
 import it.unibo.grubclash.controller.Implementation.Entity;
-import it.unibo.grubclash.controller.Implementation.Heal;
 import it.unibo.grubclash.controller.Implementation.Physic;
 import it.unibo.grubclash.controller.Implementation.Player;
-import it.unibo.grubclash.controller.Implementation.Trap;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
 import it.unibo.grubclash.view.Implementation.MapBuilder;

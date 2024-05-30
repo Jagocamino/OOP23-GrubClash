@@ -67,7 +67,7 @@ public class ProjectileRoket extends Projectile {
 
     private void explosionHappening () {
         Entity damage = damage(dmgRadius);
-        Allowed.applyDamage(Allowed.dealDamage(damage.getX(), damage.getY(), damage.getWidth(), damage.getHeight()), 2); //da risolvere TODO
+        Allowed.applyDamage(Allowed.dealDamage(damage.getX(), damage.getY(), damage.getWidth(), damage.getHeight()), 2);
         this.working = EnumEntity.status.DEAD;
     }
 

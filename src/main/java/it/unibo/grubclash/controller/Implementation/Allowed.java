@@ -159,11 +159,7 @@ public class Allowed {
         }
         return Optional.empty();
     } */
-
-    // TODO evitare che il proiettile esca dallo schermo, gestire la collisione dei proiettili con il giocatore, fare in modo che i proiettili colpiscano in tutte le direzioni
-
-    // TODO devo riuscire a lavorare le heal e trap senza dover scomodare GrubPanel
-
+    
     public static void addMapBase (EnumEntity.entities[][] entityMatrix) {
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
@@ -287,28 +283,6 @@ public class Allowed {
 
 
     //                                      TUTTO QUELLO CHE RIGUARDA IL PROIETTILE
-
- 
-
-    /*
-        TODO restituisce una Entity, da aggiungere alla dynamicEntity. 
-        Ogni cosa dentro la damageArea() deve volare, infatti chiamata mapdestroyer() per ogni entità che sta dentro
-        finché canMoveThere() da falso, si scorrono le entità all'interno dell'area e viene applicato l'effetto del danno
-        ^naturalmente da mettere dentro GrubPanel :) ^ 
-    */
-
-        
-    //TODO MODO PER ELIMINARE LA MAPPA DA METTERE DENTRO GRUBPANEL
-    /* if (gonnaExplode == true) {
-            addDynamicEntity( damage() ); //mettendola a entità si possono includere immagini o animazioni o boh
-            for (canMoveThere( dynamicEntity.find(entities.EXPLOSION) == false)) {
-                // scorro eliminando tutto quello che c'è dentro l'area
-                mapDestroyer(whatWallIsIncluded (x, y, width, height));                
-            }
-            //faccio questa pulizia per eliminare l'entità dell'esplosione
-            dynamicEntity.find(entities.EXPLOSION).remove();
-    } */
-
     
     private static boolean gonnaExplodeHere(int x, int y, Player owner ) {
         //scorre tutte le entità in lvlData per controllare le collisioni
@@ -448,7 +422,7 @@ public class Allowed {
     // il return di dealDamage() va come argomento di applyDamage()
     public static void applyDamage (ArrayList<Entity> dealDamage, int i) {
         for (Entity entity : dealDamage) {
-            if ( isPlayer(entity) ) { // TODO ci sono due player
+            if ( isPlayer(entity) ) {
                 for(int j = 0; j < i; j++){
                     entity.life.damage();
                 }
