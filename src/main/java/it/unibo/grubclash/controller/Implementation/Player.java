@@ -1,10 +1,8 @@
 package it.unibo.grubclash.controller.Implementation;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Optional;
-
 import it.unibo.grubclash.controller.Weapon;
 import it.unibo.grubclash.model.Implementation.GrubPanel;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
@@ -13,8 +11,6 @@ import it.unibo.grubclash.view.Implementation.LifeImpl;
 import it.unibo.grubclash.view.Implementation.MapBuilder;
 import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.view.Implementation.EnumEntity.status;
-
-//   LA POSIZIONE DEL GIOCATORE VIENE PASSATA DOPO IL CONTROLLO NEL MAP BUILDER
 
 public class Player extends Entity{
 
@@ -92,7 +88,6 @@ public class Player extends Entity{
                     x+=speed;
                 }
             }
-
 
             // TODO non è vero è un'idea bellissima non ci provare aojhfgioagionaboigkahjnèoiaghnèosighè
             //TODO togliere la possibilità di saltare mentre si è in aria (bugga anche la fisica(accelerazione di gravità continua ad aumentare))
@@ -244,8 +239,4 @@ public class Player extends Entity{
     public void setId( int id ) {
         this.id = id;
     }
-
-
-
-
 }

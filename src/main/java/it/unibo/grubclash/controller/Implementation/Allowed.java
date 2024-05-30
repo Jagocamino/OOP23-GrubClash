@@ -12,12 +12,6 @@ import java.util.Optional;
 
 public class Allowed { 
 
-    /*
-    public static Insets giveInsetsBorder(JFrame map) { //da passare ad ALLOWED per quanto riguarda IsSolid --> ALLOWED viene chiamato qua dentro
-        return map.getInsets();
-    }
-    da finire guida sulle collisioni, una volta risolto il problema dei player sul map builder
-    */
     private static int borderX;
     private static int borderY;
     private static JPanel[][] mapBase;
@@ -46,7 +40,6 @@ public class Allowed {
     public static void removeDynamicEntity (Entity dynamicEntity) {
         Allowed.dynamicEntities.remove(dynamicEntity);
     }
-
 
     public static void delateSpawnpoint () { //prima di entrare qui è già esploso
         for (int i = 0; i < getROWS(); i++) {
@@ -139,27 +132,6 @@ public class Allowed {
         }
     }
 
-    //se non funziona distruggo tutto, MA PROBABILMENTE NEANCHE SERVE!!!
-    //è un whatisfacing che restituisce un entità e non controlla i bordi
-    /* public static Optional<Entity> whatWallIsIncluded (int x, int y, int width, int height) { //qui ci metto le dimensioni dell'esplosione, ritorna la prima entità Wall nell'area
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLS; j++) {
-                if(  Allowed.lvlData[i][j].getEntity() == entities.WALL && (
-                    ( x >= Allowed.lvlData[i][j].getX() && x < (Allowed.lvlData[i][j].getX() + Allowed.lvlData[i][j].getWidth())) || // se è sporgente a sx
-                    ( x + width >= Allowed.lvlData[i][j].getX() && x + width < (Allowed.lvlData[i][j].getX() + Allowed.lvlData[i][j].getWidth())) || // se è sporgente a dx
-                    ( x < Allowed.lvlData[i][j].getX() && x + width >= (Allowed.lvlData[i][j].getX() + Allowed.lvlData[i][j].getWidth())) // se è dentro
-                    ) && (
-                    ( y >= Allowed.lvlData[i][j].getY() && y < (Allowed.lvlData[i][j].getY() + Allowed.lvlData[i][j].getHeight())) || // se è sporgente sopra
-                    ( y + height >= Allowed.lvlData[i][j].getY() && y + height < (Allowed.lvlData[i][j].getY() + Allowed.lvlData[i][j].getHeight())) || // se è sporgente sotto
-                    ( y < Allowed.lvlData[i][j].getY() && y + height >= (Allowed.lvlData[i][j].getY() + Allowed.lvlData[i][j].getHeight())) // se è dentro
-                    ) ){
-                    return Optional.ofNullable(Allowed.lvlData[i][j]);
-                }
-            }
-        }
-        return Optional.empty();
-    } */
-
     public static void addMapBase (EnumEntity.entities[][] entityMatrix) {
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
@@ -171,7 +143,6 @@ public class Allowed {
             }
         }
     }
-
     
     private static Entity giveRandomItem (int x, int y) {
         Random randomNum = new Random();    
@@ -277,7 +248,6 @@ public class Allowed {
         }
         return entities.SKY;
     }
-
 
     //                                      TUTTO QUELLO CHE RIGUARDA IL PROIETTILE
     

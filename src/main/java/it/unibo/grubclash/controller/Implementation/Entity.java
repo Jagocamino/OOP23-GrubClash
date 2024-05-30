@@ -42,7 +42,6 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
         this.width = width;
         this.height = height;
         this.entity = entity;
-        //initHitbox(); 
     } 
 
     public Entity (GrubPanel grubPanel) {
@@ -74,10 +73,6 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     public int getHeight() {
         return height;
     }
-
-    /* private void initHitbox() {
-        hitbox = new Rectangle((int) x, (int) y, (int) width, (int) height); //width e height sono double, non ho capito perché mi forza a fare il cast a int
-    } */
 
     public entities getEntity () {
         return this.entity;

@@ -17,7 +17,7 @@ public class EnumEntity {
         AMMO_BOX,
         EXPLOSION,
         GUN,
-        ITEM, // non lo toccate
+        ITEM,
         PROJECTILE;   
     }
 
@@ -52,29 +52,6 @@ public class EnumEntity {
         };
 
     }
-    /* public static Optional<entities> idToTrapConverter(int id){
-
-        return switch (id) {
-            case 1 -> Optional.ofNullable(entities.TRAP1);
-            case 2 -> Optional.ofNullable(entities.TRAP2);
-            case 3 -> Optional.ofNullable(entities.TRAP3);
-            case 4 -> Optional.ofNullable(entities.TRAP4);
-            case 5 -> Optional.ofNullable(entities.TRAP5);
-            default -> Optional.empty();
-        };
-
-    }
-    public static Optional<entities> idToHealConverter(int id){
-
-        return switch (id) {
-            case 1 -> Optional.ofNullable(entities.HEAL1);
-            case 2 -> Optional.ofNullable(entities.HEAL2);
-            case 3 -> Optional.ofNullable(entities.HEAL3);
-            default -> Optional.empty();
-        };
-
-    } */
-
 
     public static int buttonToCoordsXConverter(entities[][] entities, entities player){
         int x = 0;

@@ -32,24 +32,17 @@ public class LifeImpl implements Life {
         this.grubPanel=grubPanel;
         this.life=10;
         this.player=player;
-
         //Font
         snapITCFont = new Font("Snap ITC", Font.BOLD, 24);
-
         getImage();
-
-
     }
 
     @Override public void draw(Graphics2D g2d){
-
+        
         this.g2d = g2d;
-
         g2d.setFont(snapITCFont);
         g2d.setColor(Color.decode(color_game));
-
         drawLifePlayer();
-
     }
 
     private void getImage(){
