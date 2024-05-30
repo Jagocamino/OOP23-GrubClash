@@ -1,6 +1,8 @@
 package it.unibo.grubclash.controller.Implementation;
 import it.unibo.grubclash.view.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
+import it.unibo.grubclash.view.Implementation.EnumEntity.status;
+
 import javax.swing.*;
 
 import java.util.Random;
@@ -114,6 +116,27 @@ public class Allowed {
         return false;
     }
 
+    public static void touchDynamicEntity(Player player){
+        for (Entity t : getDynamicEntities()) {
+            if( t.working == status.ALIVE && player.x + player.width/2 > t.getX() && player.x + player.width/2 < t.getX() + t.getWidth() && 
+                player.y + player.height/2 > t.getY() && player.y + player.height/2 < t.getY() + t.getHeight()){
+                switch(t.getEntity()){
+                    case TRAP: 
+                        player.life.damage(); 
+                        System.out.println("è entrato TRAP");
+                        t.working = status.DEAD; 
+                        break;
+                    case HEAL:
+                        player.life.plusLife(); 
+                        System.out.println("è entrato HEAL");
+                        t.working = status.DEAD; 
+                        break;
+                    default: break;
+                }
+            }
+        }
+    }
+
     //se non funziona distruggo tutto, MA PROBABILMENTE NEANCHE SERVE!!!
     //è un whatisfacing che restituisce un entità e non controlla i bordi
     /* public static Optional<Entity> whatWallIsIncluded (int x, int y, int width, int height) { //qui ci metto le dimensioni dell'esplosione, ritorna la prima entità Wall nell'area
@@ -137,33 +160,6 @@ public class Allowed {
 
     // TODO evitare che il proiettile esca dallo schermo, gestire la collisione dei proiettili con il giocatore, fare in modo che i proiettili colpiscano in tutte le direzioni
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // TODO devo riuscire a lavorare le heal e trap senza dover scomodare GrubPanel
 
     public static void addMapBase (EnumEntity.entities[][] entityMatrix) {
@@ -183,7 +179,7 @@ public class Allowed {
     
     private static Entity giveRandomItem (int x, int y) {
         Random randomNum = new Random();    
-        switch (randomNum.nextInt(1)) {
+        switch (randomNum.nextInt(2)) {
             case 0:
                 return new Trap(x, y);
             case 1:

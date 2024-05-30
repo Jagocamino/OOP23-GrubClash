@@ -236,12 +236,12 @@ public class GrubPanel extends JPanel implements Runnable {
                             turnBegin = false;
                             this.addKeyListener(p.getKeyH());
                             int counter = 0;
-
                             while(numCicles <= 5 && p.working == status.ALIVE){   //algoritmo da rivedere ma la sostanza c'è TODO 
                                 long start = System.nanoTime();
                                 while(System.nanoTime() - start <= 2000000000) {
                                     counter++;
                                     p.update();
+                                    Allowed.touchDynamicEntity(p);
                                     if(counter % 33 == 0){   //forse c'è un modo migliore per farlo 
                                         secondsTurn++;
                                     }
@@ -255,8 +255,8 @@ public class GrubPanel extends JPanel implements Runnable {
                             }
                             resetVariables(p);
                         }
-                        
                     }
+
                     numAlivePlayers = 0;
                 }
             }

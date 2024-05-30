@@ -80,14 +80,6 @@ public class Player extends Entity{
                 }
                 spriteCounter = 0;
             }
-
-            //controlla se danneggiato da una trappola
-            touchDynamicEntity();
-
-            // TODO @notnoted ziopera stiamo muovendo il player NON entity, dobbiamo muovere anche l'Entity del giocatore
-            /*
-                Non ci metto le mani altrimenti Pianini mi uccide, aggiorna con i setter appena messi su Entity, se non si muovono insieme naturalmente non sono registrate le collisioni 
-            */
             if(keyH.leftPressed && canMove){
                 if(Allowed.CanMoveThere(x - speed, y, width, height)){
                     direction = orientation.LEFT;
@@ -144,20 +136,6 @@ public class Player extends Entity{
                 this.working = status.DEAD;
             }
             weapon.get().setWeaponDir(direction);
-        }
-    }
-
-    public void touchDynamicEntity(){
-
-        for (Entity t : Allowed.getDynamicEntities()) {
-            if(t.working == status.ALIVE && this.x + this.width/2 > t.getX() && this.x + this.width/2 < t.getX() + t.getWidth()
-            && this.y + this.height/2 > t.getY() && this.y + this.height/2 < t.getY() + t.getHeight()){
-                switch(t.getEntity()){
-                    case TRAP: this.life.damage();t.working = status.DEAD;break;
-                    case HEAL: this.life.plusLife();t.working = status.DEAD;break;
-                    default: break;
-                }
-            }
         }
     }
 

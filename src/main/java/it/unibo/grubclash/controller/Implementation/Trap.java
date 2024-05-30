@@ -15,7 +15,7 @@ public class Trap extends Entity{
 
     public Trap(int x, int y) {
 
-        super(x, y, 20, 20, EnumEntity.entities.HEAL);
+        super(x, y, 20, 20, EnumEntity.entities.TRAP);
 
         Allowed.addDynamicEntity(this);
         getImage();
