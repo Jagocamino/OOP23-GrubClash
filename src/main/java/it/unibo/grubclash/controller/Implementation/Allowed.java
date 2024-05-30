@@ -310,7 +310,7 @@ public class Allowed {
                     ) && (   
                         x >= entity.getX() &&
                         x < (entity.getWidth() + entity.getX()) &&
-                        y >= entity.getX() && 
+                        y >= entity.getY() && 
                         y < (entity.getY() + entity.getHeight())
                     ) && (
                         hittable(entity)
