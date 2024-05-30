@@ -194,7 +194,7 @@ public class Allowed {
     }
 
     // TODO @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted 
-    public Optional<ArrayList<Entity>> meleeAttack(int xRange, int yRange, int widthRange, int heightRange, Player owner) { // restituisce una arraylist optional dei player colpiti dal melee
+    public static Optional<ArrayList<Entity>> meleeAttack(int xRange, int yRange, int widthRange, int heightRange, Player owner) { // restituisce una arraylist optional dei player colpiti dal melee
         ArrayList<Entity> arrayList = new ArrayList<>();
         for (Entity entity : getDynamicEntities()) {
             if (entity != owner) {

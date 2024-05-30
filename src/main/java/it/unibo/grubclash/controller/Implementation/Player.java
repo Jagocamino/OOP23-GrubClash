@@ -30,6 +30,7 @@ public class Player extends Entity{
     private orientation direction;
     private Optional<Weapon> weapon;
     public boolean alreadyShot = false;
+    public boolean alreadyDug = false;
 
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
 
@@ -128,6 +129,43 @@ public class Player extends Entity{
                 getWeapon().get().shoot();
                 keyH.shootPressed = false;
                 alreadyShot = true;
+            }
+            if(keyH.shovelPressed && !alreadyDug){
+                switch(this.direction){
+                    case DOWN: 
+                        if( !Allowed.meleeAttack(x, y + height, width, height, this).equals(Optional.empty()) || 
+                            !Allowed.CanMoveThere(x, y + height, width, height)){
+                            Allowed.applyDamage(Allowed.dealDamage(x, y + height, width, height), 1);
+                        }
+                        break;
+                    case LEFT:
+                        if( !Allowed.meleeAttack(x - width - 5, y, width, height, this).equals(Optional.empty()) || 
+                            !Allowed.CanMoveThere(x - width - 5, y, width, height)){
+                            Allowed.applyDamage(Allowed.dealDamage(x - width - 5, y, width, height), 1);
+                        }
+                        break;
+                    case RIGHT:
+                        if( !Allowed.meleeAttack(x + width + 5, y, width, height, this).equals(Optional.empty()) || 
+                            !Allowed.CanMoveThere(x + width + 5, y, width, height)){
+                            Allowed.applyDamage(Allowed.dealDamage(x + width + 5, y, width, height), 1);
+                        }
+                        break;
+                    case UP:
+                        if( !Allowed.meleeAttack(x, y - 25, width, height - 15, this).equals(Optional.empty()) || 
+                            !Allowed.CanMoveThere(x, y - 25, width, height - 15)){
+                            Allowed.applyDamage(Allowed.dealDamage(x, y - 25, width, height - 15), 1);
+                        }
+                        break;
+                    case UP2:
+                        if( !Allowed.meleeAttack(x, y - 25, width, height - 15, this).equals(Optional.empty()) || 
+                            !Allowed.CanMoveThere(x, y - 25, width, height - 15)){
+                            Allowed.applyDamage(Allowed.dealDamage(x, y - 25, width, height - 15), 1);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                alreadyDug = true;
             }
             if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
                 direction = orientation.DOWN;

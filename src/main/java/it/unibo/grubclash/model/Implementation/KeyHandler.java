@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
 
     GrubPanel grubPanel;
-    public boolean leftPressed, rightPressed, spacePressed, shootPressed;
+    public boolean leftPressed, rightPressed, spacePressed, shootPressed, shovelPressed;
 
     public KeyHandler(GrubPanel grubPanel){
         this.grubPanel = grubPanel;
@@ -30,6 +30,9 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_ENTER){
             shootPressed = true;
         }
+        if(code == KeyEvent.VK_F){
+            shovelPressed = true;
+        }
     }
 
     @Override
@@ -46,6 +49,9 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_ENTER){
             shootPressed = false;
+        }
+        if(code == KeyEvent.VK_F){
+            shovelPressed = false;
         }
     }
 }

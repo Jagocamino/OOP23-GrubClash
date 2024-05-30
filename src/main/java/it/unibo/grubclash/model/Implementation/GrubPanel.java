@@ -307,6 +307,7 @@ public class GrubPanel extends JPanel implements Runnable {
         p.gravity=true;
         p.canMove = true;
         p.alreadyShot = false;
+        p.alreadyDug = false;
     }
 
     private void updatePhysic() {
