@@ -190,6 +190,32 @@ public class Allowed {
         }
     }
 
+    // TODO @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted 
+    public Optional<ArrayList<Entity>> meleeAttack(int xRange, int yRange, int widthRange, int heightRange, Player owner) { // restituisce una arraylist optional dei player colpiti dal melee
+        ArrayList<Entity> arrayList = new ArrayList<>();
+        for (Entity entity : getDynamicEntities()) {
+            if (entity != owner) {
+                int entityX = entity.getX();
+                int entityY = entity.getY();
+                int entityWidth = entity.getWidth();
+                int entityHeight = entity.getHeight();
+                if( isPlayer(entity) && (
+                    ( xRange >= entityX && xRange < (entityX + entityWidth)) || // se è sporgente a sx
+                    ( xRange + widthRange >= entityX && xRange + widthRange < (entityX + entityWidth)) || // se è sporgente a dx
+                    ( xRange < entityX && xRange + widthRange >= (entityX + entityWidth)) // se è dentro
+                    ) && (
+                    ( yRange >= entityY && yRange < (entityY + entityHeight)) || // se è sporgente sopra
+                    ( yRange + heightRange >= entityY && yRange + heightRange < (entityY + entityHeight)) || // se è sporgente sotto
+                    ( yRange < entityY && yRange + heightRange >= (entityY + entityHeight)) // se è dentro
+                    ) 
+                ){
+                        arrayList.add(entity);
+                }   
+            }
+        }
+        return Optional.ofNullable(arrayList);
+    }
+
     //entityMatrix serve SOLO per inizializzare lvlData, poi NON DEVE più essere usato
     public static void mapDestroyer (int i, int j) {
         if (getLvlData(i, j).getEntity() == entities.WALL) {     
