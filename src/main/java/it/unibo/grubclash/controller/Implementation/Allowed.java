@@ -129,6 +129,10 @@ public class Allowed {
                         player.life.plusLife(); 
                         t.working = status.DEAD; 
                         break;
+                    case AMMO_BOX:
+                        player.getWeapon().get().refillAmmo();
+                        t.working = status.DEAD; 
+                        break;
                     default: break;
                 }
             }
@@ -177,14 +181,13 @@ public class Allowed {
     
     private static Entity giveRandomItem (int x, int y) {
         Random randomNum = new Random();    
-        switch (randomNum.nextInt(2)) {
+        switch (randomNum.nextInt(3)) {
             case 0:
                 return new Trap(x, y);
             case 1:
                 return new Heal(x, y);
-            /* case 2:
-                return new Granade();
-                break; */
+            case 2:
+                return new Ammo_Box(x, y);
             default:
                 return null;
         }

@@ -36,6 +36,7 @@ public class WeaponRoket extends Weapon {
         
     }
 
+    @Override
     public void refillAmmo() {
         setAmmo(defaultAmmo);
     }

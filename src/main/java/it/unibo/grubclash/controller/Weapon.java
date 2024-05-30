@@ -59,6 +59,8 @@ public abstract class Weapon {
         this.ammo--;
     }
 
+    public void refillAmmo(){}
+
     public void draw(Graphics2D g2d){
         
         BufferedImage image = null;

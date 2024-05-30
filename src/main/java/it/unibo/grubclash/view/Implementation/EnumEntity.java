@@ -14,6 +14,7 @@ public class EnumEntity {
         SKY,
         TRAP,
         HEAL,
+        AMMO_BOX,
         EXPLOSION,
         GUN,
         ITEM, // non lo toccate
