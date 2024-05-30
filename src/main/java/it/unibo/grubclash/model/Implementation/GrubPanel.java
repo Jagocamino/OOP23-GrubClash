@@ -50,11 +50,12 @@ public class GrubPanel extends JPanel implements Runnable {
     private int numAlivePlayers = 0;
     private int idOfTheWinner;
 
+    /* 
     //Traps
     public ArrayList<Trap> traps;
 
     //Heals
-    public ArrayList<Heal> heals;
+    public ArrayList<Heal> heals;*/
 
     //UI
     UI ui = new UI(this);
@@ -68,8 +69,7 @@ public class GrubPanel extends JPanel implements Runnable {
 
     //VARIABLES
     public boolean turnBegin = false;
-    private int numTraps = 5;
-    private int numHeals = 3;
+
 
     public GrubPanel(int playerCount) {
 
@@ -98,9 +98,9 @@ public class GrubPanel extends JPanel implements Runnable {
             keyHandelers.add(new KeyHandler(this));
             players.add(new Player(this, i, keyHandelers.get(i)));
         } 
-        traps = new ArrayList<>();
+        /*traps = new ArrayList<>();*/
         
-        for(int i = 0; i < numTraps; i++){
+        /*for(int i = 0; i < numTraps; i++){
             
             traps.add(new Trap(this, i+1));
         }
@@ -110,7 +110,7 @@ public class GrubPanel extends JPanel implements Runnable {
         for(int i = 0; i < numHeals; i++){
             
             heals.add(new Heal(this, i+1));
-        }
+        }*/
 
 
         this.setSize(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
@@ -272,7 +272,7 @@ public class GrubPanel extends JPanel implements Runnable {
                 physic.checkTerrain(p);
             }
         }
-        for(Trap t : traps) {
+        /*for(Trap t : traps) {
             if(t.gravity){
                 physic.checkTerrain(t);
             }
@@ -281,7 +281,7 @@ public class GrubPanel extends JPanel implements Runnable {
             if(h.gravity){
                 physic.checkTerrain(h);
             }
-        }
+        }*/
     }
 
     public void paintComponent(Graphics g){
@@ -298,12 +298,12 @@ public class GrubPanel extends JPanel implements Runnable {
                 p.getWeapon().get().getRocket().get().draw(g2d);
             }
         }
-        for(Trap t : traps) {
+        /*for(Trap t : traps) {
             t.draw(g2d);
         }
         for(Heal h : heals) {
             h.draw(g2d);
-        }
+        }*/
 
         ui.draw(g2d);
 
