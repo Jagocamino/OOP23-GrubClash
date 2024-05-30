@@ -176,7 +176,8 @@ public class Player extends Entity{
     public void setDirection(orientation direction) {
         this.direction = direction;
     }
-
+    
+    @Override
     public void draw(Graphics2D g2d){
         
         BufferedImage image = death;

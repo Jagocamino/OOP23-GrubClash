@@ -7,11 +7,11 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import java.util.Random;
 
 import it.unibo.grubclash.controller.Implementation.Allowed;
 import it.unibo.grubclash.controller.Implementation.Entity;
 import it.unibo.grubclash.controller.Implementation.Heal;
-import it.unibo.grubclash.controller.Implementation.ItemSpawner;
 import it.unibo.grubclash.controller.Implementation.Physic;
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.controller.Implementation.Trap;
@@ -78,6 +78,12 @@ public class GrubPanel extends JPanel implements Runnable {
         this.numAlivePlayers = 0;
         keyHandelers = new ArrayList<>();
         Allowed.setMapBase(MapBuilder.getMapBase());
+        // chiamo itemSpawner
+        // TODO da controllare se c'è lo spazio per mettere quelle robe (spazio per player spawnpoint e item)
+        generateSpawnLocation(Allowed.getROWS(), Allowed.getCOLS(), MapBuilder.getItemNum(), MapBuilder.getEntityMatrix());
+        // alloco in dynamicEntity gli item random
+
+        // trasformo item in cielo
         Allowed.addMapBase(MapBuilder.getEntityMatrix()); //creo la matrice delle entità (20x20)
         
 
@@ -119,10 +125,35 @@ public class GrubPanel extends JPanel implements Runnable {
     }
 
     public void startGameThread () {
-
         gameThread = new Thread(this);
         gameThread.start();
-    } 
+    }
+
+    public void generateSpawnLocation (int ROWS, int COLS, int numOfItems, entities[][] entityMatrix) { // mette dentro entityMatrix[][] ITEM, dentro grubpanel verranno cambiati
+        Random randomNum = new Random();
+        int randX;
+        int randY;
+        ArrayList<Integer> list = new ArrayList<>();
+        while (numOfItems > 0) {
+            randY = randomNum.nextInt(ROWS);
+            do {
+                randX = randomNum.nextInt(COLS);
+                System.out.println("alskjijallògajlk" + randX);
+            } while (alreadyInCol(randX, list) == true);
+            if (entityMatrix[randY][randX] == entities.SKY) {
+                entityMatrix[randY][randX] = entities.ITEM;
+                list.add(randX);
+                numOfItems--;
+            }
+        }
+    }
+
+    private boolean alreadyInCol (int randX, ArrayList<Integer> list) {
+        for (Integer element : list) {
+            return (Integer.valueOf(element) == randX);
+        } 
+        return false;
+    }
 
     //metodo "delta" per creare un game loop
     @Override
@@ -267,21 +298,11 @@ public class GrubPanel extends JPanel implements Runnable {
     }
 
     private void updatePhysic() {
-        for(Player p : players) {
+        for(Entity p : Allowed.getDynamicEntities()) {
             if(p.gravity){
                 physic.checkTerrain(p);
             }
         }
-        /*for(Trap t : traps) {
-            if(t.gravity){
-                physic.checkTerrain(t);
-            }
-        }
-        for(Heal h : heals) {
-            if(h.gravity){
-                physic.checkTerrain(h);
-            }
-        }*/
     }
 
     public void paintComponent(Graphics g){
@@ -289,6 +310,11 @@ public class GrubPanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D)g;
+        for (Entity entity : Allowed.getDynamicEntities()) {
+            if (!Allowed.isPlayer(entity)) {
+                entity.draw(g2d);   
+            }
+        }
 
         for(Player p : players) {
             p.draw(g2d);
@@ -298,12 +324,6 @@ public class GrubPanel extends JPanel implements Runnable {
                 p.getWeapon().get().getRocket().get().draw(g2d);
             }
         }
-        /*for(Trap t : traps) {
-            t.draw(g2d);
-        }
-        for(Heal h : heals) {
-            h.draw(g2d);
-        }*/
 
         ui.draw(g2d);
 

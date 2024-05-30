@@ -90,7 +90,7 @@ public class Allowed {
     }
 
     public static void setMapBase (JPanel[][] mapBase) {
-            Allowed.mapBase = mapBase;
+        Allowed.mapBase = mapBase;
     }
 
     public static void addEntity (int x, int y, int width, int height, entities entity, int i, int j) {
@@ -166,41 +166,35 @@ public class Allowed {
 
     // TODO devo riuscire a lavorare le heal e trap senza dover scomodare GrubPanel
 
-
-
     public static void addMapBase (EnumEntity.entities[][] entityMatrix) {
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
                 // TODO QUI si gestisce l'assegnazione random degli item ATTRAVERSO UN ALTRO METODO (tipo, boh giveRandomItem() )
                 // addEntity( giveRandomItem() ), dove il randomItem è mina, healthpack o arma i guess
                 addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getWidth(), (int)mapBase[i][j].getBounds().getHeight(), entityMatrix[i][j], i, j);
-                
                 if (entityMatrix[i][j] == entities.ITEM) {
-                    //addDynamicEntity(giveRandomItem()); // TODO giverandomitem ci restituisce un item tra granata, heal e trap
+                    addDynamicEntity(giveRandomItem(mapBase[i][j].getX(), mapBase[i][j].getY())); // TODO giverandomitem ci restituisce un item tra granata, heal e trap
                     lvlData[i][j].setEntity(entities.SKY);
                 }
             }
-            }
+        }
     }
 
     
-    /* private Entity giveRandomItem () {
+    private static Entity giveRandomItem (int x, int y) {
         Random randomNum = new Random();    
-        switch (randomNum.nextInt(2)) {
+        switch (randomNum.nextInt(1)) {
             case 0:
-                return new Trap();
-                break;
+                return new Trap(x, y);
             case 1:
-                return new Heal();
-                break;
-            case 2:
+                return new Heal(x, y);
+            /* case 2:
                 return new Granade();
-                break;
-        
+                break; */
             default:
-                break;
+                return null;
         }
-    } */
+    }
 
     //entityMatrix serve SOLO per inizializzare lvlData, poi NON DEVE più essere usato
     public static void mapDestroyer (int i, int j) {

@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+import java.awt.Graphics2D;
 import it.unibo.grubclash.view.Implementation.ImageScalar;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
@@ -123,6 +123,10 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
             e.printStackTrace();
         }
         return image;
+    }
+
+    public void draw(Graphics2D g2d) {
+        
     }
 
 }

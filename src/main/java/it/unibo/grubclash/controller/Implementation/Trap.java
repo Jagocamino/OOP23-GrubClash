@@ -27,6 +27,7 @@ public class Trap extends Entity{
         stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "trap.png", this.width+23, this.height+23);
     }
 
+    @Override
     public void draw(Graphics2D g2d){
         if(working == status.ALIVE){
             g2d.drawImage(stand1, x, y,null);

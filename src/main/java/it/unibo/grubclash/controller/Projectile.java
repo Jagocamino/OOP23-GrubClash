@@ -18,6 +18,7 @@ public abstract class Projectile extends Entity{
         return new Entity(x - dmgRadius, y - dmgRadius, dmgRadius*2, dmgRadius*2, entities.EXPLOSION); //elimino ogni explosion dopo
     }
 
+    @Override
     public void draw(Graphics2D g2d){
 
         if(this.working == EnumEntity.status.ALIVE){

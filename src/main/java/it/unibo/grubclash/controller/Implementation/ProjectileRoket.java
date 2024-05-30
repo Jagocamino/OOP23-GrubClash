@@ -14,6 +14,7 @@ public class ProjectileRoket extends Projectile {
     public ProjectileRoket(int x, int y, Player owner) {
         super(x, y, getWidthRoket(), getHeightRoket(), entities.PROJECTILE); //qui c'era entity al posto di null ma entity static non va bene rompe tutto TODO
         this.owner = owner;
+        gravity = false;
         Allowed.addDynamicEntity(this);
     }   
 

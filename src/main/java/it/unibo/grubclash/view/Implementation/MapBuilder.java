@@ -23,6 +23,12 @@ public class MapBuilder extends Canvas {
 
     final static char FS = File.separatorChar;
 
+    private static int itemNum;
+    
+    public static int getItemNum() {
+        return itemNum;
+    }
+
     private static JFrame mapContainer;
     public static JFrame getMapContainer() {
         return mapContainer;
@@ -176,6 +182,21 @@ public class MapBuilder extends Canvas {
             }
             return mapBase[i][j].getBackground();
         }
+    }
+
+    private boolean canSwitchPhase() {
+        int counter = 0;
+        for(int i = 0; i < ROWS; i++ ) {
+            for(int j = 0; j < COLS; j++) {
+                if (mapBase[i][j].getBackground() == Color.WHITE) {
+                    counter++;
+                }
+            }
+        }
+        if (counter >= ( getNumPlayers() + getItemNum())) {
+            return true;
+        }
+        return false;
     }
 
     public static void setNumPlayers ( int numPlayers ) {
@@ -381,6 +402,7 @@ public class MapBuilder extends Canvas {
         getMapContainer().setSize(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
 
         setNumPlayers(numPlayers);
+        MapBuilder.itemNum = numPlayers * 3;
         mapContainer.setMinimumSize(new Dimension(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get()));
         mapContainer.setResizable(false);
         JLayeredPane layeredPaneGrid = new JLayeredPane();
@@ -410,16 +432,20 @@ public class MapBuilder extends Canvas {
                 if(i == 0 && j == COLS - 1) { //if(è nel bottone finish, ovvero quello dello switch della fase)
                     JButton btnFinish = btnMatrix[i][j];
                     btnFinish.addActionListener(f -> {
-                        initializeCurrentPlayer();
-                        mapBase[finalI][finalJ].remove(btnFinish);
-                        if (!getCharacterPlacementPhase()) {
-                            btnMatrix[finalI][finalJ] = createButton(finalI, finalJ);
-                            mapBase[finalI][finalJ].add(getBtnMatrix(finalI, finalJ), BorderLayout.CENTER);
+                        if (canSwitchPhase()) {
+                            initializeCurrentPlayer();
+                            mapBase[finalI][finalJ].remove(btnFinish);
+                            if (!getCharacterPlacementPhase()) {
+                                btnMatrix[finalI][finalJ] = createButton(finalI, finalJ);
+                                mapBase[finalI][finalJ].add(getBtnMatrix(finalI, finalJ), BorderLayout.CENTER);
+                            }
+                            updateCharacterPlacementPhase();
+                            p2Map(finalI, finalJ); //passo la posizione del bottone finish
+                            mapContainer.repaint();
+                            mapContainer.validate();
+                        } else {
+                            frameManager.showMessageBox("Messaggio", "Serve più spazio per sviluppare il gioco, ridisegnare la mappa grazie <3", JOptionPane.INFORMATION_MESSAGE);//FM
                         }
-                        updateCharacterPlacementPhase();
-                        p2Map(finalI, finalJ); //passo la posizione del bottone finish
-                        mapContainer.repaint();
-                        mapContainer.validate();
                     });
                 } else {
 
