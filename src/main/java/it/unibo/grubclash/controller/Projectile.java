@@ -22,7 +22,6 @@ public abstract class Projectile extends Entity{
     public void draw(Graphics2D g2d){
 
         if(this.working == EnumEntity.status.ALIVE){
-
             g2d.setColor(Color.BLACK);
             g2d.fillRect(getX(), getY(), getWidth(), getHeight());
         }

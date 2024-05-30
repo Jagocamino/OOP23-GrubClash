@@ -29,8 +29,8 @@ public class ProjectileRoket extends Projectile {
         return heightRoket;
     }
 
+    @Override
     public void update () {
-
         orientation dir = owner.getWeapon().get().getShootingDir();
         
         if(this.working == EnumEntity.status.ALIVE){
