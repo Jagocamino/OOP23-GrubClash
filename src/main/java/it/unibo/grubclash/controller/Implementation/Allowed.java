@@ -123,12 +123,10 @@ public class Allowed {
                 switch(t.getEntity()){
                     case TRAP: 
                         player.life.damage(); 
-                        System.out.println("è entrato TRAP");
                         t.working = status.DEAD; 
                         break;
                     case HEAL:
                         player.life.plusLife(); 
-                        System.out.println("è entrato HEAL");
                         t.working = status.DEAD; 
                         break;
                     default: break;
@@ -422,7 +420,6 @@ public class Allowed {
     public static void applyDamage (ArrayList<Entity> dealDamage, int i) {
         for (Entity entity : dealDamage) {
             if ( isPlayer(entity) ) { // TODO ci sono due player
-                System.out.println("scacaton");
                 for(int j = 0; j < i; j++){
                     entity.life.damage();
                 }

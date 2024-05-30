@@ -138,7 +138,6 @@ public class GrubPanel extends JPanel implements Runnable {
             randY = randomNum.nextInt(ROWS);
             do {
                 randX = randomNum.nextInt(COLS);
-                System.out.println("alskjijallògajlk" + randX);
             } while (alreadyInCol(randX, list) == true);
             if (entityMatrix[randY][randX] == entities.SKY) {
                 entityMatrix[randY][randX] = entities.ITEM;
@@ -179,6 +178,7 @@ public class GrubPanel extends JPanel implements Runnable {
                 repaint();  // disegna gli aggiornamenti
                 updatePhysic();
                 updateProj();
+                updateDynamicEntities();
                 delta--;
                 drawCount++;
             }
@@ -202,10 +202,22 @@ public class GrubPanel extends JPanel implements Runnable {
                 }
             }
         }
-        deleteProj(toDelete);
+        deleteDynamicEntity(toDelete);
     }
 
-    private void deleteProj (ArrayList<Entity> toDelete) {
+    private void updateDynamicEntities(){
+        ArrayList<Entity> toDelete = new ArrayList<Entity>();
+        for (Entity entity : Allowed.getDynamicEntities()) {
+            if(entity.getEntity() == entities.TRAP){
+                if (!entity.isAlive()) {
+                    toDelete.add(entity);
+                }
+            }
+        }
+        deleteDynamicEntity(toDelete);
+    }
+
+    private void deleteDynamicEntity (ArrayList<Entity> toDelete) {
         for (Entity entity : toDelete) {
             Allowed.removeDynamicEntity(entity);
         }

@@ -33,7 +33,6 @@ public class Heal extends Entity{
             g2d.drawImage(stand1, x, y,null);
         }else{
             g2d.drawImage(stand2, x, y,null);
-            Allowed.removeDynamicEntity(this);
         }
     }
     

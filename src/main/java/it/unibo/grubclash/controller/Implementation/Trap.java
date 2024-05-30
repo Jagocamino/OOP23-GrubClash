@@ -31,10 +31,7 @@ public class Trap extends Entity{
     public void draw(Graphics2D g2d){
         if(working == status.ALIVE){
             g2d.drawImage(stand1, x, y,null);
-        }else{
-            Allowed.removeDynamicEntity(this);
         }
-
     }
     
 }
