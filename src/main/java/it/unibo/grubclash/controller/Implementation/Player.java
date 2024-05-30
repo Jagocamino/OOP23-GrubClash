@@ -11,6 +11,7 @@ import it.unibo.grubclash.model.Implementation.KeyHandler;
 import it.unibo.grubclash.view.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
 import it.unibo.grubclash.view.Implementation.MapBuilder;
+import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
@@ -81,10 +82,7 @@ public class Player extends Entity{
             }
 
             //controlla se danneggiato da una trappola
-            touchTrap();
-
-            //controlla se si cura con un heal
-            touchHeal();
+            touchDynamicEntity();
 
             // TODO @notnoted ziopera stiamo muovendo il player NON entity, dobbiamo muovere anche l'Entity del giocatore
             /*
@@ -146,28 +144,19 @@ public class Player extends Entity{
                 this.working = status.DEAD;
             }
             weapon.get().setWeaponDir(direction);
-        }else{
-            Allowed.removeDynamicEntity(this);
         }
     }
 
-    public void touchTrap(){
+    public void touchDynamicEntity(){
 
-        for (Trap t : grubPanel.traps) {
+        for (Entity t : Allowed.getDynamicEntities()) {
             if(t.working == status.ALIVE && this.x + this.width/2 > t.getX() && this.x + this.width/2 < t.getX() + t.getWidth()
             && this.y + this.height/2 > t.getY() && this.y + this.height/2 < t.getY() + t.getHeight()){
-                this.life.damage();
-                t.working = status.DEAD;
-            }
-        }
-    }
-    public void touchHeal(){
-
-        for (Heal h : grubPanel.heals) {
-            if(h.working == status.ALIVE && this.x + this.width/2 > h.getX() && this.x + this.width/2 < h.getX() + h.getWidth()
-            && this.y + this.height/2 > h.getY() && this.y + this.height/2 < h.getY() + h.getHeight()){
-                this.life.plusLife();
-                h.working = status.DEAD;
+                switch(t.getEntity()){
+                    case TRAP: this.life.damage();t.working = status.DEAD;break;
+                    case HEAL: this.life.plusLife();t.working = status.DEAD;break;
+                    default: break;
+                }
             }
         }
     }
@@ -220,6 +209,9 @@ public class Player extends Entity{
 
         }else{
 
+            if(Allowed.getDynamicEntities().contains(this)){
+                Allowed.removeDynamicEntity(this);
+            }
             g2d.drawImage(image, x, y,null);
         }
 

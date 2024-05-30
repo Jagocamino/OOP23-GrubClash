@@ -12,14 +12,8 @@ public class EnumEntity {
         PLAYER5,
         WALL,
         SKY,
-        TRAP1,
-        TRAP2,
-        TRAP3,
-        TRAP4,
-        TRAP5,
-        HEAL1,
-        HEAL2,
-        HEAL3,
+        TRAP,
+        HEAL,
         EXPLOSION,
         GUN,
         ITEM, // non lo toccate
@@ -57,7 +51,7 @@ public class EnumEntity {
         };
 
     }
-    public static Optional<entities> idToTrapConverter(int id){
+    /* public static Optional<entities> idToTrapConverter(int id){
 
         return switch (id) {
             case 1 -> Optional.ofNullable(entities.TRAP1);
@@ -78,7 +72,7 @@ public class EnumEntity {
             default -> Optional.empty();
         };
 
-    }
+    } */
 
 
     public static int buttonToCoordsXConverter(entities[][] entities, entities player){

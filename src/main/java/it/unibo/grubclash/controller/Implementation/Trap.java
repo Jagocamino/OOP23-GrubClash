@@ -4,9 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import it.unibo.grubclash.model.Implementation.GrubPanel;
 import it.unibo.grubclash.view.Implementation.EnumEntity;
-import it.unibo.grubclash.view.Implementation.MapBuilder;
 import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
 public class Trap extends Entity{
@@ -15,16 +13,12 @@ public class Trap extends Entity{
 
     public BufferedImage stand1;
 
-    public Trap(GrubPanel grubPanel, int id) {
+    public Trap(int x, int y) {
 
-        super(grubPanel);
+        super(x, y, 20, 20, EnumEntity.entities.HEAL);
 
-        this.x = EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToTrapConverter(id).get());
-        this.y = EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToTrapConverter(id).get());
-
-        this.width = 20;
-        this.height = 20;
-        setEntity(EnumEntity.idToTrapConverter(id).get());
+        Allowed.addDynamicEntity(this);
+        getImage();
         Allowed.addDynamicEntity(this);
         getImage();
     }
