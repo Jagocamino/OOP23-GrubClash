@@ -159,15 +159,13 @@ public class Allowed {
         }
         return Optional.empty();
     } */
-    
+
     public static void addMapBase (EnumEntity.entities[][] entityMatrix) {
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
-                // TODO QUI si gestisce l'assegnazione random degli item ATTRAVERSO UN ALTRO METODO (tipo, boh giveRandomItem() )
-                // addEntity( giveRandomItem() ), dove il randomItem è mina, healthpack o arma i guess
                 addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getWidth(), (int)mapBase[i][j].getBounds().getHeight(), entityMatrix[i][j], i, j);
                 if (entityMatrix[i][j] == entities.ITEM) {
-                    addDynamicEntity(giveRandomItem(mapBase[i][j].getX(), mapBase[i][j].getY())); // TODO giverandomitem ci restituisce un item tra granata, heal e trap
+                    addDynamicEntity(giveRandomItem(mapBase[i][j].getX(), mapBase[i][j].getY()));
                     lvlData[i][j].setEntity(entities.SKY);
                 }
             }
@@ -189,7 +187,6 @@ public class Allowed {
         }
     }
 
-    // TODO @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted @notnoted 
     public static Optional<ArrayList<Entity>> meleeAttack(int xRange, int yRange, int widthRange, int heightRange, Player owner) { // restituisce una arraylist optional dei player colpiti dal melee
         ArrayList<Entity> arrayList = new ArrayList<>();
         for (Entity entity : getDynamicEntities()) {
@@ -417,9 +414,7 @@ public class Allowed {
         return damageToWhichDynamicEntities;
     }
 
-    // infligge il danno alle strutture e ai giocatori nella ArrayList buttata fuori da dealDamage (ovvero tutte le entità colpite dall'esplosione)
-    // TODO da gestire cosa succede al danneggiamento dell'entità
-    // il return di dealDamage() va come argomento di applyDamage()
+    // infligge il danno alle strutture e ai giocatori nella ArrayList buttata fuori da dealDamage (ovvero tutte le entità colpite dall'esplosione
     public static void applyDamage (ArrayList<Entity> dealDamage, int i) {
         for (Entity entity : dealDamage) {
             if ( isPlayer(entity) ) {
