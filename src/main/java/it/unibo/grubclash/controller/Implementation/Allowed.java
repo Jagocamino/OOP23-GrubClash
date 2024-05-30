@@ -298,6 +298,12 @@ public class Allowed {
         //scorre tutte le entità in lvlData per controllare le collisioni
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
+                if (x < 0 || x >= borderX) {
+                    return true;
+                } 
+                if (y < 0 || y >= borderY) {
+                    return true;
+                }
                 if (    lvlData[i][j].getEntity() == entities.WALL &&
                         x >= Allowed.lvlData[i][j].getX() &&
                         x < (Allowed.lvlData[i][j].getWidth() + Allowed.lvlData[i][j].getX()) &&
@@ -320,7 +326,7 @@ public class Allowed {
                         y >= entity.getX() && 
                         y < (entity.getY() + entity.getHeight())
                     ) && (
-                        hittable(entity) /* && owner.getEntity()  */
+                        hittable(entity)
                     )
                 ) {
                     System.out.println("ent: " + entity.getEntity() + " x: " + entity.getX() + " y: " + entity.getY());

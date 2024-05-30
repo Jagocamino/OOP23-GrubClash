@@ -4,10 +4,6 @@ import java.util.Optional;
 import it.unibo.grubclash.controller.Weapon;
 
 public class WeaponRoket extends Weapon {
-
-    //TODO gestire ora che estende entity, OGNI ARMA  lancia un proiettile
-    //il proiettile smette di esistere se canMoveThere() restituisce false
-
     final char FS = File.separatorChar;
 
     private final static int defaultAmmo = 5;

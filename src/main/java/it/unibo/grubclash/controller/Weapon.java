@@ -10,10 +10,6 @@ import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
 public abstract class Weapon {
 
-    /* 
-        TODO Weapon deve matierializzare l'immagine, anche i proiettili
-    */ 
-
     private Player owner;
     private int ammo;
     private orientation shootingDir;

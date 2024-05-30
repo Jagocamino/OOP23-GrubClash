@@ -1,91 +1,92 @@
 package it.unibo.grubclash.controller.Implementation;
-import java.awt.Color;
-import java.awt.Graphics2D;
-
-import it.unibo.grubclash.controller.ProjectileType;
+import it.unibo.grubclash.controller.Projectile;
 import it.unibo.grubclash.view.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
 
-public class ProjectileRoket extends Entity implements ProjectileType {
+public class ProjectileRoket extends Projectile {
 
-    final private int dmgRadius = 50;
-    final private int damage = 50; // non devo mettere 50, il danno ha valori fissi
-    final private static int widthRoket = 10;
-    final private static int heightRoket = 10;
+    private int dmgRadius = 50;
+    private static int widthRoket = 10;
+    private static int heightRoket = 10;
     private Player owner;
-    
+
+    public ProjectileRoket(int x, int y, Player owner) {
+        super(x, y, getWidthRoket(), getHeightRoket(), entities.PROJECTILE); //qui c'era entity al posto di null ma entity static non va bene rompe tutto TODO
+        this.owner = owner;
+        Allowed.addDynamicEntity(this);
+    }   
+
     public Player getOwner() {
         return owner;
     }
 
-    public ProjectileRoket(int x, int y, Player owner) {
-        super(x, y, getWidthRoket(), getHeightRoket(), entities.PROJECTILE); //qu ic'era entity al posto di null ma entity static non va bene rompe tutto TODO
-        this.owner = owner; 
-        Allowed.addDynamicEntity(this);
-    }   
-
     public static int getWidthRoket() {
-        return ProjectileRoket.widthRoket;
+        return widthRoket;
     }
     public static int getHeightRoket() {
-        return ProjectileRoket.heightRoket;
+        return heightRoket;
     }
 
-    public Entity damage (int dmgRadius) { 
-        int x = getX() + (getWidth() / 2);
-        int y = getY() + (getHeight() / 2);
-        return new Entity(x - dmgRadius, y - dmgRadius, dmgRadius*2, dmgRadius*2, entities.EXPLOSION); //elimino ogni explosion dopo
-    } 
-    
-    @Override
-    public void update () { // come faccio a passare la direizone di movimento?
+    public void update () {
 
         orientation dir = owner.getWeapon().get().getShootingDir();
         
         if(this.working == EnumEntity.status.ALIVE){
             if (dir == orientation.LEFT) {
-                if(Allowed.gonnaExplode(getX() - 5, getY(), getWidthRoket(), getHeightRoket(), owner)){
-
-                    System.out.println("pos razzo x: " + getX() + "y: " + getY());
-
-                    Entity damage = damage(dmgRadius);
-                    Allowed.applyDamage(Allowed.dealDamage(damage.getX(), damage.getY(), damage.getWidth(), damage.getHeight()), 1); //da risolvere TODO
-                    this.working = EnumEntity.status.DEAD;
+                if(Allowed.gonnaExplode(updatedDir (dir), getY(), getWidthRoket(), getHeightRoket(), owner)){
+                    explosionHappening();
                 }else{
-                    setX(getX() - 5); 
+                    setX(updatedDir (dir)); 
                 }  
             }
             else if (dir == orientation.RIGHT) {
-                setX(getX()+5);
+                if(Allowed.gonnaExplode(updatedDir (dir), getY(), getWidthRoket(), getHeightRoket(), owner)){
+                    explosionHappening();
+                }else{
+                    setX(updatedDir (dir)); 
+                } 
             }
             else if (dir == orientation.UP || dir == orientation.UP2) {
-                setY(getY()-5);
+                if(Allowed.gonnaExplode(getX(), updatedDir (dir), getWidthRoket(), getHeightRoket(), owner)){
+                    explosionHappening();
+                }else{
+                    setY(updatedDir (dir)); 
+                }  
             }
             else if (dir == orientation.DOWN) {
-                setY(getY()+5);
+                if(Allowed.gonnaExplode(getX(), updatedDir (dir), getWidthRoket(), getHeightRoket(), owner)){
+                    explosionHappening();
+                }else{
+                    setY(updatedDir (dir)); 
+                }  
             }
         }
     }
 
-    /* @Override
-    public void trajectory(int x, int y) { // passa la x e y dell'owner, poi passa la x e y del mouse
-        
-    } */
-
-    @Override //d
-    public int getDamage() {
-        return this.damage;
+    private void explosionHappening () {
+        Entity damage = damage(dmgRadius);
+        Allowed.applyDamage(Allowed.dealDamage(damage.getX(), damage.getY(), damage.getWidth(), damage.getHeight()), 1); //da risolvere TODO
+        this.working = EnumEntity.status.DEAD;
     }
 
-    public void draw(Graphics2D g2d){
-
-        if(this.working == EnumEntity.status.ALIVE){
-
-            g2d.setColor(Color.BLACK);
-            g2d.fillRect(getX(), getY(), getWidth(), getHeight());
+    // personalizzata per ogni proiettile
+    private int updatedDir (orientation dir) {
+        switch (dir) {
+            case UP:
+                return getY() - 5;
+            case UP2:
+                return getY() - 5;
+            case DOWN:
+                return getY() + 5;
+            case RIGHT:
+                return getX() + 5;
+            case LEFT:
+                return getX() - 5;
+            default:
+                return 0;
         }
-    } 
+    }
     
 
 }

@@ -44,11 +44,6 @@ public class ItemSpawner{
             list.add(randX);
             //System.out.print("[" + randX + "] ");
 
-            /*
-                TODO la entityMatrix è una matrice di enum entities, è questa che deve essere popolata di ITEM che poi diventeranno entità in lvlData.
-                La chiamata di ItemSpawner deve quindi essere fatta necessariamente prima prima della popolazione di LvlData
-                noi stiamo settando lo SKY di lvlData in altro. NO. 
-            */
             if (entityMatrix[randY][randX] == entities.SKY) {
                 entityMatrix[randY][randX] = entities.ITEM; //assegna item al posto del cielo
                 numOfItems--;
