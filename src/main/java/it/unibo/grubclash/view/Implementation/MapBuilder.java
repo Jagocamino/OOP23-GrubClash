@@ -376,8 +376,8 @@ public class MapBuilder extends Canvas {
                                 }
                                 updateCurrentPlayer();
                             }
-                            initColorSpawnpoint();
                         }
+                        initColorSpawnpoint();
                     });
                 }
             }
