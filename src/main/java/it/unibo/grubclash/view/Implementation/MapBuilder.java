@@ -382,6 +382,7 @@ public class MapBuilder extends Canvas {
                 }
             }
         }
+        
         SwingUtilities.updateComponentTreeUI(map);
     }
 
