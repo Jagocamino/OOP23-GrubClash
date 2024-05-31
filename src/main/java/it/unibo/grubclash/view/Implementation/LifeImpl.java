@@ -1,11 +1,12 @@
 package it.unibo.grubclash.view.Implementation;
 
-import it.unibo.grubclash.controller.Implementation.Entity;
+import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanelInter;
+import it.unibo.grubclash.controller.Implementation.GrubPanel;
 import it.unibo.grubclash.controller.Implementation.Player;
-import it.unibo.grubclash.model.Implementation.GrubPanel;
+import it.unibo.grubclash.model.Implementation.Entity;
+import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 import it.unibo.grubclash.view.Application_Programming_Interface.Life;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
-import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,7 +18,7 @@ public class LifeImpl implements Life {
     BufferedImage life20, life40, life60, life80, life100;
 
     int playerCount;
-    GrubPanel grubPanel;
+    GrubPanelInter grubPanel;
     Graphics2D g2d;
     String color_game = "#EF7B10";
     private final Font snapITCFont;
@@ -37,7 +38,8 @@ public class LifeImpl implements Life {
         getImage();
     }
 
-    @Override public void draw(Graphics2D g2d){
+    @Override 
+    public void draw(Graphics2D g2d){
         
         this.g2d = g2d;
         g2d.setFont(snapITCFont);
@@ -80,21 +82,25 @@ public class LifeImpl implements Life {
         }
     }
 
-    @Override public void setLife (int life) {
+    @Override 
+    public void setLife (int life) {
         this.life = life;
     }
 
-    @Override public Optional<Integer> getLife(){
+    @Override 
+    public Optional<Integer> getLife(){
         return Optional.ofNullable(this.life);
     }
 
-    @Override public void damage(){
+    @Override 
+    public void damage(){
         if(this.life > 0){
             this.life -= value;
         }
     }
 
-    @Override public void plusLife(){
+    @Override 
+    public void plusLife(){
         if(this.life < 10){
             this.life += value;
         }

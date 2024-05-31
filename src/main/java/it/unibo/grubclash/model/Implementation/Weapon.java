@@ -1,13 +1,12 @@
-package it.unibo.grubclash.controller;
+package it.unibo.grubclash.model.Implementation;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Optional;
 
 import it.unibo.grubclash.controller.Implementation.Player;
-import it.unibo.grubclash.controller.Implementation.ProjectileRoket;
-import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
-import it.unibo.grubclash.view.Implementation.EnumEntity.status;
+import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
+import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 
 public abstract class Weapon {
 

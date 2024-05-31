@@ -1,5 +1,6 @@
 package it.unibo.grubclash.view.Implementation;
 
+import it.unibo.grubclash.controller.Implementation.MapBuilder;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 
 import javax.swing.*;

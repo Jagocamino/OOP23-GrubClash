@@ -1,10 +1,10 @@
-package it.unibo.grubclash.controller;
+package it.unibo.grubclash.view.Implementation;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import it.unibo.grubclash.controller.Implementation.Entity;
-import it.unibo.grubclash.view.Implementation.EnumEntity;
-import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
+import it.unibo.grubclash.model.Implementation.Entity;
+import it.unibo.grubclash.model.Implementation.EnumEntity;
+import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 
 public abstract class Projectile extends Entity{
 

@@ -1,4 +1,4 @@
-package it.unibo.grubclash.view.Implementation;
+package it.unibo.grubclash.controller.Implementation;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -8,8 +8,9 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import it.unibo.grubclash.model.Implementation.GrubPanel;
+import it.unibo.grubclash.model.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
+import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
 
 import java.io.File;
 import java.io.IOException;

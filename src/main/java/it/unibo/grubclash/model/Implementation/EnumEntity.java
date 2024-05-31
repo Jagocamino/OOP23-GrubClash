@@ -1,6 +1,8 @@
-package it.unibo.grubclash.view.Implementation;
+package it.unibo.grubclash.model.Implementation;
 
 import java.util.Optional;
+
+import it.unibo.grubclash.controller.Implementation.MapBuilder;
 
 public class EnumEntity {
 

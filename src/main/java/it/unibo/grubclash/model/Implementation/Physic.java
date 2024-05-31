@@ -1,7 +1,7 @@
-package it.unibo.grubclash.controller.Implementation;
+package it.unibo.grubclash.model.Implementation;
 
-import it.unibo.grubclash.model.Implementation.GrubPanel;
-import it.unibo.grubclash.view.Implementation.EnumEntity.status;
+import it.unibo.grubclash.controller.Implementation.GrubPanel;
+import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 
 public class Physic {
   

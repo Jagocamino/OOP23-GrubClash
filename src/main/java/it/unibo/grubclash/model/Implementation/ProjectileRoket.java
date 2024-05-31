@@ -1,8 +1,8 @@
-package it.unibo.grubclash.controller.Implementation;
-import it.unibo.grubclash.controller.Projectile;
-import it.unibo.grubclash.view.Implementation.EnumEntity;
-import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
-import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
+package it.unibo.grubclash.model.Implementation;
+import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
+import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
+import it.unibo.grubclash.view.Implementation.Projectile;
 
 public class ProjectileRoket extends Projectile {
 
@@ -12,7 +12,7 @@ public class ProjectileRoket extends Projectile {
     private Player owner;
 
     public ProjectileRoket(int x, int y, Player owner) {
-        super(x, y, getWidthRoket(), getHeightRoket(), entities.PROJECTILE); //qui c'era entity al posto di null ma entity static non va bene rompe tutto TODO
+        super(x, y, getWidthRoket(), getHeightRoket(), entities.PROJECTILE); 
         this.owner = owner;
         gravity = false;
         Allowed.addDynamicEntity(this);
@@ -88,4 +88,5 @@ public class ProjectileRoket extends Projectile {
                 return 0;
         }
     }
+
 }

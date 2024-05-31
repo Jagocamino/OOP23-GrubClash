@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-import it.unibo.grubclash.model.Implementation.GrubPanel;
+import it.unibo.grubclash.controller.Implementation.GrubPanel;
+import it.unibo.grubclash.controller.Implementation.MapBuilder;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 
 public class UI {

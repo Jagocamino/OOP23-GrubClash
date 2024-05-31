@@ -1,11 +1,13 @@
-package it.unibo.grubclash.controller.Implementation;
+package it.unibo.grubclash.view.Implementation;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import it.unibo.grubclash.view.Implementation.EnumEntity;
-import it.unibo.grubclash.view.Implementation.EnumEntity.status;
+import it.unibo.grubclash.model.Implementation.Allowed;
+import it.unibo.grubclash.model.Implementation.Entity;
+import it.unibo.grubclash.model.Implementation.EnumEntity;
+import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 
 public class Ammo_Box extends Entity{
     

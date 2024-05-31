@@ -1,4 +1,4 @@
-package it.unibo.grubclash.controller.Implementation;
+package it.unibo.grubclash.model.Implementation;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -6,15 +6,16 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
+
+import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanelInter;
+import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
+import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 import it.unibo.grubclash.view.Implementation.ImageScalar;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
-import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
-import it.unibo.grubclash.view.Implementation.EnumEntity.status;
-import it.unibo.grubclash.model.Implementation.GrubPanel;
 
 public class Entity { //ogni entity, comprese le strutture, ha questa classe
 
-    GrubPanel grubPanel;
+    GrubPanelInter grubPanel;
 
     public int x;  //qui metterei int e non float tanto viene sempre messo (int) e come valore float non viene mai effettivamente usato
     public int y;
@@ -44,7 +45,7 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
         this.entity = entity;
     } 
 
-    public Entity (GrubPanel grubPanel) {
+    public Entity (GrubPanelInter grubPanel) {
         this.grubPanel = grubPanel;
     }
 

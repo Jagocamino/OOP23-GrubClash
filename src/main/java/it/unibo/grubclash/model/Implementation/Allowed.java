@@ -1,7 +1,10 @@
-package it.unibo.grubclash.controller.Implementation;
-import it.unibo.grubclash.view.Implementation.EnumEntity;
-import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
-import it.unibo.grubclash.view.Implementation.EnumEntity.status;
+package it.unibo.grubclash.model.Implementation;
+import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
+import it.unibo.grubclash.model.Implementation.EnumEntity.status;
+import it.unibo.grubclash.view.Implementation.Ammo_Box;
+import it.unibo.grubclash.view.Implementation.Heal;
+import it.unibo.grubclash.view.Implementation.Trap;
 
 import javax.swing.*;
 

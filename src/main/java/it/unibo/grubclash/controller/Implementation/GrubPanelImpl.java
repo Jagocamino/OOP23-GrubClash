@@ -1,4 +1,4 @@
-package it.unibo.grubclash.model.Implementation;
+package it.unibo.grubclash.controller.Implementation;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,21 +8,22 @@ import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import it.unibo.grubclash.controller.Implementation.Allowed;
-import it.unibo.grubclash.controller.Implementation.Entity;
-import it.unibo.grubclash.controller.Implementation.ItemSpawner;
-import it.unibo.grubclash.controller.Implementation.Physic;
-import it.unibo.grubclash.controller.Implementation.Player;
+
+import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanelInter;
+import it.unibo.grubclash.model.Implementation.Allowed;
+import it.unibo.grubclash.model.Implementation.Entity;
+import it.unibo.grubclash.model.Implementation.ItemSpawner;
+import it.unibo.grubclash.model.Implementation.KeyHandler;
+import it.unibo.grubclash.model.Implementation.Physic;
+import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
+import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
-import it.unibo.grubclash.view.Implementation.MapBuilder;
 import it.unibo.grubclash.view.Implementation.Menu;
 import it.unibo.grubclash.view.Implementation.UI;
-import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
-import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
 
 // Pannello di gioco
-public class GrubPanel extends JPanel implements Runnable {
+public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
 
     //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
     public FrameManager frameManager = new FrameManagerImpl();
@@ -48,13 +49,6 @@ public class GrubPanel extends JPanel implements Runnable {
     private int numAlivePlayers = 0;
     private int idOfTheWinner;
 
-    /* 
-    //Traps
-    public ArrayList<Trap> traps;
-
-    //Heals
-    public ArrayList<Heal> heals;*/
-
     //UI
     UI ui = new UI(this);
 
@@ -76,45 +70,17 @@ public class GrubPanel extends JPanel implements Runnable {
         this.numAlivePlayers = 0;
         keyHandelers = new ArrayList<>();
         Allowed.setMapBase(MapBuilder.getMapBase());
-        // chiamo itemSpawner
-        // TODO da controllare se c'è lo spazio per mettere quelle robe (spazio per player spawnpoint e item)
-        ItemSpawner.generateSpawnLocation(Allowed.getROWS(), Allowed.getCOLS(), MapBuilder.getItemNum(), MapBuilder.getEntityMatrix());
-        // alloco in dynamicEntity gli item random
 
-        // trasformo item in cielo
+        ItemSpawner.generateSpawnLocation(Allowed.getROWS(), Allowed.getCOLS(), MapBuilder.getItemNum(), MapBuilder.getEntityMatrix());
+
         Allowed.addMapBase(MapBuilder.getEntityMatrix()); //creo la matrice delle entità (20x20)
         
-
-        //ITEMSPAWNER
-        /* ItemSpawner itemSpawner = new ItemSpawner(MapBuilder.ROWS, MapBuilder.COLS, numTraps, Allowed.getLvlData());
-        ItemSpawner itemSpawner2 = new ItemSpawner(MapBuilder.ROWS, MapBuilder.COLS, numHeals, Allowed.getLvlData());
-        
-        itemSpawner.generateSpawnLocation(true);
-        itemSpawner2.generateSpawnLocation(false); */
-        
-
-        //Allowed.delateSpawnpoint(); //sostituisco i player con il cielo nella matrice 20x20, non so se metterlo TODO(da problemi di collisione)
-
-        /* itemSpawner.generateSpawnLocation(true); */
 
         players = new ArrayList<>();
         for(int i = 0; i < playerCount; i++) {
             keyHandelers.add(new KeyHandler(this));
             players.add(new Player(this, i, keyHandelers.get(i)));
         } 
-        /*traps = new ArrayList<>();*/
-        
-        /*for(int i = 0; i < numTraps; i++){
-            
-            traps.add(new Trap(this, i+1));
-        }
-
-        heals = new ArrayList<>();
-
-        for(int i = 0; i < numHeals; i++){
-            
-            heals.add(new Heal(this, i+1));
-        }*/
 
 
         this.setSize(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
@@ -122,6 +88,8 @@ public class GrubPanel extends JPanel implements Runnable {
         this.setFocusable(true);
     }
 
+    //parte il gameThread principale
+    @Override
     public void startGameThread () {
         gameThread = new Thread(this);
         gameThread.start();
@@ -215,7 +183,7 @@ public class GrubPanel extends JPanel implements Runnable {
                     for(Player p : players) {
                         if(p.isAlive()){
                             numPlayerTurn = p.getId();
-                            int numCicles = 0;   //5 cicli da 2 secondi => 10 secondi di round
+                            int numCicles = 0;   //6 cicli da 2 secondi => 12 secondi di round
                             long wait = System.nanoTime();
                             while(System.nanoTime() - wait <= 2000000000) {
                                 turnBegin = true;
@@ -271,7 +239,6 @@ public class GrubPanel extends JPanel implements Runnable {
         }else if(choice == 1){
             MapBuilder.getMapContainer().dispose();
             Thread.currentThread().interrupt();
-            // System.out.println(gameThread.isAlive());
             new Menu();
         }
     }

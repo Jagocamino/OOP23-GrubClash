@@ -1,9 +1,10 @@
-package it.unibo.grubclash.controller.Implementation;
+package it.unibo.grubclash.model.Implementation;
 
 import java.util.Random;
-import java.util.ArrayList;
 
-import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
+import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
+
+import java.util.ArrayList;
 
 public class ItemSpawner {
 
@@ -12,11 +13,9 @@ public class ItemSpawner {
         Random randomNum = new Random();
         int randX;
         int randY;
-        int saturation; // se cicla troppo, spawna anche nella stessa colonna
+        int saturation; 
         int itemsAdded = 0;
         ArrayList<Integer> list = new ArrayList<>();
-
-        System.out.println("numOfItems: " + numOfItems * 2);
 
         while (numOfItems > itemsAdded) {
             randY = randomNum.nextInt(ROWS);

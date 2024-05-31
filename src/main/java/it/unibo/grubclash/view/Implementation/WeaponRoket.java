@@ -1,7 +1,11 @@
-package it.unibo.grubclash.controller.Implementation;
+package it.unibo.grubclash.view.Implementation;
 import java.io.File;
 import java.util.Optional;
-import it.unibo.grubclash.controller.Weapon;
+
+import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.model.Implementation.Entity;
+import it.unibo.grubclash.model.Implementation.ProjectileRoket;
+import it.unibo.grubclash.model.Implementation.Weapon;
 
 public class WeaponRoket extends Weapon {
     final char FS = File.separatorChar;
