@@ -1,5 +1,6 @@
 package it.unibo.grubclash.model.Implementation;
 import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 import it.unibo.grubclash.view.Implementation.Ammo_Box;
@@ -20,10 +21,10 @@ public class Allowed {
     private static JPanel[][] mapBase;
 
     public static Entity[][] lvlData; // da cambiare in private
-    public static Entity[][] getLvlData() {
+    public static EntityInterface[][] getLvlData() {
         return Allowed.lvlData;
     }
-    public static Entity getLvlData( int i, int j) {
+    public static EntityInterface getLvlData( int i, int j) {
         return Allowed.lvlData[i][j];
     }
     public static void setLvlData(Entity[][] lvlData) {
@@ -40,7 +41,7 @@ public class Allowed {
     public static void addDynamicEntity (Entity dynamicEntity) {
         Allowed.dynamicEntities.add(dynamicEntity);
     }
-    public static void removeDynamicEntity (Entity dynamicEntity) {
+    public static void removeDynamicEntity (EntityInterface dynamicEntity) {
         Allowed.dynamicEntities.remove(dynamicEntity);
     }
 
@@ -205,14 +206,14 @@ public class Allowed {
         }
     }
 
-    public static void mapDestroyer (Entity wall) {
+    public static void mapDestroyer (EntityInterface wall) {
         int i = getI(wall).get().intValue();
         int j = getJ(wall).get().intValue();
         mapDestroyer(i, j);
     }
 
     // METTERE METODO CHE RITORNA i DATA l'entità del muro
-    public static Optional<Integer> getI (Entity entity) {
+    public static Optional<Integer> getI (EntityInterface entity) {
 
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
@@ -225,7 +226,7 @@ public class Allowed {
     }
 
     // METTERE METODO CHE RITORNA j DATA l'entità del muro
-    public static Optional<Integer> getJ (Entity entity) {
+    public static Optional<Integer> getJ (EntityInterface entity) {
 
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
@@ -283,7 +284,7 @@ public class Allowed {
         }
 
         //scorre tutte le entità in dynamicEntity per controllare le collisioni
-        for (Entity entity : Allowed.dynamicEntities) {
+        for (EntityInterface entity : Allowed.dynamicEntities) {
             if (    (
                         entity != owner && entity != owner.getWeapon().get().getRocket().get()
                     ) && (   
@@ -315,7 +316,7 @@ public class Allowed {
     }
 
     //check if entity is hittable
-    public static boolean hittable(Entity entity) {
+    public static boolean hittable(EntityInterface entity) {
         return (
             entity.getEntity() == entities.PLAYER1 ||
             entity.getEntity() == entities.PLAYER2 ||
@@ -327,7 +328,7 @@ public class Allowed {
         );
     }
 
-    public static boolean damageable (Entity entity) {
+    public static boolean damageable (EntityInterface entity) {
         return (
             entity.getEntity() == entities.PLAYER1 ||
             entity.getEntity() == entities.PLAYER2 ||
@@ -338,7 +339,7 @@ public class Allowed {
         );
     }
 
-    public static boolean isPlayer (Entity entity) {
+    public static boolean isPlayer (EntityInterface entity) {
         return (
             entity.getEntity() == entities.PLAYER1 ||
             entity.getEntity() == entities.PLAYER2 ||

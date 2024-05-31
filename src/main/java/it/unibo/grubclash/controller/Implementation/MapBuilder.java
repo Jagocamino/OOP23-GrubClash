@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import it.unibo.grubclash.controller.Application_Programming_Interface.MapBuilderInterface;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
@@ -15,7 +16,7 @@ import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
 import java.io.File;
 import java.io.IOException;
 
-public class MapBuilder extends Canvas {
+public class MapBuilder extends Canvas implements MapBuilderInterface {
 
     //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
     private static FrameManager frameManager = new FrameManagerImpl();
@@ -156,6 +157,7 @@ public class MapBuilder extends Canvas {
         }
     }
     
+    @Override
     public Color switchBackground(int i, int j, Color color) {
         // dopo primo click rimane false
         JPanel[][] mapBase = getMapBase();
@@ -210,7 +212,7 @@ public class MapBuilder extends Canvas {
         return MapBuilder.currentPlayer;
     }
 
-    public static void updateCurrentPlayer () {
+    protected static void updateCurrentPlayer () {
         if ( getCurrentPlayer() < getNumPlayers() ) {
             MapBuilder.currentPlayer++;
         }else{
@@ -218,11 +220,11 @@ public class MapBuilder extends Canvas {
         }
     }
 
-    public static void initializeCurrentPlayer () {
+    protected static void initializeCurrentPlayer () {
         MapBuilder.currentPlayer = 0;
     }
 
-    public static void initPlayerColor () {
+    private static void initPlayerColor () {
         Color[] playerColor = new Color[getNumPlayers()]; //colori che identificano i giocatori
         for (int f = 0; f < getNumPlayers(); f++) {
             switch (f) {
@@ -246,11 +248,11 @@ public class MapBuilder extends Canvas {
         MapBuilder.playerColor = playerColor;
     }
 
-    public static Color getPlayerColor (int currentPlayer) { //verrà passato tramite getCurrentPlayer();
+    private static Color getPlayerColor (int currentPlayer) { //verrà passato tramite getCurrentPlayer();
         return playerColor[currentPlayer];
     }
 
-    public static JButton createButton(int i, int j) {
+    private static JButton createButton(int i, int j) {
         final int BUTTON_WIDTH = frameManager.getWindowWidth().get() / ROWS;
         final int BUTTON_HEIGHT = frameManager.getWindowHeight().get() / COLS;
 
@@ -269,7 +271,7 @@ public class MapBuilder extends Canvas {
         return invisibleBtn; // Fa strano chiamare "invisibleBtn" l'unico bottone che fa da finish, ma non ho idee migliori
     }
 
-    public static void mapInitialization() throws IOException {
+    private static void mapInitialization() throws IOException {
         JFrame mapContainer = getMapContainer();
         JButton[][] btnMatrix = getBtnMatrix();
         JPanel[][] mapBase = getMapBase();
@@ -319,7 +321,7 @@ public class MapBuilder extends Canvas {
         mapContainer.revalidate();
     }
 
-    public static void panelBackground(JPanel[][] mapBase, int i, int j) throws IOException {
+    private static void panelBackground(JPanel[][] mapBase, int i, int j) throws IOException {
         if ( i==0 || mapBase[i-1][j].getBackground() == Color.WHITE || mapBase[i-1][j].getBackground() == Color.CYAN) {
             BufferedImage platformImg = ImageIO.read(new File("src" + FS + "main" + FS + "resources" + FS + "gameplay" + FS + "platform.png"));
             JLabel picLabel = new JLabel(new ImageIcon(platformImg));
@@ -334,7 +336,7 @@ public class MapBuilder extends Canvas {
         mapBase[i][j].add(picLabel);
     }
 
-    public static void p2Map(int btnFinishI, int btnFinishJ) {
+    private static void p2Map(int btnFinishI, int btnFinishJ) {
         JButton btnFinish = btnMatrix[btnFinishI][btnFinishJ];
         JButton[][] btnMatrix = getBtnMatrix();
 
@@ -387,6 +389,7 @@ public class MapBuilder extends Canvas {
         SwingUtilities.updateComponentTreeUI(map);
     }
 
+    @Override
     public void p1Map() {
 
         JFrame mapContainer = new JFrame();

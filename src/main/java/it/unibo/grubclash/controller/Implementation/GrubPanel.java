@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanelInter;
+import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
 import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.ItemSpawner;
@@ -71,7 +72,8 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         keyHandelers = new ArrayList<>();
         Allowed.setMapBase(MapBuilder.getMapBase());
 
-        ItemSpawner.generateSpawnLocation(Allowed.getROWS(), Allowed.getCOLS(), MapBuilder.getItemNum(), MapBuilder.getEntityMatrix());
+        ItemSpawner itSpawn = new ItemSpawner();
+        itSpawn.generateSpawnLocation(Allowed.getROWS(), Allowed.getCOLS(), MapBuilder.getItemNum(), MapBuilder.getEntityMatrix());
 
         Allowed.addMapBase(MapBuilder.getEntityMatrix()); //creo la matrice delle entità (20x20)
         
@@ -159,14 +161,13 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
     }
 
     private void deleteDynamicEntity (ArrayList<Entity> toDelete) {
-        for (Entity entity : toDelete) {
+        for (EntityInterface entity : toDelete) {
             Allowed.removeDynamicEntity(entity);
         }
         toDelete.removeAll(toDelete);
     }
 
     private void update() {
-        // TODO: RIVEDI
         new Thread(() -> {
             while(gameThread != null) {
                 for (Player player : players) {
@@ -191,7 +192,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
                             turnBegin = false;
                             this.addKeyListener(p.getKeyH());
                             int counter = 0;
-                            while(numCicles <= 5 && p.isAlive()){   //algoritmo da rivedere ma la sostanza c'è TODO 
+                            while(numCicles <= 5 && p.isAlive()){
                                 long start = System.nanoTime();
                                 while(System.nanoTime() - start <= 2000000000) {
                                     counter++;
@@ -275,7 +276,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D)g;
-        for (Entity entity : Allowed.getDynamicEntities()) {
+        for (EntityInterface entity : Allowed.getDynamicEntities()) {
             if (!Allowed.isPlayer(entity)) {
                 entity.draw(g2d);   
             }
