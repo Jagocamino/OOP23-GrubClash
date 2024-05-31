@@ -26,9 +26,9 @@ public class Player extends Entity{
     private int speed;
     private orientation direction;
     private Optional<Weapon> weapon;
-    private boolean alreadyShot = false;
-    private boolean alreadyDug = false;
-    private boolean shovelAnimation = false;
+    public boolean alreadyShot = false;
+    public boolean alreadyDug = false;
+    public boolean shovelAnimation = false;
 
     public Player(GrubPanelImpl grubPanel, int id, KeyHandler keyH) {
 
