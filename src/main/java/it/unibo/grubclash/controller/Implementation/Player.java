@@ -30,7 +30,7 @@ public class Player extends Entity{
     public boolean alreadyDug = false;
     public boolean shovelAnimation = false;
 
-    public Player(GrubPanelImpl grubPanel, int id, KeyHandler keyH) {
+    public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
 
         super(grubPanel);
         this.life= new LifeImpl(grubPanel,this);
