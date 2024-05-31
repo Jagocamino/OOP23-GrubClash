@@ -7,10 +7,9 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import java.util.Random;
-
 import it.unibo.grubclash.controller.Implementation.Allowed;
 import it.unibo.grubclash.controller.Implementation.Entity;
+import it.unibo.grubclash.controller.Implementation.ItemSpawner;
 import it.unibo.grubclash.controller.Implementation.Physic;
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
@@ -78,7 +77,7 @@ public class GrubPanel extends JPanel implements Runnable {
         Allowed.setMapBase(MapBuilder.getMapBase());
         // chiamo itemSpawner
         // TODO da controllare se c'è lo spazio per mettere quelle robe (spazio per player spawnpoint e item)
-        generateSpawnLocation(Allowed.getROWS(), Allowed.getCOLS(), MapBuilder.getItemNum(), MapBuilder.getEntityMatrix());
+        ItemSpawner.generateSpawnLocation(Allowed.getROWS(), Allowed.getCOLS(), MapBuilder.getItemNum(), MapBuilder.getEntityMatrix());
         // alloco in dynamicEntity gli item random
 
         // trasformo item in cielo
@@ -125,31 +124,6 @@ public class GrubPanel extends JPanel implements Runnable {
     public void startGameThread () {
         gameThread = new Thread(this);
         gameThread.start();
-    }
-
-    public void generateSpawnLocation (int ROWS, int COLS, int numOfItems, entities[][] entityMatrix) { // mette dentro entityMatrix[][] ITEM, dentro grubpanel verranno cambiati
-        Random randomNum = new Random();
-        int randX;
-        int randY;
-        ArrayList<Integer> list = new ArrayList<>();
-        while (numOfItems > 0) {
-            randY = randomNum.nextInt(ROWS);
-            do {
-                randX = randomNum.nextInt(COLS);
-            } while (alreadyInCol(randX, list) == true);
-            if (entityMatrix[randY][randX] == entities.SKY) {
-                entityMatrix[randY][randX] = entities.ITEM;
-                list.add(randX);
-                numOfItems--;
-            }
-        }
-    }
-
-    private boolean alreadyInCol (int randX, ArrayList<Integer> list) {
-        for (Integer element : list) {
-            return (Integer.valueOf(element) == randX);
-        } 
-        return false;
     }
 
     //metodo "delta" per creare un game loop
