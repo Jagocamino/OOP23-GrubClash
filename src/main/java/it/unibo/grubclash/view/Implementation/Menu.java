@@ -58,17 +58,46 @@ public class Menu extends JFrame{
 
         // Evento scatenato al click del bottone
         playButton.addActionListener(e -> {
-            Object player = playerSelect.getSelectedItem();
-            int playerCount=0;
-            if (player != null) {
-                playerCount = (int) player;
-            }
-            else{
-                System.out.println("Errore nella selezione del player");
-                System.exit(1);
-            }
+
             frameMenu.dispose();
-            new MapBuilder(playerCount);
+            JFrame frameMappa = new JFrame();
+            frameMappa.setTitle("GrubClash");
+            frameMappa.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frameMappa.setSize(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
+            frameMappa.setResizable(false);
+            frameMappa.setLayout(new BorderLayout());
+
+            final JPanel panelMappa = new JPanel();
+
+            ImageIcon mappa = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "grubRules.png");
+            JLabel mappa_label = new JLabel(mappa);
+
+
+            final JButton play2 = new JButton("Prova");
+            playButton.setBounds(0,0, 500, 500);
+
+            panelMappa.add(play2);
+            panelMappa.add(mappa_label);
+
+            frameMappa.add(panelMappa);
+            frameMappa.setVisible(true);
+
+
+            play2.addActionListener(b ->{
+                frameMappa.dispose();
+                Object player = playerSelect.getSelectedItem();
+                int playerCount=0;
+                if (player != null) {
+                    playerCount = (int) player;
+                }
+                else{
+                    System.out.println("Errore nella selezione del player");
+                    System.exit(1);
+                }
+                new MapBuilder(playerCount);
+
+            });
+
         });
 
         // Effetto sul bottone al passaggio del mouse
