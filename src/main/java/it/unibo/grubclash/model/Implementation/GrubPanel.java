@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,6 +16,7 @@ import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
 import it.unibo.grubclash.view.Implementation.MapBuilder;
+import it.unibo.grubclash.view.Implementation.Menu;
 import it.unibo.grubclash.view.Implementation.UI;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
@@ -248,7 +250,8 @@ public class GrubPanel extends JPanel implements Runnable {
     }
 
     private void gameFinished() {
-        /* Object[] options = {"Esci", "Ricomincia"};
+        gameThread = null;
+        Object[] options = {"Esci", "Ricomincia"};
         int choice = JOptionPane.showOptionDialog(null, "Congratulazioni!\n Il giocatore numero " + idOfTheWinner + " ha vinto!",
             "VITTORIA", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
             new ImageIcon("src" + FrameManagerImpl.FS + "main" + FrameManagerImpl.FS + "resources" + FrameManagerImpl.FS + "players" + FrameManagerImpl.FS + "player0" + FrameManagerImpl.FS + "Grub_pl_0_stand_1.png"),
@@ -258,11 +261,11 @@ public class GrubPanel extends JPanel implements Runnable {
         }else if(choice == 1){
             MapBuilder.getMapContainer().dispose();
             Thread.currentThread().interrupt();
-            System.out.println(gameThread.isAlive());
+            // System.out.println(gameThread.isAlive());
             new Menu();
-        } */   //TODO primo giocatore quando ricominci viene spawnato in alto a sx
-        frameManager.showMessageBox("VITTORIA", "Congratulazioni!\n Il giocatore numero " + idOfTheWinner + " ha vinto!", JOptionPane.OK_OPTION);
-        System.exit(0);
+        }  //TODO primo giocatore quando ricominci viene spawnato in alto a sx
+        /* frameManager.showMessageBox("VITTORIA", "Congratulazioni!\n Il giocatore numero " + idOfTheWinner + " ha vinto!", JOptionPane.OK_OPTION);
+        System.exit(0); */
     }
 
     private void resetVariables(Player p){

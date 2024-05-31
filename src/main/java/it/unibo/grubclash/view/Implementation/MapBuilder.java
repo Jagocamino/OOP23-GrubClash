@@ -106,14 +106,11 @@ public class MapBuilder extends Canvas {
         setNumPlayers(playerCount);
         MapBuilder.entityMatrix = new EnumEntity.entities[ROWS][COLS];
         mapDrawer = false;
+        p1Map();
     }
 
     public static boolean getMapDrawer () {
         return mapDrawer;
-    }
-
-    public static void setMapDrawer (boolean bool) {
-        mapDrawer = bool;
     }
 
     public static void updateMapDrawer () {
@@ -304,6 +301,7 @@ public class MapBuilder extends Canvas {
                 mapBase[i][j].repaint();
             }
         }
+        initializeCurrentPlayer();
         createPlayableLayer();
     }
 
@@ -346,7 +344,7 @@ public class MapBuilder extends Canvas {
             for(int j = 0; j < COLS; j++){
                 final int finalI = i;
                 final int finalJ = j;
-                if(btnMatrix[i][j] == btnFinish) { //if(è nel bottone finish, ovvero quello dello switch della fase)
+                if(btnMatrix[i][j] == btnFinish) {
                     frameManager.showMessageBox("Messaggio", "Seleziona dove posizionare il primo giocatore e premi il botttone finish, fai così per tutti i vari giocatori", JOptionPane.INFORMATION_MESSAGE);
                     btnFinish.addActionListener(o -> {
                         if (getCurrentPlayer() == getNumPlayers() - 1 && getColorSpawnpoint() == true) {

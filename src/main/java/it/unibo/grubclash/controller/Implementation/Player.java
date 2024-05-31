@@ -130,36 +130,45 @@ public class Player extends Entity{
                         if( !Allowed.meleeAttack(x, y + height, width, height, this).equals(Optional.empty()) || 
                             !Allowed.CanMoveThere(x, y + height, width, height)){
                             Allowed.applyDamage(Allowed.dealDamage(x, y + height, width, height), 1);
+                            System.out.println("scavato down");
+                            alreadyDug = true;
                         }
                         break;
                     case LEFT:
                         if( !Allowed.meleeAttack(x - width - 5, y, width, height, this).equals(Optional.empty()) || 
                             !Allowed.CanMoveThere(x - width - 5, y, width, height)){
                             Allowed.applyDamage(Allowed.dealDamage(x - width - 5, y, width, height), 1);
+                            System.out.println("scavato left");
+                            alreadyDug = true;
                         }
                         break;
                     case RIGHT:
                         if( !Allowed.meleeAttack(x + width + 5, y, width, height, this).equals(Optional.empty()) || 
                             !Allowed.CanMoveThere(x + width + 5, y, width, height)){
                             Allowed.applyDamage(Allowed.dealDamage(x + width + 5, y, width, height), 1);
+                            System.out.println("scavato right");
+                            alreadyDug = true;
                         }
                         break;
                     case UP:
                         if( !Allowed.meleeAttack(x, y - 25, width, height - 15, this).equals(Optional.empty()) || 
                             !Allowed.CanMoveThere(x, y - 25, width, height - 15)){
                             Allowed.applyDamage(Allowed.dealDamage(x, y - 25, width, height - 15), 1);
+                            alreadyDug = true;
+                            System.out.println("scavato up1");
                         }
                         break;
                     case UP2:
                         if( !Allowed.meleeAttack(x, y - 25, width, height - 15, this).equals(Optional.empty()) || 
                             !Allowed.CanMoveThere(x, y - 25, width, height - 15)){
                             Allowed.applyDamage(Allowed.dealDamage(x, y - 25, width, height - 15), 1);
+                            System.out.println("scavato up2");
+                            alreadyDug = true;
                         }
                         break;
                     default:
                         break;
                 }
-                alreadyDug = true;
             }
             if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
                 direction = orientation.DOWN;

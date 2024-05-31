@@ -159,6 +159,7 @@ public class Allowed {
     }
 
     public static Optional<ArrayList<Entity>> meleeAttack(int xRange, int yRange, int widthRange, int heightRange, Player owner) { // restituisce una arraylist optional dei player colpiti dal melee
+        boolean empty = true;
         ArrayList<Entity> arrayList = new ArrayList<>();
         for (Entity entity : getDynamicEntities()) {
             if (entity != owner) {
@@ -176,9 +177,13 @@ public class Allowed {
                     ( yRange < entityY && yRange + heightRange >= (entityY + entityHeight)) // se è dentro
                     ) 
                 ){
-                        arrayList.add(entity);
+                    empty = false;
+                    arrayList.add(entity);
                 }   
             }
+        }
+        if (empty) {
+            return Optional.empty();
         }
         return Optional.ofNullable(arrayList);
     }

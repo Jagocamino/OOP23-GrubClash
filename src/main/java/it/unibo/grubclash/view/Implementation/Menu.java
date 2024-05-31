@@ -67,8 +67,7 @@ public class Menu extends JFrame{
                 System.exit(1);
             }
             frameMenu.dispose();
-            MapBuilder mb = new MapBuilder(playerCount);
-            mb.p1Map();
+            new MapBuilder(playerCount);
         });
 
         // Effetto sul bottone al passaggio del mouse
