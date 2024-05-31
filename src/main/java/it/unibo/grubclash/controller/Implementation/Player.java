@@ -16,24 +16,23 @@ import it.unibo.grubclash.view.Implementation.WeaponRoket;
 
 public class Player extends Entity{
 
-    final char FS = File.separatorChar;
+    private final char FS = File.separatorChar;
 
-    KeyHandler keyH;
+    private KeyHandler keyH;
 
-    public BufferedImage stand1, stand2, left1, left2, right1, right2, jump1, jump2, jump3, death;
+    private BufferedImage stand1, stand2, left1, left2, right1, right2, jump1, jump2, jump3, death;
 
     private int id;
-    public int speed;
+    private int speed;
     private orientation direction;
     private Optional<Weapon> weapon;
-    public boolean alreadyShot = false;
-    public boolean alreadyDug = false;
-    public boolean shovelAnimation = false;
+    private boolean alreadyShot = false;
+    private boolean alreadyDug = false;
+    private boolean shovelAnimation = false;
 
-    public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
+    public Player(GrubPanelImpl grubPanel, int id, KeyHandler keyH) {
 
         super(grubPanel);
-
         this.life= new LifeImpl(grubPanel,this);
 
         this.keyH = keyH;
