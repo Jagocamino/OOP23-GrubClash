@@ -16,6 +16,7 @@ import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.ItemSpawner;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
 import it.unibo.grubclash.model.Implementation.Physic;
+import it.unibo.grubclash.model.Implementation.Sound;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
@@ -62,6 +63,10 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
 
     //VARIABLES
     public boolean turnBegin = false;
+
+    //MUSIC AND SFX
+    Sound music = new Sound();
+    Sound soundEffect = new Sound();
 
 
     public GrubPanel(int playerCount) {
@@ -219,6 +224,19 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         }).start();
     }
 
+    public void playMusic(int i){
+        music.setFile(i);
+        music.play();
+        music.loop();
+    }
+    public void stopMusic(){
+        music.stop();
+    }
+    public void playSoundEffect(int i){
+        soundEffect.setFile(i);
+        soundEffect.play();
+    }
+
     private void gameFinished(boolean win) {
         gameThread = null;
         Object[] options = {"Esci", "Ricomincia"};
@@ -261,6 +279,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         p.alreadyDug = false;
         p.shovelAnimation = false;
         p.shovelCounter = 0;
+        p.cooldownDig = false;
     }
 
     private void updatePhysic() {

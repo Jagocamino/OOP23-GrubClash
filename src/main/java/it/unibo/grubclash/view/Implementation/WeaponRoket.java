@@ -35,7 +35,6 @@ public class WeaponRoket extends Weapon implements WeaponType {
         }
         setShootingDir(getOwner().getDirection());
         reduceAmmo();
-        System.out.println(getAmmo());
         rocket = Optional.of(new ProjectileRoket(getOwner().getX(), getOwner().getY(), getOwner()));
         return rocket;
         

@@ -31,6 +31,7 @@ public class Player extends Entity{
     public boolean alreadyDug = false;
     public boolean shovelAnimation = false;
     public int shovelCounter = 0;
+    public boolean cooldownDig = false;
 
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
 
@@ -135,14 +136,15 @@ public class Player extends Entity{
                 keyH.shootPressed = false;
                 alreadyShot = true;
             }
-            if(keyH.shovelPressed && !alreadyDug){
+            if(keyH.shovelPressed && !alreadyDug && !cooldownDig){
                 shovelAnimation = true;
+                cooldownDig = true;
+                grubPanel.playSoundEffect(1);
                 switch(this.direction){
                     case DOWN: 
                         if( !Allowed.meleeAttack(x, y + height, width, height, this).equals(Optional.empty()) || 
                             !Allowed.CanMoveThere(x, y + height, width, height)){
                             Allowed.applyDamage(Allowed.dealDamage(x, y + height, width, height), 1);
-                            System.out.println("scavato down");
                             alreadyDug = true;
                         }
                         break;
@@ -150,7 +152,6 @@ public class Player extends Entity{
                         if( !Allowed.meleeAttack(x - width - 5, y, width, height, this).equals(Optional.empty()) || 
                             !Allowed.CanMoveThere(x - width - 5, y, width, height)){
                             Allowed.applyDamage(Allowed.dealDamage(x - width - 5, y, width, height), 1);
-                            System.out.println("scavato left");
                             alreadyDug = true;
                         }
                         break;
@@ -158,7 +159,6 @@ public class Player extends Entity{
                         if( !Allowed.meleeAttack(x + width + 5, y, width, height, this).equals(Optional.empty()) || 
                             !Allowed.CanMoveThere(x + width + 5, y, width, height)){
                             Allowed.applyDamage(Allowed.dealDamage(x + width + 5, y, width, height), 1);
-                            System.out.println("scavato right");
                             alreadyDug = true;
                         }
                         break;
@@ -167,14 +167,12 @@ public class Player extends Entity{
                             !Allowed.CanMoveThere(x, y - 25, width, height - 15)){
                             Allowed.applyDamage(Allowed.dealDamage(x, y - 25, width, height - 15), 1);
                             alreadyDug = true;
-                            System.out.println("scavato up1");
                         }
                         break;
                     case UP2:
                         if( !Allowed.meleeAttack(x, y - 25, width, height - 15, this).equals(Optional.empty()) || 
                             !Allowed.CanMoveThere(x, y - 25, width, height - 15)){
                             Allowed.applyDamage(Allowed.dealDamage(x, y - 25, width, height - 15), 1);
-                            System.out.println("scavato up2");
                             alreadyDug = true;
                         }
                         break;
@@ -193,6 +191,7 @@ public class Player extends Entity{
                 if(shovelCounter > 10){
                     shovelCounter = 0;
                     shovelAnimation = false;
+                    cooldownDig = false;
                 }
             }
             weapon.get().setWeaponDir(direction);
@@ -226,7 +225,6 @@ public class Player extends Entity{
                 case LEFT:
                 if(shovelAnimation){
                     image = shovelLeft;
-                    //x -= width + 13;
                 }else{
                     if(spriteNum == 1){image = left1;}
                     if(spriteNum == 2){image = left2;}
@@ -255,7 +253,6 @@ public class Player extends Entity{
                 case UP:
                 if(shovelAnimation){
                     image = shovelUp;
-                    //y -= height + 13;
                 }else{
                     image = jump1;
                 }
@@ -263,7 +260,6 @@ public class Player extends Entity{
                 case UP2:
                 if(shovelAnimation){
                     image = shovelUp;
-                    //y -= height + 13;
                 }else{
                     image = jump2;
                 }
