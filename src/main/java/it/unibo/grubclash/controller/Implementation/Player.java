@@ -21,6 +21,7 @@ public class Player extends Entity{
     private KeyHandler keyH;
 
     private BufferedImage stand1, stand2, left1, left2, right1, right2, jump1, jump2, jump3, death;
+    private BufferedImage shovelUp, shovelDown, shovelLeft, shovelRight;
 
     private int id;
     private int speed;
@@ -29,6 +30,7 @@ public class Player extends Entity{
     public boolean alreadyShot = false;
     public boolean alreadyDug = false;
     public boolean shovelAnimation = false;
+    public int shovelCounter = 0;
 
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
 
@@ -48,6 +50,7 @@ public class Player extends Entity{
         setEntity(EnumEntity.idToEntitiesConverter(id).get());
         Allowed.addDynamicEntity(this);
         getImage(id);
+        getShovelImage(id);
     }
 
     private void getImage(int playerId){ //parametro con numero del giocatore es : if(player == 1) => getImage del player1
@@ -62,6 +65,14 @@ public class Player extends Entity{
         jump2 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", this.width+13, this.height+13);
         jump3 = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player0" + FS + "Grub_pl_0" + "_jump_2.png", this.width+13, this.height+13);
         death = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "death.png", this.width+13, this.height+13);
+    }
+
+    private void getShovelImage(int playerId){
+
+        shovelDown = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_stand_1_shovel.png", this.width+13, 2 * (this.height+13));
+        shovelUp = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_jump_shovel.png", this.width+13, this.height*2 + 2);
+        shovelLeft = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_left_1_shovel.png", this.width + 25, this.height+13);
+        shovelRight = setup("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player" + id + FS + "Grub_pl_" + id + "_right_1_shovel.png", 2 * (this.width+13), this.height+13);
     }
 
     @Override
@@ -172,13 +183,19 @@ public class Player extends Entity{
                     default:
                         break;
                 }
-                shovelAnimation = false;
             }
             if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
                 direction = orientation.DOWN;
             }
             if(this.life.getLife().get() <= 0){
                 this.working = status.DEAD;
+            }
+            if(shovelAnimation){
+                shovelCounter++;
+                if(shovelCounter > 10){
+                    shovelCounter = 0;
+                    shovelAnimation = false;
+                }
             }
             weapon.get().setWeaponDir(direction);
         }
@@ -209,26 +226,49 @@ public class Player extends Entity{
 
             switch(direction){
                 case LEFT:
+                if(shovelAnimation){
+                    image = shovelLeft;
+                    //x -= width + 13;
+                }else{
                     if(spriteNum == 1){image = left1;}
                     if(spriteNum == 2){image = left2;}
+                }
                 break;
                 case RIGHT:
+                if(shovelAnimation){
+                    image = shovelRight;
+                }else{
                     if(spriteNum == 1){image = right1;}
                     if(spriteNum == 2){image = right2;}
+                }
                 break;
                 case DOWN:
+                if(shovelAnimation){
+                    image = shovelDown;
+                }else{
                     if(!isFalling){
                         if(spriteNum == 1){image = stand1;}
                         if(spriteNum == 2){image = stand2;}
                     }else{
                         image = jump3;
                     }
+                }
                 break;
                 case UP:
+                if(shovelAnimation){
+                    image = shovelUp;
+                    //y -= height + 13;
+                }else{
                     image = jump1;
+                }
                 break;
                 case UP2:
+                if(shovelAnimation){
+                    image = shovelUp;
+                    //y -= height + 13;
+                }else{
                     image = jump2;
+                }
                 break;
                 }
                 

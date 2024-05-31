@@ -259,6 +259,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         p.alreadyShot = false;
         p.alreadyDug = false;
         p.shovelAnimation = false;
+        p.shovelCounter = 0;
     }
 
     private void updatePhysic() {
