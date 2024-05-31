@@ -5,10 +5,11 @@ import java.awt.image.BufferedImage;
 import java.util.Optional;
 
 import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.model.Application_Programming_Interface.WeaponInterface;
 import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 
-public abstract class Weapon {
+public abstract class Weapon implements WeaponInterface {
 
     private Player owner;
     private int ammo;
@@ -28,39 +29,49 @@ public abstract class Weapon {
         this.weaponDir = owner.getDirection();
     }
 
+    @Override
     public void setWeaponDir(orientation weaponDir) {
         this.weaponDir = weaponDir;
     }
 
+    @Override
     public orientation getShootingDir() {
         return shootingDir;
     }
+    @Override
     public void setShootingDir(orientation shootingDir) {
         this.shootingDir = shootingDir;
     }
 
+    @Override
     public Player getOwner() {
         return this.owner;
     }
 
+    @Override
     public void setOwner(Player owner) {
         this.owner = owner;
     }
 
+    @Override
     public void setAmmo(int ammo) {
         this.ammo = ammo;
     }
 
+    @Override
     public int getAmmo() {
         return this.ammo;
     }
 
+    @Override
     public void reduceAmmo() {
         this.ammo--;
     }
 
+    @Override
     public void refillAmmo(){}
 
+    @Override
     public void draw(Graphics2D g2d){
         
         BufferedImage image = null;
@@ -92,8 +103,10 @@ public abstract class Weapon {
         }
     } 
 
+    @Override
     public Optional<ProjectileRoket> shoot(){return Optional.empty();}
 
+    @Override
     public Optional<ProjectileRoket> getRocket() {
         return rocket;
     }

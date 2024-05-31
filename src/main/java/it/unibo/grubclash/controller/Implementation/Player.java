@@ -90,9 +90,7 @@ public class Player extends Entity{
                     x+=speed;
                 }
             }
-
-            // TODO non è vero è un'idea bellissima non ci provare aojhfgioagionaboigkahjnèoiaghnèosighè
-            //TODO togliere la possibilità di saltare mentre si è in aria (bugga anche la fisica(accelerazione di gravità continua ad aumentare))
+            
             if(keyH.spacePressed){  //aggiungi "&& canJump" per effetto palleggio
                 direction = orientation.UP;
                 canMove = false;

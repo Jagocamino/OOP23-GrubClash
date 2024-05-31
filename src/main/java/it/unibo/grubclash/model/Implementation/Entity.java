@@ -8,12 +8,13 @@ import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 
 import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanelInter;
+import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 import it.unibo.grubclash.view.Implementation.ImageScalar;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
 
-public class Entity { //ogni entity, comprese le strutture, ha questa classe
+public class Entity implements EntityInterface { //ogni entity, comprese le strutture, ha questa classe
 
     GrubPanelInter grubPanel;
 
@@ -49,40 +50,50 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
         this.grubPanel = grubPanel;
     }
 
+    @Override
     public void update(){}
 
+    @Override
     public int getX () {
         return x;
     }
 
+    @Override
     public int getY () {
         return y;
     }
 
+    @Override
     public void setX (int x) {
         this.x = x;
     }
 
+    @Override
     public void setY (int y) {
         this.y = y;
     }
 
+    @Override
     public int getWidth() {
         return width;
     }
 
+    @Override
     public int getHeight() {
         return height;
     }
 
+    @Override
     public entities getEntity () {
         return this.entity;
     }
     
+    @Override
     public void setEntity (entities entity) {
         this.entity = entity;
     }
 
+    @Override
     public boolean isAlive() {
         if (working == status.ALIVE) {
             return true;
@@ -118,6 +129,7 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
         return image;
     }
 
+    @Override
     public void draw(Graphics2D g2d) {
         
     }

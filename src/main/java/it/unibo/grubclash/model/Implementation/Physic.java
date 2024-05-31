@@ -12,7 +12,6 @@ public class Physic {
     }
 
     public void checkTerrain(Entity entity){
-        //TODO caduta accelerata
         if(Allowed.CanMoveThere(entity.x, entity.y+entity.gravityAcceleration, entity.width, entity.height)){
             entity.gravityCounter++;
             entity.y+=entity.gravityAcceleration;

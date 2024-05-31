@@ -2,13 +2,14 @@ package it.unibo.grubclash.model.Implementation;
 
 import java.util.Random;
 
+import it.unibo.grubclash.model.Application_Programming_Interface.ItemSpawnerInterface;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 
 import java.util.ArrayList;
 
-public class ItemSpawner {
+public class ItemSpawner implements ItemSpawnerInterface {
 
-    public static void generateSpawnLocation (int ROWS, int COLS, int numOfItems, entities[][] entityMatrix) { // mette dentro entityMatrix[][] ITEM, dentro grubpanel verranno cambiati
+    public void generateSpawnLocation (int ROWS, int COLS, int numOfItems, entities[][] entityMatrix) { // mette dentro entityMatrix[][] ITEM, dentro grubpanel verranno cambiati
         
         Random randomNum = new Random();
         int randX;

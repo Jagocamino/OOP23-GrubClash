@@ -1,10 +1,12 @@
 package it.unibo.grubclash.model.Implementation;
 import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
+import it.unibo.grubclash.model.Application_Programming_Interface.ProjectileType;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.view.Implementation.Projectile;
 
-public class ProjectileRoket extends Projectile {
+public class ProjectileRoket extends Projectile implements ProjectileType {
 
     private int dmgRadius = 50;
     private static int widthRoket = 10;
@@ -18,6 +20,7 @@ public class ProjectileRoket extends Projectile {
         Allowed.addDynamicEntity(this);
     }   
 
+    @Override
     public Player getOwner() {
         return owner;
     }
@@ -66,7 +69,7 @@ public class ProjectileRoket extends Projectile {
     }
 
     private void explosionHappening () {
-        Entity damage = damage(dmgRadius);
+        EntityInterface damage = damage(dmgRadius);
         Allowed.applyDamage(Allowed.dealDamage(damage.getX(), damage.getY(), damage.getWidth(), damage.getHeight()), 2);
         this.working = EnumEntity.status.DEAD;
     }
