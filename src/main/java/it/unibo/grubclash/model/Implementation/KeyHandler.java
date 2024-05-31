@@ -3,14 +3,15 @@ package it.unibo.grubclash.model.Implementation;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanelInter;
+import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanel;
+import it.unibo.grubclash.controller.Implementation.GrubPanelImpl;
 
 public class KeyHandler implements KeyListener {
 
-    GrubPanelInter grubPanel;
+    GrubPanelImpl grubPanel;
     public boolean leftPressed, rightPressed, spacePressed, shootPressed, shovelPressed;
 
-    public KeyHandler(GrubPanelInter grubPanel){
+    public KeyHandler(GrubPanelImpl grubPanel){
         this.grubPanel = grubPanel;
     }
 
