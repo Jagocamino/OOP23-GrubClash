@@ -57,7 +57,7 @@ public class UI {
 
         if(grubPanel.turnBegin){
             g2d.setFont(snapITCFont.deriveFont(40f));
-            g2d.drawString("STA PER INIZIARE IL TURNO DI: " + grubPanel.numPlayerTurn, frameManager.getWindowWidth().get()/4, frameManager.getWindowHeight().get()/4);
+            g2d.drawString("STA PER INIZIARE IL TURNO DI: " + (grubPanel.numPlayerTurn + 1), frameManager.getWindowWidth().get()/4, frameManager.getWindowHeight().get()/4);
         }
     }
 
