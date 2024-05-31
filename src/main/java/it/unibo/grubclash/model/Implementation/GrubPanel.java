@@ -20,7 +20,6 @@ import it.unibo.grubclash.view.Implementation.Menu;
 import it.unibo.grubclash.view.Implementation.UI;
 import it.unibo.grubclash.view.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.view.Implementation.EnumEntity.orientation;
-import it.unibo.grubclash.view.Implementation.EnumEntity.status;
 
 // Pannello di gioco
 public class GrubPanel extends JPanel implements Runnable {
@@ -203,7 +202,7 @@ public class GrubPanel extends JPanel implements Runnable {
         new Thread(() -> {
             while(gameThread != null) {
                 for (Player player : players) {
-                    if(player.working == status.ALIVE){
+                    if(player.isAlive()){
                         numAlivePlayers++;
                         idOfTheWinner = player.getId();
                     }
@@ -212,7 +211,7 @@ public class GrubPanel extends JPanel implements Runnable {
                     gameFinished();
                 }else{
                     for(Player p : players) {
-                        if(p.working == status.ALIVE){
+                        if(p.isAlive()){
                             numPlayerTurn = p.getId();
                             int numCicles = 0;   //5 cicli da 2 secondi => 10 secondi di round
                             long wait = System.nanoTime();
@@ -222,7 +221,7 @@ public class GrubPanel extends JPanel implements Runnable {
                             turnBegin = false;
                             this.addKeyListener(p.getKeyH());
                             int counter = 0;
-                            while(numCicles <= 5 && p.working == status.ALIVE){   //algoritmo da rivedere ma la sostanza c'è TODO 
+                            while(numCicles <= 5 && p.isAlive()){   //algoritmo da rivedere ma la sostanza c'è TODO 
                                 long start = System.nanoTime();
                                 while(System.nanoTime() - start <= 2000000000) {
                                     counter++;
@@ -283,6 +282,7 @@ public class GrubPanel extends JPanel implements Runnable {
         p.canMove = true;
         p.alreadyShot = false;
         p.alreadyDug = false;
+        p.shovelAnimation = false;
     }
 
     private void updatePhysic() {

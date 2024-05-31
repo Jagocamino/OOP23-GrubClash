@@ -25,9 +25,9 @@ public class Entity { //ogni entity, comprese le strutture, ha questa classe
     public boolean gravity = true;
     public int gravityAcceleration = 2;
     public int gravityCounter = 0;
-    public boolean canJump = true;
-    public status working = status.ALIVE;
+    public boolean isFalling = true;
 
+    public status working = status.ALIVE;
 
     public LifeImpl life; //da rivedere TODO
 

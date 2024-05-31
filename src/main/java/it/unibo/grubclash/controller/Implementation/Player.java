@@ -26,6 +26,7 @@ public class Player extends Entity{
     private Optional<Weapon> weapon;
     public boolean alreadyShot = false;
     public boolean alreadyDug = false;
+    public boolean shovelAnimation = false;
 
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
 
@@ -65,7 +66,7 @@ public class Player extends Entity{
     @Override
     public void update() {
 
-        if(this.working == status.ALIVE){
+        if(this.isAlive()){
             spriteCounter++;
             if(spriteCounter > 12){
                 if(spriteNum == 1){
@@ -125,6 +126,7 @@ public class Player extends Entity{
                 alreadyShot = true;
             }
             if(keyH.shovelPressed && !alreadyDug){
+                shovelAnimation = true;
                 switch(this.direction){
                     case DOWN: 
                         if( !Allowed.meleeAttack(x, y + height, width, height, this).equals(Optional.empty()) || 
@@ -169,6 +171,7 @@ public class Player extends Entity{
                     default:
                         break;
                 }
+                shovelAnimation = false;
             }
             if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
                 direction = orientation.DOWN;
@@ -201,7 +204,7 @@ public class Player extends Entity{
         
         BufferedImage image = death;
 
-        if(this.working == status.ALIVE){
+        if(this.isAlive()){
 
             switch(direction){
                 case LEFT:
@@ -213,15 +216,18 @@ public class Player extends Entity{
                     if(spriteNum == 2){image = right2;}
                 break;
                 case DOWN:
-                    if(spriteNum == 1){image = stand1;}
-                    if(spriteNum == 2){image = stand2;}
+                    if(!isFalling){
+                        if(spriteNum == 1){image = stand1;}
+                        if(spriteNum == 2){image = stand2;}
+                    }else{
+                        image = jump3;
+                    }
                 break;
                 case UP:
                     image = jump1;
                 break;
                 case UP2:
-                    if(keyH.leftPressed){image = jump3;}
-                    else {image = jump2;}
+                    image = jump2;
                 break;
                 }
                 

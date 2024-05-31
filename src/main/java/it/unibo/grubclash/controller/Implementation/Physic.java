@@ -20,10 +20,10 @@ public class Physic {
                 entity.gravityAcceleration++;
                 entity.gravityCounter = 0;
             }
-            entity.canJump = false;
+            entity.isFalling = true;
         }else{
-            entity.canJump = true;
-            entity.gravityAcceleration = 0;
+            entity.isFalling = false;
+            entity.gravityAcceleration = 2;
             entity.gravityCounter = 0;
             if(entity.y >= grubPanel.frameManager.getWindowHeight().get()-40){
                 entity.working = status.DEAD;
