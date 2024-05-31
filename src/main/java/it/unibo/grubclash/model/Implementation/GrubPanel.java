@@ -208,7 +208,9 @@ public class GrubPanel extends JPanel implements Runnable {
                     }
                 }
                 if(numAlivePlayers == 1){
-                    gameFinished();
+                    gameFinished(true);
+                }else if(numAlivePlayers == 0){
+                    gameFinished(false);
                 }else{
                     for(Player p : players) {
                         if(p.isAlive()){
@@ -248,13 +250,22 @@ public class GrubPanel extends JPanel implements Runnable {
         }).start();
     }
 
-    private void gameFinished() {
+    private void gameFinished(boolean win) {
         gameThread = null;
         Object[] options = {"Esci", "Ricomincia"};
-        int choice = JOptionPane.showOptionDialog(null, "Congratulazioni!\n Il giocatore numero " + idOfTheWinner + " ha vinto!",
+        int choice;
+        if(win){
+            choice = JOptionPane.showOptionDialog(null, "Congratulazioni!\n Il giocatore numero " + idOfTheWinner + " ha vinto!",
             "VITTORIA", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
             new ImageIcon("src" + FrameManagerImpl.FS + "main" + FrameManagerImpl.FS + "resources" + FrameManagerImpl.FS + "players" + FrameManagerImpl.FS + "player0" + FrameManagerImpl.FS + "Grub_pl_0_stand_1.png"),
             options, options[0]);
+        }
+        else{
+            choice = JOptionPane.showOptionDialog(null, "NESSUN GIOCATORE HA VINTO LA PARTITA! ",
+            "ENDGAME", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
+            new ImageIcon("src" + FrameManagerImpl.FS + "main" + FrameManagerImpl.FS + "resources" + FrameManagerImpl.FS + "players" + FrameManagerImpl.FS + "player0" + FrameManagerImpl.FS + "Grub_pl_0_stand_1.png"),
+            options, options[0]);
+        }
         if(choice == 0){
             System.exit(0);
         }else if(choice == 1){
@@ -262,9 +273,7 @@ public class GrubPanel extends JPanel implements Runnable {
             Thread.currentThread().interrupt();
             // System.out.println(gameThread.isAlive());
             new Menu();
-        }  //TODO primo giocatore quando ricominci viene spawnato in alto a sx
-        /* frameManager.showMessageBox("VITTORIA", "Congratulazioni!\n Il giocatore numero " + idOfTheWinner + " ha vinto!", JOptionPane.OK_OPTION);
-        System.exit(0); */
+        }
     }
 
     private void resetVariables(Player p){

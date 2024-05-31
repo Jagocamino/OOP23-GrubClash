@@ -376,12 +376,13 @@ public class MapBuilder extends Canvas {
                                 }
                                 updateCurrentPlayer();
                             }
-                            initColorSpawnpoint();
                         }
+                        initColorSpawnpoint();
                     });
                 }
             }
         }
+        
         SwingUtilities.updateComponentTreeUI(map);
     }
 
