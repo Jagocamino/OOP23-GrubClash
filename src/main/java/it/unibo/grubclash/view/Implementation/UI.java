@@ -43,7 +43,7 @@ public class UI {
 
     private void drawPlayerTurn() {
         
-        g2d.drawString("TURNO DEL GIOCATORE N\u00B0: " + grubPanel.numPlayerTurn, frameManager.getWindowWidth().get()/3, 45);
+        g2d.drawString("TURNO DEL GIOCATORE N\u00B0: " + (grubPanel.numPlayerTurn + 1) , frameManager.getWindowWidth().get()/3, 45);
         g2d.drawRect(MapBuilder.getXMapBase(0, 19), MapBuilder.getYMapBase(0, 19), MapBuilder.getWidthMapBase(0,19), MapBuilder.getHeightMapBase(0,19));
         g2d.setFont(snapITCFont.deriveFont(30f));
         if(grubPanel.secondsTurn < 10){

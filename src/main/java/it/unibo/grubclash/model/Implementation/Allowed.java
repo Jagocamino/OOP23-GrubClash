@@ -119,6 +119,7 @@ public class Allowed {
                 switch(t.getEntity()){
                     case TRAP: 
                         player.life.damage(); 
+                        player.life.damage();
                         t.working = status.DEAD; 
                         break;
                     case HEAL:
