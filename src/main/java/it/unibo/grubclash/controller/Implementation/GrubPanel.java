@@ -189,6 +189,8 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
                             while(System.nanoTime() - wait <= 2000000000) {
                                 turnBegin = true;
                             } //due secondi di attesa prima che inizi il turno
+                            if(p.isAlive())
+                                MapBuilder.getCh();
                             turnBegin = false;
                             this.addKeyListener(p.getKeyH());
                             int counter = 0;
@@ -295,4 +297,6 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         g2d.dispose();
 
     }
+
+    
 }

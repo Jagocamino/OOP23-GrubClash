@@ -1,6 +1,8 @@
 package it.unibo.grubclash.controller.Implementation;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -197,6 +199,35 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
             return true;
         }
         return false;
+    }
+
+    public static void getCh() {  
+        final JFrame frame = new JFrame();  
+        synchronized (frame) {  
+            frame.setUndecorated(true);  
+            frame.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);  
+            frame.addKeyListener(new KeyListener() {
+                @Override 
+                public void keyPressed(KeyEvent e) {  
+                    synchronized (frame) {  
+                        frame.setVisible(false);  
+                        frame.dispose();  
+                        frame.notify();  
+                    }  
+                }  
+                @Override 
+                public void keyReleased(KeyEvent e) {  
+                }  
+                @Override 
+                public void keyTyped(KeyEvent e) {  
+                }  
+            });  
+            frame.setVisible(true);  
+            try {  
+                frame.wait();  
+            } catch (InterruptedException e1) {  
+            }  
+        }  
     }
 
     public static void setNumPlayers ( int numPlayers ) {
