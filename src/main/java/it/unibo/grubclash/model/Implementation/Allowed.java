@@ -20,65 +20,10 @@ public class Allowed {
     private static int borderX;
     private static int borderY;
     private static JPanel[][] mapBase;
-
-    public static Entity[][] lvlData; // da cambiare in private
-    public static EntityInterface[][] getLvlData() {
-        return Allowed.lvlData;
-    }
-    public static EntityInterface getLvlData( int i, int j) {
-        return Allowed.lvlData[i][j];
-    }
-    public static void setLvlData(Entity[][] lvlData) {
-        Allowed.lvlData = lvlData;
-    }
-    public static void switchBehaviourLvlData (int i, int j,entities entity) {
-        Allowed.lvlData[i][j].setEntity(entity);
-    }
-
     private static ArrayList<Entity> dynamicEntities;
-    public static ArrayList<Entity> getDynamicEntities() {
-        return dynamicEntities;
-    }
-    public static void addDynamicEntity (Entity dynamicEntity) {
-        Allowed.dynamicEntities.add(dynamicEntity);
-    }
-    public static void removeDynamicEntity (EntityInterface dynamicEntity) {
-        Allowed.dynamicEntities.remove(dynamicEntity);
-    }
-
-    public static void delateSpawnpoint () { //prima di entrare qui è già esploso
-        for (int i = 0; i < getROWS(); i++) {
-            for (int j = 0; j < getCOLS(); j++) {
-                if (Allowed.lvlData[i][j].getEntity() == entities.PLAYER1 || Allowed.lvlData[i][j].getEntity() != entities.PLAYER2 || Allowed.lvlData[i][j].getEntity() != entities.PLAYER3 || Allowed.lvlData[i][j].getEntity() != entities.PLAYER4 || Allowed.lvlData[i][j].getEntity() != entities.PLAYER5 ) {
-                    switchBehaviourLvlData(i, j, entities.SKY);
-                }
-            }
-        }
-    }
-
-    private static ArrayList<ArrayList<Object>> a = new ArrayList<ArrayList<Object>>();
-    public static ArrayList<ArrayList<Object>> getA () {
-        return a;
-    }
-
+    private static Entity[][] lvlData;
     private static int ROWS;
-    public static int getROWS() {
-        return Allowed.ROWS;
-    }
-
     private static int COLS;
-    public static int getCOLS() {
-        return Allowed.COLS;
-    }
-
-    /*
-    addEntity mette nella matrice di entità una nuova entità, da fare controlli necessari affinché nuove entità non vadano in conflitto
-    quando il costruttore di allowed viene chiamato, devo passargli anche le const relative all numero di celle, per rendere più flessibile il codice a future implementazioni
-    */
-
-    public static entities getEntity (int i, int j) {
-        return Allowed.lvlData[i][j].getEntity();
-    }
 
     public Allowed(int borderX, int borderY, int ROWS, int COLS) { //quando creo Allowed DENTRO MAP BUILDER chiamo il costruttore e gli passo i bordi del JPanel che contiene il giochino e le righe e colonne totali
         Allowed.borderX = borderX;
@@ -89,11 +34,39 @@ public class Allowed {
         Allowed.dynamicEntities = new ArrayList<Entity>();
     }
 
+    private static EntityInterface getLvlData( int i, int j) {
+        return Allowed.lvlData[i][j];
+    }
+    
+    public static ArrayList<Entity> getDynamicEntities() {
+        return dynamicEntities;
+    }
+    public static void addDynamicEntity (Entity dynamicEntity) {
+        Allowed.dynamicEntities.add(dynamicEntity);
+    }
+    
+    public static void removeDynamicEntity (EntityInterface dynamicEntity) {
+        Allowed.dynamicEntities.remove(dynamicEntity);
+    }
+
+    public static int getROWS() {
+        return Allowed.ROWS;
+    }
+    
+    public static int getCOLS() {
+        return Allowed.COLS;
+    }
+
+    public static entities getEntity (int i, int j) {
+        return Allowed.lvlData[i][j].getEntity();
+    }
+
+    
     public static void setMapBase (JPanel[][] mapBase) {
         Allowed.mapBase = mapBase;
     }
 
-    public static void addEntity (int x, int y, int width, int height, entities entity, int i, int j) {
+    private static void addEntity (int x, int y, int width, int height, entities entity, int i, int j) {
         if (lvlData[i][j] != null ) {
             System.out.println("This box is already taken, overwriting floor or item on the map..");
         }
@@ -245,9 +218,7 @@ public class Allowed {
         return Optional.empty();
     }
     
-    //controlleremo di volta in volta i quattro angoli di questo "rettangolo"
-    //x & y sono la posizione dei giocatori
-    public static entities whatIsFacing(int x, int y) { // metti private
+    private static entities whatIsFacing(int x, int y) {
         //controlla, di quei punti dell'angolo che vengono passati, se è dentro un oggetto
         if (x < 0 || x >= borderX) {
             return entities.WALL;
