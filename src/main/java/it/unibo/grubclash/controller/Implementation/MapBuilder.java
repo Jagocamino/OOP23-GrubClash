@@ -379,7 +379,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
                 final int finalI = i;
                 final int finalJ = j;
                 if(btnMatrix[i][j] == btnFinish) {
-                    frameManager.showMessageBox("Messaggio", "Seleziona dove posizionare il primo giocatore e premi il botttone finish, fai così per tutti i vari giocatori", JOptionPane.INFORMATION_MESSAGE);
+                    frameManager.showMessageBox("Messaggio", "Seleziona dove posizionare il primo giocatore e premi il bottone finish, fai così per tutti i vari giocatori.", JOptionPane.INFORMATION_MESSAGE);
                     btnFinish.addActionListener(o -> {
                         if (getCurrentPlayer() == getNumPlayers() - 1 && getColorSpawnpoint() == true) {
                             try {
@@ -478,7 +478,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
                             mapContainer.repaint();
                             mapContainer.validate();
                         } else {
-                            frameManager.showMessageBox("Messaggio", "Serve più spazio per sviluppare il gioco, ridisegnare la mappa grazie <3", JOptionPane.INFORMATION_MESSAGE);//FM
+                            frameManager.showMessageBox("Messaggio", "Serve più spazio per sviluppare il gioco, ridisegnare la mappa grazie <3.", JOptionPane.INFORMATION_MESSAGE);//FM
                         }
                     });
                 } else {
@@ -531,7 +531,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         mapContainer.setLocationRelativeTo(null);
         mapContainer.setVisible(true);
         map.setVisible(true);
-        frameManager.showMessageBox("Messaggio", "Crea o rimuovi spazi con collisione interagendo con i blocchi per creare la tua mappa!", JOptionPane.INFORMATION_MESSAGE);//FM
+        frameManager.showMessageBox("Messaggio", "Crea o rimuovi spazi interagendo con i blocchi. Genera così la tua mappa!", JOptionPane.INFORMATION_MESSAGE);//FM
     }
 
 }

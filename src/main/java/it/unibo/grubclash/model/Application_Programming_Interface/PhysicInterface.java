@@ -6,4 +6,6 @@ public interface PhysicInterface {
 
     void checkTerrain(Entity entity);
 
+    void checkDeath(Entity entity);
+
 }

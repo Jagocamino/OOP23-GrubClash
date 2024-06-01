@@ -288,6 +288,9 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
                 physic.checkTerrain(p);
             }
         }
+        for(Player p2 : players){
+            physic.checkDeath(p2);
+        }
     }
 
     public void paintComponent(Graphics g){

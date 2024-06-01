@@ -31,4 +31,13 @@ public class Physic implements PhysicInterface {
             }
         }
     }
+
+    @Override
+    public void checkDeath(Entity entity) {
+        if(Allowed.isPlayer(entity)){
+            if(entity.life.getLife().get() <= 0){
+                entity.working = status.DEAD;
+            }
+        }
+    }
 }
