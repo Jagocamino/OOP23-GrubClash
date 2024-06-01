@@ -3,6 +3,7 @@ package it.unibo.grubclash.model.Application_Programming_Interface;
 import java.awt.Graphics2D;
 import java.util.Optional;
 
+import it.unibo.grubclash.controller.Application_Programming_Interface.PlayerInterface;
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.model.Implementation.ProjectileRoket;
 import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
@@ -15,7 +16,7 @@ public interface WeaponInterface {
 
     void setShootingDir(orientation shootingDir);
 
-    Player getOwner();
+    PlayerInterface getOwner();
 
     void setOwner(Player owner);
 

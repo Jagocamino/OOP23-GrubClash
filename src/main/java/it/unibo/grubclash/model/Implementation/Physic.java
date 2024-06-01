@@ -1,9 +1,10 @@
 package it.unibo.grubclash.model.Implementation;
 
 import it.unibo.grubclash.controller.Implementation.GrubPanel;
+import it.unibo.grubclash.model.Application_Programming_Interface.PhysicInterface;
 import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 
-public class Physic {
+public class Physic implements PhysicInterface {
   
     GrubPanel grubPanel;
 
@@ -11,6 +12,7 @@ public class Physic {
         this.grubPanel = grubPanel;
     }
 
+    @Override
     public void checkTerrain(Entity entity){
         if(Allowed.CanMoveThere(entity.x, entity.y+entity.gravityAcceleration, entity.width, entity.height)){
             entity.gravityCounter++;

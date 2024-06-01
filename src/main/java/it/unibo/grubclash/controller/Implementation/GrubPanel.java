@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanelInter;
 import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
+import it.unibo.grubclash.model.Application_Programming_Interface.PhysicInterface;
 import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.ItemSpawner;
@@ -20,6 +21,7 @@ import it.unibo.grubclash.model.Implementation.Sound;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
+import it.unibo.grubclash.view.Application_Programming_Interface.UIInterface;
 import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
 import it.unibo.grubclash.view.Implementation.Menu;
 import it.unibo.grubclash.view.Implementation.UI;
@@ -52,10 +54,10 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
     private int idOfTheWinner;
 
     //UI
-    UI ui = new UI(this);
+    UIInterface ui = new UI(this);
 
     //PHYSIC
-    public Physic physic = new Physic(this);
+    public PhysicInterface physic = new Physic(this);
 
 
     //COLLISION CHECKER
@@ -105,7 +107,6 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         long lastTime = System.nanoTime();
         long currentTime;
         long timer = 0;
-        int drawCount = 0;
 
         update();
 
@@ -123,12 +124,9 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
                 updateProj();
                 updateDynamicEntities();
                 delta--;
-                drawCount++;
             }
 
             if(timer >= 1000000000){
-                System.out.println("FPS: " + drawCount);
-                drawCount = 0;
                 timer = 0;
             }
         }

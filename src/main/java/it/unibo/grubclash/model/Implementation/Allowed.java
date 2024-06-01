@@ -1,4 +1,5 @@
 package it.unibo.grubclash.model.Implementation;
+import it.unibo.grubclash.controller.Application_Programming_Interface.PlayerInterface;
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
@@ -169,7 +170,7 @@ public class Allowed {
         }
     }
 
-    public static Optional<ArrayList<Entity>> meleeAttack(int xRange, int yRange, int widthRange, int heightRange, Player owner) { // restituisce una arraylist optional dei player colpiti dal melee
+    public static Optional<ArrayList<Entity>> meleeAttack(int xRange, int yRange, int widthRange, int heightRange, PlayerInterface owner) { // restituisce una arraylist optional dei player colpiti dal melee
         boolean empty = true;
         ArrayList<Entity> arrayList = new ArrayList<>();
         for (Entity entity : getDynamicEntities()) {
@@ -267,7 +268,7 @@ public class Allowed {
 
     //                                      TUTTO QUELLO CHE RIGUARDA IL PROIETTILE
     
-    private static boolean gonnaExplodeHere(int x, int y, Player owner ) {
+    private static boolean gonnaExplodeHere(int x, int y, PlayerInterface owner ) {
         //scorre tutte le entità in lvlData per controllare le collisioni
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
@@ -307,7 +308,7 @@ public class Allowed {
         return false;
     }
    
-    public static boolean gonnaExplode ( int x, int y, int widthProjectile, int heightProjectile, Player playerException) { // controlla l'esplosione del proiettile
+    public static boolean gonnaExplode ( int x, int y, int widthProjectile, int heightProjectile, PlayerInterface playerException) { // controlla l'esplosione del proiettile
         if (!gonnaExplodeHere( x, y, playerException )) {
             if(!gonnaExplodeHere( x + widthProjectile, y + heightProjectile, playerException)) {
                 if(!gonnaExplodeHere( x + widthProjectile, y, playerException)) {

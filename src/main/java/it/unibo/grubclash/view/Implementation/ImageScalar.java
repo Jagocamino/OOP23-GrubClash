@@ -3,7 +3,10 @@ package it.unibo.grubclash.view.Implementation;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-public class ImageScalar {
+import it.unibo.grubclash.view.Application_Programming_Interface.ImageScalarInterface;
+
+public class ImageScalar implements ImageScalarInterface {
+    @Override
     public BufferedImage scaleImage(BufferedImage original, int width, int height){
 
         int imageType = original.getType();

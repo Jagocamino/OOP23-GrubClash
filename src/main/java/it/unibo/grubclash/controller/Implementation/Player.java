@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Optional;
 
+import it.unibo.grubclash.controller.Application_Programming_Interface.PlayerInterface;
 import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
@@ -15,7 +16,7 @@ import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
 import it.unibo.grubclash.view.Implementation.WeaponRoket;
 
-public class Player extends Entity{
+public class Player extends Entity implements PlayerInterface{
 
     private final char FS = File.separatorChar;
 
@@ -205,18 +206,22 @@ public class Player extends Entity{
         }
     }
 
+    @Override
     public Optional<Weapon> getWeapon() {
         return weapon;
     }
 
+    @Override
     public void setWeapon(Optional<Weapon> weapon) {
         this.weapon = weapon;
     }
 
+    @Override
     public orientation getDirection() {
         return direction;
     }
 
+    @Override
     public void setDirection(orientation direction) {
         this.direction = direction;
     }
@@ -285,15 +290,13 @@ public class Player extends Entity{
 
     }
 
+    @Override
     public int getId() {
         return id;
     }
 
+    @Override
     public KeyHandler getKeyH() {
         return keyH;
-    }
-
-    public void setId( int id ) {
-        this.id = id;
     }
 }

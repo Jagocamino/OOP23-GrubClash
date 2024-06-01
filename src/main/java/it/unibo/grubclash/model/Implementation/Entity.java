@@ -11,6 +11,7 @@ import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanel
 import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.status;
+import it.unibo.grubclash.view.Application_Programming_Interface.ImageScalarInterface;
 import it.unibo.grubclash.view.Implementation.ImageScalar;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
 
@@ -102,7 +103,7 @@ public class Entity implements EntityInterface { //ogni entity, comprese le stru
     }
 
     public static BufferedImage setup(String imagePath, int width, int height) { //da spolpare per bene
-        ImageScalar uTool = new ImageScalar();
+        ImageScalarInterface uTool = new ImageScalar();
         BufferedImage image = null;
     
         try {

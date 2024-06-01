@@ -7,8 +7,9 @@ import java.awt.Graphics2D;
 import it.unibo.grubclash.controller.Implementation.GrubPanel;
 import it.unibo.grubclash.controller.Implementation.MapBuilder;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
+import it.unibo.grubclash.view.Application_Programming_Interface.UIInterface;
 
-public class UI {
+public class UI implements UIInterface {
 
     //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
     private static final FrameManager frameManager = new FrameManagerImpl();
@@ -29,6 +30,7 @@ public class UI {
 
     }
 
+    @Override
     public void draw(Graphics2D g2d){
 
         this.g2d = g2d;
@@ -54,7 +56,7 @@ public class UI {
         }
     }
     
-    public void drawTurnBegin(){
+    private void drawTurnBegin(){
 
         if(grubPanel.turnBegin){
             g2d.setFont(snapITCFont.deriveFont(40f));
@@ -62,7 +64,7 @@ public class UI {
         }
     }
 
-    public void drawAmmos(){
+    private void drawAmmos(){
 
         g2d.setFont(snapITCFont.deriveFont(25f));
         g2d.drawString("MUNIZIONI: " + grubPanel.players.get(grubPanel.numPlayerTurn).getWeapon().get().getAmmo(), 50, 50);

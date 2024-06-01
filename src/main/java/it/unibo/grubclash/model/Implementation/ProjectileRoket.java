@@ -1,5 +1,5 @@
 package it.unibo.grubclash.model.Implementation;
-import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.controller.Application_Programming_Interface.PlayerInterface;
 import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
 import it.unibo.grubclash.model.Application_Programming_Interface.ProjectileType;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
@@ -11,9 +11,9 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
     private int dmgRadius = 50;
     private static int widthRoket = 10;
     private static int heightRoket = 10;
-    private Player owner;
+    private PlayerInterface owner;
 
-    public ProjectileRoket(int x, int y, Player owner) {
+    public ProjectileRoket(int x, int y, PlayerInterface owner) {
         super(x, y, getWidthRoket(), getHeightRoket(), entities.PROJECTILE); 
         this.owner = owner;
         gravity = false;
@@ -21,7 +21,7 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
     }   
 
     @Override
-    public Player getOwner() {
+    public PlayerInterface getOwner() {
         return owner;
     }
 
