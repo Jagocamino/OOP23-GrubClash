@@ -20,8 +20,6 @@ public class Trap extends Entity{
 
         Allowed.addDynamicEntity(this);
         getImage();
-        Allowed.addDynamicEntity(this);
-        getImage();
     }
 
     private void getImage() {

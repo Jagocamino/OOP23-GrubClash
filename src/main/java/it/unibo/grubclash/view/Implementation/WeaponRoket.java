@@ -19,7 +19,7 @@ public class WeaponRoket extends Weapon implements WeaponType {
         getImage();
     }
 
-    private void getImage(){ //parametro con numero del giocatore es : if(player == 1) => getImage del player1
+    private void getImage(){ 
 
         left = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_left.png", 40, 40);
         right = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_right.png", 40, 40);

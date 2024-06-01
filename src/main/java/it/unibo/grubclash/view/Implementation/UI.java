@@ -11,7 +11,6 @@ import it.unibo.grubclash.view.Application_Programming_Interface.UIInterface;
 
 public class UI implements UIInterface {
 
-    //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
     private static final FrameManager frameManager = new FrameManagerImpl();
 
     String color_game = "#EF7B10";

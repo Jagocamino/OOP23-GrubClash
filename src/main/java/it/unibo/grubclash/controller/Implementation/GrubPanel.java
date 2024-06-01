@@ -77,7 +77,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         ItemSpawner itSpawn = new ItemSpawner();
         itSpawn.generateSpawnLocation(Allowed.getROWS(), Allowed.getCOLS(), MapBuilder.getItemNum(), MapBuilder.getEntityMatrix());
 
-        Allowed.addMapBase(MapBuilder.getEntityMatrix()); //creo la matrice delle entità (20x20)
+        Allowed.addMapBase(MapBuilder.getEntityMatrix()); 
         
 
         players = new ArrayList<>();

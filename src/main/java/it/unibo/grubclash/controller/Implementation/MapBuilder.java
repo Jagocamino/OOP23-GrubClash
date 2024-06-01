@@ -20,7 +20,6 @@ import java.io.IOException;
 
 public class MapBuilder extends Canvas implements MapBuilderInterface {
 
-    //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
     private static FrameManager frameManager = new FrameManagerImpl();
 
     static String color_game = "#EF7B10";
@@ -169,7 +168,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
             return btnColor;
         }else{ // cioè se siamo nella fase di placement dei personaggi
             Color btnColor;
-            if (mapBase[i][j].getBackground() == Color.WHITE && getColorSpawnpoint() == false) { //permetto il cambio del colore solo se o lo sfondo è bianco, o è dello stesso colore del palyer che voglio cambiare
+            if (mapBase[i][j].getBackground() == Color.WHITE && getColorSpawnpoint() == false) { //permetto il cambio del colore solo se o lo sfondo è bianco, o è dello stesso colore del player che voglio cambiare
                 btnColor = getPlayerColor(getCurrentPlayer());
                 switchColorSpawnpoint();
                 mapBase[i][j].setBackground(btnColor);
@@ -292,14 +291,12 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
             invisibleBtn.setText("Finish");
             invisibleBtn.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         } else { // Gestisce tutti i bottoni che non sono quello di chiusura dell'editing della mappa
-            //invisibleBtn.setText(String.valueOf(i) + "-" + String.valueOf(j));
             invisibleBtn.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-            //invisibleBtn.setBorder(new LineBorder(Color.MAGENTA));
             invisibleBtn.setBorderPainted(false); // era true
             invisibleBtn.setContentAreaFilled(false);
             invisibleBtn.setOpaque(true);
         }
-        return invisibleBtn; // Fa strano chiamare "invisibleBtn" l'unico bottone che fa da finish, ma non ho idee migliori
+        return invisibleBtn; 
     }
 
     private static void mapInitialization() throws IOException {
@@ -345,7 +342,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         GrubPanel playableLayer = new GrubPanel(getNumPlayers());
         playableLayer.startGameThread();
         playableLayer.setBounds(0, 0, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
-        playableLayer.setOpaque(false); //come si rende trasparente?
+        playableLayer.setOpaque(false); 
         layeredPaneGrid.add(playableLayer, JLayeredPane.PALETTE_LAYER);
         layeredPaneGrid.setVisible(true);
         mapContainer.repaint();
@@ -426,7 +423,6 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         JFrame mapContainer = new JFrame();
         setMapContainer(mapContainer);
 
-        //FM setto il titolo creando una classe Framemanager perchè non posso mettere statico il metodo nell'interfaccia
         FrameManager frameManager = new FrameManagerImpl();
         frameManager.setTitle(getMapContainer());
 
@@ -461,7 +457,6 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
                 final int finalJ = j;
                 mapBase[i][j] = new JPanel();
                 mapBase[i][j].setBackground(Color.WHITE);
-                //mapBase[i][j].setLayout(new FlowLayout());
                 btnMatrix[i][j] = createButton(i, j);
                 if(i == 0 && j == COLS - 1) { //if(è nel bottone finish, ovvero quello dello switch della fase)
                     JButton btnFinish = btnMatrix[i][j];
@@ -484,7 +479,6 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
                 } else {
 
                     final Color[] previousColorState = { getBtnMatrix(finalI, finalJ).getBackground() };
-                    //btnMatrix[i][j].addActionListener(e -> previousColorState[0] = switchBackground(mapBase, finalI, finalJ, mapBase[finalI][finalJ].getBackground(), btnMatrix, map, mapContainer))
                     btnMatrix[i][j].addMouseListener(new MouseAdapter() {
                     
                         @Override
