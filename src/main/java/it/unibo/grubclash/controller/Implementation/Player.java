@@ -8,6 +8,7 @@ import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
+import it.unibo.grubclash.model.Implementation.Sound;
 import it.unibo.grubclash.model.Implementation.Weapon;
 import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.model.Implementation.EnumEntity.status;
@@ -139,7 +140,8 @@ public class Player extends Entity{
             if(keyH.shovelPressed && !alreadyDug && !cooldownDig){
                 shovelAnimation = true;
                 cooldownDig = true;
-                grubPanel.playSoundEffect(1);
+                Sound.setFile(1);
+                Sound.play();
                 switch(this.direction){
                     case DOWN: 
                         if( !Allowed.meleeAttack(x, y + height, width, height, this).equals(Optional.empty()) || 

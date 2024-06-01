@@ -16,7 +16,7 @@ import it.unibo.grubclash.view.Implementation.LifeImpl;
 
 public class Entity implements EntityInterface { //ogni entity, comprese le strutture, ha questa classe
 
-    public GrubPanelInter grubPanel;  //TODO non lo so messo per i suoni
+    GrubPanelInter grubPanel;  
 
     public int x;  //qui metterei int e non float tanto viene sempre messo (int) e come valore float non viene mai effettivamente usato
     public int y;
@@ -31,7 +31,7 @@ public class Entity implements EntityInterface { //ogni entity, comprese le stru
 
     public status working = status.ALIVE;
 
-    public LifeImpl life; //da rivedere TODO
+    public LifeImpl life; 
 
     //COUNTERS
     protected static int spriteCounter = 0;

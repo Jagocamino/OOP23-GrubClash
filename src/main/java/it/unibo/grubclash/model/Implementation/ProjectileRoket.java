@@ -69,6 +69,8 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
     }
 
     private void explosionHappening () {
+        Sound.setFile(0);
+        Sound.play();
         EntityInterface damage = damage(dmgRadius);
         Allowed.applyDamage(Allowed.dealDamage(damage.getX(), damage.getY(), damage.getWidth(), damage.getHeight()), 2);
         this.working = EnumEntity.status.DEAD;
