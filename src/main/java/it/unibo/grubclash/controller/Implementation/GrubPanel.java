@@ -191,11 +191,28 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
                             numPlayerTurn = p.getId();
                             int numCicles = 0;   //6 cicli da 2 secondi => 12 secondi di round
                             long wait = System.nanoTime();
+                            
+                            if(numAlivePlayers == 1){
+                                gameFinished(true);
+                            }
+                            if(numAlivePlayers == 0){
+                                gameFinished(false);
+                            }
+                            
                             while(System.nanoTime() - wait <= 2000000000) {
                                 turnBegin = true;
                             } //due secondi di attesa prima che inizi il turno
-                            if(p.isAlive())
+
+                            if(numAlivePlayers == 1){
+                                gameFinished(true);
+                            }
+                            if(numAlivePlayers == 0){
+                                gameFinished(false);
+                            }
+
+                            if(p.isAlive()) { // press any key to continue
                                 MapBuilder.getCh();
+                            }
                             turnBegin = false;
                             this.addKeyListener(p.getKeyH());
                             int counter = 0;
@@ -219,7 +236,6 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
                             resetVariables(p);
                         }
                     }
-
                     numAlivePlayers = 0;
                 }
             }
