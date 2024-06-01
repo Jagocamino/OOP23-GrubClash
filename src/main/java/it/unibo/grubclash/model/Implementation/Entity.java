@@ -19,7 +19,7 @@ public class Entity implements EntityInterface { //ogni entity, comprese le stru
 
     GrubPanelInter grubPanel;  
 
-    public int x;  //qui metterei int e non float tanto viene sempre messo (int) e come valore float non viene mai effettivamente usato
+    public int x;  
     public int y;
     public int width, height;
     protected entities entity;
@@ -39,7 +39,7 @@ public class Entity implements EntityInterface { //ogni entity, comprese le stru
     public int jump1Counter = 0;
     public int jump2Counter = 0;
 
-    public Entity(int x, int y, int width, int height, entities entity) { //passed
+    public Entity(int x, int y, int width, int height, entities entity) { 
         this.x = x;
         this.y = y;
         this.width = width;
@@ -102,7 +102,7 @@ public class Entity implements EntityInterface { //ogni entity, comprese le stru
         return false;
     }
 
-    public static BufferedImage setup(String imagePath, int width, int height) { //da spolpare per bene
+    public static BufferedImage setup(String imagePath, int width, int height) { 
         ImageScalarInterface uTool = new ImageScalar();
         BufferedImage image = null;
     

@@ -292,7 +292,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
             invisibleBtn.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         } else { // Gestisce tutti i bottoni che non sono quello di chiusura dell'editing della mappa
             invisibleBtn.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-            invisibleBtn.setBorderPainted(false); // era true
+            invisibleBtn.setBorderPainted(false);
             invisibleBtn.setContentAreaFilled(false);
             invisibleBtn.setOpaque(true);
         }
@@ -444,7 +444,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         JPanel map = new JPanel();
         setMap(map);
         getMap().setBounds(0, 0, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
-        getMap().setLayout(new GridLayout(ROWS, COLS));  //Imposto il layout del pane che contiene le matrix di bottoni e altri pane
+        getMap().setLayout(new GridLayout(ROWS, COLS));  //Imposto il layout del panel che contiene le matrix di bottoni e altri panel
 
         JPanel[][] mapBase = new JPanel[ROWS][COLS];
         setMapBase(mapBase);
@@ -453,12 +453,12 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
 
         for(int i = 0; i < ROWS; i++){
             for(int j = 0; j < COLS; j++){
-                final int finalI = i; // devono stare final altrimenti da errori
+                final int finalI = i; 
                 final int finalJ = j;
                 mapBase[i][j] = new JPanel();
                 mapBase[i][j].setBackground(Color.WHITE);
                 btnMatrix[i][j] = createButton(i, j);
-                if(i == 0 && j == COLS - 1) { //if(è nel bottone finish, ovvero quello dello switch della fase)
+                if(i == 0 && j == COLS - 1) { 
                     JButton btnFinish = btnMatrix[i][j];
                     btnFinish.addActionListener(f -> {
                         if (canSwitchPhase()) {

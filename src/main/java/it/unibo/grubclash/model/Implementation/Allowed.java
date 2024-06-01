@@ -300,7 +300,7 @@ public class Allowed {
             entity.getEntity() == entities.PLAYER4 ||
             entity.getEntity() == entities.PLAYER5 ||
             entity.getEntity() == entities.WALL ||
-            entity.getEntity() == entities.PROJECTILE  //boh 
+            entity.getEntity() == entities.PROJECTILE 
         );
     }
 
@@ -370,7 +370,7 @@ public class Allowed {
         return damageToWhichDynamicEntities;
     }
 
-    // infligge il danno alle strutture e ai giocatori nella ArrayList buttata fuori da dealDamage (ovvero tutte le entità colpite dall'esplosione
+    // infligge il danno alle strutture e ai giocatori nella ArrayList buttata fuori da dealDamage (ovvero tutte le entità colpite dall'esplosione)
     public static void applyDamage (ArrayList<Entity> dealDamage, int i) {
         for (Entity entity : dealDamage) {
             if ( isPlayer(entity) ) {
