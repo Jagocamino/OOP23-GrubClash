@@ -38,6 +38,7 @@ public class UI {
 
         drawPlayerTurn();
         drawTurnBegin();
+        drawAmmos();
 
     }
 
@@ -59,6 +60,12 @@ public class UI {
             g2d.setFont(snapITCFont.deriveFont(40f));
             g2d.drawString("STA PER INIZIARE IL TURNO DI: " + (grubPanel.numPlayerTurn + 1), frameManager.getWindowWidth().get()/4, frameManager.getWindowHeight().get()/4);
         }
+    }
+
+    public void drawAmmos(){
+
+        g2d.setFont(snapITCFont.deriveFont(25f));
+        g2d.drawString("MUNIZIONI: " + grubPanel.players.get(grubPanel.numPlayerTurn).getWeapon().get().getAmmo(), 50, 50);
     }
 
 }

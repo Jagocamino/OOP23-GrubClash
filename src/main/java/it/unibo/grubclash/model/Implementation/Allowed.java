@@ -277,7 +277,6 @@ public class Allowed {
                         y >= Allowed.lvlData[i][j].getY() &&
                         y < (Allowed.lvlData[i][j].getY() + lvlData[i][j].getHeight()) 
                     ) {
-                        System.out.println("ent: " + Allowed.lvlData[i][j].getEntity() + " x: " + Allowed.lvlData[i][j].getX() + " y: " + Allowed.lvlData[i][j].getY());
                     return true;
                 }
             }
@@ -296,7 +295,6 @@ public class Allowed {
                         hittable(entity)
                     )
                 ) {
-                    System.out.println("ent: " + entity.getEntity() + " x: " + entity.getX() + " y: " + entity.getY());
                 return true;
             }
         }
