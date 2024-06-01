@@ -66,20 +66,48 @@ public class Menu extends JFrame{
             frameMappa.setSize(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
             frameMappa.setResizable(false);
             frameMappa.setLayout(new BorderLayout());
+            frameManager.setIcon(frameMappa);
 
             final JPanel panelMappa = new JPanel();
+            panelMappa.setLayout(null);
+            panelMappa.setBackground(Color.WHITE);
+            panelMappa.setBounds(0, 0, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
+
+            frameMappa.add(panelMappa);
 
             ImageIcon mappa = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "grubRules.png");
             JLabel mappa_label = new JLabel(mappa);
+            mappa_label.setBounds(0, 0, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
 
 
-            final JButton play2 = new JButton("Prova");
-            playButton.setBounds(0,0, 500, 500);
+            final JButton play2 = new JButton();
+            play2.setBorderPainted(false);
+            play2.setBounds(frameManager.getWindowWidth().get()/2,0,100, 100);
+            ImageIcon originalIcon2 = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "play2.png");
+            play2.setIcon(originalIcon2);
+
+            play2.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    ImageIcon originalIcon2 = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "play_on_hover2.png");
+                    play2.setIcon(originalIcon2);
+
+                }
+    
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    ImageIcon originalIcon2 = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "play2.png");
+                    play2.setIcon(originalIcon2);
+    
+                    //ImageIcon scaledIcon = new ImageIcon(originalImage.getScaledInstance(playButton.getWidth(), playButton.getHeight(), Image.SCALE_SMOOTH));
+                    //playButton.setIcon(scaledIcon);
+                } 
+            });
+
 
             panelMappa.add(play2);
             panelMappa.add(mappa_label);
 
-            frameMappa.add(panelMappa);
             frameMappa.setVisible(true);
 
 
