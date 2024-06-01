@@ -119,15 +119,21 @@ public class Allowed {
                 player.y + player.height/2 > t.getY() && player.y + player.height/2 < t.getY() + t.getHeight()){
                 switch(t.getEntity()){
                     case TRAP: 
+                        Sound.setFile(0);
+                        Sound.play();
                         player.life.damage(); 
                         player.life.damage();
                         t.working = status.DEAD; 
                         break;
                     case HEAL:
+                        Sound.setFile(3);
+                        Sound.play();
                         player.life.plusLife(); 
                         t.working = status.DEAD; 
                         break;
                     case AMMO_BOX:
+                        Sound.setFile(2);
+                        Sound.play();
                         player.getWeapon().get().refillAmmo();
                         t.working = status.DEAD; 
                         break;

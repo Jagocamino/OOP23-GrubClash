@@ -104,12 +104,17 @@ public class Player extends Entity{
                 }
             }
             
-            if(keyH.spacePressed){  //aggiungi "&& canJump" per effetto palleggio
+            if(keyH.spacePressed){  
                 direction = orientation.UP;
                 canMove = false;
                 gravity=false;
                 
                 jump1Counter++;
+
+                if(jump1Counter == 10){
+                    Sound.setFile(4);
+                    Sound.play();
+                }
                 
                 if(jump1Counter > 15){
                     canMove = true;

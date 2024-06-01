@@ -5,6 +5,7 @@ import java.util.Optional;
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.ProjectileRoket;
+import it.unibo.grubclash.model.Implementation.Sound;
 import it.unibo.grubclash.model.Implementation.Weapon;
 import it.unibo.grubclash.view.Application_Programming_Interface.WeaponType;
 
@@ -33,6 +34,8 @@ public class WeaponRoket extends Weapon implements WeaponType {
             rocket = Optional.empty();
             return rocket;
         }
+        Sound.setFile(5);
+        Sound.play();
         setShootingDir(getOwner().getDirection());
         reduceAmmo();
         rocket = Optional.of(new ProjectileRoket(getOwner().getX(), getOwner().getY(), getOwner()));

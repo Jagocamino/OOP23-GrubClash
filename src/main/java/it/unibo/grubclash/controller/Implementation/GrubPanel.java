@@ -16,6 +16,7 @@ import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.ItemSpawner;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
 import it.unibo.grubclash.model.Implementation.Physic;
+import it.unibo.grubclash.model.Implementation.Sound;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
@@ -237,6 +238,8 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
     }
 
     private void gameFinished(boolean win) {
+        Sound.setFile(6);
+        Sound.play();
         gameThread = null;
         Object[] options = {"Esci", "Ricomincia"};
         int choice;
