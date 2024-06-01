@@ -91,16 +91,12 @@ public class Menu extends JFrame{
                 public void mouseEntered(MouseEvent e) {
                     ImageIcon originalIcon2 = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "play_on_hover2.png");
                     play2.setIcon(originalIcon2);
-
                 }
     
                 @Override
                 public void mouseExited(MouseEvent e) {
                     ImageIcon originalIcon2 = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "play2.png");
                     play2.setIcon(originalIcon2);
-    
-                    //ImageIcon scaledIcon = new ImageIcon(originalImage.getScaledInstance(playButton.getWidth(), playButton.getHeight(), Image.SCALE_SMOOTH));
-                    //playButton.setIcon(scaledIcon);
                 } 
             });
 

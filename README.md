@@ -29,8 +29,7 @@ Siamo sempre aperti a contributi e suggerimenti per migliorare il gioco! Se hai 
 GrubClash &egrave; stato sviluppato da:
 - Giorgia Patera,
 - Christian Remschi,
-- Jago Camoni,
-- Davide Nicoletti.
+- Jago Camoni.
 
  ## Licenza
 Questo progetto &egrave; distribuito con la licenza:Apache License,Version 2.0(https://www.apache.org/licenses/).
