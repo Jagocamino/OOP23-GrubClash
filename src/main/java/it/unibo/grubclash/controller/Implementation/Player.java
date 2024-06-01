@@ -106,11 +106,14 @@ public class Player extends Entity implements PlayerInterface{
             }
             
             if(keyH.spacePressed){  
-                direction = orientation.UP;
                 canMove = false;
                 gravity=false;
                 
                 jump1Counter++;
+
+                if(jump1Counter < 15){
+                    direction = orientation.UP;
+                }
 
                 if(jump1Counter == 10){
                     Sound.setFile(4);
@@ -119,15 +122,18 @@ public class Player extends Entity implements PlayerInterface{
                 
                 if(jump1Counter > 15){
                     canMove = true;
-                    direction = orientation.UP2;
+                    if(jump1Counter == 16){
+                        direction = orientation.UP2;
+                    }
                     jump2Counter++;
                     if(jump2Counter < 15 && Allowed.CanMoveThere(x, y-30/jump2Counter, width, height)){
                         y-=30 / jump2Counter;
                     }
-                    if(jump2Counter > 15 && jump2Counter < 30){ //  && Allowed.CanMoveThere(x, y+gravityAcceleration, width, height)  
-                        direction = orientation.DOWN;
+                    if(jump2Counter > 15 && jump2Counter < 30){ //  && Allowed.CanMoveThere(x, y+gravityAcceleration, width, height) 
+                        if(jump2Counter == 16){
+                            direction = orientation.DOWN;
+                        } 
                         gravity = true;
-                        //y+=jump2Counter/8;
                     }
                     if(jump2Counter > 30){
                         jump2Counter = 0;
