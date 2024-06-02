@@ -12,7 +12,6 @@ import java.io.File;
 
 public class Menu extends JFrame{
 
-    //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
     private static final FrameManager frameManager = FrameManagerImpl.getInstance();
 
     final char FS = File.separatorChar;
@@ -71,7 +70,7 @@ public class Menu extends JFrame{
 
         playButton.addActionListener(e -> {
             frameMenu.dispose();
-            JFrame frameMappa = createMapFrame();
+            JFrame frameMappa = createMenuFrame();
             createMapPanel(frameMappa);
             frameMappa.setVisible(true);
         });
@@ -95,17 +94,6 @@ public class Menu extends JFrame{
         });
 
         return playButton;
-    }
-
-    protected JFrame createMapFrame() {
-        JFrame frameMappa = new JFrame();
-        frameMappa.setTitle("GrubClash");
-        frameMappa.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameMappa.setSize(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
-        frameMappa.setResizable(false);
-        frameMappa.setLayout(new BorderLayout());
-        frameManager.setIcon(frameMappa);
-        return frameMappa;
     }
 
     protected JPanel createMapPanel(JFrame frameMappa) {
