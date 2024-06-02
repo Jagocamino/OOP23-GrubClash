@@ -2,6 +2,7 @@ package it.unibo.grubclash.view.Implementation;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Optional;
 
 import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
@@ -18,7 +19,7 @@ public class Heal extends Entity{
 
         super(x, y, 20, 20, EnumEntity.entities.HEAL);
 
-        Allowed.addDynamicEntity(this);
+        Allowed.addDynamicEntity(Optional.of(this));
         getImage();
     }
 

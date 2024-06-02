@@ -51,7 +51,7 @@ public class Player extends Entity implements PlayerInterface{
         this.direction = orientation.DOWN;
         weapon = Optional.of(new WeaponRoket(this));
         setEntity(EnumEntity.idToEntitiesConverter(id).get());
-        Allowed.addDynamicEntity(this);
+        Allowed.addDynamicEntity(Optional.of(this));
         getImage(id);
         getShovelImage(id);
     }
@@ -287,7 +287,7 @@ public class Player extends Entity implements PlayerInterface{
             this.life.setLife(0);
             g2d.drawImage(image, x, y,null);
 
-            if(Allowed.getDynamicEntities().contains(this)){
+            if(Allowed.getDynamicEntities().contains(Optional.of(this))){
                 Allowed.removeDynamicEntity(this);
             }
         }

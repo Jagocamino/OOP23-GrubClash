@@ -3,13 +3,14 @@ package it.unibo.grubclash.controller.Implementation;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Optional;
+
 import javax.swing.ImageIcon;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanelInter;
-import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
 import it.unibo.grubclash.model.Application_Programming_Interface.PhysicInterface;
 import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
@@ -146,12 +147,12 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
 
     private void updateProj() {
         ArrayList<Entity> toDelete = new ArrayList<Entity>();
-        for (Entity entity : Allowed.getDynamicEntities()) {
-            if(entity.getEntity() == entities.PROJECTILE){
-                if (entity.isAlive()) {
-                    entity.update();
+        for (Optional<Entity> entity : Allowed.getDynamicEntities()) {
+            if(entity.isPresent() && entity.get().getEntity() == entities.PROJECTILE){
+                if (entity.get().isAlive()) {
+                    entity.get().update();
                 } else {
-                    toDelete.add(entity);
+                    toDelete.add(entity.get());
                 }
             }
         }
@@ -160,10 +161,10 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
 
     private void updateDynamicEntities(){
         ArrayList<Entity> toDelete = new ArrayList<Entity>();
-        for (Entity entity : Allowed.getDynamicEntities()) {
-            if(entity.getEntity() == entities.TRAP){
-                if (!entity.isAlive()) {
-                    toDelete.add(entity);
+        for (Optional<Entity> entity : Allowed.getDynamicEntities()) {
+            if(entity.isPresent() && entity.get().getEntity() == entities.TRAP){
+                if (!entity.get().isAlive()) {
+                    toDelete.add(entity.get());
                 }
             }
         }
@@ -171,8 +172,9 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
     }
 
     private void deleteDynamicEntity (ArrayList<Entity> toDelete) {
-        for (EntityInterface entity : toDelete) {
-            //Allowed.removeDynamicEntity(entity);
+        for (Entity entity : toDelete) {
+            
+            Allowed.removeDynamicEntity(entity);
         }
         toDelete.removeAll(toDelete);
     }
@@ -215,8 +217,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
                         resetVariables(p);
                     }
                 }
-                    
-                
+                Allowed.clearDynamicEntities();
             }
         }).start();
     }
@@ -225,6 +226,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         Sound.setFile(6);
         Sound.play();
         gameThread = null;
+        Allowed.clearDynamicEntities();
         Object[] options = {"Esci", "Ricomincia"};
         int choice;
         if(win){
@@ -269,9 +271,9 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
     }
 
     private void updatePhysic() {
-        for(Entity p : Allowed.getDynamicEntities()) {
-            if(p.gravity){
-                physic.checkTerrain(p);
+        for(Optional<Entity> p : Allowed.getDynamicEntities()) {
+            if(p.isPresent() && p.get().gravity){
+                physic.checkTerrain(p.get());
             }
         }
         for(Player p2 : players){
@@ -296,9 +298,9 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         }
 
         //DRAW OBJECTS
-        for (EntityInterface entity : Allowed.getDynamicEntities()) {
-            if (!Allowed.isPlayer(entity) && entity.getEntity() != entities.PROJECTILE) {
-                entity.draw(g2d);   
+        for (Optional<Entity> entity : Allowed.getDynamicEntities()) {
+            if (entity.isPresent() && !Allowed.isPlayer(entity.get()) && entity.get().getEntity() != entities.PROJECTILE) {
+                entity.get().draw(g2d);   
             }
         }
 

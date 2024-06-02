@@ -1,4 +1,6 @@
 package it.unibo.grubclash.model.Implementation;
+import java.util.Optional;
+
 import it.unibo.grubclash.controller.Application_Programming_Interface.PlayerInterface;
 import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
 import it.unibo.grubclash.model.Application_Programming_Interface.ProjectileType;
@@ -17,7 +19,7 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
         super(x, y, getWidthRoket(), getHeightRoket(), entities.PROJECTILE); 
         this.owner = owner;
         gravity = false;
-        Allowed.addDynamicEntity(this);
+        Allowed.addDynamicEntity(Optional.of(this));
     }   
 
     @Override

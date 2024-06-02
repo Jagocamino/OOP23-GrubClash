@@ -20,7 +20,7 @@ public class Allowed {
     private static int borderX;
     private static int borderY;
     private static JPanel[][] mapBase;
-    private static ArrayList<Entity> dynamicEntities;
+    private static ArrayList<Optional<Entity>> dynamicEntities;
     private static Entity[][] lvlData;
     private static int ROWS;
     private static int COLS;
@@ -31,22 +31,34 @@ public class Allowed {
         Allowed.ROWS = ROWS;
         Allowed.COLS = COLS;
         Allowed.lvlData = new Entity[ROWS][COLS];
-        Allowed.dynamicEntities = new ArrayList<Entity>();
+        Allowed.dynamicEntities = new ArrayList<Optional<Entity>>();
     }
 
     private static EntityInterface getLvlData( int i, int j) {
         return Allowed.lvlData[i][j];
     }
+
+    public static void clearDynamicEntities(){
+        ArrayList<Optional<Entity>> toClear = new ArrayList<>();
+        for (Optional<Entity> optional : dynamicEntities) {
+            if(optional.isEmpty()){
+                toClear.add(optional);
+            }
+        }
+        for (Optional<Entity> entity : toClear) {
+            dynamicEntities.remove(entity);
+        }
+    }
     
-    public static ArrayList<Entity> getDynamicEntities() {
+    public static ArrayList<Optional<Entity>> getDynamicEntities() {
         return dynamicEntities;
     }
-    public static void addDynamicEntity (Entity dynamicEntity) {
+    public static void addDynamicEntity (Optional<Entity> dynamicEntity) {
         Allowed.dynamicEntities.add(dynamicEntity);
     }
     
     public static void removeDynamicEntity (EntityInterface dynamicEntity) {
-        Allowed.dynamicEntities.remove(dynamicEntity);
+        Allowed.dynamicEntities.set(Allowed.dynamicEntities.indexOf(Optional.of(dynamicEntity)), Optional.empty());
     }
 
     public static int getROWS() {
@@ -88,28 +100,28 @@ public class Allowed {
     }
 
     public static void touchDynamicEntity(Player player){
-        for (Entity t : getDynamicEntities()) {
-            if( t.working == status.ALIVE && player.x + player.width/2 > t.getX() && player.x + player.width/2 < t.getX() + t.getWidth() && 
-                player.y + player.height/2 > t.getY() && player.y + player.height/2 < t.getY() + t.getHeight()){
-                switch(t.getEntity()){
+        for (Optional<Entity> t : getDynamicEntities()) {
+            if( t.isPresent() && t.get().working == status.ALIVE && player.x + player.width/2 > t.get().getX() && player.x + player.width/2 < t.get().getX() + t.get().getWidth() && 
+                player.y + player.height/2 > t.get().getY() && player.y + player.height/2 < t.get().getY() + t.get().getHeight()){
+                switch(t.get().getEntity()){
                     case TRAP: 
                         Sound.setFile(0);
                         Sound.play();
                         player.life.damage(); 
                         player.life.damage();
-                        t.working = status.DEAD; 
+                        t.get().working = status.DEAD; 
                         break;
                     case HEAL:
                         Sound.setFile(3);
                         Sound.play();
                         player.life.plusLife(); 
-                        t.working = status.DEAD; 
+                        t.get().working = status.DEAD; 
                         break;
                     case AMMO_BOX:
                         Sound.setFile(2);
                         Sound.play();
                         player.getWeapon().get().refillAmmo();
-                        t.working = status.DEAD; 
+                        t.get().working = status.DEAD; 
                         break;
                     default: break;
                 }
@@ -122,7 +134,7 @@ public class Allowed {
             for (int j = 0; j < getCOLS(); j++) {
                 addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getWidth(), (int)mapBase[i][j].getBounds().getHeight(), entityMatrix[i][j], i, j);
                 if (entityMatrix[i][j] == entities.ITEM) {
-                    addDynamicEntity(giveRandomItem(mapBase[i][j].getX(), mapBase[i][j].getY()));
+                    addDynamicEntity(Optional.of(giveRandomItem(mapBase[i][j].getX(), mapBase[i][j].getY())));
                     lvlData[i][j].setEntity(entities.SKY);
                 }
             }
@@ -146,13 +158,13 @@ public class Allowed {
     public static Optional<ArrayList<Entity>> meleeAttack(int xRange, int yRange, int widthRange, int heightRange, PlayerInterface owner) { // restituisce una arraylist optional dei player colpiti dal melee
         boolean empty = true;
         ArrayList<Entity> arrayList = new ArrayList<>();
-        for (Entity entity : getDynamicEntities()) {
-            if (entity != owner) {
-                int entityX = entity.getX();
-                int entityY = entity.getY();
-                int entityWidth = entity.getWidth();
-                int entityHeight = entity.getHeight();
-                if( isPlayer(entity) && (
+        for (Optional<Entity> entity : getDynamicEntities()) {
+            if (entity.isPresent() && entity.get() != owner) {
+                int entityX = entity.get().getX();
+                int entityY = entity.get().getY();
+                int entityWidth = entity.get().getWidth();
+                int entityHeight = entity.get().getHeight();
+                if( isPlayer(entity.get()) && (
                     ( xRange >= entityX && xRange < (entityX + entityWidth)) || // se è sporgente a sx
                     ( xRange + widthRange >= entityX && xRange + widthRange < (entityX + entityWidth)) || // se è sporgente a dx
                     ( xRange < entityX && xRange + widthRange >= (entityX + entityWidth)) // se è dentro
@@ -163,7 +175,7 @@ public class Allowed {
                     ) 
                 ){
                     empty = false;
-                    arrayList.add(entity);
+                    arrayList.add(entity.get());
                 }   
             }
         }
@@ -261,16 +273,16 @@ public class Allowed {
         }
 
         //scorre tutte le entità in dynamicEntity per controllare le collisioni
-        for (EntityInterface entity : Allowed.dynamicEntities) {
+        for (Optional<Entity> entity : Allowed.dynamicEntities) {
             if (    (
-                        entity != owner && entity != owner.getWeapon().get().getRocket().get()
+                        entity.isPresent() && entity.get() != owner && entity.get() != owner.getWeapon().get().getRocket().get()
                     ) && (   
-                        x >= entity.getX() &&
-                        x < (entity.getWidth() + entity.getX()) &&
-                        y >= entity.getY() && 
-                        y < (entity.getY() + entity.getHeight())
+                        x >= entity.get().getX() &&
+                        x < (entity.get().getWidth() + entity.get().getX()) &&
+                        y >= entity.get().getY() && 
+                        y < (entity.get().getY() + entity.get().getHeight())
                     ) && (
-                        hittable(entity)
+                        hittable(entity.get())
                     )
                 ) {
                 return true;
@@ -299,8 +311,8 @@ public class Allowed {
             entity.getEntity() == entities.PLAYER3 ||
             entity.getEntity() == entities.PLAYER4 ||
             entity.getEntity() == entities.PLAYER5 ||
-            entity.getEntity() == entities.WALL //||
-            //entity.getEntity() == entities.PROJECTILE 
+            entity.getEntity() == entities.WALL ||
+            entity.getEntity() == entities.PROJECTILE 
         );
     }
 
@@ -329,22 +341,25 @@ public class Allowed {
     // chiede in input le dimensioni dell'esplosione
     public static ArrayList<Entity> dealDamage (int explosionX, int explosionY, int explosionWidth, int explosionHeight) { 
         ArrayList<Entity> damageToWhichDynamicEntities = new ArrayList<>();
-        for (Entity dynamicEntity : Allowed.dynamicEntities) {
-            int entityX = dynamicEntity.getX();
-            int entityY = dynamicEntity.getY();
-            int entityWidth = dynamicEntity.getWidth();
-            int entityHeight = dynamicEntity.getHeight();
-            if( damageable(dynamicEntity) && (
-                ( explosionX >= entityX && explosionX < (entityX + entityWidth)) || // se è sporgente a sx
-                ( explosionX + explosionWidth >= entityX && explosionX + explosionWidth < (entityX + entityWidth)) || // se è sporgente a dx
-                ( explosionX < entityX && explosionX + explosionWidth >= (entityX + entityWidth)) // se è dentro
-                ) && (
-                ( explosionY >= entityY && explosionY < (entityY + entityHeight)) || // se è sporgente sopra
-                ( explosionY + explosionHeight >= entityY && explosionY + explosionHeight < (entityY + entityHeight)) || // se è sporgente sotto
-                ( explosionY < entityY && explosionY + explosionHeight >= (entityY + entityHeight)) // se è dentro
-                ) 
-            ){
-                    damageToWhichDynamicEntities.add(dynamicEntity);
+        for (Optional<Entity> dynamicEntity : Allowed.dynamicEntities) {
+            if(dynamicEntity.isPresent()){
+
+                int entityX = dynamicEntity.get().getX();
+                int entityY = dynamicEntity.get().getY();
+                int entityWidth = dynamicEntity.get().getWidth();
+                int entityHeight = dynamicEntity.get().getHeight();
+                if( damageable(dynamicEntity.get()) && (
+                    ( explosionX >= entityX && explosionX < (entityX + entityWidth)) || // se è sporgente a sx
+                    ( explosionX + explosionWidth >= entityX && explosionX + explosionWidth < (entityX + entityWidth)) || // se è sporgente a dx
+                    ( explosionX < entityX && explosionX + explosionWidth >= (entityX + entityWidth)) // se è dentro
+                    ) && (
+                    ( explosionY >= entityY && explosionY < (entityY + entityHeight)) || // se è sporgente sopra
+                    ( explosionY + explosionHeight >= entityY && explosionY + explosionHeight < (entityY + entityHeight)) || // se è sporgente sotto
+                    ( explosionY < entityY && explosionY + explosionHeight >= (entityY + entityHeight)) // se è dentro
+                    ) 
+                ){
+                        damageToWhichDynamicEntities.add(dynamicEntity.get());
+                }
             }
         }
         for (int i = 0; i < ROWS; i++) {
