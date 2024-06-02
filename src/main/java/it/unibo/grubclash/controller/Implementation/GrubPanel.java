@@ -172,7 +172,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
 
     private void deleteDynamicEntity (ArrayList<Entity> toDelete) {
         for (EntityInterface entity : toDelete) {
-            Allowed.removeDynamicEntity(entity);
+            //Allowed.removeDynamicEntity(entity);
         }
         toDelete.removeAll(toDelete);
     }
@@ -284,12 +284,8 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D)g;
-        for (EntityInterface entity : Allowed.getDynamicEntities()) {
-            if (!Allowed.isPlayer(entity)) {
-                entity.draw(g2d);   
-            }
-        }
 
+        //DRAW PLAYER
         for(Player p : players) {
             p.draw(g2d);
             p.life.draw(g2d);
@@ -299,6 +295,14 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
             }
         }
 
+        //DRAW OBJECTS
+        for (EntityInterface entity : Allowed.getDynamicEntities()) {
+            if (!Allowed.isPlayer(entity) && entity.getEntity() != entities.PROJECTILE) {
+                entity.draw(g2d);   
+            }
+        }
+
+        //DRAW UI
         ui.draw(g2d);
 
         g2d.dispose();

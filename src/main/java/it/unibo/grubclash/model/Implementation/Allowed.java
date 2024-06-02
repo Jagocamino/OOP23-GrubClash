@@ -299,8 +299,8 @@ public class Allowed {
             entity.getEntity() == entities.PLAYER3 ||
             entity.getEntity() == entities.PLAYER4 ||
             entity.getEntity() == entities.PLAYER5 ||
-            entity.getEntity() == entities.WALL ||
-            entity.getEntity() == entities.PROJECTILE 
+            entity.getEntity() == entities.WALL //||
+            //entity.getEntity() == entities.PROJECTILE 
         );
     }
 
