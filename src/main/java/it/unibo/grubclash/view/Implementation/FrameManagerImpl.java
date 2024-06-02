@@ -15,6 +15,21 @@ public class FrameManagerImpl implements FrameManager {
     private static final int WINDOW_WIDTH = 1500;
     private static final int WINDOW_HEIGHT = 800;
 
+     // Variabile statica per l'istanza Singleton
+    private static FrameManagerImpl instance;
+
+    // Costruttore privato per evitare istanziazione esterna
+    private FrameManagerImpl() {
+    }
+
+    // Metodo statico per ottenere l'istanza Singleton
+    public static FrameManagerImpl getInstance() {
+        if (instance == null) {
+            instance = new FrameManagerImpl();
+        }
+        return instance;
+    }
+
     public void setTitle(JFrame frame) {
         frame.setTitle("GrubClash");
     }

@@ -20,7 +20,7 @@ import java.io.IOException;
 
 public class MapBuilder extends Canvas implements MapBuilderInterface {
 
-    private static FrameManager frameManager = new FrameManagerImpl();
+    private static FrameManager frameManager = FrameManagerImpl.getInstance();
 
     static String color_game = "#EF7B10";
 
@@ -423,7 +423,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         JFrame mapContainer = new JFrame();
         setMapContainer(mapContainer);
 
-        FrameManager frameManager = new FrameManagerImpl();
+        FrameManager frameManager = FrameManagerImpl.getInstance();
         frameManager.setTitle(getMapContainer());
 
         frameManager.setIcon(getMapContainer());

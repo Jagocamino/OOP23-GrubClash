@@ -11,7 +11,7 @@ import it.unibo.grubclash.view.Application_Programming_Interface.UIInterface;
 
 public class UI implements UIInterface {
 
-    private static final FrameManager frameManager = new FrameManagerImpl();
+    private static final FrameManager frameManager = FrameManagerImpl.getInstance();
 
     String color_game = "#EF7B10";
 

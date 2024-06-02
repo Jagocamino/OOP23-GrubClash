@@ -30,7 +30,7 @@ import it.unibo.grubclash.view.Implementation.UI;
 public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
 
     //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
-    public FrameManager frameManager = new FrameManagerImpl();
+    public FrameManager frameManager = FrameManagerImpl.getInstance();
 
     // FPS
     static final int FPS = 60;

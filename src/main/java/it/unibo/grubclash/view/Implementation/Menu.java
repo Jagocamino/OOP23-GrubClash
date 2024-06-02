@@ -13,7 +13,7 @@ import java.io.File;
 public class Menu extends JFrame{
 
     //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
-    private static final FrameManager frameManager = new FrameManagerImpl();
+    private static final FrameManager frameManager = FrameManagerImpl.getInstance();
 
     final char FS = File.separatorChar;
 
@@ -28,7 +28,6 @@ public class Menu extends JFrame{
         frameMenu.setLayout(new BorderLayout());
 
         //visto che ho creato l'interfaccia di FrameManager e non posso mettere i metodi statici creo il frame Fanager e gli setto l'icono FM
-        FrameManager frameManager = new FrameManagerImpl();
         frameManager.setIcon(frameMenu);
 
         //Pannello menù
