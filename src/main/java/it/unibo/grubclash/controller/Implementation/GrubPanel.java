@@ -2,7 +2,6 @@ package it.unibo.grubclash.controller.Implementation;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
@@ -37,10 +36,6 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
 
     // Thread principale
     Thread gameThread; 
-
-    // Schermo
-    BufferedImage screen;
-    Graphics2D g2d;
 
     //Key Handler
     ArrayList<KeyHandler> keyHandelers;
@@ -123,6 +118,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
                 updatePhysic();
                 updateProj();
                 updateDynamicEntities();
+                updateGameState();
                 delta--;
             }
 
@@ -130,6 +126,22 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
                 timer = 0;
             }
         }
+    }
+
+    private void updateGameState() {
+        
+        for (Player player : players) {
+            if(player.isAlive()){
+                numAlivePlayers++;
+                idOfTheWinner = player.getId();
+            }
+        }
+        if(numAlivePlayers == 1){
+            gameFinished(true);
+        }else if(numAlivePlayers == 0){
+            gameFinished(false);
+        }
+        numAlivePlayers = 0;
     }
 
     private void updateProj() {
@@ -168,69 +180,43 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
     private void update() {
         new Thread(() -> {
             while(gameThread != null) {
-                for (Player player : players) {
-                    if(player.isAlive()){
-                        numAlivePlayers++;
-                        idOfTheWinner = player.getId();
-                    }
-                }
-                if(numAlivePlayers == 1){
-                    gameFinished(true);
-                }else if(numAlivePlayers == 0){
-                    gameFinished(false);
-                }else{
-                    for(Player p : players) {
-                        if(p.isAlive()){
-                            numPlayerTurn = p.getId();
-                            int numCicles = 0;   //6 cicli da 2 secondi => 12 secondi di round
-                            long wait = System.nanoTime();
+                for(Player p : players) {
+                    if(p.isAlive()){
+                        numPlayerTurn = p.getId();
+                        int numCicles = 0;   //6 cicli da 2 secondi => 12 secondi di round
+                        long wait = System.nanoTime();
                             
-                            if(numAlivePlayers == 1){
-                                gameFinished(true);
-                            }
-                            if(numAlivePlayers == 0){
-                                gameFinished(false);
-                            }
+                        while(System.nanoTime() - wait <= 2000000000) {
+                            turnBegin = true;
+                        } //due secondi di attesa prima che inizi il turno
+
+                        MapBuilder.getCh();
                             
-                            while(System.nanoTime() - wait <= 2000000000) {
-                                turnBegin = true;
-                            } //due secondi di attesa prima che inizi il turno
-
-                            if(numAlivePlayers == 1){
-                                gameFinished(true);
-                            }
-                            if(numAlivePlayers == 0){
-                                gameFinished(false);
-                            }
-
-                            if(p.isAlive()) { // press any key to continue
-                                MapBuilder.getCh();
-                            }
-                            turnBegin = false;
-                            this.addKeyListener(p.getKeyH());
-                            int counter = 0;
-                            while(numCicles <= 5 && p.isAlive()){
-                                long start = System.nanoTime();
-                                while(System.nanoTime() - start <= 2000000000) {
-                                    counter++;
-                                    p.update();
-                                    Allowed.touchDynamicEntity(p);
-                                    if(counter % 33 == 0){   //forse c'è un modo migliore per farlo 
-                                        secondsTurn++;
-                                    }
-                                    try {
-                                        Thread.sleep(20);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
+                        turnBegin = false;
+                        this.addKeyListener(p.getKeyH());
+                        int counter = 0;
+                        while(numCicles <= 5 && p.isAlive()){
+                            long start = System.nanoTime();
+                            while(System.nanoTime() - start <= 2000000000) {
+                                counter++;
+                                p.update();
+                                Allowed.touchDynamicEntity(p);
+                                if(counter % 33 == 0){  
+                                    secondsTurn++;
                                 }
-                                numCicles++;
+                                try {
+                                    Thread.sleep(20);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                            resetVariables(p);
+                            numCicles++;
                         }
+                        resetVariables(p);
                     }
-                    numAlivePlayers = 0;
                 }
+                    
+                
             }
         }).start();
     }
