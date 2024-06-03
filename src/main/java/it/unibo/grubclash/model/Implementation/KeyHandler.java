@@ -14,6 +14,8 @@ public class KeyHandler implements KeyListener {
         this.grubPanel = grubPanel;
     }
 
+    public KeyHandler(){}
+
     @Override
     public void keyTyped(KeyEvent e) {}
 

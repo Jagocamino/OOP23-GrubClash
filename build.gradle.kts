@@ -1,4 +1,4 @@
-group = "it.unibo.grubclash"
+
 version = "1.0-SNAPSHOT"
 
 plugins {

@@ -35,22 +35,23 @@ public class Player extends Entity implements PlayerInterface{
     public int shovelCounter = 0;
     public boolean cooldownDig = false;
 
-    public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
-        super(grubPanel);
+    public Player(int id, KeyHandler keyH) {
+        super(EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get()), EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get()),
+        35, 35,EnumEntity.idToEntitiesConverter(id).get());
 
         this.life= new LifeImpl(this,new LifeDrawingImpl());
 
         this.keyH = keyH;
 
         this.id = id;
-        this.x = EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get());
-        this.y = EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get());
-        this.width = 35;
-        this.height = 35;
+        /* this.x = EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get());
+        this.y = EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get()); */
+        /* this.width = 35;
+        this.height = 35; */
         this.speed = 3;
         this.direction = orientation.DOWN;
         weapon = Optional.of(new WeaponRoket(this));
-        setEntity(EnumEntity.idToEntitiesConverter(id).get());
+        /* setEntity(EnumEntity.idToEntitiesConverter(id).get()); */
         Allowed.addDynamicEntity(Optional.of(this));
         getImage(id);
         getShovelImage(id);

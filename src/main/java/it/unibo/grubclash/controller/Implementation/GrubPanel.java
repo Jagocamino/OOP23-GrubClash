@@ -79,7 +79,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         players = new ArrayList<>();
         for(int i = 0; i < playerCount; i++) {
             keyHandelers.add(new KeyHandler(this));
-            players.add(new Player(this, i, keyHandelers.get(i)));
+            players.add(new Player(i, keyHandelers.get(i)));
         } 
 
 
