@@ -10,16 +10,25 @@ repositories {
     mavenCentral()
 }
 
+
 tasks.jar {
     archiveBaseName.set("GrubClash")
     archiveVersion.set("1.0.0")
     archiveFileName.set("..\\..\\GrubClash.jar")
 
     manifest {
-        attributes["Main-Class"] = "it.unibo.grubclash.view.Implementation.Main"
+        attributes["Main-Class"] = "it.unibo.grubclash.model.Implementation.Main"
     }
 }
 
+dependencies {
+
+    val jUnitVersion = "5.10.1"
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$jUnitVersion")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
+}
+
 application {
-    mainClass.set("it.unibo.grubclash.view.Implementation.Main")
+    mainClass.set("it.unibo.grubclash.model.Implementation.Main")
 }
