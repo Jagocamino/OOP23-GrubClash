@@ -1,6 +1,7 @@
-package it.unibo.grubclash.player;
+package it.unibo.grubclash.Entity;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -15,7 +16,7 @@ import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
 
-public class PlayerTest {
+public class RocketTest {
 
     ArrayList<Optional<Entity>> dynamicEntities = new ArrayList<>(); 
     GrubPanel gp;
@@ -23,7 +24,7 @@ public class PlayerTest {
     EnumEntity.entities[][] entities = new EnumEntity.entities[20][20];
 
     @Test
-    void testSpawnPlayer(){
+    void testProjectile(){
         for(int i = 0; i< 20; i++){
             for(int j = 0; j<20;j++){
                 entities[i][j] = EnumEntity.entities.SKY;
@@ -32,8 +33,18 @@ public class PlayerTest {
         new Allowed(0,0,0,0);
         MapBuilder.entityMatrix = entities;
         pl = new Player(0, new KeyHandler());
-        assertEquals(pl.getEntity(), EnumEntity.entities.PLAYER1);
-        assertTrue(pl.isAlive());
-        assertEquals(pl.getId(), 0);
+        assertTrue(pl.getWeapon().isPresent());
+        assertEquals(pl.getWeapon().get().getAmmo(), 5);
+        pl.getWeapon().get().shoot();
+        assertEquals(pl.getWeapon().get().getAmmo(), 4);
+        pl.getWeapon().get().reduceAmmo();
+        assertEquals(pl.getWeapon().get().getAmmo(), 3);
+        pl.getWeapon().get().refillAmmo();
+        assertEquals(pl.getWeapon().get().getAmmo(), 5);
+        pl.getWeapon().get().setAmmo(0);
+        assertEquals(pl.getWeapon().get().getAmmo(), 0);
+        assertEquals(pl.getWeapon().get().getOwner(), pl);
+
     }
+    
 }
