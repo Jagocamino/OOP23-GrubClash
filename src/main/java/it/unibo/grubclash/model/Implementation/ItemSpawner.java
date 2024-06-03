@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ItemSpawner implements ItemSpawnerInterface {
 
-    public void generateSpawnLocation (int ROWS, int COLS, int numOfItems, entities[][] entityMatrix) { // mette dentro entityMatrix[][] ITEM, dentro grubpanel verranno cambiati
+    public void generateSpawnLocation (int ROWS, int COLS, int numOfItems, entities[][] entityMatrix) {
         
         Random randomNum = new Random();
         int randX;
