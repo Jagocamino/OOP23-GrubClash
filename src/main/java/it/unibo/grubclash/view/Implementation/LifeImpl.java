@@ -1,5 +1,4 @@
 package it.unibo.grubclash.view.Implementation;
-import it.unibo.grubclash.controller.Implementation.GrubPanel;
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.view.Application_Programming_Interface.Life;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
@@ -18,7 +17,7 @@ public class LifeImpl implements Life {
     private final int value=2;
     private LifeDrawingImpl drawingStrategy;
 
-    public LifeImpl (GrubPanel grubPanel,Player player,LifeDrawingImpl drawingStrategy){
+    public LifeImpl (Player player,LifeDrawingImpl drawingStrategy){
 
         this.life=10;
         this.player=player;

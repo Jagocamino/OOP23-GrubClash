@@ -38,7 +38,7 @@ public class Player extends Entity implements PlayerInterface{
     public Player(GrubPanel grubPanel, int id, KeyHandler keyH) {
         super(grubPanel);
 
-        this.life= new LifeImpl(grubPanel,this,new LifeDrawingImpl());
+        this.life= new LifeImpl(this,new LifeDrawingImpl());
 
         this.keyH = keyH;
 
