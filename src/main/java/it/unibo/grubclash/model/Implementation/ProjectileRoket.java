@@ -13,6 +13,7 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
     private int dmgRadius = 50;
     private static int widthRoket = 10;
     private static int heightRoket = 10;
+    private int speed = 10;
     private PlayerInterface owner;
 
     public ProjectileRoket(int x, int y, PlayerInterface owner) {
@@ -82,15 +83,15 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
     private int updatedDir (orientation dir) {
         switch (dir) {
             case UP:
-                return getY() - 5;
+                return getY() - speed;
             case UP2:
-                return getY() - 5;
+                return getY() - speed;
             case DOWN:
-                return getY() + 5;
+                return getY() + speed;
             case RIGHT:
-                return getX() + 5;
+                return getX() + speed;
             case LEFT:
-                return getX() - 5;
+                return getX() - speed;
             default:
                 return 0;
         }

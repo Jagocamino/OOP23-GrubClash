@@ -38,7 +38,7 @@ public class WeaponRoket extends Weapon implements WeaponType {
         Sound.play();
         setShootingDir(getOwner().getDirection());
         reduceAmmo();
-        rocket = Optional.of(new ProjectileRoket(getOwner().getX(), getOwner().getY(), getOwner()));
+        rocket = Optional.of(new ProjectileRoket(getOwner().getX() + 20, getOwner().getY() + 20, getOwner()));
         return rocket;
         
     }
