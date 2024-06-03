@@ -47,10 +47,6 @@ public class Entity implements EntityInterface { //ogni entity, comprese le stru
         this.entity = entity;
     } 
 
-    public Entity (GrubPanelInter grubPanel) {
-        this.grubPanel = grubPanel;
-    }
-
     @Override
     public void update(){}
 

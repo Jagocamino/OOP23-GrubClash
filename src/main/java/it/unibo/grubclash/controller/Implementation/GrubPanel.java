@@ -226,7 +226,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         Sound.setFile(6);
         Sound.play();
         gameThread = null;
-        Allowed.clearDynamicEntities();
+        //Allowed.clearDynamicEntities();
         Object[] options = {"Esci", "Ricomincia"};
         int choice;
         if(win){

@@ -44,14 +44,9 @@ public class Player extends Entity implements PlayerInterface{
         this.keyH = keyH;
 
         this.id = id;
-        /* this.x = EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get());
-        this.y = EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get()); */
-        /* this.width = 35;
-        this.height = 35; */
         this.speed = 3;
         this.direction = orientation.DOWN;
         weapon = Optional.of(new WeaponRoket(this));
-        /* setEntity(EnumEntity.idToEntitiesConverter(id).get()); */
         Allowed.addDynamicEntity(Optional.of(this));
         getImage(id);
         getShovelImage(id);
