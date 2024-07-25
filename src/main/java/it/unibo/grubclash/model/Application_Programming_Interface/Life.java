@@ -1,4 +1,4 @@
-package it.unibo.grubclash.view.Application_Programming_Interface;
+package it.unibo.grubclash.model.Application_Programming_Interface;
 
 import java.awt.*;
 import java.util.Optional;

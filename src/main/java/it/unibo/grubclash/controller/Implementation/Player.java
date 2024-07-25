@@ -9,11 +9,11 @@ import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
+import it.unibo.grubclash.model.Implementation.LifeImpl;
 import it.unibo.grubclash.model.Implementation.Sound;
 import it.unibo.grubclash.model.Implementation.Weapon;
 import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.view.Implementation.LifeDrawingImpl;
-import it.unibo.grubclash.view.Implementation.LifeImpl;
 import it.unibo.grubclash.view.Implementation.WeaponRoket;
 
 public class Player extends Entity implements PlayerInterface{
@@ -201,8 +201,12 @@ public class Player extends Entity implements PlayerInterface{
                     cooldownDig = false;
                 }
             }
+            if(Allowed.damageFromMob(this)){
+                this.life.damage();
+            }
             weapon.get().setWeaponDir(direction);
         }
+
     }
 
     @Override

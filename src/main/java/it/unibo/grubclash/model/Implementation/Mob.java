@@ -8,8 +8,7 @@ import java.util.Optional;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
 import it.unibo.grubclash.model.Implementation.EnumEntity.status;
-import it.unibo.grubclash.view.Implementation.LifeDrawingImpl;
-import it.unibo.grubclash.view.Implementation.LifeImpl;
+import it.unibo.grubclash.view.Implementation.LifeDrawingMobImpl;
 
 public class Mob extends Entity {
 
@@ -26,17 +25,15 @@ public class Mob extends Entity {
     private BufferedImage stand2;
     private BufferedImage death;
 
-    private static final int lifeValues = 1;
+    private static final int lifeValues = 2;
 
     public Mob(int x, int y, int width, int height, entities entity) {
         super(x, y, width, height, entity);
         canMove=true;
-        this.life = new LifeImpl(this, new LifeDrawingImpl());
+        this.life = new LifeImpl(this, new LifeDrawingMobImpl());
         this.life.setLife(lifeValues);
 
         this.direction = orientation.DOWN;
-        //Allowed.addDynamicEntity(Optional.of(this));
-
         getImage();
 
     }
@@ -52,8 +49,6 @@ public class Mob extends Entity {
     }
 
     public void update(){
-
-        System.out.println(this.life.getLife().get());
 
         if(this.isAlive()){
 

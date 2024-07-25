@@ -17,7 +17,6 @@ import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.ItemSpawner;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
-import it.unibo.grubclash.model.Implementation.Mob;
 import it.unibo.grubclash.model.Implementation.Physic;
 import it.unibo.grubclash.model.Implementation.Sound;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
@@ -324,7 +323,8 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
 
         for (Optional<Entity> mob : Allowed.getMob()) {
             if (mob.isPresent()) {
-                mob.get().draw(g2d);   
+                mob.get().draw(g2d);
+                mob.get().life.draw(g2d);   
             }
         }
 

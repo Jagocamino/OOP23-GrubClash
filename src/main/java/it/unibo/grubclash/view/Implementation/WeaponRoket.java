@@ -14,6 +14,12 @@ public class WeaponRoket extends Weapon implements WeaponType {
 
     private final static int defaultAmmo = 5;
 
+    private static final int whidthRocket=20;
+    private static final int heigthRocket=20;
+
+    //Adding pixels to the rocket
+    private static final int addingPixel=20;
+
     public WeaponRoket(Player owner) {
         super(owner, defaultAmmo);
         getImage();
@@ -21,10 +27,10 @@ public class WeaponRoket extends Weapon implements WeaponType {
 
     private void getImage(){ 
 
-        left = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_left.png", 40, 40);
-        right = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_right.png", 40, 40);
-        up = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_up.png", 40, 40);
-        down = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_down.png", 40, 40);
+        left = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_left.png", whidthRocket, heigthRocket);
+        right = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_right.png", whidthRocket, heigthRocket);
+        up = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_up.png", whidthRocket, heigthRocket);
+        down = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_down.png", whidthRocket, heigthRocket);
     }
 
     @Override
@@ -34,11 +40,11 @@ public class WeaponRoket extends Weapon implements WeaponType {
             rocket = Optional.empty();
             return rocket;
         }
-        Sound.setFile(5);
+        Sound.setFile(defaultAmmo);
         Sound.play();
         setShootingDir(getOwner().getDirection());
         reduceAmmo();
-        rocket = Optional.of(new ProjectileRoket(getOwner().getX() + 20, getOwner().getY() + 20, getOwner()));
+        rocket = Optional.of(new ProjectileRoket(getOwner().getX() + addingPixel, getOwner().getY() + addingPixel, getOwner()));
         return rocket;
         
     }

@@ -13,7 +13,6 @@ import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 import it.unibo.grubclash.view.Application_Programming_Interface.ImageScalarInterface;
 import it.unibo.grubclash.view.Implementation.ImageScalar;
-import it.unibo.grubclash.view.Implementation.LifeImpl;
 
 public class Entity implements EntityInterface { //ogni entity, comprese le strutture, ha questa classe
 

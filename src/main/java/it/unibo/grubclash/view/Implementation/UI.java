@@ -19,12 +19,16 @@ public class UI implements UIInterface {
     private Graphics2D g2d;
     private Font snapITCFont;
 
+    //Font
+    final int sizeFont = 24;
+
+    //where the number of ammo is shown on the screen
+    private static final int ammoX=50;
+    private static final int ammoY=50;
+
     public UI(GrubPanel grubPanel2){
 
         this.grubPanel = grubPanel2;
-
-        //Font
-        final int sizeFont = 24;
         snapITCFont = new Font("Snap ITC", Font.BOLD, sizeFont);
 
 
@@ -60,14 +64,14 @@ public class UI implements UIInterface {
 
         if(grubPanel.turnBegin){
             g2d.setFont(snapITCFont.deriveFont(40f));
-            g2d.drawString("STA PER INIZIARE IL TURNO DI: " + (grubPanel.numPlayerTurn + 1), frameManager.getWindowWidth().get()/4, frameManager.getWindowHeight().get()/4);
+            g2d.drawString("STA PER INIZIARE IL TURNO DI: " + (grubPanel.numPlayerTurn+1), frameManager.getWindowWidth().get()/4, frameManager.getWindowHeight().get()/4);
         }
     }
 
     private void drawAmmos(){
 
         g2d.setFont(snapITCFont.deriveFont(25f));
-        g2d.drawString("MUNIZIONI: " + grubPanel.players.get(grubPanel.numPlayerTurn).getWeapon().get().getAmmo(), 50, 50);
+        g2d.drawString("MUNIZIONI: " + grubPanel.players.get(grubPanel.numPlayerTurn).getWeapon().get().getAmmo(), ammoX, ammoY);
     }
 
 }

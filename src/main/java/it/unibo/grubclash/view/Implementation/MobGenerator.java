@@ -18,6 +18,10 @@ public class MobGenerator extends Entity {
     private static final int widthMobGenerator=20;
     private static final int heighMobGenerator=20;
 
+    //Pixel removal Insert the MobGenerator in the right place
+    final int removePixelsWidth = 23;
+    final int removePixelsHeigth = 23;
+
     public MobGenerator(int x, int y) {
 
         super(x, y, widthMobGenerator, heighMobGenerator, EnumEntity.entities.MOBGENERATOR);
@@ -28,10 +32,6 @@ public class MobGenerator extends Entity {
     }
 
     private void getImage() {
-
-        //Pixel removal Insert the MobGenerator in the right place
-        final int removePixelsWidth = 23;
-        final int removePixelsHeigth = 23;
 
         stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "MobGenerator.png", this.width+removePixelsWidth, this.height+removePixelsHeigth);
     }

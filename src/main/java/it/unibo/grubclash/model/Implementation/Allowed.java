@@ -453,4 +453,22 @@ public class Allowed {
     }
 
 
+    public static boolean damageFromMob(Player p){
+
+        //Size in pixels
+        final int sizePixel=10;
+
+        for (Optional<Entity> m : mob) {
+
+            if(m.isPresent()){
+                if(m.get().getX()<=p.getX()+sizePixel && m.get().getX()>=p.getX()-sizePixel && m.get().getY()<=p.getY()+sizePixel && m.get().getY()>=p.getY()-sizePixel ){
+                    return true;
+                }
+            }
+            
+        }
+        return false;
+    }
+
+
 }

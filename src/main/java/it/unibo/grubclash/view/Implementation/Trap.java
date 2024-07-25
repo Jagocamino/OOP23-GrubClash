@@ -17,6 +17,10 @@ public class Trap extends Entity{
     private static final int widthTrap=20;
     private static final int heightTrap=20;
 
+    //Pixel removal Insert the Trap in the right place
+    final int removePixelsWidth = 23;
+    final int removePixelsHeigth = 23;
+
     public Trap(int x, int y) {
 
         super(x, y, widthTrap, heightTrap, EnumEntity.entities.TRAP);
@@ -26,10 +30,6 @@ public class Trap extends Entity{
     }
 
     private void getImage() {
-
-        //Pixel removal Insert the Trap in the right place
-        final int removePixelsWidth = 23;
-        final int removePixelsHeigth = 23;
 
         stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "trap.png", this.width+removePixelsWidth, this.height+removePixelsHeigth);
     }

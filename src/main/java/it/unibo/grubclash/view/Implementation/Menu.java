@@ -23,9 +23,11 @@ public class Menu extends JFrame{
         JPanel panel = createMenuPanel(frameMenu);
 
         //Impostazione dello sfondo del menu
+        final int newX=0;
+        final int newY=0;
         ImageIcon image = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "menu_bg.jpg");
         JLabel menu_bg = new JLabel(image);
-        menu_bg.setBounds(0, 0, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
+        menu_bg.setBounds(newX, newY, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
 
         //Creazione del bottone play
         JButton playButton = createPlayButton(frameMenu);
