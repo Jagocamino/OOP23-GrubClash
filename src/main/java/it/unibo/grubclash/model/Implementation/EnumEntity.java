@@ -20,7 +20,8 @@ public class EnumEntity {
         EXPLOSION,
         GUN,
         ITEM,
-        PROJECTILE;   
+        PROJECTILE,
+        MOBGENERATOR;   
     }
 
     public enum weapons {

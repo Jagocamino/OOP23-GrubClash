@@ -2,6 +2,7 @@ package it.unibo.grubclash.controller.Implementation;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -229,16 +230,17 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         //Allowed.clearDynamicEntities();
         Object[] options = {"Esci", "Ricomincia"};
         int choice;
+        final char FS = File.separatorChar;
         if(win){
             choice = JOptionPane.showOptionDialog(null, "Congratulazioni!\n Il giocatore numero " + (idOfTheWinner + 1) + " ha vinto!",
             "VITTORIA", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
-            new ImageIcon("src" + FrameManagerImpl.FS + "main" + FrameManagerImpl.FS + "resources" + FrameManagerImpl.FS + "players" + FrameManagerImpl.FS + "player0" + FrameManagerImpl.FS + "Grub_pl_0_stand_1.png"),
+            new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player0" + FS + "Grub_pl_0_stand_1.png"),
             options, options[0]);
         }
         else{
             choice = JOptionPane.showOptionDialog(null, "NESSUN GIOCATORE HA VINTO LA PARTITA! ",
             "ENDGAME", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, 
-            new ImageIcon("src" + FrameManagerImpl.FS + "main" + FrameManagerImpl.FS + "resources" + FrameManagerImpl.FS + "players" + FrameManagerImpl.FS + "player0" + FrameManagerImpl.FS + "Grub_pl_0_stand_1.png"),
+            new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "players" + FS + "player0" + FS + "Grub_pl_0_stand_1.png"),
             options, options[0]);
         }
         if(choice == 0){

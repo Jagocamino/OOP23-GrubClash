@@ -12,13 +12,19 @@ import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 
 public class Ammo_Box extends Entity{
     
-    final char FS = File.separatorChar;
+    private final char FS = File.separatorChar;
 
-    public BufferedImage stand1, stand2;
+    private BufferedImage stand1;
+    private BufferedImage stand2;
+
+    private static final int newWidth = 20;
+    private static final int newHeigth = 20;
+    //Adding pixels for the image
+    private static final int addiction = 23;
 
     public Ammo_Box(int x, int y) {
 
-        super(x, y, 20, 20, EnumEntity.entities.AMMO_BOX);
+        super(x, y, newWidth, newHeigth, EnumEntity.entities.AMMO_BOX);
 
         Allowed.addDynamicEntity(Optional.of(this));
         getImage();
@@ -26,8 +32,8 @@ public class Ammo_Box extends Entity{
 
     private void getImage() {
 
-        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "ammo_box_1.png", this.width+23, this.height+23);
-        stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "ammo_box_2.png", this.width+23, this.height+23);    
+        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "ammo_box_1.png", this.width+addiction, this.height+addiction);
+        stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "ammo_box_2.png", this.width+addiction, this.height+addiction);    
     }
 
     @Override

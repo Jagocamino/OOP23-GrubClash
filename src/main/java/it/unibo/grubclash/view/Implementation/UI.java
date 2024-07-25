@@ -13,18 +13,19 @@ public class UI implements UIInterface {
 
     private static final FrameManager frameManager = FrameManagerImpl.getInstance();
 
-    String color_game = "#EF7B10";
+    private String color_game = "#EF7B10";
 
-    GrubPanel grubPanel;
-    Graphics2D g2d;
-    public Font snapITCFont;
+    private GrubPanel grubPanel;
+    private Graphics2D g2d;
+    private Font snapITCFont;
 
     public UI(GrubPanel grubPanel2){
 
         this.grubPanel = grubPanel2;
 
         //Font
-        snapITCFont = new Font("Snap ITC", Font.BOLD, 24);
+        final int sizeFont = 24;
+        snapITCFont = new Font("Snap ITC", Font.BOLD, sizeFont);
 
 
     }

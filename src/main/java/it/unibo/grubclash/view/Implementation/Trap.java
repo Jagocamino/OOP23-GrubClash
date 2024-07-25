@@ -11,20 +11,27 @@ import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 
 public class Trap extends Entity{
 
-    final char FS = File.separatorChar;
+    private final char FS = File.separatorChar;
 
-    public BufferedImage stand1;
+    private BufferedImage stand1;
+    private static final int widthTrap=20;
+    private static final int heightTrap=20;
 
     public Trap(int x, int y) {
 
-        super(x, y, 20, 20, EnumEntity.entities.TRAP);
+        super(x, y, widthTrap, heightTrap, EnumEntity.entities.TRAP);
 
         Allowed.addDynamicEntity(Optional.of(this));
         getImage();
     }
 
     private void getImage() {
-        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "trap.png", this.width+23, this.height+23);
+
+        //Pixel removal Insert the Trap in the right place
+        final int removePixelsWidth = 23;
+        final int removePixelsHeigth = 23;
+
+        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "trap.png", this.width+removePixelsWidth, this.height+removePixelsHeigth);
     }
 
     @Override

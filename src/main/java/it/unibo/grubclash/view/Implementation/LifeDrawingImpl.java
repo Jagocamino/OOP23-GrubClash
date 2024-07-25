@@ -12,7 +12,15 @@ import it.unibo.grubclash.view.Application_Programming_Interface.LifeDrawing;
 
 public class LifeDrawingImpl implements LifeDrawing {
 
-    private BufferedImage life20,life40,life60,life80,life100;
+    private BufferedImage life20;
+    private BufferedImage life40;
+    private BufferedImage life60;
+    private BufferedImage life80;
+    private BufferedImage life100;
+
+    //pixel removal to draw the image of life on top of the character
+    private static final int removingX = 25;
+    private static final int removingY = 15;
 
     public LifeDrawingImpl() {
         final char FS = File.separatorChar;
@@ -27,19 +35,19 @@ public class LifeDrawingImpl implements LifeDrawing {
     public void drawLife(Graphics2D g2d, Player player, int life) {
         switch (life) {
             case 10:
-                g2d.drawImage(life100, player.x - 25, player.y - 15, null);
+                g2d.drawImage(life100, player.x - removingX, player.y - removingY, null);
                 break;
             case 8:
-                g2d.drawImage(life80, player.x - 25, player.y - 15, null);
+                g2d.drawImage(life80, player.x - removingX, player.y - removingY, null);
                 break;
             case 6:
-                g2d.drawImage(life60, player.x - 25, player.y - 15, null);
+                g2d.drawImage(life60, player.x - removingX, player.y - removingY, null);
                 break;
             case 4:
-                g2d.drawImage(life40, player.x - 25, player.y - 15, null);
+                g2d.drawImage(life40, player.x - removingX, player.y - removingY, null);
                 break;
             case 2:
-                g2d.drawImage(life20, player.x - 25, player.y - 15, null);
+                g2d.drawImage(life20, player.x - removingX, player.y - removingY, null);
                 break;
             default:
                 break;

@@ -1,4 +1,5 @@
 package it.unibo.grubclash.view.Implementation;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,21 +10,17 @@ import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
 import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 
-public class Heal extends Entity{
-
+public class MobGenerator extends Entity {
+    
     private final char FS = File.separatorChar;
 
     private BufferedImage stand1;
-    private BufferedImage stand2;
+    private static final int widthMobGenerator=20;
+    private static final int heighMobGenerator=20;
 
-    private static final int newWidth = 20;
-    private static final int newHeigth = 20;
-    //Adding pixels for the image
-    private static final int addiction = 23;
+    public MobGenerator(int x, int y) {
 
-    public Heal(int x, int y) {
-
-        super(x, y, newWidth, newHeigth, EnumEntity.entities.HEAL);
+        super(x, y, widthMobGenerator, heighMobGenerator, EnumEntity.entities.MOBGENERATOR);
 
         Allowed.addDynamicEntity(Optional.of(this));
         getImage();
@@ -31,17 +28,17 @@ public class Heal extends Entity{
 
     private void getImage() {
 
-        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "heal_1.png", this.width+addiction, this.height+addiction);
-        stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "heal_2.png", this.width+addiction, this.height+addiction);    
+        //Pixel removal Insert the MobGenerator in the right place
+        final int removePixelsWidth = 23;
+        final int removePixelsHeigth = 23;
+
+        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "trap.png", this.width+removePixelsWidth, this.height+removePixelsHeigth);
     }
 
     @Override
     public void draw(Graphics2D g2d){
         if(working == status.ALIVE){
             g2d.drawImage(stand1, x, y,null);
-        }else{
-            g2d.drawImage(stand2, x, y,null);
         }
     }
-    
 }

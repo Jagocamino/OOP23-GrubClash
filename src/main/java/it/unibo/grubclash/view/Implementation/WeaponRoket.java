@@ -10,7 +10,7 @@ import it.unibo.grubclash.model.Implementation.Weapon;
 import it.unibo.grubclash.view.Application_Programming_Interface.WeaponType;
 
 public class WeaponRoket extends Weapon implements WeaponType {
-    final char FS = File.separatorChar;
+    private final char FS = File.separatorChar;
 
     private final static int defaultAmmo = 5;
 
