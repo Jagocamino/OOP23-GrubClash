@@ -1,5 +1,4 @@
 package it.unibo.grubclash.view.Implementation;
-import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.view.Application_Programming_Interface.Life;
 import it.unibo.grubclash.view.Implementation.LifeImpl;

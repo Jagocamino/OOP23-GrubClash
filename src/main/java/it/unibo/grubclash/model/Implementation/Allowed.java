@@ -25,6 +25,7 @@ public class Allowed {
     private static Entity[][] lvlData;
     private static int ROWS;
     private static int COLS;
+    private static ArrayList<Optional<Entity>> mob;
 
     public Allowed(int borderX, int borderY, int ROWS, int COLS) { //quando creo Allowed DENTRO MAP BUILDER chiamo il costruttore e gli passo i bordi del JPanel che contiene il giochino e le righe e colonne totali
         Allowed.borderX = borderX;
@@ -33,6 +34,7 @@ public class Allowed {
         Allowed.COLS = COLS;
         Allowed.lvlData = new Entity[ROWS][COLS];
         Allowed.dynamicEntities = new ArrayList<Optional<Entity>>();
+        mob = new ArrayList<>();
     }
 
     private static EntityInterface getLvlData( int i, int j) {
@@ -126,6 +128,7 @@ public class Allowed {
                         break;
                     case MOBGENERATOR:
                         t.get().working = status.DEAD;
+                        getMob().add(Optional.of(new Mob(0,0,35,35,entities.MOB)));
                         break;
                     default: break;
                 }
@@ -294,6 +297,21 @@ public class Allowed {
                 return true;
             }
         }
+        for (Optional<Entity> entity : Allowed.mob) {
+            if (    (
+                        entity.isPresent() 
+                    ) && (   
+                        x >= entity.get().getX() &&
+                        x < (entity.get().getWidth() + entity.get().getX()) &&
+                        y >= entity.get().getY() && 
+                        y < (entity.get().getY() + entity.get().getHeight())
+                    ) && (
+                        hittable(entity.get())
+                    )
+                ) {
+                return true;
+            }
+        }
         return false;
     }
    
@@ -318,7 +336,8 @@ public class Allowed {
             entity.getEntity() == entities.PLAYER4 ||
             entity.getEntity() == entities.PLAYER5 ||
             entity.getEntity() == entities.WALL ||
-            entity.getEntity() == entities.PROJECTILE 
+            entity.getEntity() == entities.PROJECTILE ||
+            entity.getEntity() == entities.MOB
         );
     }
 
@@ -329,7 +348,8 @@ public class Allowed {
             entity.getEntity() == entities.PLAYER3 ||
             entity.getEntity() == entities.PLAYER4 ||
             entity.getEntity() == entities.PLAYER5 ||
-            entity.getEntity() == entities.WALL
+            entity.getEntity() == entities.WALL ||
+            entity.getEntity() == entities.MOB
         );
     }
 
@@ -348,6 +368,29 @@ public class Allowed {
     public static ArrayList<Entity> dealDamage (int explosionX, int explosionY, int explosionWidth, int explosionHeight) { 
         ArrayList<Entity> damageToWhichDynamicEntities = new ArrayList<>();
         for (Optional<Entity> dynamicEntity : Allowed.dynamicEntities) {
+            if(dynamicEntity.isPresent()){
+
+                int entityX = dynamicEntity.get().getX();
+                int entityY = dynamicEntity.get().getY();
+                int entityWidth = dynamicEntity.get().getWidth();
+                int entityHeight = dynamicEntity.get().getHeight();
+                if( damageable(dynamicEntity.get()) && (
+                    ( explosionX >= entityX && explosionX < (entityX + entityWidth)) || // se è sporgente a sx
+                    ( explosionX + explosionWidth >= entityX && explosionX + explosionWidth < (entityX + entityWidth)) || // se è sporgente a dx
+                    ( explosionX < entityX && explosionX + explosionWidth >= (entityX + entityWidth)) // se è dentro
+                    ) && (
+                    ( explosionY >= entityY && explosionY < (entityY + entityHeight)) || // se è sporgente sopra
+                    ( explosionY + explosionHeight >= entityY && explosionY + explosionHeight < (entityY + entityHeight)) || // se è sporgente sotto
+                    ( explosionY < entityY && explosionY + explosionHeight >= (entityY + entityHeight)) // se è dentro
+                    ) 
+                ){
+                        damageToWhichDynamicEntities.add(dynamicEntity.get());
+                }
+            }
+
+        }
+
+        for (Optional<Entity> dynamicEntity : Allowed.mob) {
             if(dynamicEntity.isPresent()){
 
                 int entityX = dynamicEntity.get().getX();
@@ -394,7 +437,7 @@ public class Allowed {
     // infligge il danno alle strutture e ai giocatori nella ArrayList buttata fuori da dealDamage (ovvero tutte le entità colpite dall'esplosione)
     public static void applyDamage (ArrayList<Entity> dealDamage, int i) {
         for (Entity entity : dealDamage) {
-            if ( isPlayer(entity) ) {
+            if ( isPlayer(entity) || entity.getEntity().equals(entities.MOB) ) {
                 for(int j = 0; j < i; j++){
                     entity.life.damage();
                 }
@@ -403,6 +446,10 @@ public class Allowed {
                 mapDestroyer(entity);
             }
         }
+    }
+
+    public static ArrayList<Optional<Entity>> getMob() {
+        return mob;
     }
 
 

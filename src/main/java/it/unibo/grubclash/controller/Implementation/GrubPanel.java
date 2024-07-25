@@ -17,6 +17,7 @@ import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.ItemSpawner;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
+import it.unibo.grubclash.model.Implementation.Mob;
 import it.unibo.grubclash.model.Implementation.Physic;
 import it.unibo.grubclash.model.Implementation.Sound;
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
@@ -121,11 +122,20 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
                 updateProj();
                 updateDynamicEntities();
                 updateGameState();
+                updateMob();
                 delta--;
             }
 
             if(timer >= 1000000000){
                 timer = 0;
+            }
+        }
+    }
+
+    private void updateMob() {
+        for (Optional<Entity> mob : Allowed.getMob()) {
+            if (mob.isPresent()) {
+                mob.get().update(); 
             }
         }
     }
@@ -281,6 +291,12 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         for(Player p2 : players){
             physic.checkDeath(p2);
         }
+
+        for (Optional<Entity> mob : Allowed.getMob()) {
+            if (mob.isPresent()) {
+                physic.checkTerrain(mob.get()); 
+            }
+        }
     }
 
     public void paintComponent(Graphics g){
@@ -303,6 +319,12 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         for (Optional<Entity> entity : Allowed.getDynamicEntities()) {
             if (entity.isPresent() && !Allowed.isPlayer(entity.get()) && entity.get().getEntity() != entities.PROJECTILE) {
                 entity.get().draw(g2d);   
+            }
+        }
+
+        for (Optional<Entity> mob : Allowed.getMob()) {
+            if (mob.isPresent()) {
+                mob.get().draw(g2d);   
             }
         }
 

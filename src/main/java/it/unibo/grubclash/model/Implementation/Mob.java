@@ -2,14 +2,18 @@ package it.unibo.grubclash.model.Implementation;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Optional;
 
 import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
+import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 import it.unibo.grubclash.view.Implementation.LifeDrawingImpl;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
 
 public class Mob extends Entity {
+
+    private final char FS = File.separatorChar;
 
     private static final int speed = 3;
     private orientation direction;
@@ -22,28 +26,37 @@ public class Mob extends Entity {
     private BufferedImage stand2;
     private BufferedImage death;
 
-    private static final int lifeValues = 4;
+    private static final int lifeValues = 1;
 
     public Mob(int x, int y, int width, int height, entities entity) {
         super(x, y, width, height, entity);
+        canMove=true;
         this.life = new LifeImpl(this, new LifeDrawingImpl());
         this.life.setLife(lifeValues);
 
         this.direction = orientation.DOWN;
-        Allowed.addDynamicEntity(Optional.of(this));
+        //Allowed.addDynamicEntity(Optional.of(this));
 
         getImage();
 
     }
 
     private void getImage() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getImage'");
+        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "mob" + FS + "Mob_down_1.png" , this.width+13, this.height+13);
+        stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "mob" + FS + "Mob_down_2.png" , this.width+13, this.height+13);
+        left1 = setup("src" + FS + "main" + FS + "resources" + FS + "mob" + FS + "Mob_left_1.png" , this.width+13, this.height+13);
+        left2 = setup("src" + FS + "main" + FS + "resources" + FS + "mob" + FS + "Mob_left_2.png" , this.width+13, this.height+13);
+        right1 = setup("src" + FS + "main" + FS + "resources" + FS + "mob" + FS + "Mob_right_1.png" , this.width+13, this.height+13);
+        right2 = setup("src" + FS + "main" + FS + "resources" + FS + "mob" + FS + "Mob_right_2.png" , this.width+13, this.height+13);
+        death = setup("src" + FS + "main" + FS + "resources" + FS + "mob" + FS + "Mob_death.png", this.width+13, this.height+13);
     }
 
     public void update(){
 
+        System.out.println(this.life.getLife().get());
+
         if(this.isAlive()){
+
             spriteCounter++;
             if(spriteCounter > 12){
                 if(spriteNum == 1){
@@ -54,15 +67,25 @@ public class Mob extends Entity {
                 }
                 spriteCounter = 0;
             }
-            if(Allowed.CanMoveThere(x - speed, y, width, height)){
+            if(Allowed.CanMoveThere(x - speed, y, width, height) && !canMove){
                 direction = orientation.LEFT;
                 x-=speed;
+                
             }
-            else if(Allowed.CanMoveThere(x + speed, y, width, height)){
+            else{
+                direction = orientation.DOWN;
+                canMove=true;
+            }
+            if(Allowed.CanMoveThere(x + speed, y, width, height) && canMove){
                 direction = orientation.RIGHT;
                 x+=speed;
             }else {
-                direction = orientation.DOWN;
+                direction = orientation.LEFT;
+                canMove=false;
+            }
+
+            if(this.life.getLife().get() <= 0){
+                working=status.DEAD;
             }
         }
     }
