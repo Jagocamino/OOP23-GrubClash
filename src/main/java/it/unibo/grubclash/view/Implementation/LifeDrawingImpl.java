@@ -2,7 +2,6 @@ package it.unibo.grubclash.view.Implementation;
 
 import java.awt.Graphics2D;
 
-import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.model.Implementation.Entity;
 
 import java.awt.image.BufferedImage;
