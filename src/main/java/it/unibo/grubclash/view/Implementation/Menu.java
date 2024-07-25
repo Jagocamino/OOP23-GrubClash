@@ -127,9 +127,9 @@ public class Menu extends JFrame{
 
         //Pixel removal Insert the play2 (Jbutton) in the right place
         final int removePixelsX = 100;
-        final int new_y = 350;
-        final int widthPlay2 = 200;
-        final int heightPlay2 = 200;
+        final int new_y = 0;
+        final int widthPlay2 = 100;
+        final int heightPlay2 = 100;
 
         play2.setBorderPainted(false);
         play2.setBounds((frameManager.getWindowWidth().get() / 2) - removePixelsX, new_y, widthPlay2, heightPlay2);

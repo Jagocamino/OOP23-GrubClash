@@ -1,5 +1,6 @@
 package it.unibo.grubclash.view.Implementation;
 import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.view.Application_Programming_Interface.Life;
 import it.unibo.grubclash.view.Implementation.LifeImpl;
 
@@ -10,17 +11,17 @@ public class LifeImpl implements Life {
 
     private String color_game = "#EF7B10";
     private final Font snapITCFont;
-    private final Player player;
+    private final Entity entity;
 
     //vita di ogni giocatore che va da 10 a 0
     private int life;
     private final int value=2;
     private LifeDrawingImpl drawingStrategy;
 
-    public LifeImpl (Player player,LifeDrawingImpl drawingStrategy){
+    public LifeImpl (Entity entity,LifeDrawingImpl drawingStrategy){
 
         this.life=10;
-        this.player=player;
+        this.entity=entity;
         this.drawingStrategy = drawingStrategy;
         //Font
         snapITCFont = new Font("Snap ITC", Font.BOLD, 24);
@@ -32,7 +33,7 @@ public class LifeImpl implements Life {
         g2d.setFont(snapITCFont);
         g2d.setColor(Color.decode(color_game));
 
-        drawingStrategy.drawLife(g2d, player, life);
+        drawingStrategy.drawLife(g2d, entity, life);
     }
 
 

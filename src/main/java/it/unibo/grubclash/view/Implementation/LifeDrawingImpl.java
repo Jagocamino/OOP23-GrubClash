@@ -32,22 +32,22 @@ public class LifeDrawingImpl implements LifeDrawing {
     }
 
     @Override
-    public void drawLife(Graphics2D g2d, Player player, int life) {
+    public void drawLife(Graphics2D g2d, Entity entity, int life) {
         switch (life) {
             case 10:
-                g2d.drawImage(life100, player.x - removingX, player.y - removingY, null);
+                g2d.drawImage(life100, entity.x - removingX, entity.y - removingY, null);
                 break;
             case 8:
-                g2d.drawImage(life80, player.x - removingX, player.y - removingY, null);
+                g2d.drawImage(life80, entity.x - removingX, entity.y - removingY, null);
                 break;
             case 6:
-                g2d.drawImage(life60, player.x - removingX, player.y - removingY, null);
+                g2d.drawImage(life60, entity.x - removingX, entity.y - removingY, null);
                 break;
             case 4:
-                g2d.drawImage(life40, player.x - removingX, player.y - removingY, null);
+                g2d.drawImage(life40, entity.x - removingX, entity.y - removingY, null);
                 break;
             case 2:
-                g2d.drawImage(life20, player.x - removingX, player.y - removingY, null);
+                g2d.drawImage(life20, entity.x - removingX, entity.y - removingY, null);
                 break;
             default:
                 break;

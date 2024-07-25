@@ -6,6 +6,7 @@ import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.status;
 import it.unibo.grubclash.view.Implementation.Ammo_Box;
 import it.unibo.grubclash.view.Implementation.Heal;
+import it.unibo.grubclash.view.Implementation.MobGenerator;
 import it.unibo.grubclash.view.Implementation.Trap;
 
 import javax.swing.*;
@@ -123,6 +124,9 @@ public class Allowed {
                         player.getWeapon().get().refillAmmo();
                         t.get().working = status.DEAD; 
                         break;
+                    case MOBGENERATOR:
+                        t.get().working = status.DEAD;
+                        break;
                     default: break;
                 }
             }
@@ -143,13 +147,15 @@ public class Allowed {
     
     private static Entity giveRandomItem (int x, int y) {
         Random randomNum = new Random();    
-        switch (randomNum.nextInt(3)) {
+        switch (randomNum.nextInt(4)) {
             case 0:
                 return new Trap(x, y);
             case 1:
                 return new Heal(x, y);
             case 2:
                 return new Ammo_Box(x, y);
+            case 3:
+                return new MobGenerator(x, y);
             default:
                 return null;
         }
