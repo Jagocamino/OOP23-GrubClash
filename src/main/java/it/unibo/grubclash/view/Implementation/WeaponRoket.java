@@ -27,10 +27,10 @@ public class WeaponRoket extends Weapon implements WeaponType {
 
     private void getImage(){ 
 
-        left = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_left.png", whidthRocket, heigthRocket);
-        right = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_right.png", whidthRocket, heigthRocket);
-        up = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_up.png", whidthRocket, heigthRocket);
-        down = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_down.png", whidthRocket, heigthRocket);
+        left = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_left.png", whidthRocket + addingPixel, heigthRocket + addingPixel);
+        right = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_right.png", whidthRocket + addingPixel, heigthRocket + addingPixel);
+        up = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_up.png", whidthRocket + addingPixel, heigthRocket + addingPixel);
+        down = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "weapons" + FS + "rocketweapon" + FS + "rocketweapon_down.png", whidthRocket + addingPixel, heigthRocket + addingPixel);
     }
 
     @Override
