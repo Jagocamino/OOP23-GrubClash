@@ -55,4 +55,33 @@ public interface PlayerInterface {
      */
     KeyHandler getKeyHandler();
 
+    /**
+     * Sets the alreadyShot variable to true if the player shot during his turn
+     * @param alreadyShot 
+     */
+    void setAlreadyShot(boolean alreadyShot);
+
+    /**
+     * Sets the alreadydug variable to true if the player dug successfully during his turn
+     * @param alreadyDug 
+     */
+    void setAlreadyDug(boolean alreadyDug);
+
+    /**
+     * Sets the shovelAnimation variable to true if the player dug during his turn and starts the animation
+     * @param shovelAnimation 
+     */
+    void setShovelAnimation(boolean shovelAnimation);
+
+    /**
+     * Sets the shovelCounter variable to manage the duration of the dug animation
+     * @param shovelCounter 
+     */
+    void setShovelCounter(int shovelCounter);
+
+    /**
+     * Sets the cooldownDig variable to manage the count down between one dig and the next one
+     * @param cooldownDig 
+     */
+    void setCooldownDig(boolean cooldownDig);
 }

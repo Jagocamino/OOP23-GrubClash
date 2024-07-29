@@ -300,11 +300,11 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         p.jump2Counter = RESET;
         p.gravity=true;
         p.canMove = true;
-        p.alreadyShot = false;
-        p.alreadyDug = false;
-        p.shovelAnimation = false;
-        p.shovelCounter = RESET;
-        p.cooldownDig = false;
+        p.setAlreadyShot(false);
+        p.setAlreadyDug(false);
+        p.setShovelAnimation(false);
+        p.setShovelCounter(RESET);
+        p.setCooldownDig(false);
     }
 
     /**
