@@ -8,7 +8,7 @@ import java.util.Optional;
 import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
-import it.unibo.grubclash.model.Implementation.EnumEntity.status;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 
 public class MobGenerator extends Entity {
     
@@ -19,12 +19,12 @@ public class MobGenerator extends Entity {
     private static final int heighMobGenerator=20;
 
     //Pixel removal Insert the MobGenerator in the right place
-    final int removePixelsWidth = 23;
-    final int removePixelsHeigth = 23;
+    private final int removePixelsWidth = 23;
+    private final int removePixelsHeigth = 23;
 
     public MobGenerator(int x, int y) {
 
-        super(x, y, widthMobGenerator, heighMobGenerator, EnumEntity.entities.MOBGENERATOR);
+        super(x, y, widthMobGenerator, heighMobGenerator, EnumEntity.Entities.MOBGENERATOR);
 
         Allowed.addDynamicEntity(Optional.of(this));
         
@@ -38,7 +38,7 @@ public class MobGenerator extends Entity {
 
     @Override
     public void draw(Graphics2D g2d){
-        if(working == status.ALIVE){
+        if(working == Status.ALIVE){
             g2d.drawImage(stand1, x, y,null);
         }
     }

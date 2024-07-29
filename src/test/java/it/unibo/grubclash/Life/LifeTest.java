@@ -20,14 +20,14 @@ public class LifeTest {
     ArrayList<Optional<Entity>> dynamicEntities = new ArrayList<>(); 
     GrubPanel gp;
     Player pl;
-    EnumEntity.entities[][] entities = new EnumEntity.entities[20][20];
+    EnumEntity.Entities[][] entities = new EnumEntity.Entities[20][20];
 
     @Test
     void TestLife(){
 
         for(int i = 0; i< 20; i++){
             for(int j = 0; j<20;j++){
-                entities[i][j] = EnumEntity.entities.SKY;
+                entities[i][j] = EnumEntity.Entities.SKY;
             }
         }
         new Allowed(0,0,0,0);

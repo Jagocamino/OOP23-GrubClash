@@ -6,7 +6,7 @@ import java.util.Optional;
 import it.unibo.grubclash.controller.Application_Programming_Interface.PlayerInterface;
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.model.Implementation.ProjectileRoket;
-import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 
 /**
  * @author Camoni Jago
@@ -17,18 +17,18 @@ public interface WeaponInterface {
      * Set the direction of the weapon
      * @param weaponDir
      */
-    void setWeaponDir(orientation weaponDir);
+    void setWeaponDir(Orientation weaponDir);
 
     /**
      * @return The direction of the projectile
      */
-    orientation getShootingDir();
+    Orientation getShootingDir();
 
     /**
      * Set the direction of the projectile
      * @param shootingDir
      */
-    void setShootingDir(orientation shootingDir);
+    void setShootingDir(Orientation shootingDir);
 
     /**
      * @return The owner

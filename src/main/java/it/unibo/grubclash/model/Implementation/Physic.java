@@ -2,7 +2,7 @@ package it.unibo.grubclash.model.Implementation;
 
 import it.unibo.grubclash.controller.Implementation.GrubPanel;
 import it.unibo.grubclash.model.Application_Programming_Interface.PhysicInterface;
-import it.unibo.grubclash.model.Implementation.EnumEntity.status;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 
 public class Physic implements PhysicInterface {
   
@@ -26,8 +26,8 @@ public class Physic implements PhysicInterface {
             entity.isFalling = false;
             entity.gravityAcceleration = 2;
             entity.gravityCounter = 0;
-            if(entity.y >= grubPanel.frameManager.getWindowHeight().get()-40){
-                entity.working = status.DEAD;
+            if(entity.y >= grubPanel.getFrameManager().getWindowHeight().get()-40){
+                entity.working = Status.DEAD;
             }
         }
     }
@@ -36,7 +36,7 @@ public class Physic implements PhysicInterface {
     public void checkDeath(Entity entity) {
         if(Allowed.isPlayer(entity)){
             if(entity.life.getLife().get() <= 0){
-                entity.working = status.DEAD;
+                entity.working = Status.DEAD;
             }
         }
     }

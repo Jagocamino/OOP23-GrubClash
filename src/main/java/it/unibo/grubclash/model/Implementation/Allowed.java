@@ -2,8 +2,8 @@ package it.unibo.grubclash.model.Implementation;
 import it.unibo.grubclash.controller.Application_Programming_Interface.PlayerInterface;
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
-import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
-import it.unibo.grubclash.model.Implementation.EnumEntity.status;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 import it.unibo.grubclash.view.Implementation.Ammo_Box;
 import it.unibo.grubclash.view.Implementation.Heal;
 import it.unibo.grubclash.view.Implementation.MobGenerator;
@@ -72,7 +72,7 @@ public class Allowed {
         return Allowed.COLS;
     }
 
-    public static entities getEntity (int i, int j) {
+    public static Entities getEntity (int i, int j) {
         return Allowed.lvlData[i][j].getEntity();
     }
 
@@ -81,7 +81,7 @@ public class Allowed {
         Allowed.mapBase = mapBase;
     }
 
-    private static void addEntity (int x, int y, int width, int height, entities entity, int i, int j) {
+    private static void addEntity (int x, int y, int width, int height, Entities entity, int i, int j) {
         if (lvlData[i][j] != null ) {
             System.out.println("This box is already taken, overwriting floor or item on the map..");
         }
@@ -91,10 +91,10 @@ public class Allowed {
     //regards player
     public static boolean CanMoveThere(int x, int y, int width, int height) { 
         //controlla ogni angolo del rettangolo, se gli angoli non sono contenuti nel WALL (cioè la piattaforma o i bordi), allora restituisce true
-        if (whatIsFacing(x+5, y+5) != entities.WALL) {
-            if(whatIsFacing(x + width, y + height+2) != entities.WALL) {
-                if(whatIsFacing(x + width, y+5) != entities.WALL) {
-                    if(whatIsFacing(x+5, y + height+2) != entities.WALL)
+        if (whatIsFacing(x+5, y+5) != Entities.WALL) {
+            if(whatIsFacing(x + width, y + height+2) != Entities.WALL) {
+                if(whatIsFacing(x + width, y+5) != Entities.WALL) {
+                    if(whatIsFacing(x+5, y + height+2) != Entities.WALL)
                         return true;
                 }
             }
@@ -104,7 +104,7 @@ public class Allowed {
 
     public static void touchDynamicEntity(Player player){
         for (Optional<Entity> t : getDynamicEntities()) {
-            if( t.isPresent() && t.get().working == status.ALIVE && player.x + player.width/2 > t.get().getX() && player.x + player.width/2 < t.get().getX() + t.get().getWidth() && 
+            if( t.isPresent() && t.get().working == Status.ALIVE && player.x + player.width/2 > t.get().getX() && player.x + player.width/2 < t.get().getX() + t.get().getWidth() && 
                 player.y + player.height/2 > t.get().getY() && player.y + player.height/2 < t.get().getY() + t.get().getHeight()){
                 switch(t.get().getEntity()){
                     case TRAP: 
@@ -112,23 +112,23 @@ public class Allowed {
                         Sound.play();
                         player.life.damage(); 
                         player.life.damage();
-                        t.get().working = status.DEAD; 
+                        t.get().working = Status.DEAD; 
                         break;
                     case HEAL:
                         Sound.setFile(3);
                         Sound.play();
                         player.life.plusLife(); 
-                        t.get().working = status.DEAD; 
+                        t.get().working = Status.DEAD; 
                         break;
                     case AMMO_BOX:
                         Sound.setFile(2);
                         Sound.play();
                         player.getWeapon().get().refillAmmo();
-                        t.get().working = status.DEAD; 
+                        t.get().working = Status.DEAD; 
                         break;
                     case MOBGENERATOR:
-                        t.get().working = status.DEAD;
-                        getMob().add(Optional.of(new Mob(0,0,35,35,entities.MOB)));
+                        t.get().working = Status.DEAD;
+                        getMob().add(Optional.of(new Mob(0,0,35,35,Entities.MOB)));
                         break;
                     default: break;
                 }
@@ -136,13 +136,13 @@ public class Allowed {
         }
     }
 
-    public static void addMapBase (EnumEntity.entities[][] entityMatrix) {
+    public static void addMapBase (EnumEntity.Entities[][] entityMatrix) {
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
                 addEntity(mapBase[i][j].getX(), mapBase[i][j].getY(), (int)mapBase[i][j].getBounds().getWidth(), (int)mapBase[i][j].getBounds().getHeight(), entityMatrix[i][j], i, j);
-                if (entityMatrix[i][j] == entities.ITEM) {
+                if (entityMatrix[i][j] == Entities.ITEM) {
                     addDynamicEntity(Optional.of(giveRandomItem(mapBase[i][j].getX(), mapBase[i][j].getY())));
-                    lvlData[i][j].setEntity(entities.SKY);
+                    lvlData[i][j].setEntity(Entities.SKY);
                 }
             }
         }
@@ -196,12 +196,12 @@ public class Allowed {
 
     //entityMatrix serve SOLO per inizializzare lvlData, poi NON DEVE più essere usato
     public static void mapDestroyer (int i, int j) {
-        if (getLvlData(i, j).getEntity() == entities.WALL) {     
+        if (getLvlData(i, j).getEntity() == Entities.WALL) {     
             mapBase[i][j].removeAll();
             mapBase[i][j].setBackground(Color.CYAN);
             mapBase[i][j].revalidate();
             mapBase[i][j].repaint();
-            Allowed.lvlData[i][j].setEntity(entities.SKY);
+            Allowed.lvlData[i][j].setEntity(Entities.SKY);
         }else{
             System.out.println("Entity not wall didnt switch behaviour");
         }
@@ -239,13 +239,13 @@ public class Allowed {
         return Optional.empty();
     }
     
-    private static entities whatIsFacing(int x, int y) {
+    private static Entities whatIsFacing(int x, int y) {
         //controlla, di quei punti dell'angolo che vengono passati, se è dentro un oggetto
         if (x < 0 || x >= borderX) {
-            return entities.WALL;
+            return Entities.WALL;
         } 
         if (y < 0 || y >= borderY) {
-            return entities.WALL;
+            return Entities.WALL;
         }
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
@@ -255,7 +255,7 @@ public class Allowed {
                 }
             }
         }
-        return entities.SKY;
+        return Entities.SKY;
     }
 
     //                                      TUTTO QUELLO CHE RIGUARDA IL PROIETTILE
@@ -270,7 +270,7 @@ public class Allowed {
                 if (y < 0 || y >= borderY) {
                     return true;
                 }
-                if (    lvlData[i][j].getEntity() == entities.WALL &&
+                if (    lvlData[i][j].getEntity() == Entities.WALL &&
                         x >= Allowed.lvlData[i][j].getX() &&
                         x < (Allowed.lvlData[i][j].getWidth() + Allowed.lvlData[i][j].getX()) &&
                         y >= Allowed.lvlData[i][j].getY() &&
@@ -330,36 +330,36 @@ public class Allowed {
     //check if entity is hittable
     public static boolean hittable(EntityInterface entity) {
         return (
-            entity.getEntity() == entities.PLAYER1 ||
-            entity.getEntity() == entities.PLAYER2 ||
-            entity.getEntity() == entities.PLAYER3 ||
-            entity.getEntity() == entities.PLAYER4 ||
-            entity.getEntity() == entities.PLAYER5 ||
-            entity.getEntity() == entities.WALL ||
-            entity.getEntity() == entities.PROJECTILE ||
-            entity.getEntity() == entities.MOB
+            entity.getEntity() == Entities.PLAYER1 ||
+            entity.getEntity() == Entities.PLAYER2 ||
+            entity.getEntity() == Entities.PLAYER3 ||
+            entity.getEntity() == Entities.PLAYER4 ||
+            entity.getEntity() == Entities.PLAYER5 ||
+            entity.getEntity() == Entities.WALL ||
+            entity.getEntity() == Entities.PROJECTILE ||
+            entity.getEntity() == Entities.MOB
         );
     }
 
     public static boolean damageable (EntityInterface entity) {
         return (
-            entity.getEntity() == entities.PLAYER1 ||
-            entity.getEntity() == entities.PLAYER2 ||
-            entity.getEntity() == entities.PLAYER3 ||
-            entity.getEntity() == entities.PLAYER4 ||
-            entity.getEntity() == entities.PLAYER5 ||
-            entity.getEntity() == entities.WALL ||
-            entity.getEntity() == entities.MOB
+            entity.getEntity() == Entities.PLAYER1 ||
+            entity.getEntity() == Entities.PLAYER2 ||
+            entity.getEntity() == Entities.PLAYER3 ||
+            entity.getEntity() == Entities.PLAYER4 ||
+            entity.getEntity() == Entities.PLAYER5 ||
+            entity.getEntity() == Entities.WALL ||
+            entity.getEntity() == Entities.MOB
         );
     }
 
     public static boolean isPlayer (EntityInterface entity) {
         return (
-            entity.getEntity() == entities.PLAYER1 ||
-            entity.getEntity() == entities.PLAYER2 ||
-            entity.getEntity() == entities.PLAYER3 ||
-            entity.getEntity() == entities.PLAYER4 ||
-            entity.getEntity() == entities.PLAYER5
+            entity.getEntity() == Entities.PLAYER1 ||
+            entity.getEntity() == Entities.PLAYER2 ||
+            entity.getEntity() == Entities.PLAYER3 ||
+            entity.getEntity() == Entities.PLAYER4 ||
+            entity.getEntity() == Entities.PLAYER5
         );
     }
 
@@ -417,7 +417,7 @@ public class Allowed {
                 int entityY = lvlData[i][j].getY();
                 int entityWidth = lvlData[i][j].getWidth();
                 int entityHeight = lvlData[i][j].getHeight();
-                if( (lvlData[i][j].getEntity() == entities.WALL) && (
+                if( (lvlData[i][j].getEntity() == Entities.WALL) && (
                     ( explosionX >= entityX && explosionX < (entityX + entityWidth)) || // se è sporgente a sx
                     ( explosionX + explosionWidth >= entityX && explosionX + explosionWidth < (entityX + entityWidth)) || // se è sporgente a dx
                     ( explosionX < entityX && explosionX + explosionWidth >= (entityX + entityWidth)) // se è dentro
@@ -437,12 +437,12 @@ public class Allowed {
     // infligge il danno alle strutture e ai giocatori nella ArrayList buttata fuori da dealDamage (ovvero tutte le entità colpite dall'esplosione)
     public static void applyDamage (ArrayList<Entity> dealDamage, int i) {
         for (Entity entity : dealDamage) {
-            if ( isPlayer(entity) || entity.getEntity().equals(entities.MOB) ) {
+            if ( isPlayer(entity) || entity.getEntity().equals(Entities.MOB) ) {
                 for(int j = 0; j < i; j++){
                     entity.life.damage();
                 }
             }
-            if ( entity.getEntity() == entities.WALL ) {// da valutare se il muoro si cancella direttamente oppure ha una healthbar
+            if ( entity.getEntity() == Entities.WALL ) {// da valutare se il muoro si cancella direttamente oppure ha una healthbar
                 mapDestroyer(entity);
             }
         }

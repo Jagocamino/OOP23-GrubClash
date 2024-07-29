@@ -6,16 +6,16 @@ import java.util.Optional;
 
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.model.Application_Programming_Interface.WeaponInterface;
-import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
-import it.unibo.grubclash.model.Implementation.EnumEntity.status;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 
 public abstract class Weapon implements WeaponInterface {
 
     private Player owner;
     private int ammo;
-    private orientation shootingDir;
+    private Orientation shootingDir;
 
-    private orientation weaponDir;
+    private Orientation weaponDir;
 
     protected Optional<ProjectileRoket> rocket;
 
@@ -30,16 +30,16 @@ public abstract class Weapon implements WeaponInterface {
     }
 
     @Override
-    public void setWeaponDir(orientation weaponDir) {
+    public void setWeaponDir(Orientation weaponDir) {
         this.weaponDir = weaponDir;
     }
 
     @Override
-    public orientation getShootingDir() {
+    public Orientation getShootingDir() {
         return shootingDir;
     }
     @Override
-    public void setShootingDir(orientation shootingDir) {
+    public void setShootingDir(Orientation shootingDir) {
         this.shootingDir = shootingDir;
     }
 
@@ -76,7 +76,7 @@ public abstract class Weapon implements WeaponInterface {
         
         BufferedImage image = null;
 
-        if(getOwner().working == status.ALIVE){
+        if(getOwner().working == Status.ALIVE){
 
             switch(weaponDir){
                 case LEFT:

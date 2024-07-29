@@ -12,7 +12,7 @@ import it.unibo.grubclash.model.Implementation.KeyHandler;
 import it.unibo.grubclash.model.Implementation.LifeImpl;
 import it.unibo.grubclash.model.Implementation.Sound;
 import it.unibo.grubclash.model.Implementation.Weapon;
-import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 import it.unibo.grubclash.view.Implementation.LifeDrawingImpl;
 import it.unibo.grubclash.view.Implementation.WeaponRoket;
 
@@ -27,7 +27,7 @@ public class Player extends Entity implements PlayerInterface{
 
     private int id;
     private int speed;
-    private orientation direction;
+    private Orientation direction;
     private Optional<Weapon> weapon;
     public boolean alreadyShot = false;
     public boolean alreadyDug = false;
@@ -45,7 +45,7 @@ public class Player extends Entity implements PlayerInterface{
 
         this.id = id;
         this.speed = 3;
-        this.direction = orientation.DOWN;
+        this.direction = Orientation.DOWN;
         weapon = Optional.of(new WeaponRoket(this));
         Allowed.addDynamicEntity(Optional.of(this));
         getImage(id);
@@ -90,13 +90,13 @@ public class Player extends Entity implements PlayerInterface{
             }
             if(keyH.leftPressed && canMove){
                 if(Allowed.CanMoveThere(x - speed, y, width, height)){
-                    direction = orientation.LEFT;
+                    direction = Orientation.LEFT;
                     x-=speed;
                 }
             }
             else if(keyH.rightPressed && canMove){
                 if(Allowed.CanMoveThere(x + speed, y, width, height)){
-                    direction = orientation.RIGHT;
+                    direction = Orientation.RIGHT;
                     x+=speed;
                 }
             }
@@ -108,7 +108,7 @@ public class Player extends Entity implements PlayerInterface{
                 jump1Counter++;
 
                 if(jump1Counter < 15){
-                    direction = orientation.UP;
+                    direction = Orientation.UP;
                 }
 
                 if(jump1Counter == 10){
@@ -119,7 +119,7 @@ public class Player extends Entity implements PlayerInterface{
                 if(jump1Counter > 15){
                     canMove = true;
                     if(jump1Counter == 16){
-                        direction = orientation.UP2;
+                        direction = Orientation.UP2;
                     }
                     jump2Counter++;
                     if(jump2Counter < 15 && Allowed.CanMoveThere(x, y-30/jump2Counter, width, height)){
@@ -127,7 +127,7 @@ public class Player extends Entity implements PlayerInterface{
                     }
                     if(jump2Counter > 15 && jump2Counter < 30){  
                         if(jump2Counter == 16){
-                            direction = orientation.DOWN;
+                            direction = Orientation.DOWN;
                         } 
                         gravity = true;
                     }
@@ -191,7 +191,7 @@ public class Player extends Entity implements PlayerInterface{
                 }
             }
             if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
-                direction = orientation.DOWN;
+                direction = Orientation.DOWN;
             }
             if(shovelAnimation){
                 shovelCounter++;
@@ -220,12 +220,12 @@ public class Player extends Entity implements PlayerInterface{
     }
 
     @Override
-    public orientation getDirection() {
+    public Orientation getDirection() {
         return direction;
     }
 
     @Override
-    public void setDirection(orientation direction) {
+    public void setDirection(Orientation direction) {
         this.direction = direction;
     }
     
@@ -300,7 +300,7 @@ public class Player extends Entity implements PlayerInterface{
     }
 
     @Override
-    public KeyHandler getKeyH() {
+    public KeyHandler getKeyHandler() {
         return keyH;
     }
 }

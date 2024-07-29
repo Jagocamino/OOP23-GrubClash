@@ -3,13 +3,13 @@ package it.unibo.grubclash.model.Implementation;
 import java.util.Random;
 
 import it.unibo.grubclash.model.Application_Programming_Interface.ItemSpawnerInterface;
-import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 
 import java.util.ArrayList;
 
 public class ItemSpawner implements ItemSpawnerInterface {
 
-    public void generateSpawnLocation (int ROWS, int COLS, int numOfItems, entities[][] entityMatrix) {
+    public void generateSpawnLocation (int ROWS, int COLS, int numOfItems, Entities[][] entityMatrix) {
         
         Random randomNum = new Random();
         int randX;
@@ -27,8 +27,8 @@ public class ItemSpawner implements ItemSpawnerInterface {
                 randX = randomNum.nextInt(COLS);
             } while ((alreadyInCol(randX, list) == true) && (saturation < numOfItems));
 
-            if (entityMatrix[randY][randX] == entities.SKY) {
-                entityMatrix[randY][randX] = entities.ITEM;
+            if (entityMatrix[randY][randX] == Entities.SKY) {
+                entityMatrix[randY][randX] = Entities.ITEM;
                 list.add(randX);
                 itemsAdded++;
             }

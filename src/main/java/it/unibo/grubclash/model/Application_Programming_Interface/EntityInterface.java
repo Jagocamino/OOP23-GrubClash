@@ -2,7 +2,7 @@ package it.unibo.grubclash.model.Application_Programming_Interface;
 
 import java.awt.Graphics2D;
 
-import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 
 public interface EntityInterface {
 
@@ -20,9 +20,9 @@ public interface EntityInterface {
 
     int getHeight();
 
-    entities getEntity();
+    Entities getEntity();
 
-    void setEntity(entities entity);
+    void setEntity(Entities entity);
 
     boolean isAlive();
 

@@ -5,9 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Optional;
 
-import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
-import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
-import it.unibo.grubclash.model.Implementation.EnumEntity.status;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 import it.unibo.grubclash.view.Implementation.LifeDrawingMobImpl;
 
 public class Mob extends Entity {
@@ -15,7 +15,7 @@ public class Mob extends Entity {
     private final char FS = File.separatorChar;
 
     private static final int speed = 3;
-    private orientation direction;
+    private Orientation direction;
 
     private BufferedImage left1;
     private BufferedImage left2;
@@ -27,13 +27,13 @@ public class Mob extends Entity {
 
     private static final int lifeValues = 2;
 
-    public Mob(int x, int y, int width, int height, entities entity) {
+    public Mob(int x, int y, int width, int height, Entities entity) {
         super(x, y, width, height, entity);
         canMove=true;
         this.life = new LifeImpl(this, new LifeDrawingMobImpl());
         this.life.setLife(lifeValues);
 
-        this.direction = orientation.DOWN;
+        this.direction = Orientation.DOWN;
         getImage();
 
     }
@@ -63,24 +63,24 @@ public class Mob extends Entity {
                 spriteCounter = 0;
             }
             if(Allowed.CanMoveThere(x - speed, y, width, height) && !canMove){
-                direction = orientation.LEFT;
+                direction = Orientation.LEFT;
                 x-=speed;
                 
             }
             else{
-                direction = orientation.DOWN;
+                direction = Orientation.DOWN;
                 canMove=true;
             }
             if(Allowed.CanMoveThere(x + speed, y, width, height) && canMove){
-                direction = orientation.RIGHT;
+                direction = Orientation.RIGHT;
                 x+=speed;
             }else {
-                direction = orientation.LEFT;
+                direction = Orientation.LEFT;
                 canMove=false;
             }
 
             if(this.life.getLife().get() <= 0){
-                working=status.DEAD;
+                working=Status.DEAD;
             }
         }
     }
@@ -121,11 +121,11 @@ public class Mob extends Entity {
         
     }
 
-    public orientation getDirection() {
+    public Orientation getDirection() {
         return direction;
     }
 
-    public void setDirection(orientation direction) {
+    public void setDirection(Orientation direction) {
         this.direction = direction;
     }
     

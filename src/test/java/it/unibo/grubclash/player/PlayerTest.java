@@ -20,19 +20,19 @@ public class PlayerTest {
     ArrayList<Optional<Entity>> dynamicEntities = new ArrayList<>(); 
     GrubPanel gp;
     Player pl;
-    EnumEntity.entities[][] entities = new EnumEntity.entities[20][20];
+    EnumEntity.Entities[][] entities = new EnumEntity.Entities[20][20];
 
     @Test
     void testSpawnPlayer(){
         for(int i = 0; i< 20; i++){
             for(int j = 0; j<20;j++){
-                entities[i][j] = EnumEntity.entities.SKY;
+                entities[i][j] = EnumEntity.Entities.SKY;
             }
         }
         new Allowed(0,0,0,0);
         MapBuilder.entityMatrix = entities;
         pl = new Player(0, new KeyHandler());
-        assertEquals(pl.getEntity(), EnumEntity.entities.PLAYER1);
+        assertEquals(pl.getEntity(), EnumEntity.Entities.PLAYER1);
         assertTrue(pl.isAlive());
         assertEquals(pl.getId(), 0);
     }

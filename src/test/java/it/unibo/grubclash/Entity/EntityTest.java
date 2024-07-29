@@ -26,7 +26,7 @@ public class EntityTest {
         assertEquals(Allowed.getDynamicEntities().get(0).get().getX(), x);
         assertEquals(Allowed.getDynamicEntities().get(0).get().getY(), y);
         assertTrue(Allowed.getDynamicEntities().get(0).get().isAlive());
-        assertEquals(Allowed.getDynamicEntities().get(0).get().getEntity(), EnumEntity.entities.TRAP);
+        assertEquals(Allowed.getDynamicEntities().get(0).get().getEntity(), EnumEntity.Entities.TRAP);
     }
 
     @Test
@@ -36,7 +36,7 @@ public class EntityTest {
         assertEquals(Allowed.getDynamicEntities().get(0).get().getX(), x);
         assertEquals(Allowed.getDynamicEntities().get(0).get().getY(), y);
         assertTrue(Allowed.getDynamicEntities().get(0).get().isAlive());
-        assertEquals(Allowed.getDynamicEntities().get(0).get().getEntity(), EnumEntity.entities.HEAL);
+        assertEquals(Allowed.getDynamicEntities().get(0).get().getEntity(), EnumEntity.Entities.HEAL);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class EntityTest {
         assertEquals(Allowed.getDynamicEntities().get(0).get().getX(), x);
         assertEquals(Allowed.getDynamicEntities().get(0).get().getY(), y);
         assertTrue(Allowed.getDynamicEntities().get(0).get().isAlive());
-        assertEquals(Allowed.getDynamicEntities().get(0).get().getEntity(), EnumEntity.entities.AMMO_BOX);
+        assertEquals(Allowed.getDynamicEntities().get(0).get().getEntity(), EnumEntity.Entities.AMMO_BOX);
     }
     
 }

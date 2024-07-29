@@ -103,11 +103,11 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
     public final static int ROWS = 20;
     public final static int COLS = 20; 
 
-    public static EnumEntity.entities[][] entityMatrix;
+    public static EnumEntity.Entities[][] entityMatrix;
 
     public MapBuilder(final int playerCount) {
         setNumPlayers(playerCount);
-        MapBuilder.entityMatrix = new EnumEntity.entities[ROWS][COLS];
+        MapBuilder.entityMatrix = new EnumEntity.Entities[ROWS][COLS];
         mapDrawer = false;
         p1Map();
     }
@@ -124,11 +124,11 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         }
     }
 
-    public static EnumEntity.entities[][] getEntityMatrix() { // metodo per le altre classi
+    public static EnumEntity.Entities[][] getEntityMatrix() { // metodo per le altre classi
         return entityMatrix;
     }
 
-    public static void setEntityInMatrix (int i, int j, EnumEntity.entities entity) {
+    public static void setEntityInMatrix (int i, int j, EnumEntity.Entities entity) {
         MapBuilder.entityMatrix[i][j] = entity;
     }
 
@@ -309,25 +309,25 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
                 btnMatrix[i][j].setVisible(false);
                 if(mapBase[i][j].getBackground() == Color.BLACK) {
                     panelBackground(mapBase, i, j);
-                    setEntityInMatrix(i, j, EnumEntity.entities.WALL);
+                    setEntityInMatrix(i, j, EnumEntity.Entities.WALL);
                 }else if(mapBase[i][j].getBackground() == Color.GREEN){
                     mapBase[i][j].setBackground(Color.CYAN);
-                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER1);
+                    setEntityInMatrix(i, j, EnumEntity.Entities.PLAYER1);
                 }else if(mapBase[i][j].getBackground() == Color.CYAN){
                     mapBase[i][j].setBackground(Color.CYAN);
-                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER2);
+                    setEntityInMatrix(i, j, EnumEntity.Entities.PLAYER2);
                 }else if(mapBase[i][j].getBackground() == Color.ORANGE){
                     mapBase[i][j].setBackground(Color.CYAN);
-                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER3);
+                    setEntityInMatrix(i, j, EnumEntity.Entities.PLAYER3);
                 }else if(mapBase[i][j].getBackground() == Color.YELLOW){
                     mapBase[i][j].setBackground(Color.CYAN);
-                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER4);
+                    setEntityInMatrix(i, j, EnumEntity.Entities.PLAYER4);
                 }else if(mapBase[i][j].getBackground() == Color.RED){
                     mapBase[i][j].setBackground(Color.CYAN);
-                    setEntityInMatrix(i, j, EnumEntity.entities.PLAYER5);
+                    setEntityInMatrix(i, j, EnumEntity.Entities.PLAYER5);
                 }else {
                     mapBase[i][j].setBackground(Color.CYAN);
-                    setEntityInMatrix(i, j, EnumEntity.entities.SKY);
+                    setEntityInMatrix(i, j, EnumEntity.Entities.SKY);
                 }        
                 mapBase[i][j].repaint();
             }
@@ -388,19 +388,19 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
                             if (getColorSpawnpoint()) { //se il giocatore è stato piazzato, allora si può fare l'update dei player
                                 switch (getCurrentPlayer()) {
                                     case 1:
-                                        setEntityInMatrix(finalI, finalJ, EnumEntity.entities.PLAYER1);
+                                        setEntityInMatrix(finalI, finalJ, EnumEntity.Entities.PLAYER1);
                                         break;
                                     case 2:
-                                        setEntityInMatrix(finalI, finalJ, EnumEntity.entities.PLAYER2);
+                                        setEntityInMatrix(finalI, finalJ, EnumEntity.Entities.PLAYER2);
                                         break;
                                     case 3:
-                                        setEntityInMatrix(finalI, finalJ, EnumEntity.entities.PLAYER3);
+                                        setEntityInMatrix(finalI, finalJ, EnumEntity.Entities.PLAYER3);
                                         break;
                                     case 4:
-                                        setEntityInMatrix(finalI, finalJ, EnumEntity.entities.PLAYER4);
+                                        setEntityInMatrix(finalI, finalJ, EnumEntity.Entities.PLAYER4);
                                         break;
                                     case 5:
-                                        setEntityInMatrix(finalI, finalJ, EnumEntity.entities.PLAYER5);
+                                        setEntityInMatrix(finalI, finalJ, EnumEntity.Entities.PLAYER5);
                                         break;
                                     default:
                                         break;

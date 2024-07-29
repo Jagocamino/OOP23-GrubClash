@@ -50,28 +50,28 @@ public class UI implements UIInterface {
 
     private void drawPlayerTurn() {
         
-        g2d.drawString("TURNO DEL GIOCATORE N\u00B0: " + (grubPanel.numPlayerTurn + 1) , frameManager.getWindowWidth().get()/3, 45);
+        g2d.drawString("TURNO DEL GIOCATORE N\u00B0: " + (grubPanel.getNumPlayerTurn() + 1) , frameManager.getWindowWidth().get()/3, 45);
         g2d.drawRect(MapBuilder.getXMapBase(0, 19), MapBuilder.getYMapBase(0, 19), MapBuilder.getWidthMapBase(0,19), MapBuilder.getHeightMapBase(0,19));
         g2d.setFont(snapITCFont.deriveFont(30f));
-        if(grubPanel.secondsTurn < 10){
-            g2d.drawString("0" + grubPanel.secondsTurn, MapBuilder.getXMapBase(0, 19)+MapBuilder.getWidthMapBase(0,19)*2/7, MapBuilder.getYMapBase(0, 19)+MapBuilder.getHeightMapBase(0,19)*2/3);
+        if(grubPanel.getSecondsTurn() < 10){
+            g2d.drawString("0" + grubPanel.getSecondsTurn(), MapBuilder.getXMapBase(0, 19)+MapBuilder.getWidthMapBase(0,19)*2/7, MapBuilder.getYMapBase(0, 19)+MapBuilder.getHeightMapBase(0,19)*2/3);
         }else{
-            g2d.drawString("" + grubPanel.secondsTurn, MapBuilder.getXMapBase(0, 19)+MapBuilder.getWidthMapBase(0,19)*2/7, MapBuilder.getYMapBase(0, 19)+MapBuilder.getHeightMapBase(0,19)*2/3);
+            g2d.drawString("" + grubPanel.getSecondsTurn(), MapBuilder.getXMapBase(0, 19)+MapBuilder.getWidthMapBase(0,19)*2/7, MapBuilder.getYMapBase(0, 19)+MapBuilder.getHeightMapBase(0,19)*2/3);
         }
     }
     
     private void drawTurnBegin(){
 
-        if(grubPanel.turnBegin){
+        if(grubPanel.isTurnBegin()){
             g2d.setFont(snapITCFont.deriveFont(40f));
-            g2d.drawString("STA PER INIZIARE IL TURNO DI: " + (grubPanel.numPlayerTurn+1), frameManager.getWindowWidth().get()/4, frameManager.getWindowHeight().get()/4);
+            g2d.drawString("STA PER INIZIARE IL TURNO DI: " + (grubPanel.getNumPlayerTurn()+1), frameManager.getWindowWidth().get()/4, frameManager.getWindowHeight().get()/4);
         }
     }
 
     private void drawAmmos(){
 
         g2d.setFont(snapITCFont.deriveFont(25f));
-        g2d.drawString("MUNIZIONI: " + grubPanel.players.get(grubPanel.numPlayerTurn).getWeapon().get().getAmmo(), ammoX, ammoY);
+        g2d.drawString("MUNIZIONI: " + grubPanel.getPlayers().get(grubPanel.getNumPlayerTurn()).getWeapon().get().getAmmo(), ammoX, ammoY);
     }
 
 }

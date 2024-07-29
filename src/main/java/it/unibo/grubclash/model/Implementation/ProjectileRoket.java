@@ -4,8 +4,8 @@ import java.util.Optional;
 import it.unibo.grubclash.controller.Application_Programming_Interface.PlayerInterface;
 import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
 import it.unibo.grubclash.model.Application_Programming_Interface.ProjectileType;
-import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
-import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 import it.unibo.grubclash.view.Implementation.Projectile;
 
 public class ProjectileRoket extends Projectile implements ProjectileType {
@@ -17,7 +17,7 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
     private PlayerInterface owner;
 
     public ProjectileRoket(int x, int y, PlayerInterface owner) {
-        super(x, y, getWidthRoket(), getHeightRoket(), entities.PROJECTILE); 
+        super(x, y, getWidthRoket(), getHeightRoket(), Entities.PROJECTILE); 
         this.owner = owner;
         gravity = false;
         Allowed.addDynamicEntity(Optional.of(this));
@@ -37,31 +37,31 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
 
     @Override
     public void update () {
-        orientation dir = owner.getWeapon().get().getShootingDir();
+        Orientation dir = owner.getWeapon().get().getShootingDir();
         
-        if(this.working == EnumEntity.status.ALIVE){
-            if (dir == orientation.LEFT) {
+        if(this.working == EnumEntity.Status.ALIVE){
+            if (dir == Orientation.LEFT) {
                 if(Allowed.gonnaExplode(updatedDir (dir), getY(), getWidthRoket(), getHeightRoket(), owner)){
                     explosionHappening();
                 }else{
                     setX(updatedDir (dir)); 
                 }  
             }
-            else if (dir == orientation.RIGHT) {
+            else if (dir == Orientation.RIGHT) {
                 if(Allowed.gonnaExplode(updatedDir (dir), getY(), getWidthRoket(), getHeightRoket(), owner)){
                     explosionHappening();
                 }else{
                     setX(updatedDir (dir)); 
                 } 
             }
-            else if (dir == orientation.UP || dir == orientation.UP2) {
+            else if (dir == Orientation.UP || dir == Orientation.UP2) {
                 if(Allowed.gonnaExplode(getX(), updatedDir (dir), getWidthRoket(), getHeightRoket(), owner)){
                     explosionHappening();
                 }else{
                     setY(updatedDir (dir)); 
                 }  
             }
-            else if (dir == orientation.DOWN) {
+            else if (dir == Orientation.DOWN) {
                 if(Allowed.gonnaExplode(getX(), updatedDir (dir), getWidthRoket(), getHeightRoket(), owner)){
                     explosionHappening();
                 }else{
@@ -76,11 +76,11 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
         Sound.play();
         EntityInterface damage = damage(dmgRadius);
         Allowed.applyDamage(Allowed.dealDamage(damage.getX(), damage.getY(), damage.getWidth(), damage.getHeight()), 2);
-        this.working = EnumEntity.status.DEAD;
+        this.working = EnumEntity.Status.DEAD;
     }
 
     // personalizzata per ogni proiettile
-    private int updatedDir (orientation dir) {
+    private int updatedDir (Orientation dir) {
         switch (dir) {
             case UP:
                 return getY() - speed;

@@ -19,56 +19,55 @@ import it.unibo.grubclash.model.Implementation.ItemSpawner;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
 import it.unibo.grubclash.model.Implementation.Physic;
 import it.unibo.grubclash.model.Implementation.Sound;
-import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
-import it.unibo.grubclash.model.Implementation.EnumEntity.orientation;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import it.unibo.grubclash.view.Application_Programming_Interface.UIInterface;
 import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
 import it.unibo.grubclash.view.Implementation.Menu;
 import it.unibo.grubclash.view.Implementation.UI;
 
-// Pannello di gioco
+/**
+ * Class implementing the GrubPanel methods.
+ */
 public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
 
-    //FM creo il FrameManager visto che creando l'interfaccia non posso avere più i metodi statici
-    public FrameManager frameManager = FrameManagerImpl.getInstance();
+    private static final int FPS = 60;
+    private static final int TIME_LIMIT = 1000000000;
+    private static final int RESET = 0;
+    private static final int NUMBER_OF_CICLES = 5;
+    private static final int SECONDS_CONVERTER = 33;
+    private static final int TIME_SLEEP = 20;
 
-    // FPS
-    static final int FPS = 60;
-
-    // Thread principale
-    Thread gameThread; 
-
-    //Key Handler
-    ArrayList<KeyHandler> keyHandelers;
-
-    //Players
-    public ArrayList<Player> players;
-    public int playerCount;
-    public int numPlayerTurn;
-    public int secondsTurn = 0;
-    private int numAlivePlayers = 0;
+    private FrameManager frameManager = FrameManagerImpl.getInstance();
+    private Thread gameThread; 
+    private ArrayList<KeyHandler> keyHandlers;
+    private ArrayList<Player> players;
+    private int playerCount;
+    private int numPlayerTurn;
+    private int secondsTurn = RESET;
+    private int numAlivePlayers = RESET;
     private int idOfTheWinner;
+    private UIInterface ui = new UI(this);
+    private PhysicInterface physic = new Physic(this);
+    private boolean turnBegin = false;
+    
+    /**
+    * Need to initialize allowed, even if we are not going to use it as a variable
+    */
+    @SuppressWarnings("unused")
+    private Allowed allowed = new Allowed(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get(), MapBuilder.ROWS, MapBuilder.COLS);
 
-    //UI
-    UIInterface ui = new UI(this);
-
-    //PHYSIC
-    public PhysicInterface physic = new Physic(this);
-
-
-    //COLLISION CHECKER
-    public Allowed allowed = new Allowed(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get(), MapBuilder.ROWS, MapBuilder.COLS);
-
-    //VARIABLES
-    public boolean turnBegin = false;
-
+    /**
+    * Constructor for GrubPanel
+    * @param playerCount number of players
+    */
     public GrubPanel(int playerCount) {
 
         this.playerCount = playerCount;
         this.idOfTheWinner = 99;
-        this.numAlivePlayers = 0;
-        keyHandelers = new ArrayList<>();
+        this.numAlivePlayers = RESET;
+        keyHandlers = new ArrayList<>();
         Allowed.setMapBase(MapBuilder.getMapBase());
 
         ItemSpawner itSpawn = new ItemSpawner();
@@ -79,8 +78,8 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
 
         players = new ArrayList<>();
         for(int i = 0; i < playerCount; i++) {
-            keyHandelers.add(new KeyHandler(this));
-            players.add(new Player(i, keyHandelers.get(i)));
+            keyHandlers.add(new KeyHandler(this));
+            players.add(new Player(i, keyHandlers.get(i)));
         } 
 
 
@@ -89,21 +88,25 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         this.setFocusable(true);
     }
 
-    //parte il gameThread principale
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startGameThread () {
         gameThread = new Thread(this);
         gameThread.start();
     }
 
-    //metodo "delta" per creare un game loop
+    /**
+     * Delta method to create a game loop
+     */
     @Override
     public void run() {
-        double drawInterval = (double) 1000000000 / FPS;
-        double delta = 0;
+        double drawInterval = (double) TIME_LIMIT / FPS;
+        double delta = RESET;
         long lastTime = System.nanoTime();
         long currentTime;
-        long timer = 0;
+        long timer = RESET;
 
         update();
 
@@ -116,7 +119,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
             lastTime = currentTime;
 
             if(delta >= 1) {
-                repaint();  // disegna gli aggiornamenti
+                repaint();  
                 updatePhysic();
                 updateProj();
                 updateDynamicEntities();
@@ -125,12 +128,15 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
                 delta--;
             }
 
-            if(timer >= 1000000000){
-                timer = 0;
+            if(timer >= TIME_LIMIT){
+                timer = RESET;
             }
         }
     }
 
+    /**
+     * Updates the mob's movement and interaction
+     */
     private void updateMob() {
         for (Optional<Entity> mob : Allowed.getMob()) {
             if (mob.isPresent()) {
@@ -139,6 +145,9 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         }
     }
 
+    /**
+     * Checks how many players are alive, then ends the game or not, choosing the winner
+     */
     private void updateGameState() {
         
         for (Player player : players) {
@@ -152,13 +161,16 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         }else if(numAlivePlayers == 0){
             gameFinished(false);
         }
-        numAlivePlayers = 0;
+        numAlivePlayers = RESET;
     }
 
+    /**
+     * Updates the projectile's movement and interaction
+     */
     private void updateProj() {
         ArrayList<Entity> toDelete = new ArrayList<Entity>();
         for (Optional<Entity> entity : Allowed.getDynamicEntities()) {
-            if(entity.isPresent() && entity.get().getEntity() == entities.PROJECTILE){
+            if(entity.isPresent() && entity.get().getEntity() == Entities.PROJECTILE){
                 if (entity.get().isAlive()) {
                     entity.get().update();
                 } else {
@@ -169,10 +181,13 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         deleteDynamicEntity(toDelete);
     }
 
+    /**
+     * Removes the dynamic entities whenever their state is set to dead
+     */
     private void updateDynamicEntities(){
         ArrayList<Entity> toDelete = new ArrayList<Entity>();
         for (Optional<Entity> entity : Allowed.getDynamicEntities()) {
-            if(entity.isPresent() && entity.get().getEntity() == entities.TRAP){
+            if(entity.isPresent() && entity.get().getEntity() == Entities.TRAP){
                 if (!entity.get().isAlive()) {
                     toDelete.add(entity.get());
                 }
@@ -181,6 +196,9 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         deleteDynamicEntity(toDelete);
     }
 
+    /**
+     * Supports the previous method
+     */
     private void deleteDynamicEntity (ArrayList<Entity> toDelete) {
         for (Entity entity : toDelete) {
             
@@ -189,35 +207,38 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         toDelete.removeAll(toDelete);
     }
 
+    /**
+     * Updates the players based on their turn
+     */
     private void update() {
         new Thread(() -> {
             while(gameThread != null) {
                 for(Player p : players) {
                     if(p.isAlive()){
                         numPlayerTurn = p.getId();
-                        int numCicles = 0;   //6 cicli da 2 secondi => 12 secondi di round
+                        int numCicles = RESET;   
                         long wait = System.nanoTime();
                             
-                        while(System.nanoTime() - wait <= 2000000000) {
+                        while(System.nanoTime() - wait <= 2 * TIME_LIMIT) {
                             turnBegin = true;
-                        } //due secondi di attesa prima che inizi il turno
+                        } 
 
                         MapBuilder.getCh();
                             
                         turnBegin = false;
-                        this.addKeyListener(p.getKeyH());
-                        int counter = 0;
-                        while(numCicles <= 5 && p.isAlive()){
+                        this.addKeyListener(p.getKeyHandler());
+                        int counter = RESET;
+                        while(numCicles <= NUMBER_OF_CICLES && p.isAlive()){
                             long start = System.nanoTime();
-                            while(System.nanoTime() - start <= 2000000000) {
+                            while(System.nanoTime() - start <= 2 * TIME_LIMIT) {
                                 counter++;
                                 p.update();
                                 Allowed.touchDynamicEntity(p);
-                                if(counter % 33 == 0){  
+                                if(counter % SECONDS_CONVERTER == 0){  
                                     secondsTurn++;
                                 }
                                 try {
-                                    Thread.sleep(20);
+                                    Thread.sleep(TIME_SLEEP);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -232,11 +253,13 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         }).start();
     }
 
+    /**
+     * Manages the option pane at the end of the game and his behavior
+     */
     private void gameFinished(boolean win) {
         Sound.setFile(6);
         Sound.play();
         gameThread = null;
-        //Allowed.clearDynamicEntities();
         Object[] options = {"Esci", "Ricomincia"};
         int choice;
         final char FS = File.separatorChar;
@@ -261,34 +284,40 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         }
     }
 
+    /**
+     * resets the variables 
+     */
     private void resetVariables(Player p){
 
-        secondsTurn = 0;
-        p.getKeyH().leftPressed = false;
-        p.getKeyH().rightPressed = false;
-        p.getKeyH().spacePressed = false;
-        p.getKeyH().shootPressed = false;
-        this.removeKeyListener(p.getKeyH());
-        p.setDirection(orientation.DOWN);
-        p.jump1Counter = 0;
-        p.jump2Counter = 0;
+        secondsTurn = RESET;
+        p.getKeyHandler().leftPressed = false;
+        p.getKeyHandler().rightPressed = false;
+        p.getKeyHandler().spacePressed = false;
+        p.getKeyHandler().shootPressed = false;
+        this.removeKeyListener(p.getKeyHandler());
+        p.setDirection(Orientation.DOWN);
+        p.jump1Counter = RESET;
+        p.jump2Counter = RESET;
         p.gravity=true;
         p.canMove = true;
         p.alreadyShot = false;
         p.alreadyDug = false;
         p.shovelAnimation = false;
-        p.shovelCounter = 0;
+        p.shovelCounter = RESET;
         p.cooldownDig = false;
     }
 
+    /**
+     * Updates the physic of the dynamic entities, players and mobs
+     */
     private void updatePhysic() {
-        for(Optional<Entity> p : Allowed.getDynamicEntities()) {
-            if(p.isPresent() && p.get().gravity){
-                physic.checkTerrain(p.get());
+        for(Optional<Entity> entity : Allowed.getDynamicEntities()) {
+            if(entity.isPresent() && entity.get().gravity){
+                physic.checkTerrain(entity.get());
             }
         }
-        for(Player p2 : players){
-            physic.checkDeath(p2);
+        for(Player p : players){
+            physic.checkDeath(p);
         }
 
         for (Optional<Entity> mob : Allowed.getMob()) {
@@ -298,6 +327,9 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         }
     }
 
+    /**
+     * Draws players, objects, mobs and the UI on the screen
+     */
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
@@ -316,11 +348,12 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
 
         //DRAW OBJECTS
         for (Optional<Entity> entity : Allowed.getDynamicEntities()) {
-            if (entity.isPresent() && !Allowed.isPlayer(entity.get()) && entity.get().getEntity() != entities.PROJECTILE) {
+            if (entity.isPresent() && !Allowed.isPlayer(entity.get()) && entity.get().getEntity() != Entities.PROJECTILE) {
                 entity.get().draw(g2d);   
             }
         }
 
+        //DRAW MOBS
         for (Optional<Entity> mob : Allowed.getMob()) {
             if (mob.isPresent()) {
                 mob.get().draw(g2d);
@@ -335,5 +368,51 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
 
     }
 
-    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public FrameManager getFrameManager() {
+        return frameManager;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getPlayerCount() {
+        return playerCount;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getNumPlayerTurn() {
+        return numPlayerTurn;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getSecondsTurn() {
+        return secondsTurn;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isTurnBegin() {
+        return turnBegin;
+    }
 }

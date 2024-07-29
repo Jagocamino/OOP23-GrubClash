@@ -9,8 +9,8 @@ import java.awt.Graphics2D;
 
 import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanelInter;
 import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
-import it.unibo.grubclash.model.Implementation.EnumEntity.entities;
-import it.unibo.grubclash.model.Implementation.EnumEntity.status;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 import it.unibo.grubclash.view.Application_Programming_Interface.ImageScalarInterface;
 import it.unibo.grubclash.view.Implementation.ImageScalar;
 
@@ -21,7 +21,7 @@ public class Entity implements EntityInterface { //ogni entity, comprese le stru
     public int x;  
     public int y;
     public int width, height;
-    protected entities entity;
+    protected Entities entity;
     protected int spriteNum = 1;
     public boolean canMove = true;
     public boolean gravity = true;
@@ -29,7 +29,7 @@ public class Entity implements EntityInterface { //ogni entity, comprese le stru
     public int gravityCounter = 0;
     public boolean isFalling = true;
 
-    public status working = status.ALIVE;
+    public Status working = Status.ALIVE;
 
     public LifeImpl life; 
 
@@ -38,7 +38,7 @@ public class Entity implements EntityInterface { //ogni entity, comprese le stru
     public int jump1Counter = 0;
     public int jump2Counter = 0;
 
-    public Entity(int x, int y, int width, int height, entities entity) { 
+    public Entity(int x, int y, int width, int height, Entities entity) { 
         this.x = x;
         this.y = y;
         this.width = width;
@@ -80,18 +80,18 @@ public class Entity implements EntityInterface { //ogni entity, comprese le stru
     }
 
     @Override
-    public entities getEntity () {
+    public Entities getEntity () {
         return this.entity;
     }
     
     @Override
-    public void setEntity (entities entity) {
+    public void setEntity (Entities entity) {
         this.entity = entity;
     }
 
     @Override
     public boolean isAlive() {
-        if (working == status.ALIVE) {
+        if (working == Status.ALIVE) {
             return true;
         }
         return false;

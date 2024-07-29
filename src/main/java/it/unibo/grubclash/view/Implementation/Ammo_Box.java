@@ -8,7 +8,7 @@ import java.util.Optional;
 import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
-import it.unibo.grubclash.model.Implementation.EnumEntity.status;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 
 public class Ammo_Box extends Entity{
     
@@ -24,7 +24,7 @@ public class Ammo_Box extends Entity{
 
     public Ammo_Box(int x, int y) {
 
-        super(x, y, newWidth, newHeigth, EnumEntity.entities.AMMO_BOX);
+        super(x, y, newWidth, newHeigth, EnumEntity.Entities.AMMO_BOX);
 
         Allowed.addDynamicEntity(Optional.of(this));
         getImage();
@@ -38,7 +38,7 @@ public class Ammo_Box extends Entity{
 
     @Override
     public void draw(Graphics2D g2d){
-        if(working == status.ALIVE){
+        if(working == Status.ALIVE){
             g2d.drawImage(stand1, x, y,null);
         }else{
             g2d.drawImage(stand2, x, y,null);
