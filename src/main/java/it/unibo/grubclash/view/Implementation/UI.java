@@ -20,16 +20,16 @@ public class UI implements UIInterface {
     private Font snapITCFont;
 
     //Font
-    final int sizeFont = 24;
+    private static final int FONT_SIZE = 24;
 
     //where the number of ammo is shown on the screen
-    private static final int ammoX=50;
-    private static final int ammoY=50;
+    private static final int AMMO_X=50;
+    private static final int AMMO_Y=50;
 
     public UI(GrubPanel grubPanel2){
 
         this.grubPanel = grubPanel2;
-        snapITCFont = new Font("Snap ITC", Font.BOLD, sizeFont);
+        snapITCFont = new Font("Snap ITC", Font.BOLD, FONT_SIZE);
 
 
     }
@@ -71,7 +71,7 @@ public class UI implements UIInterface {
     private void drawAmmos(){
 
         g2d.setFont(snapITCFont.deriveFont(25f));
-        g2d.drawString("MUNIZIONI: " + grubPanel.getPlayers().get(grubPanel.getNumPlayerTurn()).getWeapon().get().getAmmo(), ammoX, ammoY);
+        g2d.drawString("MUNIZIONI: " + grubPanel.getPlayers().get(grubPanel.getNumPlayerTurn()).getWeapon().get().getAmmo(), AMMO_X, AMMO_Y);
     }
 
 }

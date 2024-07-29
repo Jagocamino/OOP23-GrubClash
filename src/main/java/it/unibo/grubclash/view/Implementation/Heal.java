@@ -7,7 +7,6 @@ import java.util.Optional;
 import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
-import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 
 public class Heal extends Entity{
 
@@ -16,14 +15,14 @@ public class Heal extends Entity{
     private BufferedImage stand1;
     private BufferedImage stand2;
 
-    private static final int newWidth = 20;
-    private static final int newHeigth = 20;
+    private static final int NEW_WIDTH = 20;
+    private static final int NEW_HEIGHT = 20;
     //Adding pixels for the image
-    private static final int addiction = 23;
+    private static final int ADDITION = 23;
 
     public Heal(int x, int y) {
 
-        super(x, y, newWidth, newHeigth, EnumEntity.Entities.HEAL);
+        super(x, y, NEW_WIDTH, NEW_HEIGHT, EnumEntity.Entities.HEAL);
 
         Allowed.addDynamicEntity(Optional.of(this));
         getImage();
@@ -31,16 +30,16 @@ public class Heal extends Entity{
 
     private void getImage() {
 
-        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "heal_1.png", this.width+addiction, this.height+addiction);
-        stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "heal_2.png", this.width+addiction, this.height+addiction);    
+        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "heal_1.png", this.getWidth()+ADDITION, this.getHeight()+ADDITION);
+        stand2 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "heal_2.png", this.getWidth()+ADDITION, this.getHeight()+ADDITION);    
     }
 
     @Override
     public void draw(Graphics2D g2d){
-        if(working == Status.ALIVE){
-            g2d.drawImage(stand1, x, y,null);
+        if(isAlive()){
+            g2d.drawImage(stand1, getX(), getY(),null);
         }else{
-            g2d.drawImage(stand2, x, y,null);
+            g2d.drawImage(stand2, getX(), getY(),null);
         }
     }
     

@@ -7,7 +7,6 @@ import java.util.Optional;
 import it.unibo.grubclash.controller.Implementation.Player;
 import it.unibo.grubclash.model.Application_Programming_Interface.WeaponInterface;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
-import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 
 public abstract class Weapon implements WeaponInterface {
 
@@ -76,28 +75,28 @@ public abstract class Weapon implements WeaponInterface {
         
         BufferedImage image = null;
 
-        if(getOwner().working == Status.ALIVE){
+        if(getOwner().isAlive()){
 
             switch(weaponDir){
                 case LEFT:
                     image = left;
-                    g2d.drawImage(image, getOwner().x - 5, getOwner().y + 5,null);
+                    g2d.drawImage(image, getOwner().getX() - 5, getOwner().getY() + 5,null);
                 break;
                 case RIGHT:
                     image = right;
-                    g2d.drawImage(image, getOwner().x + getOwner().width + 5, getOwner().y + 5,null);
+                    g2d.drawImage(image, getOwner().getX() + getOwner().getWidth() + 5, getOwner().getY() + 5,null);
                 break;
                 case DOWN:
                     image = down;
-                    g2d.drawImage(image, getOwner().x + getOwner().width/2, getOwner().y + getOwner().height/2,null);
+                    g2d.drawImage(image, getOwner().getX() + getOwner().getWidth()/2, getOwner().getY() + getOwner().getHeight()/2,null);
                 break;
                 case UP:
                     image = up;
-                    g2d.drawImage(image, getOwner().x + getOwner().width/2, getOwner().y - getOwner().height/2,null);
+                    g2d.drawImage(image, getOwner().getX() + getOwner().getWidth()/2, getOwner().getY() - getOwner().getHeight()/2,null);
                 break;
                 case UP2:
                     image = up;
-                    g2d.drawImage(image, getOwner().x + getOwner().width/2, getOwner().y - getOwner().height/2,null);
+                    g2d.drawImage(image, getOwner().getX() + getOwner().getWidth()/2, getOwner().getY() - getOwner().getHeight()/2,null);
                 break;
             }
         }

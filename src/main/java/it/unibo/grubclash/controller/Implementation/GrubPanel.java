@@ -296,10 +296,10 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         p.getKeyHandler().shootPressed = false;
         this.removeKeyListener(p.getKeyHandler());
         p.setDirection(Orientation.DOWN);
-        p.jump1Counter = RESET;
-        p.jump2Counter = RESET;
-        p.gravity=true;
-        p.canMove = true;
+        p.setJump1Counter(RESET);
+        p.setJump2Counter(RESET);
+        p.setGravity(true);
+        p.setCanMove(true);
         p.setAlreadyShot(false);
         p.setAlreadyDug(false);
         p.setShovelAnimation(false);
@@ -312,7 +312,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
      */
     private void updatePhysic() {
         for(Optional<Entity> entity : Allowed.getDynamicEntities()) {
-            if(entity.isPresent() && entity.get().gravity){
+            if(entity.isPresent() && entity.get().isThereGravity()){
                 physic.checkTerrain(entity.get());
             }
         }
@@ -339,7 +339,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         //DRAW PLAYER
         for(Player p : players) {
             p.draw(g2d);
-            p.life.draw(g2d);
+            p.getLife().draw(g2d);
             p.getWeapon().get().draw(g2d);
             if(!p.getWeapon().get().getRocket().isEmpty()){
                 p.getWeapon().get().getRocket().get().draw(g2d);
@@ -357,7 +357,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         for (Optional<Entity> mob : Allowed.getMob()) {
             if (mob.isPresent()) {
                 mob.get().draw(g2d);
-                mob.get().life.draw(g2d);   
+                mob.get().getLife().draw(g2d);   
             }
         }
 

@@ -41,12 +41,12 @@ public class LifeImpl implements Life {
 
 
     @Override 
-    public void setLife (int life) {
+    public void setLifeValue (int life) {
         this.life = life;
     }
 
     @Override 
-    public Optional<Integer> getLife(){
+    public Optional<Integer> getLifeValue(){
         return Optional.ofNullable(this.life);
     }
 

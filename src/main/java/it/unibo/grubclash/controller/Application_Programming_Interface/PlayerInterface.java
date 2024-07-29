@@ -84,4 +84,16 @@ public interface PlayerInterface {
      * @param cooldownDig 
      */
     void setCooldownDig(boolean cooldownDig);
+
+    /**
+     * Sets the counter for the first part of the player's jump
+     * @param jump1Counter
+     */
+    void setJump1Counter(int jump1Counter);
+
+    /**
+     * Sets the counter for the second part of the player's jump
+     * @param jump2Counter
+     */
+    void setJump2Counter(int jump2Counter);
 }

@@ -33,13 +33,13 @@ public class LifeTest {
         new Allowed(0,0,0,0);
         MapBuilder.entityMatrix = entities;
         pl = new Player(0, new KeyHandler());
-        assertEquals(pl.life.getLife().get(), 10);
-        pl.life.damage();
-        assertEquals(pl.life.getLife().get(), 8);
-        pl.life.plusLife();
-        assertEquals(pl.life.getLife().get(), 10);
-        pl.life.setLife(0);
-        assertEquals(pl.life.getLife().get(), 0);
+        assertEquals(pl.getLife().getLifeValue().get(), 10);
+        pl.getLife().damage();
+        assertEquals(pl.getLife().getLifeValue().get(), 8);
+        pl.getLife().plusLife();
+        assertEquals(pl.getLife().getLifeValue().get(), 10);
+        pl.getLife().setLifeValue(0);
+        assertEquals(pl.getLife().getLifeValue().get(), 0);
     
         
 

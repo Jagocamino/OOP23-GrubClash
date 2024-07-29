@@ -5,8 +5,12 @@ import it.unibo.grubclash.model.Application_Programming_Interface.PhysicInterfac
 import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 
 public class Physic implements PhysicInterface {
+
+    private static final int BORDER_OFFSET = 40;
+    private static final int FRAMES_TO_INCREASE_GRAVITY = 15;
+    private static final int RESET = 0;
   
-    GrubPanel grubPanel;
+    private GrubPanel grubPanel;
 
     public Physic(GrubPanel grubPanel){
         this.grubPanel = grubPanel;
@@ -14,20 +18,20 @@ public class Physic implements PhysicInterface {
 
     @Override
     public void checkTerrain(Entity entity){
-        if(Allowed.CanMoveThere(entity.x, entity.y+entity.gravityAcceleration, entity.width, entity.height)){
-            entity.gravityCounter++;
-            entity.y+=entity.gravityAcceleration;
-            if(entity.gravityCounter > 15){
-                entity.gravityAcceleration++;
-                entity.gravityCounter = 0;
+        if(Allowed.CanMoveThere(entity.getX(), entity.getY()+entity.getGravityAcceleration(), entity.getWidth(), entity.getHeight())){
+            entity.setGravityCounter(entity.getGravityCounter() + 1);
+            entity.setY(entity.getY() + entity.getGravityAcceleration());
+            if(entity.getGravityCounter() > FRAMES_TO_INCREASE_GRAVITY){
+                entity.setGravityAcceleration(entity.getGravityAcceleration() + 1);
+                entity.setGravityCounter(RESET);
             }
-            entity.isFalling = true;
+            entity.setFalling(true);
         }else{
-            entity.isFalling = false;
-            entity.gravityAcceleration = 2;
-            entity.gravityCounter = 0;
-            if(entity.y >= grubPanel.getFrameManager().getWindowHeight().get()-40){
-                entity.working = Status.DEAD;
+            entity.setFalling(false);
+            entity.setGravityAcceleration(Entity.INITIAL_GRAVITY_ACCELERATION);
+            entity.setGravityCounter(RESET);
+            if(entity.getY() >= grubPanel.getFrameManager().getWindowHeight().get()-BORDER_OFFSET){
+                entity.setWorking(Status.DEAD);
             }
         }
     }
@@ -35,8 +39,8 @@ public class Physic implements PhysicInterface {
     @Override
     public void checkDeath(Entity entity) {
         if(Allowed.isPlayer(entity)){
-            if(entity.life.getLife().get() <= 0){
-                entity.working = Status.DEAD;
+            if(entity.getLife().getLifeValue().get() <= RESET){
+                entity.setWorking(Status.DEAD);
             }
         }
     }

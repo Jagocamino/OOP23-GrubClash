@@ -8,23 +8,22 @@ import java.util.Optional;
 import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
-import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 
 public class MobGenerator extends Entity {
     
     private final char FS = File.separatorChar;
 
     private BufferedImage stand1;
-    private static final int widthMobGenerator=20;
-    private static final int heighMobGenerator=20;
+    private static final int WIDTH_MOB_GENERATOR=20;
+    private static final int HEIGHT_MOB_GENERATOR=20;
 
     //Pixel removal Insert the MobGenerator in the right place
-    private final int removePixelsWidth = 23;
-    private final int removePixelsHeigth = 23;
+    private static final int REMOVE_PIXELS_WIDTH = 23;
+    private static final int REMOVE_PIXELS_HEIGHT = 23;
 
     public MobGenerator(int x, int y) {
 
-        super(x, y, widthMobGenerator, heighMobGenerator, EnumEntity.Entities.MOBGENERATOR);
+        super(x, y, WIDTH_MOB_GENERATOR, HEIGHT_MOB_GENERATOR, EnumEntity.Entities.MOBGENERATOR);
 
         Allowed.addDynamicEntity(Optional.of(this));
         
@@ -33,13 +32,13 @@ public class MobGenerator extends Entity {
 
     private void getImage() {
 
-        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "MobGenerator.png", this.width+removePixelsWidth, this.height+removePixelsHeigth);
+        stand1 = setup("src" + FS + "main" + FS + "resources" + FS + "items" + FS + "MobGenerator.png", this.getWidth()+REMOVE_PIXELS_WIDTH, this.getHeight()+REMOVE_PIXELS_HEIGHT);
     }
 
     @Override
     public void draw(Graphics2D g2d){
-        if(working == Status.ALIVE){
-            g2d.drawImage(stand1, x, y,null);
+        if(isAlive()){
+            g2d.drawImage(stand1, getX(), getY(),null);
         }
     }
 }

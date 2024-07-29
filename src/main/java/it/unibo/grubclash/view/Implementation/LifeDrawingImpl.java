@@ -18,39 +18,39 @@ public class LifeDrawingImpl implements LifeDrawing {
     private BufferedImage life100;
 
     //pixel removal to draw the image of life on top of the character
-    private static final int removingX = 25;
-    private static final int removingY = 15;
+    private static final int REMOVING_X = 25;
+    private static final int REMOVING_Y = 15;
 
-    private static final int whidthLife = 100;
-    private static final int heigthLife = 15;
+    private static final int WIDTH_LIFE = 100;
+    private static final int HEIGHT_LIFE = 15;
 
 
     public LifeDrawingImpl() {
         final char FS = File.separatorChar;
-        life100 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_100.png", whidthLife, heigthLife);
-        life80 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_80.png", whidthLife, heigthLife);
-        life60 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_60.png", whidthLife, heigthLife);
-        life40 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_40.png", whidthLife, heigthLife);
-        life20 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_20.png", whidthLife, heigthLife);
+        life100 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_100.png", WIDTH_LIFE, HEIGHT_LIFE);
+        life80 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_80.png", WIDTH_LIFE, HEIGHT_LIFE);
+        life60 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_60.png", WIDTH_LIFE, HEIGHT_LIFE);
+        life40 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_40.png", WIDTH_LIFE, HEIGHT_LIFE);
+        life20 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_20.png", WIDTH_LIFE, HEIGHT_LIFE);
     }
 
     @Override
     public void drawLife(Graphics2D g2d, Entity entity, int life) {
         switch (life) {
             case 10:
-                g2d.drawImage(life100, entity.x - removingX, entity.y - removingY, null);
+                g2d.drawImage(life100, entity.getX() - REMOVING_X, entity.getY() - REMOVING_Y, null);
                 break;
             case 8:
-                g2d.drawImage(life80, entity.x - removingX, entity.y - removingY, null);
+                g2d.drawImage(life80, entity.getX() - REMOVING_X, entity.getY() - REMOVING_Y, null);
                 break;
             case 6:
-                g2d.drawImage(life60, entity.x - removingX, entity.y - removingY, null);
+                g2d.drawImage(life60, entity.getX() - REMOVING_X, entity.getY() - REMOVING_Y, null);
                 break;
             case 4:
-                g2d.drawImage(life40, entity.x - removingX, entity.y - removingY, null);
+                g2d.drawImage(life40, entity.getX() - REMOVING_X, entity.getY() - REMOVING_Y, null);
                 break;
             case 2:
-                g2d.drawImage(life20, entity.x - removingX, entity.y - removingY, null);
+                g2d.drawImage(life20, entity.getX() - REMOVING_X, entity.getY() - REMOVING_Y, null);
                 break;
             default:
                 break;

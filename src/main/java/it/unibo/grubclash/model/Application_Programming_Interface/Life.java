@@ -6,9 +6,9 @@ import java.util.Optional;
 public interface Life {
     void draw(Graphics2D g2d);
 
-    void setLife(int life);
+    void setLifeValue(int life);
 
-    Optional<Integer> getLife();
+    Optional<Integer> getLifeValue();
 
     void damage();
 

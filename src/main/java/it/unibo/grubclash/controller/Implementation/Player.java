@@ -22,12 +22,7 @@ import it.unibo.grubclash.view.Implementation.WeaponRoket;
 public class Player extends Entity implements PlayerInterface{
 
     private static final char FS = File.separatorChar;
-    private static final int RESET = 0;
     private static final int DEFAULT_SPEED = 3;
-    private static final int ADDITIONAL_PIXELS = 13;
-    private static final int ANIMATION_INTERVAL = 12;
-    private static final int FIRST_ANIMATION = 1;
-    private static final int SECOND_ANIMATION = 2;
     private static final int CHANGE_STAGE_JUMP = 15;
     private static final int SHOVEL_INTERVAL = 10;
     private static final int OFFSET = 5;
@@ -59,6 +54,8 @@ public class Player extends Entity implements PlayerInterface{
     private boolean shovelAnimation = false;
     private int shovelCounter = RESET;
     private boolean cooldownDig = false;
+    private int jump1Counter = RESET;
+    private int jump2Counter = RESET;
 
     /**
     * Constructor for Player
@@ -69,7 +66,7 @@ public class Player extends Entity implements PlayerInterface{
         super(EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get()), EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get()),
         35, 35,EnumEntity.idToEntitiesConverter(id).get());
 
-        this.life= new LifeImpl(this,new LifeDrawingImpl());
+        this.setLife(new LifeImpl(this,new LifeDrawingImpl()));
 
         this.keyH = keyH;
 
@@ -88,16 +85,16 @@ public class Player extends Entity implements PlayerInterface{
      */
     private void getImage(int playerId){ 
 
-        stand1 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", this.width+ADDITIONAL_PIXELS, this.height+ADDITIONAL_PIXELS);
-        stand2 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_stand_2.png", this.width+ADDITIONAL_PIXELS, this.height+ADDITIONAL_PIXELS);
-        left1 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_left_1.png", this.width+ADDITIONAL_PIXELS, this.height+ADDITIONAL_PIXELS);
-        left2 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_left_2.png", this.width+ADDITIONAL_PIXELS, this.height+ADDITIONAL_PIXELS);
-        right1 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_right_1.png", this.width+ADDITIONAL_PIXELS, this.height+ADDITIONAL_PIXELS);
-        right2 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_right_2.png", this.width+ADDITIONAL_PIXELS, this.height+ADDITIONAL_PIXELS);
-        jump1 = setup(ROOT + "player0" + FS + "Grub_pl_0" + "_jump_1.png", this.width+ADDITIONAL_PIXELS, this.height+ADDITIONAL_PIXELS);
-        jump2 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", this.width+ADDITIONAL_PIXELS, this.height+ADDITIONAL_PIXELS);
-        jump3 = setup(ROOT + "player0" + FS + "Grub_pl_0" + "_jump_2.png", this.width+ADDITIONAL_PIXELS, this.height+ADDITIONAL_PIXELS);
-        death = setup(ROOT + "death.png", this.width+ADDITIONAL_PIXELS, this.height+ADDITIONAL_PIXELS);
+        stand1 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", this.getWidth()+ADDITIONAL_PIXELS, this.getHeight()+ADDITIONAL_PIXELS);
+        stand2 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_stand_2.png", this.getWidth()+ADDITIONAL_PIXELS, this.getHeight()+ADDITIONAL_PIXELS);
+        left1 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_left_1.png", this.getWidth()+ADDITIONAL_PIXELS, this.getHeight()+ADDITIONAL_PIXELS);
+        left2 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_left_2.png", this.getWidth()+ADDITIONAL_PIXELS, this.getHeight()+ADDITIONAL_PIXELS);
+        right1 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_right_1.png", this.getWidth()+ADDITIONAL_PIXELS, this.getHeight()+ADDITIONAL_PIXELS);
+        right2 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_right_2.png", this.getWidth()+ADDITIONAL_PIXELS, this.getHeight()+ADDITIONAL_PIXELS);
+        jump1 = setup(ROOT + "player0" + FS + "Grub_pl_0" + "_jump_1.png", this.getWidth()+ADDITIONAL_PIXELS, this.getHeight()+ADDITIONAL_PIXELS);
+        jump2 = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_stand_1.png", this.getWidth()+ADDITIONAL_PIXELS, this.getHeight()+ADDITIONAL_PIXELS);
+        jump3 = setup(ROOT + "player0" + FS + "Grub_pl_0" + "_jump_2.png", this.getWidth()+ADDITIONAL_PIXELS, this.getHeight()+ADDITIONAL_PIXELS);
+        death = setup(ROOT + "death.png", this.getWidth()+ADDITIONAL_PIXELS, this.getHeight()+ADDITIONAL_PIXELS);
     }
 
     /**
@@ -106,10 +103,10 @@ public class Player extends Entity implements PlayerInterface{
      */
     private void getShovelImage(int playerId){
 
-        shovelDown = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_stand_1_shovel.png", this.width+ADDITIONAL_PIXELS, 2 * (this.height+ADDITIONAL_PIXELS));
-        shovelUp = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_jump_shovel.png", this.width+ADDITIONAL_PIXELS, this.height*2 + 2);
-        shovelLeft = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_left_1_shovel.png", this.width + 2 * ADDITIONAL_PIXELS, this.height+ADDITIONAL_PIXELS);
-        shovelRight = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_right_1_shovel.png", 2 * (this.width+ADDITIONAL_PIXELS), this.height+ADDITIONAL_PIXELS);
+        shovelDown = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_stand_1_shovel.png", this.getWidth()+ADDITIONAL_PIXELS, 2 * (this.getHeight()+ADDITIONAL_PIXELS));
+        shovelUp = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_jump_shovel.png", this.getWidth()+ADDITIONAL_PIXELS, this.getHeight()*2 + 2);
+        shovelLeft = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_left_1_shovel.png", this.getWidth() + 2 * ADDITIONAL_PIXELS, this.getHeight()+ADDITIONAL_PIXELS);
+        shovelRight = setup(ROOT + "player" + id + FS + "Grub_pl_" + id + "_right_1_shovel.png", 2 * (this.getWidth()+ADDITIONAL_PIXELS), this.getHeight()+ADDITIONAL_PIXELS);
     }
 
     /**
@@ -119,32 +116,32 @@ public class Player extends Entity implements PlayerInterface{
     public void update() {
 
         if(this.isAlive()){
-            spriteCounter++;
-            if(spriteCounter > ANIMATION_INTERVAL){
-                if(spriteNum == FIRST_ANIMATION){
-                    spriteNum = SECOND_ANIMATION;
+            setSpriteCounter(getSpriteCounter() + 1);
+            if(getSpriteCounter() > ANIMATION_INTERVAL){
+                if(getSpriteNum() == FIRST_ANIMATION){
+                    setSpriteNum(SECOND_ANIMATION);
                 }
-                else if(spriteNum == SECOND_ANIMATION){
-                    spriteNum = FIRST_ANIMATION;
+                else if(getSpriteNum() == SECOND_ANIMATION){
+                    setSpriteNum(FIRST_ANIMATION);
                 }
-                spriteCounter = RESET;
+                setSpriteCounter(RESET);
             }
-            if(keyH.leftPressed && canMove){
-                if(Allowed.CanMoveThere(x - speed, y, width, height)){
+            if(keyH.leftPressed && canMove()){
+                if(Allowed.CanMoveThere(getX() - speed, getY(), getWidth(), getHeight())){
                     direction = Orientation.LEFT;
-                    x-=speed;
+                    setX(getX() - speed);
                 }
             }
-            else if(keyH.rightPressed && canMove){
-                if(Allowed.CanMoveThere(x + speed, y, width, height)){
+            else if(keyH.rightPressed && canMove()){
+                if(Allowed.CanMoveThere(getX() + speed, getY(), getWidth(), getHeight())){
                     direction = Orientation.RIGHT;
-                    x+=speed;
+                    setX(getX() + speed);
                 }
             }
             if(keyH.spacePressed){  
                 jumpAnimation();
             }else{
-                gravity=true;
+                setGravity(true);
             }
             if(keyH.shootPressed && !alreadyShot){
                 getWeapon().get().shoot();
@@ -170,7 +167,7 @@ public class Player extends Entity implements PlayerInterface{
                 }
             }
             if(Allowed.damageFromMob(this)){
-                this.life.damage();
+                this.getLife().damage();
             }
             weapon.get().setWeaponDir(direction);
         }
@@ -180,8 +177,8 @@ public class Player extends Entity implements PlayerInterface{
      * Manages the jump of the player with all animations and collision checker
      */
     private void jumpAnimation() {
-        canMove = false;
-        gravity=false;
+        setCanMove(false);
+        setGravity(false);
                 
         jump1Counter++;
 
@@ -195,19 +192,19 @@ public class Player extends Entity implements PlayerInterface{
         }
                 
         if(jump1Counter > CHANGE_STAGE_JUMP){
-            canMove = true;
+            setCanMove(true);
             if(jump1Counter == CHANGE_STAGE_JUMP + 1){
                 direction = Orientation.UP2;
             }
             jump2Counter++;
-            if(jump2Counter < CHANGE_STAGE_JUMP && Allowed.CanMoveThere(x, y-30/jump2Counter, width, height)){
-                y -= 30 / jump2Counter;
+            if(jump2Counter < CHANGE_STAGE_JUMP && Allowed.CanMoveThere(getX(), getY()-30/jump2Counter, getWidth(), getHeight())){
+                setY(getY() - 30 / jump2Counter);
             }
             if(jump2Counter > CHANGE_STAGE_JUMP && jump2Counter < CHANGE_STAGE_JUMP * 2){  
                 if(jump2Counter == CHANGE_STAGE_JUMP + 1){
                     direction = Orientation.DOWN;
                 } 
-                gravity = true;
+                setGravity(true);
             }
             if(jump2Counter > CHANGE_STAGE_JUMP * 2){
                 jump2Counter = RESET;
@@ -224,37 +221,37 @@ public class Player extends Entity implements PlayerInterface{
     private void shovelAttack(Orientation direction){
         switch(direction){
             case DOWN: 
-                if( !Allowed.meleeAttack(x, y + height, width, height, this).equals(Optional.empty()) || 
-                    !Allowed.CanMoveThere(x, y + height, width, height)){
-                    Allowed.applyDamage(Allowed.dealDamage(x, y + height, width, height), 1);
+                if( !Allowed.meleeAttack(getX(), getY() + getHeight(), getWidth(), getHeight(), this).equals(Optional.empty()) || 
+                    !Allowed.CanMoveThere(getX(), getY() + getHeight(), getWidth(), getHeight())){
+                    Allowed.applyDamage(Allowed.dealDamage(getX(), getY() + getHeight(), getWidth(), getHeight()), 1);
                     alreadyDug = true;
                 }
                 break;
             case LEFT:
-                if( !Allowed.meleeAttack(x - width - OFFSET, y, width, height, this).equals(Optional.empty()) || 
-                    !Allowed.CanMoveThere(x - width - OFFSET, y, width, height)){
-                    Allowed.applyDamage(Allowed.dealDamage(x - width - OFFSET, y, width, height), 1);
+                if( !Allowed.meleeAttack(getX() - getWidth() - OFFSET, getY(), getWidth(), getHeight(), this).equals(Optional.empty()) || 
+                    !Allowed.CanMoveThere(getX() - getWidth() - OFFSET, getY(), getWidth(), getHeight())){
+                    Allowed.applyDamage(Allowed.dealDamage(getX() - getWidth() - OFFSET, getY(), getWidth(), getHeight()), 1);
                     alreadyDug = true;
                 }
                 break;
             case RIGHT:
-                if( !Allowed.meleeAttack(x + width + OFFSET, y, width, height, this).equals(Optional.empty()) || 
-                    !Allowed.CanMoveThere(x + width + OFFSET, y, width, height)){
-                    Allowed.applyDamage(Allowed.dealDamage(x + width + OFFSET, y, width, height), 1);
+                if( !Allowed.meleeAttack(getX() + getWidth() + OFFSET, getY(), getWidth(), getHeight(), this).equals(Optional.empty()) || 
+                    !Allowed.CanMoveThere(getX() + getWidth() + OFFSET, getY(), getWidth(), getHeight())){
+                    Allowed.applyDamage(Allowed.dealDamage(getX() + getWidth() + OFFSET, getY(), getWidth(), getHeight()), 1);
                     alreadyDug = true;
                 }
                 break;
             case UP:
-                if( !Allowed.meleeAttack(x, y - OFFSET * OFFSET, width, height - OFFSET * 3, this).equals(Optional.empty()) || 
-                    !Allowed.CanMoveThere(x, y - OFFSET * OFFSET, width, height - OFFSET * 3)){
-                    Allowed.applyDamage(Allowed.dealDamage(x, y - OFFSET * OFFSET, width, height - OFFSET * 3), 1);
+                if( !Allowed.meleeAttack(getX(), getY() - OFFSET * OFFSET, getWidth(), getHeight() - OFFSET * 3, this).equals(Optional.empty()) || 
+                    !Allowed.CanMoveThere(getX(), getY() - OFFSET * OFFSET, getWidth(), getHeight() - OFFSET * 3)){
+                    Allowed.applyDamage(Allowed.dealDamage(getX(), getY() - OFFSET * OFFSET, getWidth(), getHeight() - OFFSET * 3), 1);
                     alreadyDug = true;
                 }
                 break;
             case UP2:
-                if( !Allowed.meleeAttack(x, y - OFFSET * OFFSET, width, height - OFFSET * 3, this).equals(Optional.empty()) || 
-                    !Allowed.CanMoveThere(x, y - OFFSET * OFFSET, width, height - OFFSET * 3)){
-                    Allowed.applyDamage(Allowed.dealDamage(x, y - OFFSET * OFFSET, width, height - OFFSET * 3), 1);
+                if( !Allowed.meleeAttack(getX(), getY() - OFFSET * OFFSET, getWidth(), getHeight() - OFFSET * 3, this).equals(Optional.empty()) || 
+                    !Allowed.CanMoveThere(getX(), getY() - OFFSET * OFFSET, getWidth(), getHeight() - OFFSET * 3)){
+                    Allowed.applyDamage(Allowed.dealDamage(getX(), getY() - OFFSET * OFFSET, getWidth(), getHeight() - OFFSET * 3), 1);
                     alreadyDug = true;
                 }
                 break;
@@ -310,10 +307,10 @@ public class Player extends Entity implements PlayerInterface{
                 if(shovelAnimation){
                     image = shovelLeft;
                 }else{
-                    if(spriteNum == FIRST_ANIMATION){
+                    if(getSpriteNum() == FIRST_ANIMATION){
                         image = left1;
                     }
-                    if(spriteNum == SECOND_ANIMATION){
+                    if(getSpriteNum() == SECOND_ANIMATION){
                         image = left2;
                     }
                 }
@@ -322,10 +319,10 @@ public class Player extends Entity implements PlayerInterface{
                 if(shovelAnimation){
                     image = shovelRight;
                 }else{
-                    if(spriteNum == FIRST_ANIMATION){
+                    if(getSpriteNum() == FIRST_ANIMATION){
                         image = right1;
                     }
-                    if(spriteNum == SECOND_ANIMATION){
+                    if(getSpriteNum() == SECOND_ANIMATION){
                         image = right2;
                     }
                 }
@@ -334,11 +331,11 @@ public class Player extends Entity implements PlayerInterface{
                 if(shovelAnimation){
                     image = shovelDown;
                 }else{
-                    if(!isFalling){
-                        if(spriteNum == FIRST_ANIMATION){
+                    if(!isFalling()){
+                        if(getSpriteNum() == FIRST_ANIMATION){
                             image = stand1;
                         }
-                        if(spriteNum == SECOND_ANIMATION){
+                        if(getSpriteNum() == SECOND_ANIMATION){
                             image = stand2;
                         }
                     }else{
@@ -362,11 +359,11 @@ public class Player extends Entity implements PlayerInterface{
                 break;
                 }
                 
-                g2d.drawImage(image, x, y,null);
+                g2d.drawImage(image, getX(), getY(),null);
 
         }else{
-            this.life.setLife(RESET);
-            g2d.drawImage(image, x, y,null);
+            this.getLife().setLifeValue(RESET);
+            g2d.drawImage(image, getX(), getY(),null);
 
             if(Allowed.getDynamicEntities().contains(Optional.of(this))){
                 Allowed.removeDynamicEntity(this);
@@ -429,5 +426,21 @@ public class Player extends Entity implements PlayerInterface{
     @Override
     public void setCooldownDig(boolean cooldownDig) {
         this.cooldownDig = cooldownDig;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setJump1Counter(int jump1Counter) {
+        this.jump1Counter = jump1Counter;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setJump2Counter(int jump2Counter) {
+        this.jump2Counter = jump2Counter;
     }
 }

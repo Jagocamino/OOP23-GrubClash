@@ -104,30 +104,30 @@ public class Allowed {
 
     public static void touchDynamicEntity(Player player){
         for (Optional<Entity> t : getDynamicEntities()) {
-            if( t.isPresent() && t.get().working == Status.ALIVE && player.x + player.width/2 > t.get().getX() && player.x + player.width/2 < t.get().getX() + t.get().getWidth() && 
-                player.y + player.height/2 > t.get().getY() && player.y + player.height/2 < t.get().getY() + t.get().getHeight()){
+            if( t.isPresent() && t.get().getWorking() == Status.ALIVE && player.getX() + player.getWidth()/2 > t.get().getX() && player.getX() + player.getWidth()/2 < t.get().getX() + t.get().getWidth() && 
+                player.getY() + player.getHeight()/2 > t.get().getY() && player.getY() + player.getHeight()/2 < t.get().getY() + t.get().getHeight()){
                 switch(t.get().getEntity()){
                     case TRAP: 
                         Sound.setFile(0);
                         Sound.play();
-                        player.life.damage(); 
-                        player.life.damage();
-                        t.get().working = Status.DEAD; 
+                        player.getLife().damage(); 
+                        player.getLife().damage();
+                        t.get().setWorking(Status.DEAD); 
                         break;
                     case HEAL:
                         Sound.setFile(3);
                         Sound.play();
-                        player.life.plusLife(); 
-                        t.get().working = Status.DEAD; 
+                        player.getLife().plusLife(); 
+                        t.get().setWorking(Status.DEAD); 
                         break;
                     case AMMO_BOX:
                         Sound.setFile(2);
                         Sound.play();
                         player.getWeapon().get().refillAmmo();
-                        t.get().working = Status.DEAD; 
+                        t.get().setWorking(Status.DEAD); 
                         break;
                     case MOBGENERATOR:
-                        t.get().working = Status.DEAD;
+                        t.get().setWorking(Status.DEAD);
                         getMob().add(Optional.of(new Mob(0,0,35,35,Entities.MOB)));
                         break;
                     default: break;
@@ -439,7 +439,7 @@ public class Allowed {
         for (Entity entity : dealDamage) {
             if ( isPlayer(entity) || entity.getEntity().equals(Entities.MOB) ) {
                 for(int j = 0; j < i; j++){
-                    entity.life.damage();
+                    entity.getLife().damage();
                 }
             }
             if ( entity.getEntity() == Entities.WALL ) {// da valutare se il muoro si cancella direttamente oppure ha una healthbar

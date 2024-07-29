@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 
 import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
 import it.unibo.grubclash.model.Implementation.Entity;
-import it.unibo.grubclash.model.Implementation.EnumEntity;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 import it.unibo.grubclash.view.Application_Programming_Interface.ProjectileInterface;
 
@@ -24,7 +23,7 @@ public abstract class Projectile extends Entity implements ProjectileInterface{
     @Override
     public void draw(Graphics2D g2d){
 
-        if(this.working == EnumEntity.Status.ALIVE){
+        if(isAlive()){
             g2d.setColor(Color.BLACK);
             g2d.fillRect(getX(), getY(), getWidth(), getHeight());
         }

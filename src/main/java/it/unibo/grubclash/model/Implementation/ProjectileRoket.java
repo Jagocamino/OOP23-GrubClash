@@ -6,6 +6,7 @@ import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterfac
 import it.unibo.grubclash.model.Application_Programming_Interface.ProjectileType;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
+import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 import it.unibo.grubclash.view.Implementation.Projectile;
 
 public class ProjectileRoket extends Projectile implements ProjectileType {
@@ -19,7 +20,7 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
     public ProjectileRoket(int x, int y, PlayerInterface owner) {
         super(x, y, getWidthRoket(), getHeightRoket(), Entities.PROJECTILE); 
         this.owner = owner;
-        gravity = false;
+        setGravity(false);
         Allowed.addDynamicEntity(Optional.of(this));
     }   
 
@@ -39,7 +40,7 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
     public void update () {
         Orientation dir = owner.getWeapon().get().getShootingDir();
         
-        if(this.working == EnumEntity.Status.ALIVE){
+        if(this.isAlive()){
             if (dir == Orientation.LEFT) {
                 if(Allowed.gonnaExplode(updatedDir (dir), getY(), getWidthRoket(), getHeightRoket(), owner)){
                     explosionHappening();
@@ -76,7 +77,7 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
         Sound.play();
         EntityInterface damage = damage(dmgRadius);
         Allowed.applyDamage(Allowed.dealDamage(damage.getX(), damage.getY(), damage.getWidth(), damage.getHeight()), 2);
-        this.working = EnumEntity.Status.DEAD;
+        this.setWorking(Status.DEAD);
     }
 
     // personalizzata per ogni proiettile
