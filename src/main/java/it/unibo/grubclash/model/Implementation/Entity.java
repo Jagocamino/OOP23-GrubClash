@@ -52,7 +52,9 @@ public class Entity implements EntityInterface {
      * {@inheritDoc}
      */
     @Override
-    public void update(){}  //TODO da levare? 
+    public void update(){
+        
+    }   
 
     /**
      * {@inheritDoc}

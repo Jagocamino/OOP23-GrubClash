@@ -4,6 +4,9 @@ import it.unibo.grubclash.controller.Implementation.GrubPanel;
 import it.unibo.grubclash.model.Application_Programming_Interface.PhysicInterface;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 
+/**
+ * Class implementing the Physic methods.
+ */
 public class Physic implements PhysicInterface {
 
     private static final int BORDER_OFFSET = 40;
@@ -12,10 +15,17 @@ public class Physic implements PhysicInterface {
   
     private GrubPanel grubPanel;
 
+    /**
+     * Constructor for physic
+     * @param grubPanel
+     */
     public Physic(GrubPanel grubPanel){
         this.grubPanel = grubPanel;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void checkTerrain(Entity entity){
         if(Allowed.CanMoveThere(entity.getX(), entity.getY()+entity.getGravityAcceleration(), entity.getWidth(), entity.getHeight())){
@@ -30,12 +40,15 @@ public class Physic implements PhysicInterface {
             entity.setFalling(false);
             entity.setGravityAcceleration(Entity.INITIAL_GRAVITY_ACCELERATION);
             entity.setGravityCounter(RESET);
-            if(entity.getY() >= grubPanel.getFrameManager().getWindowHeight().get()-BORDER_OFFSET){
+            if(entity.getY() >= grubPanel.getFrameManager().getWindowHeight().get() - BORDER_OFFSET){
                 entity.setWorking(Status.DEAD);
             }
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void checkDeath(Entity entity) {
         if(Allowed.isPlayer(entity)){
