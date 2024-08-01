@@ -6,13 +6,16 @@ import it.unibo.grubclash.view.Application_Programming_Interface.LifeDrawing;
 import java.awt.*;
 import java.util.Optional;
 
+/**
+ * Class implementing the Life methods.
+ */
 public class LifeImpl implements Life {
 
     private String color_game = "#EF7B10";
     private final Font snapITCFont;
     private final Entity entity;
 
-    //vita di ogni giocatore che va da 10 a 0
+    //life of each player ranging from 10 to 0
     private int life;
     private static final int maxLife=10;
     private static final int minLife=0;
@@ -30,6 +33,9 @@ public class LifeImpl implements Life {
         snapITCFont = new Font("Snap ITC", Font.BOLD, sizeFont);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override 
     public void draw(Graphics2D g2d){
         
@@ -39,17 +45,25 @@ public class LifeImpl implements Life {
         drawingStrategy.drawLife(g2d, entity, life);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override 
     public void setLifeValue (int life) {
         this.life = life;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override 
     public Optional<Integer> getLifeValue(){
         return Optional.ofNullable(this.life);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override 
     public void damage(){
         if(this.life > minLife){
@@ -57,6 +71,9 @@ public class LifeImpl implements Life {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override 
     public void plusLife(){
         if(this.life < maxLife){

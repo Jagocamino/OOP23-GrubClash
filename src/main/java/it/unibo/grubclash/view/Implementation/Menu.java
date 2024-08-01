@@ -17,29 +17,42 @@ public class Menu extends JFrame{
     private final char FS = File.separatorChar;
     private JComboBox<Integer> playerSelect;
 
+    //Setting the Menu Background
+    private static final int newX=0;
+    private static final int newY=0;
+
+    //Pixel removal Insert the combobox (playerSelect) in the right place
+    private static final int removePixelsPlayerSelectX = 950;
+    private static final int removePixelsPlayerSelectY = 455;
+    private static final int widthPlayerSelect = 200;
+    private static final int heightPlayerSelect = 30;
+
+    //Pixel removal Insert the PlayButton in the right place
+    private static final int removePixelsPlayButtonX = 1150;
+    private static final int removePixelsPlayButtonY = 350;
+    private static final int widthPlayButton = 200;
+    private static final int heightPlayButton = 200;
+
+    //Pixel removal Insert the play2 (Jbutton) in the right place
+    private static final int removePixelsPlay2X = 100;
+    private static final int widthPlay2 = 100;
+    private static final int heightPlay2 = 100;
+
     public Menu() {
 
         JFrame frameMenu = createMenuFrame();
         JPanel panel = createMenuPanel(frameMenu);
 
-        //Impostazione dello sfondo del menu
-        final int newX=0;
-        final int newY=0;
         ImageIcon image = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "menu_bg.jpg");
         JLabel menu_bg = new JLabel(image);
         menu_bg.setBounds(newX, newY, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
 
-        //Creazione del bottone play
+        //Creating the play button
         JButton playButton = createPlayButton(frameMenu);
 
-        //Pixel removal Insert the combobox in the right place
-        final int removePixelsX = 950;
-        final int removePixelsY = 455;
-        final int widthPlayerSelect = 200;
-        final int heightPlayerSelect = 30;
 
         playerSelect = new JComboBox<>(new Integer[]{2, 3, 4, 5});
-        playerSelect.setBounds(frameManager.getWindowWidth().get()-removePixelsX, frameManager.getWindowHeight().get() - removePixelsY, widthPlayerSelect, heightPlayerSelect);
+        playerSelect.setBounds(frameManager.getWindowWidth().get()-removePixelsPlayerSelectX, frameManager.getWindowHeight().get() - removePixelsPlayerSelectY, widthPlayerSelect, heightPlayerSelect);
 
         panel.add(playButton);
         panel.add(playerSelect);
@@ -60,8 +73,6 @@ public class Menu extends JFrame{
 
     protected JPanel createMenuPanel(JFrame frameMenu) {
         JPanel panel = new JPanel();
-        final int newX=0;
-        final int newY=0;
         panel.setLayout(null);
         panel.setBounds(newX, newY, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
         frameMenu.add(panel);
@@ -71,14 +82,8 @@ public class Menu extends JFrame{
     protected JButton createPlayButton(JFrame frameMenu) {
         JButton playButton = new JButton();
 
-        //Pixel removal Insert the PlayButton in the right place
-        final int removePixelsX = 1150;
-        final int removePixelsY = 350;
-        final int widthPlayButton = 200;
-        final int heightPlayButton = 200;
-
         playButton.setBorderPainted(false);
-        playButton.setBounds(frameManager.getWindowWidth().get() - removePixelsX, frameManager.getWindowHeight().get() - removePixelsY, widthPlayButton, heightPlayButton);
+        playButton.setBounds(frameManager.getWindowWidth().get() - removePixelsPlayButtonX, frameManager.getWindowHeight().get() - removePixelsPlayButtonY, widthPlayButton, heightPlayButton);
 
         ImageIcon originalIcon = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "play.png");
         Image originalImage = originalIcon.getImage();
@@ -115,26 +120,19 @@ public class Menu extends JFrame{
 
     protected JPanel createMapPanel(JFrame frameMappa) {
         JPanel panelMappa = new JPanel();
-        final int newX=0;
-        final int newY=0;
+
         panelMappa.setLayout(null);
         panelMappa.setBackground(Color.WHITE);
         panelMappa.setBounds(newX, newY, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
 
         ImageIcon mappa = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "grubRules.png");
         JLabel mappa_label = new JLabel(mappa);
-        mappa_label.setBounds(0, 0, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
+        mappa_label.setBounds(newX, newY, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
 
         JButton play2 = new JButton();
 
-        //Pixel removal Insert the play2 (Jbutton) in the right place
-        final int removePixelsX = 100;
-        final int new_y = 0;
-        final int widthPlay2 = 100;
-        final int heightPlay2 = 100;
-
         play2.setBorderPainted(false);
-        play2.setBounds((frameManager.getWindowWidth().get() / 2) - removePixelsX, new_y, widthPlay2, heightPlay2);
+        play2.setBounds((frameManager.getWindowWidth().get() / 2) - removePixelsPlay2X, newY, widthPlay2, heightPlay2);
         ImageIcon originalIcon2 = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "play2.png");
         play2.setIcon(originalIcon2);
 

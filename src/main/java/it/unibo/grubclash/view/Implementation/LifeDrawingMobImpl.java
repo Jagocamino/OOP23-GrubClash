@@ -7,6 +7,9 @@ import java.io.File;
 import it.unibo.grubclash.model.Implementation.Entity;
 import it.unibo.grubclash.view.Application_Programming_Interface.LifeDrawing;
 
+/**
+ * Class implementing the LifeDrawing methods.
+ */
 public class LifeDrawingMobImpl implements LifeDrawing {
 
     private BufferedImage life20;
@@ -23,6 +26,9 @@ public class LifeDrawingMobImpl implements LifeDrawing {
         life20 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_mob.png", WIDTH_LIFE_MOB, HEIGHT_LIFE_MOB);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void drawLife(Graphics2D g2d, Entity entity, int life) {
 

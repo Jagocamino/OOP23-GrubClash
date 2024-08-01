@@ -34,6 +34,9 @@ public class UI implements UIInterface {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void draw(Graphics2D g2d){
 
@@ -48,6 +51,10 @@ public class UI implements UIInterface {
 
     }
 
+
+    /**
+     * Draw the player's turn and the seconds of the turn
+     */
     private void drawPlayerTurn() {
         
         g2d.drawString("TURNO DEL GIOCATORE N\u00B0: " + (grubPanel.getNumPlayerTurn() + 1) , frameManager.getWindowWidth().get()/3, 45);
@@ -60,6 +67,9 @@ public class UI implements UIInterface {
         }
     }
     
+    /**
+     * He says that shift is about to start
+     */
     private void drawTurnBegin(){
 
         if(grubPanel.isTurnBegin()){
@@ -68,6 +78,9 @@ public class UI implements UIInterface {
         }
     }
 
+    /**
+     * Tells the number of ammo of the player on that turn
+     */
     private void drawAmmos(){
 
         g2d.setFont(snapITCFont.deriveFont(25f));

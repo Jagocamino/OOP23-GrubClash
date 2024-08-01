@@ -15,9 +15,9 @@ public class ImageScalar implements ImageScalarInterface {
 
         int imageType = original.getType();
         
-        // Gestione del tipo di immagine personalizzato o sconosciuto
+        // Custom or Unknown Image Type Management
         if (imageType == 0) {
-            // Usa un tipo di immagine predefinito
+            // Use a predefined image type
             imageType = BufferedImage.TYPE_INT_ARGB;
         }
         

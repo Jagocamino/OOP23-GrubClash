@@ -8,8 +8,8 @@ import javax.sound.sampled.AudioSystem;
 
 public class Sound {
     
-    static Clip clip;
-    static File soundFile[] = new File[7];
+    private static Clip clip;
+    private static File soundFile[] = new File[7];
     private static char FS = File.separatorChar;
     
 
