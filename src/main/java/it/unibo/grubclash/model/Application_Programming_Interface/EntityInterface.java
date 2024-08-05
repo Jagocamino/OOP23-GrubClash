@@ -6,6 +6,9 @@ import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 import it.unibo.grubclash.model.Implementation.LifeImpl;
 
+/**
+ * @author Camoni Jago
+ */
 public interface EntityInterface {
 
     /**
