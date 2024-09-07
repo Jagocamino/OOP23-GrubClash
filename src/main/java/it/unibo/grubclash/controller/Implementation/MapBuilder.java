@@ -96,8 +96,8 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
     
     protected static Color playerColor[];
 
-    private static boolean characterPlacementPhase; //diventa true quando viene toccato il primo "finish"
-    private static boolean colorSpawnpoint; //bool che serve per tenere traccia se lo spawnpoint è stato messo o no, si usa nel metodo switchBackground
+    private static boolean characterPlacementPhase; //true when first finish is clicked
+    private static boolean colorSpawnpoint;
     private static boolean mapDrawer;
 
     public final static int ROWS = 20;
@@ -124,7 +124,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         }
     }
 
-    public static EnumEntity.Entities[][] getEntityMatrix() { // metodo per le altre classi
+    public static EnumEntity.Entities[][] getEntityMatrix() {
         return entityMatrix;
     }
 
@@ -132,7 +132,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         MapBuilder.entityMatrix[i][j] = entity;
     }
 
-    public static void initCharacterPlacementPhase () { // questi tre metodi servono al programma a capire se siamo nella fase del piazzamento dei personaggi, che si trova dopo la fase della creazione dei blocchi di terra della mappa
+    public static void initCharacterPlacementPhase () {
         characterPlacementPhase = false;
     }
     public static void updateCharacterPlacementPhase () {
@@ -160,13 +160,12 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
     
     @Override
     public Color switchBackground(int i, int j, Color color) {
-        // dopo primo click rimane false
         JPanel[][] mapBase = getMapBase();
         if (getCharacterPlacementPhase() == false) {
             Color btnColor = (color == Color.WHITE ? Color.BLACK : Color.WHITE);
             mapBase[i][j].setBackground(btnColor);
             return btnColor;
-        }else{ // cioè se siamo nella fase di placement dei personaggi
+        }else{ // if we can place the players
             Color btnColor;
             if (mapBase[i][j].getBackground() == Color.WHITE && getColorSpawnpoint() == false) { //permetto il cambio del colore solo se o lo sfondo è bianco, o è dello stesso colore del player che voglio cambiare
                 btnColor = getPlayerColor(getCurrentPlayer());
@@ -255,7 +254,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
     }
 
     private static void initPlayerColor () {
-        Color[] playerColor = new Color[getNumPlayers()]; //colori che identificano i giocatori
+        Color[] playerColor = new Color[getNumPlayers()]; // colors identifies players
         for (int f = 0; f < getNumPlayers(); f++) {
             switch (f) {
                 case 0:
@@ -278,7 +277,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         MapBuilder.playerColor = playerColor;
     }
 
-    private static Color getPlayerColor (int currentPlayer) { //verrà passato tramite getCurrentPlayer();
+    private static Color getPlayerColor (int currentPlayer) {
         return playerColor[currentPlayer];
     }
 
@@ -303,7 +302,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         JFrame mapContainer = getMapContainer();
         JButton[][] btnMatrix = getBtnMatrix();
         JPanel[][] mapBase = getMapBase();
-        mapContainer.setResizable(false); //blocco il resize, aiuta le hitbox
+        mapContainer.setResizable(false);
         for(int i = 0; i < ROWS; i++ ) {
             for(int j = 0; j < COLS; j++) {
                 btnMatrix[i][j].setVisible(false);
@@ -385,7 +384,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
                                 e.printStackTrace();
                             }
                         }else{
-                            if (getColorSpawnpoint()) { //se il giocatore è stato piazzato, allora si può fare l'update dei player
+                            if (getColorSpawnpoint()) { // if player is placed, it can be updated
                                 switch (getCurrentPlayer()) {
                                     case 1:
                                         setEntityInMatrix(finalI, finalJ, EnumEntity.Entities.PLAYER1);
@@ -440,11 +439,10 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         getLayeredPaneGrid().setPreferredSize(mapContainer.getSize());
         getLayeredPaneGrid().setLayout(null);
 
-        // Creo una griglia di panels
         JPanel map = new JPanel();
         setMap(map);
         getMap().setBounds(0, 0, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
-        getMap().setLayout(new GridLayout(ROWS, COLS));  //Imposto il layout del panel che contiene le matrix di bottoni e altri panel
+        getMap().setLayout(new GridLayout(ROWS, COLS)); 
 
         JPanel[][] mapBase = new JPanel[ROWS][COLS];
         setMapBase(mapBase);
@@ -469,7 +467,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
                                 mapBase[finalI][finalJ].add(getBtnMatrix(finalI, finalJ), BorderLayout.CENTER);
                             }
                             updateCharacterPlacementPhase();
-                            p2Map(finalI, finalJ); //passo la posizione del bottone finish
+                            p2Map(finalI, finalJ); 
                             mapContainer.repaint();
                             mapContainer.validate();
                         } else {
@@ -487,7 +485,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
                                 switchBackground(finalI, finalJ, getMapBase(finalI, finalJ).getBackground());
                             }
                             if (!getCharacterPlacementPhase()) {
-                                updateMapDrawer(); //se il bool è in true, allora si può disegnare la mappa con il mouse (ecco perché nell'altra fase non viene rispettato questo bool)
+                                updateMapDrawer(); // if true, map can be drawn
                             }
                         };
 
@@ -501,7 +499,6 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
                             btnMatrix[finalI][finalJ].setBackground(menuColor);
                             btnMatrix[finalI][finalJ].setContentAreaFilled(true);
                         }
-                        // Reimposta il colore della cella
                         @Override
                         public void mouseExited(MouseEvent e) {
                             btnMatrix[finalI][finalJ].setBackground(previousColorState[0]);
@@ -509,7 +506,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
                         }
                     });
                 }
-                mapBase[i][j].add(btnMatrix[i][j], BorderLayout.CENTER); //la linea terra di default alla base della mappa
+                mapBase[i][j].add(btnMatrix[i][j], BorderLayout.CENTER);
                 if(i == 19) {
                     mapBase[i][j].setBackground(Color.BLACK);
                 }
