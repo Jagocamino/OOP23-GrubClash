@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
-import it.unibo.grubclash.controller.Implementation.GrubPanel;
-import it.unibo.grubclash.controller.Implementation.MapBuilder;
+import it.unibo.grubclash.controller.Implementation.GrubPanelImpl;
+import it.unibo.grubclash.controller.Implementation.MapBuilderImpl;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import it.unibo.grubclash.view.Application_Programming_Interface.UIInterface;
 
@@ -15,7 +15,7 @@ public class UI implements UIInterface {
 
     private String color_game = "#EF7B10";
 
-    private GrubPanel grubPanel;
+    private GrubPanelImpl grubPanel;
     private Graphics2D g2d;
     private Font snapITCFont;
 
@@ -26,7 +26,7 @@ public class UI implements UIInterface {
     private static final int AMMO_X=50;
     private static final int AMMO_Y=50;
 
-    public UI(GrubPanel grubPanel2){
+    public UI(GrubPanelImpl grubPanel2){
 
         this.grubPanel = grubPanel2;
         snapITCFont = new Font("Snap ITC", Font.BOLD, FONT_SIZE);
@@ -58,12 +58,12 @@ public class UI implements UIInterface {
     private void drawPlayerTurn() {
         
         g2d.drawString("TURNO DEL GIOCATORE N\u00B0: " + (grubPanel.getNumPlayerTurn() + 1) , frameManager.getWindowWidth().get()/3, 45);
-        g2d.drawRect(MapBuilder.getXMapBase(0, 19), MapBuilder.getYMapBase(0, 19), MapBuilder.getWidthMapBase(0,19), MapBuilder.getHeightMapBase(0,19));
+        g2d.drawRect(MapBuilderImpl.getXMapBase(0, 19), MapBuilderImpl.getYMapBase(0, 19), MapBuilderImpl.getWidthMapBase(0,19), MapBuilderImpl.getHeightMapBase(0,19));
         g2d.setFont(snapITCFont.deriveFont(30f));
         if(grubPanel.getSecondsTurn() < 10){
-            g2d.drawString("0" + grubPanel.getSecondsTurn(), MapBuilder.getXMapBase(0, 19)+MapBuilder.getWidthMapBase(0,19)*2/7, MapBuilder.getYMapBase(0, 19)+MapBuilder.getHeightMapBase(0,19)*2/3);
+            g2d.drawString("0" + grubPanel.getSecondsTurn(), MapBuilderImpl.getXMapBase(0, 19)+MapBuilderImpl.getWidthMapBase(0,19)*2/7, MapBuilderImpl.getYMapBase(0, 19)+MapBuilderImpl.getHeightMapBase(0,19)*2/3);
         }else{
-            g2d.drawString("" + grubPanel.getSecondsTurn(), MapBuilder.getXMapBase(0, 19)+MapBuilder.getWidthMapBase(0,19)*2/7, MapBuilder.getYMapBase(0, 19)+MapBuilder.getHeightMapBase(0,19)*2/3);
+            g2d.drawString("" + grubPanel.getSecondsTurn(), MapBuilderImpl.getXMapBase(0, 19)+MapBuilderImpl.getWidthMapBase(0,19)*2/7, MapBuilderImpl.getYMapBase(0, 19)+MapBuilderImpl.getHeightMapBase(0,19)*2/3);
         }
     }
     

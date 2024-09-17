@@ -1,6 +1,7 @@
 package it.unibo.grubclash.model.Implementation;
 
-import it.unibo.grubclash.controller.Implementation.GrubPanel;
+import it.unibo.grubclash.controller.Implementation.GrubPanelImpl;
+import it.unibo.grubclash.model.Application_Programming_Interface.Entity;
 import it.unibo.grubclash.model.Application_Programming_Interface.PhysicInterface;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 
@@ -13,13 +14,13 @@ public class Physic implements PhysicInterface {
     private static final int FRAMES_TO_INCREASE_GRAVITY = 15;
     private static final int RESET = 0;
   
-    private GrubPanel grubPanel;
+    private GrubPanelImpl grubPanel;
 
     /**
      * Constructor for physic
      * @param grubPanel
      */
-    public Physic(GrubPanel grubPanel){
+    public Physic(GrubPanelImpl grubPanel){
         this.grubPanel = grubPanel;
     }
 
@@ -38,7 +39,7 @@ public class Physic implements PhysicInterface {
             entity.setFalling(true);
         }else{
             entity.setFalling(false);
-            entity.setGravityAcceleration(Entity.INITIAL_GRAVITY_ACCELERATION);
+            entity.setGravityAcceleration(EntityImpl.INITIAL_GRAVITY_ACCELERATION);
             entity.setGravityCounter(RESET);
             if(entity.getY() >= grubPanel.getFrameManager().getWindowHeight().get() - BORDER_OFFSET){
                 entity.setWorking(Status.DEAD);

@@ -10,7 +10,7 @@ import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 /**
  * @author Remschi Christian
  */
-public interface PlayerInterface {
+public interface Player {
 
     /**
      * If alive, it allows the player to move and act

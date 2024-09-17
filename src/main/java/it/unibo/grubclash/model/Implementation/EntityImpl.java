@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 
-import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
+import it.unibo.grubclash.model.Application_Programming_Interface.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 import it.unibo.grubclash.view.Application_Programming_Interface.ImageScalarInterface;
@@ -16,7 +16,7 @@ import it.unibo.grubclash.view.Implementation.ImageScalar;
 /**
  * Class implementing the Entity methods.
  */
-public class Entity implements EntityInterface { 
+public class EntityImpl implements Entity { 
 
     public static final int RESET = 0;
     public static final int FIRST_ANIMATION = 1;
@@ -40,7 +40,7 @@ public class Entity implements EntityInterface {
     private LifeImpl life; 
     private int spriteCounter = RESET;
 
-    public Entity(int x, int y, int width, int height, Entities entity) { 
+    public EntityImpl(int x, int y, int width, int height, Entities entity) { 
         this.x = x;
         this.y = y;
         this.width = width;

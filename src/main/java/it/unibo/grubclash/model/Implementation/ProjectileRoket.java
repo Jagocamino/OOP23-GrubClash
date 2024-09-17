@@ -1,8 +1,9 @@
 package it.unibo.grubclash.model.Implementation;
 import java.util.Optional;
 
-import it.unibo.grubclash.controller.Application_Programming_Interface.PlayerInterface;
-import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
+import it.unibo.grubclash.controller.Application_Programming_Interface.Player;
+import it.unibo.grubclash.controller.Implementation.PlayerImpl;
+import it.unibo.grubclash.model.Application_Programming_Interface.Entity;
 import it.unibo.grubclash.model.Application_Programming_Interface.ProjectileType;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
@@ -15,9 +16,9 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
     private static int widthRoket = 10;
     private static int heightRoket = 10;
     private int speed = 10;
-    private PlayerInterface owner;
+    private PlayerImpl owner;
 
-    public ProjectileRoket(int x, int y, PlayerInterface owner) {
+    public ProjectileRoket(int x, int y, PlayerImpl owner) {
         super(x, y, getWidthRoket(), getHeightRoket(), Entities.PROJECTILE); 
         this.owner = owner;
         setGravity(false);
@@ -25,7 +26,7 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
     }   
 
     @Override
-    public PlayerInterface getOwner() {
+    public Player getOwner() {
         return owner;
     }
 
@@ -75,7 +76,7 @@ public class ProjectileRoket extends Projectile implements ProjectileType {
     private void explosionHappening () {
         Sound.setFile(0);
         Sound.play();
-        EntityInterface damage = damage(dmgRadius);
+        Entity damage = damage(dmgRadius);
         Allowed.applyDamage(Allowed.dealDamage(damage.getX(), damage.getY(), damage.getWidth(), damage.getHeight()), 2);
         this.setWorking(Status.DEAD);
     }

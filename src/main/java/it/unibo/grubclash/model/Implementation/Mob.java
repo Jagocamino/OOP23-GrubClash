@@ -10,7 +10,7 @@ import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 import it.unibo.grubclash.view.Implementation.LifeDrawingMobImpl;
 
-public class Mob extends Entity {
+public class Mob extends EntityImpl {
 
     private final char FS = File.separatorChar;
 

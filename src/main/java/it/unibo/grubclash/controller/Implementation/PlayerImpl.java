@@ -4,9 +4,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Optional;
 
-import it.unibo.grubclash.controller.Application_Programming_Interface.PlayerInterface;
+import it.unibo.grubclash.controller.Application_Programming_Interface.Player;
 import it.unibo.grubclash.model.Implementation.Allowed;
-import it.unibo.grubclash.model.Implementation.Entity;
+import it.unibo.grubclash.model.Implementation.EntityImpl;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
@@ -19,7 +19,7 @@ import it.unibo.grubclash.view.Implementation.WeaponRoket;
 /**
  * Class implementing the Player methods.
  */
-public class Player extends Entity implements PlayerInterface{
+public class PlayerImpl extends EntityImpl implements Player{
 
     private static final char FS = File.separatorChar;
     private static final int DEFAULT_SPEED = 3;
@@ -62,8 +62,8 @@ public class Player extends Entity implements PlayerInterface{
     * @param id id of the player
     * @param keyH KeyHandler assigned to the player
     */
-    public Player(int id, KeyHandler keyH) {
-        super(EnumEntity.buttonToCoordsXConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get()), EnumEntity.buttonToCoordsYConverter(MapBuilder.entityMatrix, EnumEntity.idToEntitiesConverter(id).get()),
+    public PlayerImpl(int id, KeyHandler keyH) {
+        super(EnumEntity.buttonToCoordsXConverter(MapBuilderImpl.entityMatrix, EnumEntity.idToEntitiesConverter(id).get()), EnumEntity.buttonToCoordsYConverter(MapBuilderImpl.entityMatrix, EnumEntity.idToEntitiesConverter(id).get()),
         35, 35,EnumEntity.idToEntitiesConverter(id).get());
 
         this.setLife(new LifeImpl(this,new LifeDrawingImpl()));

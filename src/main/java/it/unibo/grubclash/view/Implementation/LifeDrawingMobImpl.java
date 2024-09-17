@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import it.unibo.grubclash.model.Implementation.Entity;
+import it.unibo.grubclash.model.Implementation.EntityImpl;
 import it.unibo.grubclash.view.Application_Programming_Interface.LifeDrawing;
 
 /**
@@ -23,14 +23,14 @@ public class LifeDrawingMobImpl implements LifeDrawing {
 
     public LifeDrawingMobImpl() {
         final char FS = File.separatorChar;
-        life20 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_mob.png", WIDTH_LIFE_MOB, HEIGHT_LIFE_MOB);
+        life20 = EntityImpl.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_mob.png", WIDTH_LIFE_MOB, HEIGHT_LIFE_MOB);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void drawLife(Graphics2D g2d, Entity entity, int life) {
+    public void drawLife(Graphics2D g2d, EntityImpl entity, int life) {
 
         switch (life) {
             case 2:

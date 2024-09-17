@@ -2,7 +2,7 @@ package it.unibo.grubclash.model.Implementation;
 
 import java.util.Optional;
 
-import it.unibo.grubclash.controller.Implementation.MapBuilder;
+import it.unibo.grubclash.controller.Implementation.MapBuilderImpl;
 
 public class EnumEntity {
 
@@ -26,8 +26,7 @@ public class EnumEntity {
     }
 
     public enum Weapons {
-        GRANADE,
-        ROKET,
+        GRANADE, 
         HITSCAN;
     }
     
@@ -59,10 +58,10 @@ public class EnumEntity {
 
     public static int buttonToCoordsXConverter(Entities[][] entities, Entities player){
         int x = 0;
-        for(int i = 0; i < MapBuilder.COLS; i++){
-            for(int j = 0; j < MapBuilder.ROWS; j++){
+        for(int i = 0; i < MapBuilderImpl.COLS; i++){
+            for(int j = 0; j < MapBuilderImpl.ROWS; j++){
                 if(entities[i][j].equals(player)){
-                    x = MapBuilder.getXMapBase(i, j);
+                    x = MapBuilderImpl.getXMapBase(i, j);
                 }
             }
         }
@@ -71,10 +70,10 @@ public class EnumEntity {
 
     public static int buttonToCoordsYConverter(Entities[][] entities, Entities player){
         int y = 0;
-        for(int i = 0; i < MapBuilder.COLS; i++){
-            for(int j = 0; j < MapBuilder.ROWS; j++){
+        for(int i = 0; i < MapBuilderImpl.COLS; i++){
+            for(int j = 0; j < MapBuilderImpl.ROWS; j++){
                 if(entities[i][j].equals(player)){
-                    y = MapBuilder.getYMapBase(i, j);
+                    y = MapBuilderImpl.getYMapBase(i, j);
                 }
             }
         }

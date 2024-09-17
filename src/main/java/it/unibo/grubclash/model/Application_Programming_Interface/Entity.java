@@ -9,7 +9,7 @@ import it.unibo.grubclash.model.Implementation.LifeImpl;
 /**
  * @author Camoni Jago
  */
-public interface EntityInterface {
+public interface Entity {
 
     /**
      * If alive, the entity is updated

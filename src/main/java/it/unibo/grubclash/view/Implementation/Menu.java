@@ -1,6 +1,6 @@
 package it.unibo.grubclash.view.Implementation;
 
-import it.unibo.grubclash.controller.Implementation.MapBuilder;
+import it.unibo.grubclash.controller.Implementation.MapBuilderImpl;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 
 import javax.swing.*;
@@ -160,7 +160,7 @@ public class Menu extends JFrame{
                 System.out.println("Errore nella selezione del player");
                 System.exit(1);
             }
-            new MapBuilder(playerCount);
+            new MapBuilderImpl(playerCount);
         });
 
         panelMappa.add(play2);

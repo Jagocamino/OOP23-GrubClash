@@ -2,13 +2,13 @@ package it.unibo.grubclash.controller.Application_Programming_Interface;
 
 import java.util.ArrayList;
 
-import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.controller.Implementation.PlayerImpl;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 
 /**
  * @author Remschi Christian
  */
-public interface GrubPanelInter {
+public interface GrubPanel {
 
     /**
      * Starts the main Thread
@@ -38,7 +38,7 @@ public interface GrubPanelInter {
     /**
      * @return the list of players
      */
-    ArrayList<Player> getPlayers();
+    ArrayList<PlayerImpl> getPlayers();
 
     /**
      * @return true if the turn already started, false otherwise

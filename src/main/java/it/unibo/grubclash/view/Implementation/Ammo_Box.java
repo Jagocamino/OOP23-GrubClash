@@ -6,10 +6,10 @@ import java.io.File;
 import java.util.Optional;
 
 import it.unibo.grubclash.model.Implementation.Allowed;
-import it.unibo.grubclash.model.Implementation.Entity;
+import it.unibo.grubclash.model.Implementation.EntityImpl;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
 
-public class Ammo_Box extends Entity{
+public class Ammo_Box extends EntityImpl{
     
     private final char FS = File.separatorChar;
 

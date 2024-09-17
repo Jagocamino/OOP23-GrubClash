@@ -13,7 +13,7 @@ public class LifeImpl implements Life {
 
     private String color_game = "#EF7B10";
     private final Font snapITCFont;
-    private final Entity entity;
+    private final EntityImpl entity;
 
     //life of each player ranging from 10 to 0
     private int life;
@@ -24,7 +24,7 @@ public class LifeImpl implements Life {
 
     private static final int sizeFont = 24;
 
-    public LifeImpl (Entity entity,LifeDrawing drawingStrategy){
+    public LifeImpl (EntityImpl entity,LifeDrawing drawingStrategy){
 
         this.life=10;
         this.entity=entity;

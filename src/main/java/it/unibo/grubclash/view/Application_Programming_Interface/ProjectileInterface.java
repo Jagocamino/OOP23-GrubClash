@@ -2,7 +2,7 @@ package it.unibo.grubclash.view.Application_Programming_Interface;
 
 import java.awt.Graphics2D;
 
-import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
+import it.unibo.grubclash.model.Application_Programming_Interface.Entity;
 /**
  * @author Camoni Jago
  */
@@ -12,7 +12,7 @@ public interface ProjectileInterface {
      * Applies the damage of the explosion when a collision is detected
      * @param dmgRadius
      */
-    EntityInterface damage(int dmgRadius);
+    Entity damage(int dmgRadius);
 
     /**
      * Draws the damage

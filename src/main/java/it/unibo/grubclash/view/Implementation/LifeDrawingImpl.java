@@ -2,7 +2,7 @@ package it.unibo.grubclash.view.Implementation;
 
 import java.awt.Graphics2D;
 
-import it.unibo.grubclash.model.Implementation.Entity;
+import it.unibo.grubclash.model.Implementation.EntityImpl;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -30,18 +30,18 @@ public class LifeDrawingImpl implements LifeDrawing {
 
     public LifeDrawingImpl() {
         final char FS = File.separatorChar;
-        life100 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_100.png", WIDTH_LIFE, HEIGHT_LIFE);
-        life80 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_80.png", WIDTH_LIFE, HEIGHT_LIFE);
-        life60 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_60.png", WIDTH_LIFE, HEIGHT_LIFE);
-        life40 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_40.png", WIDTH_LIFE, HEIGHT_LIFE);
-        life20 = Entity.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_20.png", WIDTH_LIFE, HEIGHT_LIFE);
+        life100 = EntityImpl.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_100.png", WIDTH_LIFE, HEIGHT_LIFE);
+        life80 = EntityImpl.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_80.png", WIDTH_LIFE, HEIGHT_LIFE);
+        life60 = EntityImpl.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_60.png", WIDTH_LIFE, HEIGHT_LIFE);
+        life40 = EntityImpl.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_40.png", WIDTH_LIFE, HEIGHT_LIFE);
+        life20 = EntityImpl.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_20.png", WIDTH_LIFE, HEIGHT_LIFE);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void drawLife(Graphics2D g2d, Entity entity, int life) {
+    public void drawLife(Graphics2D g2d, EntityImpl entity, int life) {
         switch (life) {
             case 10:
                 g2d.drawImage(life100, entity.getX() - REMOVING_X, entity.getY() - REMOVING_Y, null);

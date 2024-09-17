@@ -4,13 +4,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Optional;
 
-import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.controller.Implementation.PlayerImpl;
 import it.unibo.grubclash.model.Application_Programming_Interface.WeaponInterface;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 
 public abstract class Weapon implements WeaponInterface {
 
-    private Player owner;
+    private PlayerImpl owner;
     private int ammo;
     private Orientation shootingDir;
 
@@ -20,7 +20,7 @@ public abstract class Weapon implements WeaponInterface {
 
     public BufferedImage left, right, up, down;
 
-    public Weapon(Player owner, int ammo){
+    public Weapon(PlayerImpl owner, int ammo){
 
         setOwner(owner);
         setAmmo(ammo);
@@ -43,12 +43,12 @@ public abstract class Weapon implements WeaponInterface {
     }
 
     @Override
-    public Player getOwner() {
+    public PlayerImpl getOwner() {
         return this.owner;
     }
 
     @Override
-    public void setOwner(Player owner) {
+    public void setOwner(PlayerImpl owner) {
         this.owner = owner;
     }
 

@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import it.unibo.grubclash.controller.Application_Programming_Interface.MapBuilderInterface;
+import it.unibo.grubclash.controller.Application_Programming_Interface.MapBuilder;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
 import it.unibo.grubclash.view.Application_Programming_Interface.FrameManager;
 import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
@@ -18,7 +18,7 @@ import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
 import java.io.File;
 import java.io.IOException;
 
-public class MapBuilder extends Canvas implements MapBuilderInterface {
+public class MapBuilderImpl extends Canvas implements MapBuilder {
 
     private static FrameManager frameManager = FrameManagerImpl.getInstance();
 
@@ -37,7 +37,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         return mapContainer;
     }
     public static void setMapContainer(JFrame mapContainer) {
-        MapBuilder.mapContainer = mapContainer;
+        MapBuilderImpl.mapContainer = mapContainer;
     }
 
     private static JPanel map;
@@ -45,7 +45,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         return map;
     }
     public static void setMap(JPanel map) {
-        MapBuilder.map = map;
+        MapBuilderImpl.map = map;
     }
 
     private static JPanel mapBase[][];
@@ -56,19 +56,19 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         return mapBase[i][j];
     }
     public static void setMapBase(JPanel[][] mapBase) {
-        MapBuilder.mapBase = mapBase;   
+        MapBuilderImpl.mapBase = mapBase;   
     }
     public static int getXMapBase(int i, int j){
-        return MapBuilder.mapBase[i][j].getX();
+        return MapBuilderImpl.mapBase[i][j].getX();
     }
     public static int getYMapBase(int i, int j){
-        return MapBuilder.mapBase[i][j].getY();
+        return MapBuilderImpl.mapBase[i][j].getY();
     }
     public static int getWidthMapBase(int i, int j){
-        return MapBuilder.mapBase[i][j].getWidth();
+        return MapBuilderImpl.mapBase[i][j].getWidth();
     }
     public static int getHeightMapBase(int i, int j){
-        return MapBuilder.mapBase[i][j].getHeight();
+        return MapBuilderImpl.mapBase[i][j].getHeight();
     }
 
 
@@ -80,7 +80,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         return btnMatrix[i][j];
     }
     public static void setBtnMatrix(JButton[][] btnMatrix) {
-        MapBuilder.btnMatrix = btnMatrix;
+        MapBuilderImpl.btnMatrix = btnMatrix;
     }
 
     private static JLayeredPane layeredPaneGrid;
@@ -88,7 +88,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         return layeredPaneGrid;
     }
     public static void setLayeredPaneGrid(JLayeredPane layeredPaneGrid) {
-        MapBuilder.layeredPaneGrid = layeredPaneGrid;
+        MapBuilderImpl.layeredPaneGrid = layeredPaneGrid;
     }
 
     protected static int currentPlayer;
@@ -105,9 +105,9 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
 
     public static EnumEntity.Entities[][] entityMatrix;
 
-    public MapBuilder(final int playerCount) {
+    public MapBuilderImpl(final int playerCount) {
         setNumPlayers(playerCount);
-        MapBuilder.entityMatrix = new EnumEntity.Entities[ROWS][COLS];
+        MapBuilderImpl.entityMatrix = new EnumEntity.Entities[ROWS][COLS];
         mapDrawer = false;
         p1Map();
     }
@@ -129,7 +129,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
     }
 
     public static void setEntityInMatrix (int i, int j, EnumEntity.Entities entity) {
-        MapBuilder.entityMatrix[i][j] = entity;
+        MapBuilderImpl.entityMatrix[i][j] = entity;
     }
 
     public static void initCharacterPlacementPhase () {
@@ -229,7 +229,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
     }
 
     public static void setNumPlayers ( int numPlayers ) {
-        MapBuilder.numPlayers = numPlayers;
+        MapBuilderImpl.numPlayers = numPlayers;
         initPlayerColor();
     }
 
@@ -238,19 +238,19 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
     }
 
     public static int getCurrentPlayer () {
-        return MapBuilder.currentPlayer;
+        return MapBuilderImpl.currentPlayer;
     }
 
     protected static void updateCurrentPlayer () {
         if ( getCurrentPlayer() < getNumPlayers() ) {
-            MapBuilder.currentPlayer++;
+            MapBuilderImpl.currentPlayer++;
         }else{
             initializeCurrentPlayer();
         }
     }
 
     protected static void initializeCurrentPlayer () {
-        MapBuilder.currentPlayer = 0;
+        MapBuilderImpl.currentPlayer = 0;
     }
 
     private static void initPlayerColor () {
@@ -274,7 +274,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
                     break;
             }
         }
-        MapBuilder.playerColor = playerColor;
+        MapBuilderImpl.playerColor = playerColor;
     }
 
     private static Color getPlayerColor (int currentPlayer) {
@@ -338,7 +338,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
     private static void createPlayableLayer() { 
         JFrame mapContainer = getMapContainer();
         JLayeredPane layeredPaneGrid = getLayeredPaneGrid();
-        GrubPanel playableLayer = new GrubPanel(getNumPlayers());
+        GrubPanelImpl playableLayer = new GrubPanelImpl(getNumPlayers());
         playableLayer.startGameThread();
         playableLayer.setBounds(0, 0, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
         playableLayer.setOpaque(false); 
@@ -431,7 +431,7 @@ public class MapBuilder extends Canvas implements MapBuilderInterface {
         getMapContainer().setSize(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
 
         setNumPlayers(numPlayers);
-        MapBuilder.itemNum = numPlayers * 5;
+        MapBuilderImpl.itemNum = numPlayers * 5;
         mapContainer.setMinimumSize(new Dimension(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get()));
         mapContainer.setResizable(false);
         JLayeredPane layeredPaneGrid = new JLayeredPane();

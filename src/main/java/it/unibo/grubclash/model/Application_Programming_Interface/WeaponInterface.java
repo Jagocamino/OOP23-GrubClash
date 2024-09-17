@@ -3,8 +3,8 @@ package it.unibo.grubclash.model.Application_Programming_Interface;
 import java.awt.Graphics2D;
 import java.util.Optional;
 
-import it.unibo.grubclash.controller.Application_Programming_Interface.PlayerInterface;
-import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.controller.Application_Programming_Interface.Player;
+import it.unibo.grubclash.controller.Implementation.PlayerImpl;
 import it.unibo.grubclash.model.Implementation.ProjectileRoket;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 
@@ -33,12 +33,12 @@ public interface WeaponInterface {
     /**
      * @return The owner
      */
-    PlayerInterface getOwner();
+    Player getOwner();
 
     /**
      * Sets the owner
      */
-    void setOwner(Player owner);
+    void setOwner(PlayerImpl owner);
 
     /**
      * Sets the ammunitions

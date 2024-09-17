@@ -11,10 +11,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanelInter;
+import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanel;
 import it.unibo.grubclash.model.Application_Programming_Interface.PhysicInterface;
 import it.unibo.grubclash.model.Implementation.Allowed;
-import it.unibo.grubclash.model.Implementation.Entity;
+import it.unibo.grubclash.model.Implementation.EntityImpl;
 import it.unibo.grubclash.model.Implementation.ItemSpawner;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
 import it.unibo.grubclash.model.Implementation.Physic;
@@ -30,7 +30,7 @@ import it.unibo.grubclash.view.Implementation.UI;
 /**
  * Class implementing the GrubPanel methods.
  */
-public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
+public class GrubPanelImpl extends JPanel implements Runnable, GrubPanel {
 
     private static final int FPS = 60;
     private static final int TIME_LIMIT = 1000000000;
@@ -42,7 +42,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
     private FrameManager frameManager = FrameManagerImpl.getInstance();
     private Thread gameThread; 
     private ArrayList<KeyHandler> keyHandlers;
-    private ArrayList<Player> players;
+    private ArrayList<PlayerImpl> players;
     private int playerCount;
     private int numPlayerTurn;
     private int secondsTurn = RESET;
@@ -56,30 +56,30 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
     * Need to initialize allowed, even if we are not going to use it as a variable
     */
     @SuppressWarnings("unused")
-    private Allowed allowed = new Allowed(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get(), MapBuilder.ROWS, MapBuilder.COLS);
+    private Allowed allowed = new Allowed(frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get(), MapBuilderImpl.ROWS, MapBuilderImpl.COLS);
 
     /**
     * Constructor for GrubPanel
     * @param playerCount number of players
     */
-    public GrubPanel(int playerCount) {
+    public GrubPanelImpl(int playerCount) {
 
         this.playerCount = playerCount;
         this.idOfTheWinner = 99;
         this.numAlivePlayers = RESET;
         keyHandlers = new ArrayList<>();
-        Allowed.setMapBase(MapBuilder.getMapBase());
+        Allowed.setMapBase(MapBuilderImpl.getMapBase());
 
         ItemSpawner itSpawn = new ItemSpawner();
-        itSpawn.generateSpawnLocation(Allowed.getROWS(), Allowed.getCOLS(), MapBuilder.getItemNum(), MapBuilder.getEntityMatrix());
+        itSpawn.generateSpawnLocation(Allowed.getROWS(), Allowed.getCOLS(), MapBuilderImpl.getItemNum(), MapBuilderImpl.getEntityMatrix());
 
-        Allowed.addMapBase(MapBuilder.getEntityMatrix()); 
+        Allowed.addMapBase(MapBuilderImpl.getEntityMatrix()); 
         
 
         players = new ArrayList<>();
         for(int i = 0; i < playerCount; i++) {
             keyHandlers.add(new KeyHandler(this));
-            players.add(new Player(i, keyHandlers.get(i)));
+            players.add(new PlayerImpl(i, keyHandlers.get(i)));
         } 
 
 
@@ -138,7 +138,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
      * Updates the mob's movement and interaction
      */
     private void updateMob() {
-        for (Optional<Entity> mob : Allowed.getMob()) {
+        for (Optional<EntityImpl> mob : Allowed.getMob()) {
             if (mob.isPresent()) {
                 mob.get().update(); 
             }
@@ -150,7 +150,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
      */
     private void updateGameState() {
         
-        for (Player player : players) {
+        for (PlayerImpl player : players) {
             if(player.isAlive()){
                 numAlivePlayers++;
                 idOfTheWinner = player.getId();
@@ -168,8 +168,8 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
      * Updates the projectile's movement and interaction
      */
     private void updateProj() {
-        ArrayList<Entity> toDelete = new ArrayList<Entity>();
-        for (Optional<Entity> entity : Allowed.getDynamicEntities()) {
+        ArrayList<EntityImpl> toDelete = new ArrayList<EntityImpl>();
+        for (Optional<EntityImpl> entity : Allowed.getDynamicEntities()) {
             if(entity.isPresent() && entity.get().getEntity() == Entities.PROJECTILE){
                 if (entity.get().isAlive()) {
                     entity.get().update();
@@ -185,8 +185,8 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
      * Removes the dynamic entities whenever their state is set to dead
      */
     private void updateDynamicEntities(){
-        ArrayList<Entity> toDelete = new ArrayList<Entity>();
-        for (Optional<Entity> entity : Allowed.getDynamicEntities()) {
+        ArrayList<EntityImpl> toDelete = new ArrayList<EntityImpl>();
+        for (Optional<EntityImpl> entity : Allowed.getDynamicEntities()) {
             if(entity.isPresent() && entity.get().getEntity() == Entities.TRAP){
                 if (!entity.get().isAlive()) {
                     toDelete.add(entity.get());
@@ -199,8 +199,8 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
     /**
      * Supports the previous method
      */
-    private void deleteDynamicEntity (ArrayList<Entity> toDelete) {
-        for (Entity entity : toDelete) {
+    private void deleteDynamicEntity (ArrayList<EntityImpl> toDelete) {
+        for (EntityImpl entity : toDelete) {
             
             Allowed.removeDynamicEntity(entity);
         }
@@ -213,7 +213,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
     private void update() {
         new Thread(() -> {
             while(gameThread != null) {
-                for(Player p : players) {
+                for(PlayerImpl p : players) {
                     if(p.isAlive()){
                         numPlayerTurn = p.getId();
                         int numCicles = RESET;   
@@ -223,7 +223,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
                             turnBegin = true;
                         } 
 
-                        MapBuilder.getCh();
+                        MapBuilderImpl.getCh();
                             
                         turnBegin = false;
                         this.addKeyListener(p.getKeyHandler());
@@ -278,7 +278,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         if(choice == 0){
             System.exit(0);
         }else if(choice == 1){
-            MapBuilder.getMapContainer().dispose();
+            MapBuilderImpl.getMapContainer().dispose();
             Thread.currentThread().interrupt();
             new Menu();
         }
@@ -287,7 +287,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
     /**
      * resets the variables 
      */
-    private void resetVariables(Player p){
+    private void resetVariables(PlayerImpl p){
 
         secondsTurn = RESET;
         p.getKeyHandler().leftPressed = false;
@@ -311,16 +311,16 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
      * Updates the physic of the dynamic entities, players and mobs
      */
     private void updatePhysic() {
-        for(Optional<Entity> entity : Allowed.getDynamicEntities()) {
+        for(Optional<EntityImpl> entity : Allowed.getDynamicEntities()) {
             if(entity.isPresent() && entity.get().isThereGravity()){
                 physic.checkTerrain(entity.get());
             }
         }
-        for(Player p : players){
+        for(PlayerImpl p : players){
             physic.checkDeath(p);
         }
 
-        for (Optional<Entity> mob : Allowed.getMob()) {
+        for (Optional<EntityImpl> mob : Allowed.getMob()) {
             if (mob.isPresent()) {
                 physic.checkTerrain(mob.get()); 
             }
@@ -337,7 +337,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         Graphics2D g2d = (Graphics2D)g;
 
         //DRAW PLAYER
-        for(Player p : players) {
+        for(PlayerImpl p : players) {
             p.draw(g2d);
             p.getLife().draw(g2d);
             p.getWeapon().get().draw(g2d);
@@ -347,14 +347,14 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
         }
 
         //DRAW OBJECTS
-        for (Optional<Entity> entity : Allowed.getDynamicEntities()) {
+        for (Optional<EntityImpl> entity : Allowed.getDynamicEntities()) {
             if (entity.isPresent() && !Allowed.isPlayer(entity.get()) && entity.get().getEntity() != Entities.PROJECTILE) {
                 entity.get().draw(g2d);   
             }
         }
 
         //DRAW MOBS
-        for (Optional<Entity> mob : Allowed.getMob()) {
+        for (Optional<EntityImpl> mob : Allowed.getMob()) {
             if (mob.isPresent()) {
                 mob.get().draw(g2d);
                 mob.get().getLife().draw(g2d);   
@@ -404,7 +404,7 @@ public class GrubPanel extends JPanel implements Runnable, GrubPanelInter {
      * {@inheritDoc}
      */
     @Override
-    public ArrayList<Player> getPlayers() {
+    public ArrayList<PlayerImpl> getPlayers() {
         return players;
     }
 

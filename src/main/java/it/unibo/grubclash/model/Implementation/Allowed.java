@@ -1,7 +1,6 @@
 package it.unibo.grubclash.model.Implementation;
-import it.unibo.grubclash.controller.Application_Programming_Interface.PlayerInterface;
-import it.unibo.grubclash.controller.Implementation.Player;
-import it.unibo.grubclash.model.Application_Programming_Interface.EntityInterface;
+import it.unibo.grubclash.controller.Implementation.PlayerImpl;
+import it.unibo.grubclash.model.Application_Programming_Interface.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 import it.unibo.grubclash.view.Implementation.Ammo_Box;
@@ -21,46 +20,46 @@ public class Allowed {
     private static int borderX;
     private static int borderY;
     private static JPanel[][] mapBase;
-    private static ArrayList<Optional<Entity>> dynamicEntities;
-    private static Entity[][] lvlData;
+    private static ArrayList<Optional<EntityImpl>> dynamicEntities;
+    private static EntityImpl[][] lvlData;
     private static int ROWS;
     private static int COLS;
-    private static ArrayList<Optional<Entity>> mob;
+    private static ArrayList<Optional<EntityImpl>> mob;
 
     public Allowed(int borderX, int borderY, int ROWS, int COLS) {
         Allowed.borderX = borderX;
         Allowed.borderY = borderY;
         Allowed.ROWS = ROWS;
         Allowed.COLS = COLS;
-        Allowed.lvlData = new Entity[ROWS][COLS];
-        Allowed.dynamicEntities = new ArrayList<Optional<Entity>>();
+        Allowed.lvlData = new EntityImpl[ROWS][COLS];
+        Allowed.dynamicEntities = new ArrayList<Optional<EntityImpl>>();
         mob = new ArrayList<>();
     }
 
-    private static EntityInterface getLvlData( int i, int j) {
+    private static EntityImpl getLvlData( int i, int j) {
         return Allowed.lvlData[i][j];
     }
 
     public static void clearDynamicEntities(){
-        ArrayList<Optional<Entity>> toClear = new ArrayList<>();
-        for (Optional<Entity> optional : dynamicEntities) {
+        ArrayList<Optional<EntityImpl>> toClear = new ArrayList<>();
+        for (Optional<EntityImpl> optional : dynamicEntities) {
             if(optional.isEmpty()){
                 toClear.add(optional);
             }
         }
-        for (Optional<Entity> entity : toClear) {
+        for (Optional<EntityImpl> entity : toClear) {
             dynamicEntities.remove(entity);
         }
     }
     
-    public static ArrayList<Optional<Entity>> getDynamicEntities() {
+    public static ArrayList<Optional<EntityImpl>> getDynamicEntities() {
         return dynamicEntities;
     }
-    public static void addDynamicEntity (Optional<Entity> dynamicEntity) {
+    public static void addDynamicEntity (Optional<EntityImpl> dynamicEntity) {
         Allowed.dynamicEntities.add(dynamicEntity);
     }
     
-    public static void removeDynamicEntity (EntityInterface dynamicEntity) {
+    public static void removeDynamicEntity (EntityImpl dynamicEntity) {
         Allowed.dynamicEntities.set(Allowed.dynamicEntities.indexOf(Optional.of(dynamicEntity)), Optional.empty());
     }
 
@@ -85,7 +84,7 @@ public class Allowed {
         if (lvlData[i][j] != null ) {
             System.out.println("This box is already taken, overwriting floor or item on the map..");
         }
-        Allowed.lvlData[i][j] = new Entity(x, y, width, height, entity);
+        Allowed.lvlData[i][j] = new EntityImpl(x, y, width, height, entity);
     }
 
     //regards player
@@ -101,8 +100,8 @@ public class Allowed {
         return false;
     }
 
-    public static void touchDynamicEntity(Player player){
-        for (Optional<Entity> t : getDynamicEntities()) {
+    public static void touchDynamicEntity(PlayerImpl player){
+        for (Optional<EntityImpl> t : getDynamicEntities()) {
             if( t.isPresent() && t.get().getWorking() == Status.ALIVE && player.getX() + player.getWidth()/2 > t.get().getX() && player.getX() + player.getWidth()/2 < t.get().getX() + t.get().getWidth() && 
                 player.getY() + player.getHeight()/2 > t.get().getY() && player.getY() + player.getHeight()/2 < t.get().getY() + t.get().getHeight()){
                 switch(t.get().getEntity()){
@@ -147,7 +146,7 @@ public class Allowed {
         }
     }
     
-    private static Entity giveRandomItem (int x, int y) {
+    private static EntityImpl giveRandomItem (int x, int y) {
         Random randomNum = new Random();    
         switch (randomNum.nextInt(4)) {
             case 0:
@@ -172,10 +171,10 @@ public class Allowed {
      * @param owner
      * @return an optional arraylist of melee attack targets
      */
-    public static Optional<ArrayList<Entity>> meleeAttack(int xRange, int yRange, int widthRange, int heightRange, PlayerInterface owner) {
+    public static Optional<ArrayList<EntityImpl>> meleeAttack(int xRange, int yRange, int widthRange, int heightRange, PlayerImpl owner) {
         boolean empty = true;
-        ArrayList<Entity> arrayList = new ArrayList<>();
-        for (Optional<Entity> entity : getDynamicEntities()) {
+        ArrayList<EntityImpl> arrayList = new ArrayList<>();
+        for (Optional<EntityImpl> entity : getDynamicEntities()) {
             if (entity.isPresent() && entity.get() != owner) {
                 int entityX = entity.get().getX();
                 int entityY = entity.get().getY();
@@ -219,7 +218,7 @@ public class Allowed {
         }
     }
 
-    public static void mapDestroyer (EntityInterface wall) {
+    public static void mapDestroyer (Entity wall) {
         int i = getI(wall).get().intValue();
         int j = getJ(wall).get().intValue();
         mapDestroyer(i, j);
@@ -230,7 +229,7 @@ public class Allowed {
      * @param entity
      * @return i number of the wall argument
      */
-    public static Optional<Integer> getI (EntityInterface entity) {
+    public static Optional<Integer> getI (Entity entity) {
 
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
@@ -247,7 +246,7 @@ public class Allowed {
      * @param entity
      * @return j number of the wall argument
      */
-    public static Optional<Integer> getJ (EntityInterface entity) {
+    public static Optional<Integer> getJ (Entity entity) {
 
         for (int i = 0; i < getROWS(); i++) {
             for (int j = 0; j < getCOLS(); j++) {
@@ -291,7 +290,7 @@ public class Allowed {
      * @param owner
      * @return if the collision happens
      */
-    private static boolean gonnaExplodeHere(int x, int y, PlayerInterface owner ) {
+    private static boolean gonnaExplodeHere(int x, int y, PlayerImpl owner ) {
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLS; j++) {
                 if (x < 0 || x >= borderX) {
@@ -311,7 +310,7 @@ public class Allowed {
             }
         }
 
-        for (Optional<Entity> entity : Allowed.dynamicEntities) {
+        for (Optional<EntityImpl> entity : Allowed.dynamicEntities) {
             if (    (
                         entity.isPresent() && entity.get() != owner && entity.get() != owner.getWeapon().get().getRocket().get()
                     ) && (   
@@ -326,7 +325,7 @@ public class Allowed {
                 return true;
             }
         }
-        for (Optional<Entity> entity : Allowed.mob) {
+        for (Optional<EntityImpl> entity : Allowed.mob) {
             if (    (
                         entity.isPresent() 
                     ) && (   
@@ -349,14 +348,14 @@ public class Allowed {
      * @param y
      * @param widthProjectile
      * @param heightProjectile
-     * @param playerException
+     * @param owner
      * @return if at least a entity will get hit
      */
-    public static boolean gonnaExplode ( int x, int y, int widthProjectile, int heightProjectile, PlayerInterface playerException) {
-        if (!gonnaExplodeHere( x, y, playerException )) {
-            if(!gonnaExplodeHere( x + widthProjectile, y + heightProjectile, playerException)) {
-                if(!gonnaExplodeHere( x + widthProjectile, y, playerException)) {
-                    if(!gonnaExplodeHere( x, y + heightProjectile, playerException))
+    public static boolean gonnaExplode ( int x, int y, int widthProjectile, int heightProjectile, PlayerImpl owner) {
+        if (!gonnaExplodeHere( x, y, owner )) {
+            if(!gonnaExplodeHere( x + widthProjectile, y + heightProjectile, owner)) {
+                if(!gonnaExplodeHere( x + widthProjectile, y, owner)) {
+                    if(!gonnaExplodeHere( x, y + heightProjectile, owner))
                         return false;
                 }
             }
@@ -369,7 +368,7 @@ public class Allowed {
      * @param entity
      * @return if the entity is hittable
      */
-    public static boolean hittable(EntityInterface entity) {
+    public static boolean hittable(Entity entity) {
         return (
             entity.getEntity() == Entities.PLAYER1 ||
             entity.getEntity() == Entities.PLAYER2 ||
@@ -386,7 +385,7 @@ public class Allowed {
      * @param entity
      * @return if you can deal damage to the entity
      */
-    public static boolean damageable (EntityInterface entity) {
+    public static boolean damageable (Entity entity) {
         return (
             entity.getEntity() == Entities.PLAYER1 ||
             entity.getEntity() == Entities.PLAYER2 ||
@@ -403,7 +402,7 @@ public class Allowed {
      * @param entity
      * @return if the entity is a player or not
      */
-    public static boolean isPlayer (EntityInterface entity) {
+    public static boolean isPlayer (Entity entity) {
         return (
             entity.getEntity() == Entities.PLAYER1 ||
             entity.getEntity() == Entities.PLAYER2 ||
@@ -420,9 +419,9 @@ public class Allowed {
      * @param explosionHeight
      * @return a list of hitted targets
      */
-    public static ArrayList<Entity> dealDamage (int explosionX, int explosionY, int explosionWidth, int explosionHeight) { 
-        ArrayList<Entity> damageToWhichDynamicEntities = new ArrayList<>();
-        for (Optional<Entity> dynamicEntity : Allowed.dynamicEntities) {
+    public static ArrayList<EntityImpl> dealDamage (int explosionX, int explosionY, int explosionWidth, int explosionHeight) { 
+        ArrayList<EntityImpl> damageToWhichDynamicEntities = new ArrayList<>();
+        for (Optional<EntityImpl> dynamicEntity : Allowed.dynamicEntities) {
             if(dynamicEntity.isPresent()){
 
                 int entityX = dynamicEntity.get().getX();
@@ -445,7 +444,7 @@ public class Allowed {
 
         }
 
-        for (Optional<Entity> dynamicEntity : Allowed.mob) {
+        for (Optional<EntityImpl> dynamicEntity : Allowed.mob) {
             if(dynamicEntity.isPresent()){
 
                 int entityX = dynamicEntity.get().getX();
@@ -494,7 +493,7 @@ public class Allowed {
      * @param dealDamage
      * @param i
      */
-    public static void applyDamage (ArrayList<Entity> dealDamage, int i) {
+    public static void applyDamage (ArrayList<EntityImpl> dealDamage, int i) {
         for (Entity entity : dealDamage) {
             if ( isPlayer(entity) || entity.getEntity().equals(Entities.MOB) ) {
                 for(int j = 0; j < i; j++){
@@ -507,16 +506,15 @@ public class Allowed {
         }
     }
 
-    public static ArrayList<Optional<Entity>> getMob() {
+    public static ArrayList<Optional<EntityImpl>> getMob() {
         return mob;
     }
 
-
-    public static boolean damageFromMob(Player p){
+    public static boolean damageFromMob(PlayerImpl p){
 
         final int sizePixel=10;
 
-        for (Optional<Entity> m : mob) {
+        for (Optional<EntityImpl> m : mob) {
 
             if(m.isPresent()){
                 if(m.get().getX()<=p.getX()+sizePixel && m.get().getX()>=p.getX()-sizePixel && m.get().getY()<=p.getY()+sizePixel && m.get().getY()>=p.getY()-sizePixel ){

@@ -4,7 +4,7 @@ import java.awt.Color;
 /**
  * @author Camoni Jago
  */
-public interface MapBuilderInterface {
+public interface MapBuilder {
 
     /**
      * This method switches the behavior of the background, each background depends on the state of the map
