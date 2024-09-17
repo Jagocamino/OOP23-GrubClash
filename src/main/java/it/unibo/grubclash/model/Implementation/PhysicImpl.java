@@ -2,13 +2,13 @@ package it.unibo.grubclash.model.Implementation;
 
 import it.unibo.grubclash.controller.Implementation.GrubPanelImpl;
 import it.unibo.grubclash.model.Application_Programming_Interface.Entity;
-import it.unibo.grubclash.model.Application_Programming_Interface.PhysicInterface;
+import it.unibo.grubclash.model.Application_Programming_Interface.Physic;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 
 /**
  * Class implementing the Physic methods.
  */
-public class Physic implements PhysicInterface {
+public class PhysicImpl implements Physic {
 
     private static final int BORDER_OFFSET = 40;
     private static final int FRAMES_TO_INCREASE_GRAVITY = 15;
@@ -20,7 +20,7 @@ public class Physic implements PhysicInterface {
      * Constructor for physic
      * @param grubPanel
      */
-    public Physic(GrubPanelImpl grubPanel){
+    public PhysicImpl(GrubPanelImpl grubPanel){
         this.grubPanel = grubPanel;
     }
 

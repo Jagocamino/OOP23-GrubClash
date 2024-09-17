@@ -5,10 +5,10 @@ import java.awt.image.BufferedImage;
 import java.util.Optional;
 
 import it.unibo.grubclash.controller.Implementation.PlayerImpl;
-import it.unibo.grubclash.model.Application_Programming_Interface.WeaponInterface;
+import it.unibo.grubclash.model.Application_Programming_Interface.Weapon;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 
-public abstract class Weapon implements WeaponInterface {
+public abstract class WeaponImpl implements Weapon {
 
     private PlayerImpl owner;
     private int ammo;
@@ -20,7 +20,7 @@ public abstract class Weapon implements WeaponInterface {
 
     public BufferedImage left, right, up, down;
 
-    public Weapon(PlayerImpl owner, int ammo){
+    public WeaponImpl(PlayerImpl owner, int ammo){
 
         setOwner(owner);
         setAmmo(ammo);

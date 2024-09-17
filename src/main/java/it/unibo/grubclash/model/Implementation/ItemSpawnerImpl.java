@@ -2,12 +2,12 @@ package it.unibo.grubclash.model.Implementation;
 
 import java.util.Random;
 
-import it.unibo.grubclash.model.Application_Programming_Interface.ItemSpawnerInterface;
+import it.unibo.grubclash.model.Application_Programming_Interface.ItemSpawner;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 
 import java.util.ArrayList;
 
-public class ItemSpawner implements ItemSpawnerInterface {
+public class ItemSpawnerImpl implements ItemSpawner {
 
     public void generateSpawnLocation (int ROWS, int COLS, int numOfItems, Entities[][] entityMatrix) {
         

@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.util.Optional;
 
 import it.unibo.grubclash.model.Implementation.KeyHandler;
-import it.unibo.grubclash.model.Implementation.Weapon;
+import it.unibo.grubclash.model.Implementation.WeaponImpl;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 
 /**
@@ -20,13 +20,13 @@ public interface Player {
     /**
      * @return the player's weapon
      */
-    Optional<Weapon> getWeapon();
+    Optional<WeaponImpl> getWeapon();
 
     /**
      * Sets the player's weapon
      * @param weapon the object to set
      */
-    void setWeapon(Optional<Weapon> weapon);
+    void setWeapon(Optional<WeaponImpl> weapon);
 
     /**
      * @return the player's direction

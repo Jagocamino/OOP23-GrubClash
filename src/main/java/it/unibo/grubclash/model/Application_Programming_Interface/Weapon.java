@@ -11,7 +11,7 @@ import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 /**
  * @author Camoni Jago
  */
-public interface WeaponInterface {
+public interface Weapon {
 
     /**
      * Set the direction of the weapon

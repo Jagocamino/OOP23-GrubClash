@@ -12,7 +12,7 @@ import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
 import it.unibo.grubclash.model.Implementation.LifeImpl;
 import it.unibo.grubclash.model.Implementation.Sound;
-import it.unibo.grubclash.model.Implementation.Weapon;
+import it.unibo.grubclash.model.Implementation.WeaponImpl;
 import it.unibo.grubclash.view.Implementation.LifeDrawingImpl;
 import it.unibo.grubclash.view.Implementation.WeaponRoket;
 
@@ -48,7 +48,7 @@ public class PlayerImpl extends EntityImpl implements Player{
     private int id;
     private int speed;
     private Orientation direction;
-    private Optional<Weapon> weapon;
+    private Optional<WeaponImpl> weapon;
     private boolean alreadyShot = false;
     private boolean alreadyDug = false;
     private boolean shovelAnimation = false;
@@ -264,7 +264,7 @@ public class PlayerImpl extends EntityImpl implements Player{
      * {@inheritDoc}
      */
     @Override
-    public Optional<Weapon> getWeapon() {
+    public Optional<WeaponImpl> getWeapon() {
         return weapon;
     }
 
@@ -272,7 +272,7 @@ public class PlayerImpl extends EntityImpl implements Player{
      * {@inheritDoc}
      */
     @Override
-    public void setWeapon(Optional<Weapon> weapon) {
+    public void setWeapon(Optional<WeaponImpl> weapon) {
         this.weapon = weapon;
     }
 

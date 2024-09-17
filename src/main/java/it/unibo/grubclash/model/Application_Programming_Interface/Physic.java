@@ -3,7 +3,7 @@ package it.unibo.grubclash.model.Application_Programming_Interface;
 /**
  * @author Remschi Christian
  */
-public interface PhysicInterface {
+public interface Physic {
 
     /**
      * Checks if there is terrain under the entity, if so the entity stops, otherwise it will fall

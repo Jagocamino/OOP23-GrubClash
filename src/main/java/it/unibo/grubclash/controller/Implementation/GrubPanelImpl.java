@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import it.unibo.grubclash.controller.Application_Programming_Interface.GrubPanel;
-import it.unibo.grubclash.model.Application_Programming_Interface.PhysicInterface;
+import it.unibo.grubclash.model.Application_Programming_Interface.Physic;
 import it.unibo.grubclash.model.Implementation.Allowed;
 import it.unibo.grubclash.model.Implementation.EntityImpl;
-import it.unibo.grubclash.model.Implementation.ItemSpawner;
+import it.unibo.grubclash.model.Implementation.ItemSpawnerImpl;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
-import it.unibo.grubclash.model.Implementation.Physic;
+import it.unibo.grubclash.model.Implementation.PhysicImpl;
 import it.unibo.grubclash.model.Implementation.Sound;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
@@ -49,7 +49,7 @@ public class GrubPanelImpl extends JPanel implements Runnable, GrubPanel {
     private int numAlivePlayers = RESET;
     private int idOfTheWinner;
     private UIInterface ui = new UI(this);
-    private PhysicInterface physic = new Physic(this);
+    private Physic physic = new PhysicImpl(this);
     private boolean turnBegin = false;
     
     /**
@@ -70,7 +70,7 @@ public class GrubPanelImpl extends JPanel implements Runnable, GrubPanel {
         keyHandlers = new ArrayList<>();
         Allowed.setMapBase(MapBuilderImpl.getMapBase());
 
-        ItemSpawner itSpawn = new ItemSpawner();
+        ItemSpawnerImpl itSpawn = new ItemSpawnerImpl();
         itSpawn.generateSpawnLocation(Allowed.getROWS(), Allowed.getCOLS(), MapBuilderImpl.getItemNum(), MapBuilderImpl.getEntityMatrix());
 
         Allowed.addMapBase(MapBuilderImpl.getEntityMatrix()); 
