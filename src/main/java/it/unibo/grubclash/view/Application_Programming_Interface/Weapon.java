@@ -7,7 +7,7 @@ import it.unibo.grubclash.model.Implementation.ProjectileRoket;
 /**
  * @author Camoni Jago
  */
-public interface WeaponType {
+public interface Weapon {
 
     /**
      * Shoots the bullet/granade

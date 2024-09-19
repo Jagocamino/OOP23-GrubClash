@@ -6,7 +6,7 @@ import it.unibo.grubclash.model.Application_Programming_Interface.Entity;
 /**
  * @author Camoni Jago
  */
-public interface ProjectileInterface {
+public interface Projectile {
     
     /**
      * Applies the damage of the explosion when a collision is detected

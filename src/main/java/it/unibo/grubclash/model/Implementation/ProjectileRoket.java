@@ -8,9 +8,9 @@ import it.unibo.grubclash.model.Application_Programming_Interface.ProjectileType
 import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Orientation;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
-import it.unibo.grubclash.view.Implementation.Projectile;
+import it.unibo.grubclash.view.Implementation.ProjectileImpl;
 
-public class ProjectileRoket extends Projectile implements ProjectileType {
+public class ProjectileRoket extends ProjectileImpl implements ProjectileType {
 
     private int dmgRadius = 50;
     private static int widthRoket = 10;

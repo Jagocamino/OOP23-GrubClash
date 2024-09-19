@@ -5,11 +5,11 @@ import java.awt.Graphics2D;
 import it.unibo.grubclash.model.Application_Programming_Interface.Entity;
 import it.unibo.grubclash.model.Implementation.EntityImpl;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
-import it.unibo.grubclash.view.Application_Programming_Interface.ProjectileInterface;
+import it.unibo.grubclash.view.Application_Programming_Interface.Projectile;
 
-public abstract class Projectile extends EntityImpl implements ProjectileInterface{
+public abstract class ProjectileImpl extends EntityImpl implements Projectile{
 
-    public Projectile(int x, int y, int width, int height, Entities entity) {
+    public ProjectileImpl(int x, int y, int width, int height, Entities entity) {
         super(x, y, width, height, entity);
     }
 

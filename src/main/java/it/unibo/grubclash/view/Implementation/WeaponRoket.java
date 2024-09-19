@@ -7,9 +7,9 @@ import it.unibo.grubclash.model.Implementation.EntityImpl;
 import it.unibo.grubclash.model.Implementation.ProjectileRoket;
 import it.unibo.grubclash.model.Implementation.Sound;
 import it.unibo.grubclash.model.Implementation.WeaponImpl;
-import it.unibo.grubclash.view.Application_Programming_Interface.WeaponType;
+import it.unibo.grubclash.view.Application_Programming_Interface.Weapon;
 
-public class WeaponRoket extends WeaponImpl implements WeaponType {
+public class WeaponRoket extends WeaponImpl implements Weapon {
     private final char FS = File.separatorChar;
 
     private final static int DEFAULT_AMMO = 5;

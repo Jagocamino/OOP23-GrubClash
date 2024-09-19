@@ -10,8 +10,8 @@ import java.awt.Graphics2D;
 import it.unibo.grubclash.model.Application_Programming_Interface.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
-import it.unibo.grubclash.view.Application_Programming_Interface.ImageScalarInterface;
-import it.unibo.grubclash.view.Implementation.ImageScalar;
+import it.unibo.grubclash.view.Application_Programming_Interface.ImageScalar;
+import it.unibo.grubclash.view.Implementation.ImageScalarImpl;
 
 /**
  * Class implementing the Entity methods.
@@ -139,7 +139,7 @@ public class EntityImpl implements Entity {
      * @return the image scaled 
      */
     public static BufferedImage setup(String imagePath, int width, int height) { 
-        ImageScalarInterface uTool = new ImageScalar();
+        ImageScalar uTool = new ImageScalarImpl();
         BufferedImage image = null;
     
         try {

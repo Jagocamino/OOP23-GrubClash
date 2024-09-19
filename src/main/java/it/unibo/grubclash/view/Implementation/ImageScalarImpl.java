@@ -3,9 +3,9 @@ package it.unibo.grubclash.view.Implementation;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import it.unibo.grubclash.view.Application_Programming_Interface.ImageScalarInterface;
+import it.unibo.grubclash.view.Application_Programming_Interface.ImageScalar;
 
-public class ImageScalar implements ImageScalarInterface {
+public class ImageScalarImpl implements ImageScalar {
 
     private static final int NEW_X = 0;
     private static final int NEW_Y = 0;
