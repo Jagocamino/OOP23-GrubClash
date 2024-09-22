@@ -11,7 +11,7 @@ import java.util.Optional;
  */
 public class LifeImpl implements Life {
 
-    private String color_game = "#EF7B10";
+    private static final String color_game = "#EF7B10";
     private final Font snapITCFont;
     private final EntityImpl entity;
 

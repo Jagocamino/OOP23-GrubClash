@@ -138,9 +138,14 @@ public class GrubPanelImpl extends JPanel implements Runnable, GrubPanel {
      * Updates the mob's movement and interaction
      */
     private void updateMob() {
-        for (Optional<EntityImpl> mob : Allowed.getMob()) {
-            if (mob.isPresent()) {
-                mob.get().update(); 
+        for (Optional<EntityImpl> skeleton : Allowed.getSkeleton()) {
+            if (skeleton.isPresent()) {
+                skeleton.get().update(); 
+            }
+        }
+        for (Optional<EntityImpl> zombie : Allowed.getZombie()) {
+            if (zombie.isPresent()) {
+                zombie.get().update(); 
             }
         }
     }
@@ -320,9 +325,14 @@ public class GrubPanelImpl extends JPanel implements Runnable, GrubPanel {
             physic.checkDeath(p);
         }
 
-        for (Optional<EntityImpl> mob : Allowed.getMob()) {
-            if (mob.isPresent()) {
-                physic.checkTerrain(mob.get()); 
+        for (Optional<EntityImpl> skeleton : Allowed.getSkeleton()) {
+            if (skeleton.isPresent()) {
+                physic.checkTerrain(skeleton.get()); 
+            }
+        }
+        for (Optional<EntityImpl> zombie : Allowed.getZombie()) {
+            if (zombie.isPresent()) {
+                physic.checkTerrain(zombie.get()); 
             }
         }
     }
@@ -354,10 +364,16 @@ public class GrubPanelImpl extends JPanel implements Runnable, GrubPanel {
         }
 
         //DRAW MOBS
-        for (Optional<EntityImpl> mob : Allowed.getMob()) {
+        for (Optional<EntityImpl> mob : Allowed.getSkeleton()) {
             if (mob.isPresent()) {
                 mob.get().draw(g2d);
                 mob.get().getLife().draw(g2d);   
+            }
+        }
+        for (Optional<EntityImpl> zombie : Allowed.getZombie()) {
+            if (zombie.isPresent()) {
+                zombie.get().draw(g2d);
+                zombie.get().getLife().draw(g2d);   
             }
         }
 

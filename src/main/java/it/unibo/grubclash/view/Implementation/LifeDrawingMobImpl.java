@@ -13,6 +13,7 @@ import it.unibo.grubclash.view.Application_Programming_Interface.LifeDrawing;
 public class LifeDrawingMobImpl implements LifeDrawing {
 
     private BufferedImage life20;
+    private BufferedImage life60;
 
     //pixel removal to draw the image of life on top of the character
     private static final int REMOVING_X = 25;
@@ -24,7 +25,8 @@ public class LifeDrawingMobImpl implements LifeDrawing {
     public LifeDrawingMobImpl() {
         final char FS = File.separatorChar;
         life20 = EntityImpl.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_mob.png", WIDTH_LIFE_MOB, HEIGHT_LIFE_MOB);
-    }
+        life60 = EntityImpl.setup("src" + FS + "main" + FS + "resources" + FS + "Life" + FS + "life_mob_6.png", WIDTH_LIFE_MOB, HEIGHT_LIFE_MOB);
+    }   
 
     /**
      * {@inheritDoc}
@@ -35,6 +37,9 @@ public class LifeDrawingMobImpl implements LifeDrawing {
         switch (life) {
             case 2:
             g2d.drawImage(life20, entity.getX() - REMOVING_X, entity.getY() - REMOVING_Y, null);
+            break;
+            case 6:
+            g2d.drawImage(life60, entity.getX() - REMOVING_X, entity.getY() - REMOVING_Y, null);
             break;
             default:
             break;

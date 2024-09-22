@@ -22,7 +22,8 @@ public class EnumEntity {
         ITEM,
         PROJECTILE,
         MOBGENERATOR,
-        MOB;   
+        SKELETON,
+        ZOMBIE;   
     }
 
     public enum Weapons {

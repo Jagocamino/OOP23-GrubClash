@@ -166,7 +166,10 @@ public class PlayerImpl extends EntityImpl implements Player{
                     cooldownDig = false;
                 }
             }
-            if(Allowed.damageFromMob(this)){
+            if(Allowed.damageFromSkeleton(this)){
+                this.getLife().damage();
+            }
+            if(Allowed.damageFromZombie(this)){
                 this.getLife().damage();
             }
             weapon.get().setWeaponDir(direction);

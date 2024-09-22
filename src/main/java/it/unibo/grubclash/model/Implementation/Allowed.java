@@ -4,6 +4,7 @@ import it.unibo.grubclash.model.Application_Programming_Interface.Entity;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Entities;
 import it.unibo.grubclash.model.Implementation.EnumEntity.Status;
 import it.unibo.grubclash.view.Implementation.Ammo_Box;
+import it.unibo.grubclash.view.Implementation.FrameManagerImpl;
 import it.unibo.grubclash.view.Implementation.Heal;
 import it.unibo.grubclash.view.Implementation.MobGenerator;
 import it.unibo.grubclash.view.Implementation.Trap;
@@ -24,7 +25,8 @@ public class Allowed {
     private static EntityImpl[][] lvlData;
     private static int ROWS;
     private static int COLS;
-    private static ArrayList<Optional<EntityImpl>> mob;
+    private static ArrayList<Optional<EntityImpl>> skeleton;
+    private static ArrayList<Optional<EntityImpl>> zombie;
 
     public Allowed(int borderX, int borderY, int ROWS, int COLS) {
         Allowed.borderX = borderX;
@@ -33,7 +35,8 @@ public class Allowed {
         Allowed.COLS = COLS;
         Allowed.lvlData = new EntityImpl[ROWS][COLS];
         Allowed.dynamicEntities = new ArrayList<Optional<EntityImpl>>();
-        mob = new ArrayList<>();
+        skeleton = new ArrayList<>();
+        zombie = new ArrayList<>();
     }
 
     private static EntityImpl getLvlData( int i, int j) {
@@ -126,7 +129,16 @@ public class Allowed {
                         break;
                     case MOBGENERATOR:
                         t.get().setWorking(Status.DEAD);
-                        getMob().add(Optional.of(new Mob(0,0,35,35,Entities.MOB)));
+
+                        Random randomNum = new Random();    
+                        switch (randomNum.nextInt(2)) {
+                        case 0:
+                            getSkeleton().add(Optional.of(new Skeleton(0,0,35,35,Entities.SKELETON)));
+                            break;
+                        case 1:
+                            getZombie().add(Optional.of(new Zombie(FrameManagerImpl.getInstance().getWindowWidth().get()-40, 0, 35, 35, Entities.ZOMBIE)));
+                            break;
+                        }
                         break;
                     default: break;
                 }
@@ -325,7 +337,22 @@ public class Allowed {
                 return true;
             }
         }
-        for (Optional<EntityImpl> entity : Allowed.mob) {
+        for (Optional<EntityImpl> entity : Allowed.zombie) {
+            if (    (
+                        entity.isPresent() 
+                    ) && (   
+                        x >= entity.get().getX() &&
+                        x < (entity.get().getWidth() + entity.get().getX()) &&
+                        y >= entity.get().getY() && 
+                        y < (entity.get().getY() + entity.get().getHeight())
+                    ) && (
+                        hittable(entity.get())
+                    )
+                ) {
+                return true;
+            }
+        }
+        for (Optional<EntityImpl> entity : Allowed.skeleton) {
             if (    (
                         entity.isPresent() 
                     ) && (   
@@ -377,7 +404,8 @@ public class Allowed {
             entity.getEntity() == Entities.PLAYER5 ||
             entity.getEntity() == Entities.WALL ||
             entity.getEntity() == Entities.PROJECTILE ||
-            entity.getEntity() == Entities.MOB
+            entity.getEntity() == Entities.SKELETON ||
+            entity.getEntity() == Entities.ZOMBIE
         );
     }
 
@@ -393,7 +421,9 @@ public class Allowed {
             entity.getEntity() == Entities.PLAYER4 ||
             entity.getEntity() == Entities.PLAYER5 ||
             entity.getEntity() == Entities.WALL ||
-            entity.getEntity() == Entities.MOB
+            entity.getEntity() == Entities.SKELETON || 
+            entity.getEntity() == Entities.ZOMBIE
+
         );
     }
 
@@ -444,7 +474,28 @@ public class Allowed {
 
         }
 
-        for (Optional<EntityImpl> dynamicEntity : Allowed.mob) {
+        for (Optional<EntityImpl> dynamicEntity : Allowed.skeleton) {
+            if(dynamicEntity.isPresent()){
+
+                int entityX = dynamicEntity.get().getX();
+                int entityY = dynamicEntity.get().getY();
+                int entityWidth = dynamicEntity.get().getWidth();
+                int entityHeight = dynamicEntity.get().getHeight();
+                if( damageable(dynamicEntity.get()) && (
+                    ( explosionX >= entityX && explosionX < (entityX + entityWidth)) || // check left
+                    ( explosionX + explosionWidth >= entityX && explosionX + explosionWidth < (entityX + entityWidth)) || // check right
+                    ( explosionX < entityX && explosionX + explosionWidth >= (entityX + entityWidth)) // check if inside
+                    ) && (
+                    ( explosionY >= entityY && explosionY < (entityY + entityHeight)) || // check above
+                    ( explosionY + explosionHeight >= entityY && explosionY + explosionHeight < (entityY + entityHeight)) || // check under
+                    ( explosionY < entityY && explosionY + explosionHeight >= (entityY + entityHeight)) // check if inside
+                    ) 
+                ){
+                        damageToWhichDynamicEntities.add(dynamicEntity.get());
+                }
+            }
+        }
+        for (Optional<EntityImpl> dynamicEntity : Allowed.zombie) {
             if(dynamicEntity.isPresent()){
 
                 int entityX = dynamicEntity.get().getX();
@@ -495,7 +546,7 @@ public class Allowed {
      */
     public static void applyDamage (ArrayList<EntityImpl> dealDamage, int i) {
         for (Entity entity : dealDamage) {
-            if ( isPlayer(entity) || entity.getEntity().equals(Entities.MOB) ) {
+            if ( isPlayer(entity) || entity.getEntity().equals(Entities.SKELETON) || entity.getEntity().equals(Entities.ZOMBIE) ) {
                 for(int j = 0; j < i; j++){
                     entity.getLife().damage();
                 }
@@ -506,15 +557,34 @@ public class Allowed {
         }
     }
 
-    public static ArrayList<Optional<EntityImpl>> getMob() {
-        return mob;
+    public static ArrayList<Optional<EntityImpl>> getSkeleton() {
+        return skeleton;
+    }
+    public static ArrayList<Optional<EntityImpl>> getZombie() {
+        return zombie;
     }
 
-    public static boolean damageFromMob(PlayerImpl p){
+    public static boolean damageFromSkeleton(PlayerImpl p){
 
         final int sizePixel=10;
 
-        for (Optional<EntityImpl> m : mob) {
+        for (Optional<EntityImpl> m : skeleton) {
+
+            if(m.isPresent()){
+                if(m.get().getX()<=p.getX()+sizePixel && m.get().getX()>=p.getX()-sizePixel && m.get().getY()<=p.getY()+sizePixel && m.get().getY()>=p.getY()-sizePixel ){
+                    return true;
+                }
+            }
+            
+        }
+        return false;
+    }
+
+    public static boolean damageFromZombie(PlayerImpl p){
+
+        final int sizePixel=4;
+
+        for (Optional<EntityImpl> m : zombie) {
 
             if(m.isPresent()){
                 if(m.get().getX()<=p.getX()+sizePixel && m.get().getX()>=p.getX()-sizePixel && m.get().getY()<=p.getY()+sizePixel && m.get().getY()>=p.getY()-sizePixel ){

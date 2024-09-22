@@ -8,19 +8,19 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-import it.unibo.grubclash.controller.Implementation.GrubPanel;
-import it.unibo.grubclash.controller.Implementation.MapBuilder;
-import it.unibo.grubclash.controller.Implementation.Player;
+import it.unibo.grubclash.controller.Implementation.GrubPanelImpl;
+import it.unibo.grubclash.controller.Implementation.MapBuilderImpl;
+import it.unibo.grubclash.controller.Implementation.PlayerImpl;
 import it.unibo.grubclash.model.Implementation.Allowed;
-import it.unibo.grubclash.model.Implementation.Entity;
+import it.unibo.grubclash.model.Implementation.EntityImpl;
 import it.unibo.grubclash.model.Implementation.EnumEntity;
 import it.unibo.grubclash.model.Implementation.KeyHandler;
 
 public class RocketTest {
 
-    ArrayList<Optional<Entity>> dynamicEntities = new ArrayList<>(); 
-    GrubPanel gp;
-    Player pl;
+    ArrayList<Optional<EntityImpl>> dynamicEntities = new ArrayList<>(); 
+    GrubPanelImpl gp;
+    PlayerImpl pl;
     EnumEntity.Entities[][] entities = new EnumEntity.Entities[20][20];
 
     @Test
@@ -31,8 +31,8 @@ public class RocketTest {
             }
         }
         new Allowed(0,0,0,0);
-        MapBuilder.entityMatrix = entities;
-        pl = new Player(0, new KeyHandler());
+        MapBuilderImpl.entityMatrix = entities;
+        pl = new PlayerImpl(0, new KeyHandler());
         assertTrue(pl.getWeapon().isPresent());
         assertEquals(pl.getWeapon().get().getAmmo(), 5);
         pl.getWeapon().get().shoot();

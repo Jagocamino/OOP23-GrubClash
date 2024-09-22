@@ -92,9 +92,9 @@ public class Menu extends JFrame{
 
         playButton.addActionListener(e -> {
             frameMenu.dispose();
-            JFrame frameMappa = createMenuFrame();
-            createMapPanel(frameMappa);
-            frameMappa.setVisible(true);
+            JFrame frameMap = createMenuFrame();
+            createMapPanel(frameMap);
+            frameMap.setVisible(true);
         });
 
         playButton.addMouseListener(new MouseAdapter() {
@@ -118,16 +118,16 @@ public class Menu extends JFrame{
         return playButton;
     }
 
-    protected JPanel createMapPanel(JFrame frameMappa) {
-        JPanel panelMappa = new JPanel();
+    protected JPanel createMapPanel(JFrame frameMap) {
+        JPanel panelMap = new JPanel();
 
-        panelMappa.setLayout(null);
-        panelMappa.setBackground(Color.WHITE);
-        panelMappa.setBounds(newX, newY, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
+        panelMap.setLayout(null);
+        panelMap.setBackground(Color.WHITE);
+        panelMap.setBounds(newX, newY, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
 
-        ImageIcon mappa = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "grubRules.png");
-        JLabel mappa_label = new JLabel(mappa);
-        mappa_label.setBounds(newX, newY, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
+        ImageIcon map = new ImageIcon("src" + FS + "main" + FS + "resources" + FS + "menu" + FS + "grubRules.png");
+        JLabel map_label = new JLabel(map);
+        map_label.setBounds(newX, newY, frameManager.getWindowWidth().get(), frameManager.getWindowHeight().get());
 
         JButton play2 = new JButton();
 
@@ -151,7 +151,7 @@ public class Menu extends JFrame{
         });
 
         play2.addActionListener(b -> {
-            frameMappa.dispose();
+            frameMap.dispose();
             Object player = playerSelect.getSelectedItem();
             int playerCount = 0;
             if (player != null) {
@@ -163,10 +163,10 @@ public class Menu extends JFrame{
             new MapBuilderImpl(playerCount);
         });
 
-        panelMappa.add(play2);
-        panelMappa.add(mappa_label);
-        frameMappa.add(panelMappa);
+        panelMap.add(play2);
+        panelMap.add(map_label);
+        frameMap.add(panelMap);
 
-        return panelMappa;
+        return panelMap;
     }
 }
