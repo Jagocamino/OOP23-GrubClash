@@ -17,7 +17,7 @@ public class WeaponRoket extends WeaponImpl implements Weapon {
     private static final int WIDTH_ROCKET=20;
     private static final int HEIGHT_ROCKET=20;
 
-    //Adding pixels to the rocket
+    //Adding pixels to the rocketl
     private static final int ADDITION=20;
 
     public WeaponRoket(PlayerImpl owner) {
