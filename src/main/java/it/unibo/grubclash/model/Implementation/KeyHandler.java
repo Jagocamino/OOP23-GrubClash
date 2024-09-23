@@ -8,7 +8,11 @@ import it.unibo.grubclash.controller.Implementation.GrubPanelImpl;
 public class KeyHandler implements KeyListener {
 
     GrubPanelImpl grubPanel;
-    public boolean leftPressed, rightPressed, spacePressed, shootPressed, shovelPressed;
+    public boolean leftPressed;
+    public boolean rightPressed;
+    public boolean spacePressed;
+    public boolean shootPressed;
+    public boolean shovelPressed; 
 
     public KeyHandler(GrubPanelImpl grubPanel){
         this.grubPanel = grubPanel;
