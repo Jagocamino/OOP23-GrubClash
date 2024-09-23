@@ -78,7 +78,7 @@ public class GrubPanelImpl extends JPanel implements Runnable, GrubPanel {
 
         players = new ArrayList<>();
         for(int i = 0; i < playerCount; i++) {
-            keyHandlers.add(new KeyHandler(this));
+            keyHandlers.add(new KeyHandler());
             players.add(new PlayerImpl(i, keyHandlers.get(i)));
         } 
 
@@ -295,10 +295,10 @@ public class GrubPanelImpl extends JPanel implements Runnable, GrubPanel {
     private void resetVariables(PlayerImpl p){
 
         secondsTurn = RESET;
-        p.getKeyHandler().leftPressed = false;
-        p.getKeyHandler().rightPressed = false;
-        p.getKeyHandler().spacePressed = false;
-        p.getKeyHandler().shootPressed = false;
+        p.getKeyHandler().setLeftPressed(false);
+        p.getKeyHandler().setRightPressed(false);
+        p.getKeyHandler().setSpacePressed(false);
+        p.getKeyHandler().setShootPressed(false);
         this.removeKeyListener(p.getKeyHandler());
         p.setDirection(Orientation.DOWN);
         p.setJump1Counter(RESET);

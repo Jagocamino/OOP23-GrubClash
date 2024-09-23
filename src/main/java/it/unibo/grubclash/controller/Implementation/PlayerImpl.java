@@ -126,36 +126,36 @@ public class PlayerImpl extends EntityImpl implements Player{
                 }
                 setSpriteCounter(RESET);
             }
-            if(keyH.leftPressed && canMove()){
+            if(keyH.isLeftPressed() && canMove()){
                 if(Allowed.CanMoveThere(getX() - speed, getY(), getWidth(), getHeight())){
                     direction = Orientation.LEFT;
                     setX(getX() - speed);
                 }
             }
-            else if(keyH.rightPressed && canMove()){
+            else if(keyH.isRightPressed() && canMove()){
                 if(Allowed.CanMoveThere(getX() + speed, getY(), getWidth(), getHeight())){
                     direction = Orientation.RIGHT;
                     setX(getX() + speed);
                 }
             }
-            if(keyH.spacePressed){  
+            if(keyH.isSpacePressed()){  
                 jumpAnimation();
             }else{
                 setGravity(true);
             }
-            if(keyH.shootPressed && !alreadyShot){
+            if(keyH.isShootPressed() && !alreadyShot){
                 getWeapon().get().shoot();
-                keyH.shootPressed = false;
+                keyH.setShootPressed(false);
                 alreadyShot = true;
             }
-            if(keyH.shovelPressed && !alreadyDug && !cooldownDig){
+            if(keyH.isShovelPressed() && !alreadyDug && !cooldownDig){
                 shovelAnimation = true;
                 cooldownDig = true;
                 Sound.setFile(1);
                 Sound.play();
                 shovelAttack(direction);
             }
-            if(!keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed){
+            if(!keyH.isLeftPressed() && !keyH.isRightPressed() && !keyH.isSpacePressed()){
                 direction = Orientation.DOWN;
             }
             if(shovelAnimation){
@@ -212,7 +212,7 @@ public class PlayerImpl extends EntityImpl implements Player{
             if(jump2Counter > CHANGE_STAGE_JUMP * 2){
                 jump2Counter = RESET;
                 jump1Counter = RESET;
-                keyH.spacePressed = false;
+                keyH.setSpacePressed(false);
             }
         }
     }

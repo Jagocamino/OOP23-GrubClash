@@ -3,20 +3,13 @@ package it.unibo.grubclash.model.Implementation;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import it.unibo.grubclash.controller.Implementation.GrubPanelImpl;
-
 public class KeyHandler implements KeyListener {
 
-    GrubPanelImpl grubPanel;
-    public boolean leftPressed;
-    public boolean rightPressed;
-    public boolean spacePressed;
-    public boolean shootPressed;
-    public boolean shovelPressed; 
-
-    public KeyHandler(GrubPanelImpl grubPanel){
-        this.grubPanel = grubPanel;
-    }
+    private boolean leftPressed;
+    private boolean rightPressed;
+    private boolean spacePressed;
+    private boolean shootPressed;
+    private boolean shovelPressed; 
 
     public KeyHandler(){}
 
@@ -61,5 +54,85 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_F){
             shovelPressed = false;
         }
+    }
+
+    /**
+     * 
+     * @return true if the key A is pressed
+     */
+    public boolean isLeftPressed() {
+        return leftPressed;
+    }
+
+    /**
+     * Sets the variable to the param value
+     * @param leftPressed
+     */
+    public void setLeftPressed(boolean leftPressed) {
+        this.leftPressed = leftPressed;
+    }
+    
+    /**
+     * 
+     * @return true if the key D is pressed
+     */
+    public boolean isRightPressed() {
+        return rightPressed;
+    }
+
+    /**
+     * Sets the variable to the param value
+     * @param rightPressed
+     */
+    public void setRightPressed(boolean rightPressed) {
+        this.rightPressed = rightPressed;
+    }
+
+    /**
+     * 
+     * @return true if the key SPACE is pressed
+     */
+    public boolean isSpacePressed() {
+        return spacePressed;
+    }
+
+    /**
+     * Sets the variable to the param value
+     * @param spacePressed
+     */
+    public void setSpacePressed(boolean spacePressed) {
+        this.spacePressed = spacePressed;
+    }
+
+    /**
+     * 
+     * @return true if the key ENTER is pressed
+     */
+    public boolean isShootPressed() {
+        return shootPressed;
+    }
+
+    /**
+     * Sets the variable to the param value
+     * @param shootPressed
+     */
+    public void setShootPressed(boolean shootPressed) {
+        this.shootPressed = shootPressed;
+    }
+
+    /**
+     * 
+     * @return true if the key F is pressed
+     */
+    public boolean isShovelPressed() {
+        return shovelPressed;
+    }
+
+    /**
+     * Sets the variable to the param value
+     * @param shovelPressed
+     */
+    public void setShovelPressed(boolean shovelPressed) {
+        this.shovelPressed = shovelPressed;
     }
 }
