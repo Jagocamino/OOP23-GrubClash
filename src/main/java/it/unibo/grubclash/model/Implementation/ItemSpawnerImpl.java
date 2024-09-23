@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 public class ItemSpawnerImpl implements ItemSpawner {
 
+    /**
+     * {@inheritDoc}
+     */
     public void generateSpawnLocation (int ROWS, int COLS, int numOfItems, Entities[][] entityMatrix) {
         
         Random randomNum = new Random();

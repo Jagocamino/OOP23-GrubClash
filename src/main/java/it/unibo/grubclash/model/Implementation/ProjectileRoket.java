@@ -81,7 +81,6 @@ public class ProjectileRoket extends ProjectileImpl implements ProjectileType {
         this.setWorking(Status.DEAD);
     }
 
-    // personalizzata per ogni proiettile
     private int updatedDir (Orientation dir) {
         switch (dir) {
             case UP:

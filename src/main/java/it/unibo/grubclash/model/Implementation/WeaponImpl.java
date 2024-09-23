@@ -18,7 +18,10 @@ public abstract class WeaponImpl implements Weapon {
 
     protected Optional<ProjectileRoket> rocket;
 
-    public BufferedImage left, right, up, down;
+    protected BufferedImage left;
+    protected BufferedImage right;
+    protected BufferedImage up;
+    protected BufferedImage down;
 
     public WeaponImpl(PlayerImpl owner, int ammo){
 

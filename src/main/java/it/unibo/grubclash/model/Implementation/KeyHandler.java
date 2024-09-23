@@ -3,6 +3,9 @@ package it.unibo.grubclash.model.Implementation;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * @author Christian Remschi 
+ */
 public class KeyHandler implements KeyListener {
 
     private boolean leftPressed;

@@ -17,7 +17,7 @@ public abstract class ProjectileImpl extends EntityImpl implements Projectile{
     public Entity damage (int dmgRadius) { 
         int x = getX() + (getWidth() / 2);
         int y = getY() + (getHeight() / 2);
-        return new EntityImpl(x - dmgRadius, y - dmgRadius, dmgRadius*2, dmgRadius*2, Entities.EXPLOSION); //elimino ogni explosion dopo
+        return new EntityImpl(x - dmgRadius, y - dmgRadius, dmgRadius*2, dmgRadius*2, Entities.EXPLOSION); 
     }
 
     @Override

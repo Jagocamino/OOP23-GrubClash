@@ -44,6 +44,11 @@ public class EnumEntity {
         DEAD;
     }
 
+    /**
+     * 
+     * @param id of the player 
+     * @return the player enum
+     */
     public static Optional<Entities> idToEntitiesConverter(int id){
 
         return switch (id) {
@@ -57,6 +62,12 @@ public class EnumEntity {
 
     }
 
+    /**
+     * 
+     * @param entities
+     * @param player
+     * @return the coord x of the player in the map
+     */
     public static int buttonToCoordsXConverter(Entities[][] entities, Entities player){
         int x = 0;
         for(int i = 0; i < MapBuilderImpl.COLS; i++){
@@ -69,6 +80,12 @@ public class EnumEntity {
         return x;
     }
 
+     /**
+     * 
+     * @param entities
+     * @param player
+     * @return the coord y of the player in the map
+     */
     public static int buttonToCoordsYConverter(Entities[][] entities, Entities player){
         int y = 0;
         for(int i = 0; i < MapBuilderImpl.COLS; i++){

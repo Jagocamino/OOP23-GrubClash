@@ -20,11 +20,11 @@ import java.io.IOException;
 
 public class MapBuilderImpl extends Canvas implements MapBuilder {
 
-    private static FrameManager frameManager = FrameManagerImpl.getInstance();
+    private static final FrameManager frameManager = FrameManagerImpl.getInstance();
 
-    static String color_game = "#EF7B10";
+    private static final String color_game = "#EF7B10";
 
-    final static char FS = File.separatorChar;
+    private static final char FS = File.separatorChar;
 
     private static int itemNum;
     
